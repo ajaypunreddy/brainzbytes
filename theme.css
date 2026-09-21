@@ -491,6 +491,28 @@ html { scroll-behavior: smooth; }
   display: flex;
   align-items: center;
 }
+
+.bb-architecture-status {
+  width: min(1180px, calc(100% - 32px));
+  margin: 18px auto 0;
+  padding: 12px 16px;
+  border: 1px solid rgba(188,140,255,0.32);
+  border-radius: 12px;
+  color: var(--text-muted);
+  background: linear-gradient(135deg, rgba(188,140,255,0.1), rgba(88,166,255,0.08));
+  box-shadow: var(--card-shadow);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.bb-architecture-status strong {
+  color: var(--text-heading);
+}
+
+.bb-architecture-status a {
+  color: var(--accent-purple);
+  font-weight: 700;
+}
 .bb-nav-inner {
   width: 100%;
   max-width: 1400px;

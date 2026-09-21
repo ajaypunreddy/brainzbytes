@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Governed, Fresh, and Version-Safe RAG"><title>Governed, Fresh, and Version-Safe RAG | BrainzBytes ContextWeaver</title><link rel="icon" type="image/svg+xml" href="/logo.svg"><style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2333;--line:rgba(255,255,255,.1);--text:#e6edf3;--muted:#8b949e;--cyan:#58a6ff;--blue:#58a6ff;--violet:#bc8cff;--green:#34d399;--amber:#fbbf24;--rose:#fb7185}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 12% 8%,rgba(88,166,255,.11) 0,transparent 34%),radial-gradient(circle at 88% 18%,rgba(188,140,255,.13) 0,transparent 30%),var(--bg);color:var(--text);font:15px/1.68 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--cyan)}.top{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px max(18px,calc((100vw - 1420px)/2));border-bottom:1px solid var(--line);background:rgba(13,17,23,.94);backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}.mark{display:block;width:40px;height:40px}.brand b,.brand small{display:block}.brand small{color:var(--muted);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.actions{display:flex;flex-wrap:wrap;gap:7px}.button{padding:7px 10px;border:1px solid var(--line);border-radius:8px;color:var(--text);background:rgba(255,255,255,.04);font-size:11px;font-weight:800;text-decoration:none}.button.primary{color:#fff;background:linear-gradient(135deg,var(--violet),#7c3aed);border-color:var(--violet)}
+.layout{display:grid;grid-template-columns:275px minmax(0,1fr);gap:22px;width:min(1420px,calc(100% - 28px));margin:22px auto 50px}.toc{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:18px;border:1px solid var(--line);border-radius:15px;background:rgba(12,29,48,.86)}.toc h2{margin:0 0 12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase}.toc ul{margin:0;padding-left:17px}.toc li{margin:5px 0;color:var(--muted);font-size:11px}.toc a{color:inherit;text-decoration:none}.toc a:hover{color:var(--cyan)}
+.document{min-width:0;padding:clamp(24px,4vw,55px);border:1px solid var(--line);border-radius:20px;background:rgba(22,27,34,.92);box-shadow:0 22px 70px rgba(0,0,0,.25)}.document>h1:first-child{margin-top:0;font:800 clamp(34px,5vw,64px)/1.02 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.045em;background:linear-gradient(135deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}.document h1,.document h2,.document h3,.document h4{scroll-margin-top:84px;color:#f3f8ff}.document h2{margin-top:2.1em;padding-top:.35em;border-top:1px solid var(--line);font:750 32px/1.15 Inter,ui-sans-serif,system-ui,sans-serif}.document h3{margin-top:1.7em;color:#c4b5fd}.document p,.document li{color:#c7d0da}.document blockquote{margin:1.3em 0;padding:13px 18px;border-left:4px solid var(--violet);background:rgba(188,140,255,.08);color:#e1d9ef}.document code{color:#7dd3fc;background:rgba(88,166,255,.1);padding:.12em .3em;border-radius:4px}.document pre{overflow:auto;padding:17px;border:1px solid #30363d;border-radius:11px;background:#090d12}.document pre code{padding:0;background:none}.document table{display:block;max-width:100%;overflow:auto;border-collapse:collapse}.document th,.document td{padding:10px 12px;border:1px solid var(--line);text-align:left;vertical-align:top}.document th{color:#ede9fe;background:#211a33}.document img{max-width:100%;height:auto;border-radius:10px}.document hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+.catalog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.card b,.card small{display:block}.card small{margin-top:5px;color:var(--muted)}.card a{text-decoration:none}
+.diagram-layout{width:min(1500px,calc(100% - 28px));margin:20px auto 45px}.diagram-shell{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:rgba(22,27,34,.94)}.diagram-head{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 17px;border-bottom:1px solid var(--line)}.diagram-head h1{margin:0;font:800 clamp(22px,3vw,36px) Inter,ui-sans-serif,system-ui,sans-serif}.tabs{display:flex;gap:7px;overflow:auto;padding:12px 14px;border-bottom:1px solid var(--line)}.tab{white-space:nowrap;padding:8px 11px;border:1px solid var(--line);border-radius:8px;color:var(--muted);background:#111827;cursor:pointer}.tab.active{color:#fff;border-color:var(--violet);background:linear-gradient(135deg,var(--violet),#7c3aed);font-weight:900}.toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line)}.toolbar button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;color:var(--text);background:#1c2333;cursor:pointer}.canvas{overflow:auto;min-height:72vh;padding:22px;background:#e8edf4}.canvas img{display:block;width:100%;max-width:none;height:auto;margin:auto;filter:drop-shadow(0 10px 22px rgba(20,50,64,.18));transform-origin:top left}
+.caption{padding:10px 15px;color:var(--muted);font-size:11px}.empty{padding:40px;text-align:center;color:var(--muted)}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:relative;top:auto;max-height:none}.catalog{grid-template-columns:1fr 1fr}}@media(max-width:620px){.actions{display:none}.catalog{grid-template-columns:1fr}.document{padding:22px 17px}.diagram-head{align-items:flex-start;flex-direction:column}.canvas{padding:8px}}
+@media print{.top,.toc,.toolbar,.tabs{display:none}.layout,.diagram-layout{display:block;width:100%;margin:0}.document,.diagram-shell{border:0;box-shadow:none}.canvas{overflow:visible;padding:0;background:white}.canvas img{width:100%!important;transform:none!important}}
+</style></head>
+<body><header class="top"><a class="brand" href="/"><img class="mark" src="/logo.svg" alt="BrainzBytes"><span><b>BrainzBytes · ContextWeaver</b><small>Rendered document</small></span></a><div class="actions"><a class="button" href="/">BrainzBytes home</a><a class="button primary" href="/docs/">Documentation home</a><a class="button" href="../content/governed-rag-ingestion.md">View source</a></div></header>
+<main class="layout"><aside class="toc"><h2>On this page</h2><ul><li class="level-1"><a href="#governed-fresh-and-version-safe-rag">Governed, Fresh, and Version-Safe RAG</a></li><li class="level-2"><a href="#1-non-negotiable-outcomes">1. Non-negotiable outcomes</a></li><li class="level-2"><a href="#2-service-boundaries">2. Service boundaries</a></li><li class="level-2"><a href="#3-source-registration">3. Source registration</a></li><li class="level-2"><a href="#4-freshness-ledger">4. Freshness ledger</a></li><li class="level-2"><a href="#5-ingestion-admission">5. Ingestion admission</a></li><li class="level-2"><a href="#6-atomic-index-publication">6. Atomic index publication</a></li><li class="level-2"><a href="#7-precedence">7. Precedence</a></li><li class="level-2"><a href="#8-effective-retrieval-plan">8. Effective Retrieval Plan</a></li><li class="level-2"><a href="#9-seamless-service-upgrades-and-downgrades">9. Seamless service upgrades and downgrades</a></li><li class="level-3"><a href="#upgrade">Upgrade</a></li><li class="level-3"><a href="#multi-service-release">Multi-service release</a></li><li class="level-3"><a href="#downgrade">Downgrade</a></li><li class="level-2"><a href="#10-cross-vertical-controls">10. Cross-vertical controls</a></li><li class="level-2"><a href="#11-current-implementation">11. Current implementation</a></li></ul></aside><article class="document"><h1 id="governed-fresh-and-version-safe-rag">Governed, Fresh, and Version-Safe RAG <a href="#governed-fresh-and-version-safe-rag" aria-label="Permalink">#</a></h1>
+<p><strong>Publication date:</strong> September 18, 2026 <strong>Status:</strong> Source Catalog and ingestion contract foundation implemented locally</p>
+<h2 id="1-non-negotiable-outcomes">1. Non-negotiable outcomes <a href="#1-non-negotiable-outcomes" aria-label="Permalink">#</a></h2>
+<ol>
+<li>Documents remain in storage owned by a user, group, or organization.</li>
+<li>ContextWeaver receives delegated, least-privilege access by reference.</li>
+<li>Raw document bodies, secrets, and connector credentials are not accepted by</li>
+<p>the Source Catalog or ingestion control APIs.</p>
+<li>Event-driven change detection is always paired with periodic</li>
+<p>reconciliation.</p>
+<li>A changed, deleted, revoked, quarantined, or legal-hold source is immediately</li>
+<p>ineligible for retrieval.</p>
+<li>A new index generation becomes queryable only after complete validation and</li>
+<p>an atomic alias switch.</p>
+<li>Active workflow runs pin exact service, contract, policy, source, index,</li>
+<p>extractor, chunker, embedding, and reranker versions.</p>
+<li>Upgrades and safe downgrades run old and new service versions concurrently</li>
+<p>without interrupting active requests or ingestion jobs.</p>
+</ol>
+<p>Absolute zero propagation delay is not achievable in a distributed system. The enforceable guarantee is stronger and measurable: <strong>known-stale data is never returned</strong>. A policy-sensitive query fails closed, waits for publication, or uses an approved authoritative direct lookup when its source revision is newer than the active index generation.</p>
+<h2 id="2-service-boundaries">2. Service boundaries <a href="#2-service-boundaries" aria-label="Permalink">#</a></h2>
+<pre><code class="language-text">User / Group / Organization Storage
+  -&gt; delegated read-only connector
+  -&gt; Source Catalog + Freshness Ledger
+  -&gt; change event and periodic reconciler
+  -&gt; ingestion admission and security scans
+  -&gt; immutable artifact reference
+  -&gt; extraction / chunking / embeddings
+  -&gt; shadow index generation
+  -&gt; validation and compatibility gate
+  -&gt; atomic logical-alias publication
+  -&gt; authorization-first retrieval
+  -&gt; ContextPack + CitationManifest</code></pre>
+<table><thead><tr><th>Component</th><th>Responsibility</th></tr></thead><tbody><tr><td><code>cw-source-catalog</code></td><td>Ownership, authority, allowed purpose, storage/credential references, ACL revision, classification, residency, retention, lineage, tombstones, and index freshness</td></tr><tr><td><code>cw-rag-ingestion</code></td><td>Event/reconcile scheduling, security admission, version-pinned processing, shadow index construction, validation, atomic publication, retirement, and deletion</td></tr><tr><td><code>cw-artifact-gateway</code></td><td>Immutable normalized content bodies and hashes</td></tr><tr><td><code>cw-policy-decision-service</code></td><td>Source registration, ingestion, publication, retrieval, export, correction, and deletion decisions</td></tr><tr><td><code>cw-model-gateway</code></td><td>Approved embedding/reranker/model aliases and provider controls</td></tr><tr><td><code>cw-rag-retrieval</code></td><td>Effective Retrieval Plan, query-time ACLs, precedence, conflict handling, and freshness enforcement</td></tr><tr><td><code>cw-context-citation</code></td><td>ContextPack, CitationManifest, source revision, and lineage evidence</td></tr><tr><td><code>cw-context-memory</code></td><td>Policy-bound continuity; never a replacement for authoritative source storage</td></tr><tr><td><code>cw-audit-service</code></td><td>Immutable decision, access, publication, revocation, deletion, and release evidence</td></tr></tbody></table>
+<h2 id="3-source-registration">3. Source registration <a href="#3-source-registration" aria-label="Permalink">#</a></h2>
+<p>Every source is registered before ingestion:</p>
+<pre><code class="language-yaml">source:
+  sourceId: source://tenant-a/user-a/documents
+  tenantId: tenant-a
+  ownerScope: user
+  ownerId: user-a
+  authorityClass: owner_original
+  connectorType: s3-compatible
+  storageLocationRef: storage://user-a/documents
+  credentialRef: secret://delegated/source-reader/user-a
+  allowedPurposes: [personal_research]
+  classification: confidential
+  retentionPolicyRef: retention://user-content
+  residency: us
+  changeDetection:
+    mode: event_and_reconcile
+    maximumSourceLagSeconds: 60</code></pre>
+<p>Ownership and authority are different. A user may own a document without it being authoritative company policy. A system of record may be authoritative without permitting arbitrary AI use. Storage ownership never grants access by itself.</p>
+<h2 id="4-freshness-ledger">4. Freshness ledger <a href="#4-freshness-ledger" aria-label="Permalink">#</a></h2>
+<p>The Source Catalog records:</p>
+<pre><code class="language-yaml">freshness:
+  sourceRevision: etag-482
+  sourceHash: sha256-source
+  aclSnapshotHash: sha256-acl
+  observedAt: 2026-09-18T17:30:00Z
+  indexedRevision: etag-482
+  indexGeneration: rag-user-a-000184
+  embeddingModelVersion: embedding-v4
+  chunkerVersion: semantic-chunker-v3
+  publishedAt: 2026-09-18T17:30:38Z
+  state: current</code></pre>
+<p>Queryable state requires all of the following:</p>
+<pre><code class="language-text">state == current
+AND sourceRevision == indexedRevision
+AND current ACL decision permits the caller and purpose
+AND generation/schema/model versions are allowed by the Retrieval Plan
+AND no revocation, deletion, quarantine, or legal-hold tombstone applies</code></pre>
+<p>Events minimize latency. Full reconciliation detects lost, duplicated, out-of-order, or unsupported source events. Reconciliation compares stable source IDs, revisions, hashes, ACL snapshots, classification, retention, and deletion state.</p>
+<h2 id="5-ingestion-admission">5. Ingestion admission <a href="#5-ingestion-admission" aria-label="Permalink">#</a></h2>
+<p>The shared admission pipeline performs:</p>
+<ol>
+<li>Connector identity and source authorization.</li>
+<li>File type, size, archive-depth, parser, and decompression limits.</li>
+<li>Malware scanning.</li>
+<li>Classification and DLP.</li>
+<li>Secrets, PII, PHI, PCI, export-controlled, and regulated-data detection.</li>
+<li>Hidden text, invisible instructions, and prompt-injection scanning.</li>
+<li>Poisoning, anomaly, duplication, and source-trust evaluation.</li>
+<li>Copyright, licensing, consent, and allowed-use validation.</li>
+<li>Immutable artifact commit.</li>
+<li>Version-pinned extraction, chunking, embedding, and index-schema writing.</li>
+<li>ACL, lineage, quality, count, hash, poisoning, and compatibility checks.</li>
+<li>Atomic publication or quarantine.</li>
+</ol>
+<p>Vectors, lexical indexes, extracted entities, summaries, caches, and ContextPacks inherit the source classification and lifecycle.</p>
+<h2 id="6-atomic-index-publication">6. Atomic index publication <a href="#6-atomic-index-publication" aria-label="Permalink">#</a></h2>
+<p>The active index is never modified in place for a material revision:</p>
+<pre><code class="language-text">active alias -&gt; generation N
+
+build generation N+1 in isolation
+  -&gt; validate counts and hashes
+  -&gt; validate ACL filters and lineage
+  -&gt; validate quality and poisoning thresholds
+  -&gt; validate mixed-version readers
+  -&gt; validate rollback readability
+
+atomic alias switch:
+active alias -&gt; generation N+1
+
+retain generation N as bounded rollback generation</code></pre>
+<p>Deletion and access revocation do not wait for physical index cleanup. The query-time policy boundary denies the source immediately, then the deletion workflow removes chunks, vectors, lexical entries, caches, memory references, ContextPacks, reports, evaluation sets, and expired backups.</p>
+<h2 id="7-precedence">7. Precedence <a href="#7-precedence" aria-label="Permalink">#</a></h2>
+<p>There is no universal <code>organization &gt; group &gt; user</code> rule.</p>
+<table><thead><tr><th>Dimension</th><th>Rule</th></tr></thead><tbody><tr><td>Authorization</td><td>Explicit deny and missing purpose authorization win</td></tr><tr><td>Mandatory policy</td><td>Applicable regulatory and organization obligations cannot be removed</td></tr><tr><td>Content authority</td><td>The designated owner or system of record wins for its facts</td></tr><tr><td>Personalization</td><td>User preferences may override defaults when no obligation conflicts</td></tr><tr><td>Classification</td><td>The most restrictive applicable handling requirement wins</td></tr><tr><td>Retention</td><td>Legal hold wins; otherwise the approved governing retention policy applies</td></tr><tr><td>Residency</td><td>The most restrictive applicable location rule wins</td></tr><tr><td>Workflow policy</td><td>A workflow may narrow authority but never expand it</td></tr><tr><td>Ranking</td><td>Preferences affect only already-authorized candidates</td></tr></tbody></table>
+<p>Governance determines eligibility, mandatory evidence, exclusions, authority floors, freshness, retention, residency, disclosure, and citations. Application policy determines ranking, weights, context budget, task relevance, and presentation only after governance.</p>
+<h2 id="8-effective-retrieval-plan">8. Effective Retrieval Plan <a href="#8-effective-retrieval-plan" aria-label="Permalink">#</a></h2>
+<p>Every query compiles an immutable plan:</p>
+<pre><code class="language-yaml">effectiveRetrievalPlan:
+  tenantId: tenant-a
+  principalId: user-a
+  purpose: travel_booking
+  workflowRef: workflow://travel/4.1.0
+  mandatorySources:
+    - sourceRef: source://company/travel-policy
+      authority: policy
+      maximumAgeSeconds: 0
+  eligibleSources:
+    - scope: user
+      purpose: travel_preferences
+      weight: 1.0
+    - scope: group
+      groupId: engineering
+      weight: 0.6
+  conflictResolution:
+    policyObligation: organization_authoritative
+    personalPreference: user_authoritative
+    factualRecord: designated_system_of_record
+    unresolvedConflict: return_both_with_citations
+  controls:
+    authorizationBeforeSimilarity: true
+    currentRevisionRequired: true
+    citationsRequired: true
+    rawContentLogging: prohibited</code></pre>
+<p>The complete plan and its source/index/policy/model versions become part of the workflow evidence.</p>
+<h2 id="9-seamless-service-upgrades-and-downgrades">9. Seamless service upgrades and downgrades <a href="#9-seamless-service-upgrades-and-downgrades" aria-label="Permalink">#</a></h2>
+<p>Every deployable service version is immutable. Stable logical aliases route new work; active work remains pinned to its resolved version.</p>
+<h3 id="upgrade">Upgrade <a href="#upgrade" aria-label="Permalink">#</a></h3>
+<ol>
+<li>Register the new service and contract versions as <code>candidate</code>.</li>
+<li>Prove backward compatibility or register explicit adapters.</li>
+<li>Use expand-only database migrations.</li>
+<li>Start new replicas while old replicas remain ready.</li>
+<li>Send synthetic, shadow, then canary traffic to the new version.</li>
+<li>Allow old and new workers to finish version-pinned jobs.</li>
+<li>Atomically promote the service alias for new work.</li>
+<li>Drain old replicas only after active runs and queues reach zero.</li>
+<li>Retain the prior service and index generation for the rollback window.</li>
+<li>Perform contract cleanup only after no supported reader requires old data.</li>
+</ol>
+<p>Kubernetes deployments use:</p>
+<pre><code class="language-yaml">strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1</code></pre>
+<p>At least two replicas, readiness/startup probes, graceful termination, PodDisruptionBudgets, topology spread, and shared durable state are required for production zero-downtime claims.</p>
+<h3 id="multi-service-release">Multi-service release <a href="#multi-service-release" aria-label="Permalink">#</a></h3>
+<p>A release bundle contains the compatibility graph for all upgraded services. Dependencies are expanded first, compatible versions overlap, and logical aliases are promoted as one governed release decision. Existing workflow plans continue using their pinned versions. New plans see the promoted version set.</p>
+<h3 id="downgrade">Downgrade <a href="#downgrade" aria-label="Permalink">#</a></h3>
+<p>Downgrade is allowed only when:</p>
+<ul>
+<li>the previous binary understands the current stored schema;</li>
+<li>destructive contract/data migrations have not occurred;</li>
+<li>the previous index generation remains available and authorized;</li>
+<li>active work does not depend on new-only fields or behavior;</li>
+<li>compensation or forward migration exists for new side effects.</li>
+</ul>
+<p>If any condition fails, the safe response is a forward fix, not a forced downgrade.</p>
+<h2 id="10-cross-vertical-controls">10. Cross-vertical controls <a href="#10-cross-vertical-controls" aria-label="Permalink">#</a></h2>
+<ul>
+<li>Temporal truth with <code>effectiveFrom</code>, <code>effectiveUntil</code>, and supersession.</li>
+<li>Immediate ACL and consent revocation.</li>
+<li>Legal hold without automatic retrieval access.</li>
+<li>Field/document lineage and correction.</li>
+<li>Data residency and cryptographic isolation.</li>
+<li>Multimodal OCR/audio/image confidence.</li>
+<li>Human stewardship and dispute handling.</li>
+<li>Model, parser, chunker, tokenizer, and index-schema drift.</li>
+<li>Evaluation for retrieval quality, conflict handling, poisoning, leakage,</li>
+<p>citations, deletion, and freshness.</p>
+<li>Reproducible disaster recovery: indexes are disposable projections rebuilt</li>
+<p>from authoritative sources and the lineage ledger.</p>
+</ul>
+<h2 id="11-current-implementation">11. Current implementation <a href="#11-current-implementation" aria-label="Permalink">#</a></h2>
+<p>Implemented:</p>
+<ul>
+<li><code>cw-source-catalog</code> repository, contracts, SQLite development adapter,</li>
+<p>PostgreSQL production adapter, migrations, tests, container, and Helm chart;</p>
+<li>source registration, revision observation, exact-revision publication,</li>
+<p>quarantine, revocation, deletion, legal hold, and freshness states;</p>
+<li><code>cw-rag-ingestion</code> reference-only contracts, version-pinned job receipts,</li>
+<p>freshness checks, required publication validation, shadow/atomic generation receipts, rollback generation, tests, container, and zero-unavailable rollout settings.</p>
+</ul>
+<p>Still required:</p>
+<ul>
+<li>real storage connectors and event adapters;</li>
+<li>recurring reconciliation workers;</li>
+<li>malware/DLP/poisoning integrations;</li>
+<li>artifact, embedding, search/vector, and deletion adapters;</li>
+<li>Effective Retrieval Plan implementation in <code>cw-rag-retrieval</code>;</li>
+<li>release-bundle and compatibility orchestration in registry/GitOps.</li>
+</ul>
+<p>The registry now exposes <code>POST /v1/releases/validate</code> as the first compatibility gate. It rejects release bundles with dependency cycles, non-backward-compatible contracts, unsafe mixed versions, fewer than two replicas, nonzero unavailable capacity, missing graceful drain or pinned-work support, non-expand/migrate/contract data changes, or unreadable rollback artifacts. Downgrades additionally require the previous reader and index generation to remain usable. Persistence and atomic promotion of approved release bundles remain to be added.</p></article></main></body></html>

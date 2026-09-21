@@ -128,9 +128,18 @@
   .ladder-detail .ld-path{font-family:'Cascadia Code','Consolas',monospace;font-size:.7rem;color:rgba(255,255,255,0.5);margin-bottom:.3rem}
   .ladder-detail .ld-ref{font-family:'Cascadia Code','Consolas',monospace;font-size:.73rem;color:#2ea867;margin-bottom:.35rem}
   .ladder-detail .ld-note{line-height:1.55}
+  .brandbar{max-width:1180px;margin:0 auto 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem 1rem;border:1px solid rgba(188,140,255,.28);border-radius:14px;background:linear-gradient(135deg,rgba(188,140,255,.1),rgba(88,166,255,.07))}
+  .brandbar .brand{display:flex;align-items:center;gap:.7rem;color:#e6edf3;text-decoration:none;font-weight:800}.brandbar img{width:42px;height:42px}.brandbar small{display:block;color:rgba(255,255,255,.45);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase}
+  .brandbar .docs{padding:8px 13px;border-radius:9px;background:linear-gradient(135deg,#bc8cff,#7c3aed);color:#fff;text-decoration:none;font-size:.75rem;font-weight:800}
+  .status-note{max-width:940px;margin:0 auto 1.2rem;padding:.7rem 1rem;border:1px solid rgba(188,140,255,.25);border-radius:10px;background:rgba(188,140,255,.07);color:rgba(255,255,255,.62);font-size:.76rem;line-height:1.5;text-align:center}.status-note a{color:#bc8cff;font-weight:800}
 </style>
 </head>
 <body>
+
+<div class="brandbar">
+  <a class="brand" href="index.html"><img src="logo.svg" alt="BrainzBytes"><span>BrainzBytes<small>ContextWeaver runtime reference</small></span></a>
+  <a class="docs" href="docs/index.html">Architecture Documentation</a>
+</div>
 
 <div class="nav">
   <a class="n1" href="code-structure-diagram.html">🗂️ Source Structure</a>
@@ -144,6 +153,7 @@
 
 <h1>🔀 How It Works — Runtime Call Flows</h1>
 <p class="subtitle">ContextWeaver ships as a <b>generic platform</b>. These are the <b>actual step-by-step sequences</b> behind every capability, traced through <code>app.py</code>, <code>agent.py</code>, and the governance modules — each step names the real function and <code>file:line</code>. 🛡️ marks a security / policy checkpoint.</p>
+<div class="status-note"><b>Implementation reference:</b> this diagram explains the current codebase. For the normative production architecture and explicit implementation status, use the <a href="docs/index.html">public documentation portal</a>.</div>
 <div class="slate-banner">🌱 <b>Clean-slate by design:</b> a fresh customer deployment starts <b>empty</b> — no plugins, no MCP engines, no workflows. Start with <b>🚀 Getting Started</b> to see how you build from zero; every other tab shows how that piece works at runtime.</div>
 
 <div class="legend" id="legend"></div>

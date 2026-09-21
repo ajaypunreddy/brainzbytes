@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Durable Microservice Resilience and Cross-Pod Work Recovery"><title>Durable Microservice Resilience and Cross-Pod Work Recovery | BrainzBytes ContextWeaver</title><link rel="icon" type="image/svg+xml" href="/logo.svg"><style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2333;--line:rgba(255,255,255,.1);--text:#e6edf3;--muted:#8b949e;--cyan:#58a6ff;--blue:#58a6ff;--violet:#bc8cff;--green:#34d399;--amber:#fbbf24;--rose:#fb7185}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 12% 8%,rgba(88,166,255,.11) 0,transparent 34%),radial-gradient(circle at 88% 18%,rgba(188,140,255,.13) 0,transparent 30%),var(--bg);color:var(--text);font:15px/1.68 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--cyan)}.top{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px max(18px,calc((100vw - 1420px)/2));border-bottom:1px solid var(--line);background:rgba(13,17,23,.94);backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}.mark{display:block;width:40px;height:40px}.brand b,.brand small{display:block}.brand small{color:var(--muted);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.actions{display:flex;flex-wrap:wrap;gap:7px}.button{padding:7px 10px;border:1px solid var(--line);border-radius:8px;color:var(--text);background:rgba(255,255,255,.04);font-size:11px;font-weight:800;text-decoration:none}.button.primary{color:#fff;background:linear-gradient(135deg,var(--violet),#7c3aed);border-color:var(--violet)}
+.layout{display:grid;grid-template-columns:275px minmax(0,1fr);gap:22px;width:min(1420px,calc(100% - 28px));margin:22px auto 50px}.toc{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:18px;border:1px solid var(--line);border-radius:15px;background:rgba(12,29,48,.86)}.toc h2{margin:0 0 12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase}.toc ul{margin:0;padding-left:17px}.toc li{margin:5px 0;color:var(--muted);font-size:11px}.toc a{color:inherit;text-decoration:none}.toc a:hover{color:var(--cyan)}
+.document{min-width:0;padding:clamp(24px,4vw,55px);border:1px solid var(--line);border-radius:20px;background:rgba(22,27,34,.92);box-shadow:0 22px 70px rgba(0,0,0,.25)}.document>h1:first-child{margin-top:0;font:800 clamp(34px,5vw,64px)/1.02 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.045em;background:linear-gradient(135deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}.document h1,.document h2,.document h3,.document h4{scroll-margin-top:84px;color:#f3f8ff}.document h2{margin-top:2.1em;padding-top:.35em;border-top:1px solid var(--line);font:750 32px/1.15 Inter,ui-sans-serif,system-ui,sans-serif}.document h3{margin-top:1.7em;color:#c4b5fd}.document p,.document li{color:#c7d0da}.document blockquote{margin:1.3em 0;padding:13px 18px;border-left:4px solid var(--violet);background:rgba(188,140,255,.08);color:#e1d9ef}.document code{color:#7dd3fc;background:rgba(88,166,255,.1);padding:.12em .3em;border-radius:4px}.document pre{overflow:auto;padding:17px;border:1px solid #30363d;border-radius:11px;background:#090d12}.document pre code{padding:0;background:none}.document table{display:block;max-width:100%;overflow:auto;border-collapse:collapse}.document th,.document td{padding:10px 12px;border:1px solid var(--line);text-align:left;vertical-align:top}.document th{color:#ede9fe;background:#211a33}.document img{max-width:100%;height:auto;border-radius:10px}.document hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+.catalog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.card b,.card small{display:block}.card small{margin-top:5px;color:var(--muted)}.card a{text-decoration:none}
+.diagram-layout{width:min(1500px,calc(100% - 28px));margin:20px auto 45px}.diagram-shell{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:rgba(22,27,34,.94)}.diagram-head{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 17px;border-bottom:1px solid var(--line)}.diagram-head h1{margin:0;font:800 clamp(22px,3vw,36px) Inter,ui-sans-serif,system-ui,sans-serif}.tabs{display:flex;gap:7px;overflow:auto;padding:12px 14px;border-bottom:1px solid var(--line)}.tab{white-space:nowrap;padding:8px 11px;border:1px solid var(--line);border-radius:8px;color:var(--muted);background:#111827;cursor:pointer}.tab.active{color:#fff;border-color:var(--violet);background:linear-gradient(135deg,var(--violet),#7c3aed);font-weight:900}.toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line)}.toolbar button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;color:var(--text);background:#1c2333;cursor:pointer}.canvas{overflow:auto;min-height:72vh;padding:22px;background:#e8edf4}.canvas img{display:block;width:100%;max-width:none;height:auto;margin:auto;filter:drop-shadow(0 10px 22px rgba(20,50,64,.18));transform-origin:top left}
+.caption{padding:10px 15px;color:var(--muted);font-size:11px}.empty{padding:40px;text-align:center;color:var(--muted)}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:relative;top:auto;max-height:none}.catalog{grid-template-columns:1fr 1fr}}@media(max-width:620px){.actions{display:none}.catalog{grid-template-columns:1fr}.document{padding:22px 17px}.diagram-head{align-items:flex-start;flex-direction:column}.canvas{padding:8px}}
+@media print{.top,.toc,.toolbar,.tabs{display:none}.layout,.diagram-layout{display:block;width:100%;margin:0}.document,.diagram-shell{border:0;box-shadow:none}.canvas{overflow:visible;padding:0;background:white}.canvas img{width:100%!important;transform:none!important}}
+</style></head>
+<body><header class="top"><a class="brand" href="/"><img class="mark" src="/logo.svg" alt="BrainzBytes"><span><b>BrainzBytes · ContextWeaver</b><small>Rendered document</small></span></a><div class="actions"><a class="button" href="/">BrainzBytes home</a><a class="button primary" href="/docs/">Documentation home</a><a class="button" href="../content/durable-microservice-resilience.md">View source</a></div></header>
+<main class="layout"><aside class="toc"><h2>On this page</h2><ul><li class="level-1"><a href="#durable-microservice-resilience-and-cross-pod-work-recovery">Durable Microservice Resilience and Cross-Pod Work Recovery</a></li><li class="level-2"><a href="#executive-invariant">Executive invariant</a></li><li class="level-2"><a href="#recovery-sequence">Recovery sequence</a></li><li class="level-2"><a href="#failure-recovery-matrix">Failure recovery matrix</a></li><li class="level-2"><a href="#mandatory-service-classes">Mandatory service classes</a></li><li class="level-3"><a href="#stateless-request-services">Stateless request services</a></li><li class="level-3"><a href="#durable-asynchronous-workers">Durable asynchronous workers</a></li><li class="level-3"><a href="#workflow-coordinators">Workflow coordinators</a></li><li class="level-3"><a href="#schedulers-and-controllers">Schedulers and controllers</a></li><li class="level-3"><a href="#rag-ingestion">RAG ingestion</a></li><li class="level-3"><a href="#mcp-and-irreversible-side-effects">MCP and irreversible side effects</a></li><li class="level-2"><a href="#graceful-shutdown-protocol">Graceful shutdown protocol</a></li><li class="level-2"><a href="#kubernetes-availability-profile">Kubernetes availability profile</a></li><li class="level-2"><a href="#durable-dependency-requirements">Durable dependency requirements</a></li><li class="level-2"><a href="#required-resilience-tests">Required resilience tests</a></li><li class="level-2"><a href="#observability-and-slo-evidence">Observability and SLO evidence</a></li><li class="level-2"><a href="#current-implementation-status">Current implementation status</a></li></ul></aside><article class="document"><h1 id="durable-microservice-resilience-and-cross-pod-work-recovery">Durable Microservice Resilience and Cross-Pod Work Recovery <a href="#durable-microservice-resilience-and-cross-pod-work-recovery" aria-label="Permalink">#</a></h1>
+<p><strong>Specification date:</strong> September 21, 2026 <strong>Status:</strong> Normative architecture; partially implemented</p>
+<h2 id="executive-invariant">Executive invariant <a href="#executive-invariant" aria-label="Permalink">#</a></h2>
+<p>Every ContextWeaver microservice must remain available through ordinary pod, node, deployment, and dependency failures. Any accepted unit of work must be recoverable by another healthy replica without depending on the failed pod's memory or local filesystem.</p>
+<p>Kubernetes restores compute. It does not restore in-memory work. Durable work recovery therefore requires:</p>
+<ul>
+<li>PostgreSQL as the authoritative run, task, lease, checkpoint, timer, inbox,</li>
+<p>outbox, receipt, and Saga state store;</p>
+<li>RabbitMQ durable quorum queues for commands and events;</li>
+<li>manual acknowledgement only after durable state transition;</li>
+<li>renewable ownership leases and heartbeats;</li>
+<li>idempotency and inbox deduplication;</li>
+<li>immutable execution plans and version-pinned inputs;</li>
+<li>externally visible side-effect receipts and compensation definitions; and</li>
+<li>no authoritative state on pod-local filesystems or in-process caches.</li>
+</ul>
+<h2 id="recovery-sequence">Recovery sequence <a href="#recovery-sequence" aria-label="Permalink">#</a></h2>
+<pre><code class="language-text">Client or upstream service
+        |
+        v
+API replica validates identity, policy, schema, and idempotency key
+        |
+        v
+PostgreSQL transaction
+  - creates run/task
+  - records immutable input and plan references
+  - writes outbox event
+        |
+        v
+Outbox publisher -&gt; RabbitMQ durable quorum queue
+                         |
+                  competing consumers
+                         |
+                  Pod A claims lease
+                         |
+                 checkpoints progress
+                         |
+                    Pod A fails
+                         |
+       message remains unacknowledged or lease expires
+                         |
+            RabbitMQ redelivery / coordinator reclaim
+                         |
+                  Pod B claims task
+                         |
+        loads plan, checkpoint, receipts, and policy epoch
+                         |
+           resumes or safely replays idempotently
+                         |
+        commits result, receipt, and next outbox event
+                         |
+                 acknowledges message</code></pre>
+<p>The consumer must never acknowledge a message merely because execution started. It acknowledges only after the corresponding result or failure state has been committed durably.</p>
+<h2 id="failure-recovery-matrix">Failure recovery matrix <a href="#failure-recovery-matrix" aria-label="Permalink">#</a></h2>
+<table><thead><tr><th>Failure point</th><th>Required recovery</th></tr></thead><tbody><tr><td>Pod fails before the request transaction commits</td><td>No work is accepted. The caller retries with the same idempotency key.</td></tr><tr><td>Task commits but event publication fails</td><td>A transactional outbox publisher discovers and publishes the pending event.</td></tr><tr><td>Worker receives a command and dies before completion</td><td>RabbitMQ redelivers the unacknowledged command.</td></tr><tr><td>Worker becomes unreachable while retaining an assignment</td><td>Its renewable PostgreSQL lease expires and another replica claims the task.</td></tr><tr><td>Worker checkpoints and then fails</td><td>The replacement loads the latest compatible checkpoint and continues from the next safe boundary.</td></tr><tr><td>External action succeeds but the worker dies before completion is recorded</td><td>The replacement uses the same idempotency key or reconciles the provider receipt instead of repeating the action blindly.</td></tr><tr><td>Result commits but message acknowledgement fails</td><td>Redelivery is absorbed by the inbox/deduplication record and returns the existing result.</td></tr><tr><td>Scheduler or timer pod fails</td><td>Another scheduler replica claims expired timer leases from PostgreSQL.</td></tr><tr><td>HITL wait spans deployments or outages</td><td>Approval state, reminders, deadlines, quorum, and authorization references remain durable in PostgreSQL.</td></tr><tr><td>SSE or WebSocket connection fails</td><td>Execution continues independently; the client reconnects from a durable event cursor.</td></tr><tr><td>Node or availability zone fails</td><td>Kubernetes reschedules replicas in another failure domain while PostgreSQL, RabbitMQ, and object storage retain state.</td></tr><tr><td>A new service version rolls out during execution</td><td>Existing runs retain pinned versions; new work uses the promoted alias only after compatibility validation.</td></tr></tbody></table>
+<h2 id="mandatory-service-classes">Mandatory service classes <a href="#mandatory-service-classes" aria-label="Permalink">#</a></h2>
+<h3 id="stateless-request-services">Stateless request services <a href="#stateless-request-services" aria-label="Permalink">#</a></h3>
+<p>API gateways, policy services, registries, catalogs, and synchronous query surfaces must:</p>
+<ul>
+<li>run at least two replicas;</li>
+<li>keep sessions and mutation state outside the pod;</li>
+<li>require idempotency keys for retried mutations;</li>
+<li>expose lightweight startup, readiness, and liveness probes;</li>
+<li>stop accepting traffic before termination; and</li>
+<li>return explicit retryable or terminal errors rather than success-shaped</li>
+<p>fallbacks.</p>
+</ul>
+<p>An interrupted read may be retried. An interrupted write must return or recover the same logical result for the same idempotency key.</p>
+<h3 id="durable-asynchronous-workers">Durable asynchronous workers <a href="#durable-asynchronous-workers" aria-label="Permalink">#</a></h3>
+<p>Ingestion, artifact, notification, evaluation, migration, Agent, and MCP workers must:</p>
+<ul>
+<li>consume from durable queues using competing consumers;</li>
+<li>use manual acknowledgements and publisher confirms;</li>
+<li>persist inbox deduplication before applying a message;</li>
+<li>checkpoint at type-specific safe boundaries;</li>
+<li>apply bounded retries with exponential backoff and jitter;</li>
+<li>route exhausted or invalid work to a classified dead-letter queue; and</li>
+<li>make every externally visible side effect idempotent or compensatable.</li>
+</ul>
+<h3 id="workflow-coordinators">Workflow coordinators <a href="#workflow-coordinators" aria-label="Permalink">#</a></h3>
+<p><code>cw-run-coordinator</code> replicas must coordinate through PostgreSQL, not in-process locks. Atomic claims use row locking or conditional lease updates. The durable state includes:</p>
+<ul>
+<li>run, task, node, attempt, and dependency state;</li>
+<li>ready, running, completed, failed, waiting, and compensating sets;</li>
+<li>immutable plan and registry snapshot hashes;</li>
+<li>owner replica, lease expiry, and heartbeat;</li>
+<li>input, output, error, artifact, and checkpoint references;</li>
+<li>policy, consent, credential, and revocation epochs;</li>
+<li>retry budget, deadline, and next eligible time;</li>
+<li>inbox and outbox identifiers;</li>
+<li>execution and side-effect receipts; and</li>
+<li>Saga compensation progress.</li>
+</ul>
+<h3 id="schedulers-and-controllers">Schedulers and controllers <a href="#schedulers-and-controllers" aria-label="Permalink">#</a></h3>
+<p>Schedulers, reconcilers, and controllers may run multiple replicas, but only one replica owns a specific timer or reconciliation key at a time. Ownership must use a renewable database lease or Kubernetes leader election. A failed leader is replaceable after bounded lease expiry.</p>
+<h3 id="rag-ingestion">RAG ingestion <a href="#rag-ingestion" aria-label="Permalink">#</a></h3>
+<p>RAG ingestion checkpoints deterministic stages such as source fetch, malware scan, extraction, classification, chunking, embedding, validation, shadow generation publication, and alias promotion. A replacement resumes from the last valid stage and never exposes a partially built generation.</p>
+<h3 id="mcp-and-irreversible-side-effects">MCP and irreversible side effects <a href="#mcp-and-irreversible-side-effects" aria-label="Permalink">#</a></h3>
+<p>Side-effecting MCP operations require:</p>
+<ul>
+<li>a stable platform idempotency key;</li>
+<li>immutable request hash;</li>
+<li>exact tenant, principal, workflow, run, node, purpose, and operation binding;</li>
+<li>provider request and response receipt;</li>
+<li>reconciliation where provider outcome is uncertain;</li>
+<li>explicit compensation capability where reversal is possible; and</li>
+<li>manual remediation when neither safe replay nor compensation is possible.</li>
+</ul>
+<p>RabbitMQ provides at-least-once delivery. ContextWeaver obtains an effectively-once business outcome through inbox deduplication, idempotent state transitions, provider idempotency, receipts, and reconciliation.</p>
+<h2 id="graceful-shutdown-protocol">Graceful shutdown protocol <a href="#graceful-shutdown-protocol" aria-label="Permalink">#</a></h2>
+<p>On deployment, scaling, eviction, or administrative drain, each workload must:</p>
+<ol>
+<li>fail readiness and stop receiving new HTTP requests;</li>
+<li>stop claiming new queue messages and task leases;</li>
+<li>finish or checkpoint work that can complete within the termination budget;</li>
+<li>negatively acknowledge or release work that cannot finish safely;</li>
+<li>flush outbox, receipt, audit, and telemetry buffers;</li>
+<li>release renewable leases where practical; and</li>
+<li>terminate only after the bounded drain period.</li>
+</ol>
+<p>Abrupt failure remains safe because the same durable recovery rules apply.</p>
+<h2 id="kubernetes-availability-profile">Kubernetes availability profile <a href="#kubernetes-availability-profile" aria-label="Permalink">#</a></h2>
+<p>Production service charts must declare:</p>
+<pre><code class="language-yaml">availability:
+  minimumReplicas: 2
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1
+  podDisruptionBudget:
+    maxUnavailable: 0
+  topologySpread:
+    nodes: required
+    zones: preferred-or-required-by-tier
+  gracefulDrain:
+    enabled: true
+    terminationGracePeriodSeconds: 60
+  probes:
+    startup: required
+    readiness: required
+    liveness: required
+  autoscaling:
+    api: hpa
+    workers: keda-queue-depth</code></pre>
+<p>The production profile also requires immutable images, dependency-aware readiness, anti-affinity or topology spread, resource requests and limits, priority classes where justified, and controlled disruption during node or cluster maintenance.</p>
+<h2 id="durable-dependency-requirements">Durable dependency requirements <a href="#durable-dependency-requirements" aria-label="Permalink">#</a></h2>
+<ul>
+<li>PostgreSQL must be highly available, backed up, point-in-time recoverable,</li>
+<p>and tested through restore exercises.</p>
+<li>RabbitMQ must use durable quorum queues, persistent messages, publisher</li>
+<p>confirms, consumer acknowledgements, retry exchanges, and dead-letter quarantine.</p>
+<li>Object storage must retain immutable artifacts and checkpoints according to</li>
+<p>policy.</p>
+<li>Valkey may accelerate reads, coordination, and rate limits, but it must not</li>
+<p>be the only authoritative record of accepted work.</p>
+<li>Registry, schema, policy, and configuration versions required by an active</li>
+<p>run must remain readable for the run's compatibility window.</p>
+</ul>
+<h2 id="required-resilience-tests">Required resilience tests <a href="#required-resilience-tests" aria-label="Permalink">#</a></h2>
+<p>Every service must pass the tests applicable to its class:</p>
+<ul>
+<li>terminate a worker before, during, and after durable commit;</li>
+<li>terminate a coordinator while a task lease is active;</li>
+<li>deliver the same message more than once;</li>
+<li>interrupt publishing between database commit and broker delivery;</li>
+<li>interrupt acknowledgement after result commit;</li>
+<li>restart during every checkpointable stage;</li>
+<li>lose a node and, for higher tiers, an availability zone;</li>
+<li>restart or fail over PostgreSQL and RabbitMQ;</li>
+<li>delay, duplicate, reorder, and poison messages;</li>
+<li>expire timers and HITL waits during an outage;</li>
+<li>rotate and revoke identity or credentials during retry;</li>
+<li>deploy mixed service versions while runs are active;</li>
+<li>restore from backup and reconcile queued work; and</li>
+<li>prove that no accepted work is silently lost or reported successful twice.</li>
+</ul>
+<h2 id="observability-and-slo-evidence">Observability and SLO evidence <a href="#observability-and-slo-evidence" aria-label="Permalink">#</a></h2>
+<p>Each service publishes:</p>
+<ul>
+<li>request and task rate, success, latency, and saturation;</li>
+<li>queue depth, oldest-message age, redelivery, retry, and DLQ counts;</li>
+<li>active and expired leases;</li>
+<li>checkpoint age and resume count;</li>
+<li>inbox deduplication and idempotency-hit count;</li>
+<li>outbox publication lag;</li>
+<li>side-effect reconciliation and compensation state;</li>
+<li>graceful-drain duration and forced termination count; and</li>
+<li>run-level correlation across API, PostgreSQL, RabbitMQ, Agent, MCP, artifact,</li>
+<p>and finalization spans.</p>
+</ul>
+<p>Alerts must detect stuck leases, outbox lag, queue-age SLO breaches, retry storms, DLQ growth, checkpoint stagnation, lost publisher confirms, compensation failures, and excessive forced pod termination.</p>
+<h2 id="current-implementation-status">Current implementation status <a href="#current-implementation-status" aria-label="Permalink">#</a></h2>
+<p>As of September 21, 2026:</p>
+<ul>
+<li>most service charts default to two replicas and include readiness probes;</li>
+<li>Registry, Source Catalog, and RAG Ingestion include zero-unavailable rolling</li>
+<p>updates, graceful drain, and PodDisruptionBudgets;</p>
+<li>selected services persist state in PostgreSQL;</li>
+<li>Source Catalog and RAG Ingestion have restart-safe local contract</li>
+<p>foundations; and</p>
+<li>release validation requires replica overlap, pinned active work,</li>
+<p>mixed-version safety, graceful drain, and readable rollback data.</p>
+</ul>
+<p>The complete platform-wide guarantee is not implemented yet. Transactional outbox/inbox processing, RabbitMQ task topology, universal task leases, heartbeats, workflow checkpoints, timer recovery, execution receipts, Saga recovery, and cross-pod replay remain part of the durable workflow milestone.</p>
+<p>Until those components and resilience tests are complete, multiple replicas provide service availability but do not by themselves guarantee recovery of every in-flight operation.</p></article></main></body></html>

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Continuous Entitlement and Runtime Authorization"><title>Continuous Entitlement and Runtime Authorization | BrainzBytes ContextWeaver</title><link rel="icon" type="image/svg+xml" href="/logo.svg"><style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2333;--line:rgba(255,255,255,.1);--text:#e6edf3;--muted:#8b949e;--cyan:#58a6ff;--blue:#58a6ff;--violet:#bc8cff;--green:#34d399;--amber:#fbbf24;--rose:#fb7185}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 12% 8%,rgba(88,166,255,.11) 0,transparent 34%),radial-gradient(circle at 88% 18%,rgba(188,140,255,.13) 0,transparent 30%),var(--bg);color:var(--text);font:15px/1.68 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--cyan)}.top{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px max(18px,calc((100vw - 1420px)/2));border-bottom:1px solid var(--line);background:rgba(13,17,23,.94);backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}.mark{display:block;width:40px;height:40px}.brand b,.brand small{display:block}.brand small{color:var(--muted);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.actions{display:flex;flex-wrap:wrap;gap:7px}.button{padding:7px 10px;border:1px solid var(--line);border-radius:8px;color:var(--text);background:rgba(255,255,255,.04);font-size:11px;font-weight:800;text-decoration:none}.button.primary{color:#fff;background:linear-gradient(135deg,var(--violet),#7c3aed);border-color:var(--violet)}
+.layout{display:grid;grid-template-columns:275px minmax(0,1fr);gap:22px;width:min(1420px,calc(100% - 28px));margin:22px auto 50px}.toc{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:18px;border:1px solid var(--line);border-radius:15px;background:rgba(12,29,48,.86)}.toc h2{margin:0 0 12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase}.toc ul{margin:0;padding-left:17px}.toc li{margin:5px 0;color:var(--muted);font-size:11px}.toc a{color:inherit;text-decoration:none}.toc a:hover{color:var(--cyan)}
+.document{min-width:0;padding:clamp(24px,4vw,55px);border:1px solid var(--line);border-radius:20px;background:rgba(22,27,34,.92);box-shadow:0 22px 70px rgba(0,0,0,.25)}.document>h1:first-child{margin-top:0;font:800 clamp(34px,5vw,64px)/1.02 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.045em;background:linear-gradient(135deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}.document h1,.document h2,.document h3,.document h4{scroll-margin-top:84px;color:#f3f8ff}.document h2{margin-top:2.1em;padding-top:.35em;border-top:1px solid var(--line);font:750 32px/1.15 Inter,ui-sans-serif,system-ui,sans-serif}.document h3{margin-top:1.7em;color:#c4b5fd}.document p,.document li{color:#c7d0da}.document blockquote{margin:1.3em 0;padding:13px 18px;border-left:4px solid var(--violet);background:rgba(188,140,255,.08);color:#e1d9ef}.document code{color:#7dd3fc;background:rgba(88,166,255,.1);padding:.12em .3em;border-radius:4px}.document pre{overflow:auto;padding:17px;border:1px solid #30363d;border-radius:11px;background:#090d12}.document pre code{padding:0;background:none}.document table{display:block;max-width:100%;overflow:auto;border-collapse:collapse}.document th,.document td{padding:10px 12px;border:1px solid var(--line);text-align:left;vertical-align:top}.document th{color:#ede9fe;background:#211a33}.document img{max-width:100%;height:auto;border-radius:10px}.document hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+.catalog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.card b,.card small{display:block}.card small{margin-top:5px;color:var(--muted)}.card a{text-decoration:none}
+.diagram-layout{width:min(1500px,calc(100% - 28px));margin:20px auto 45px}.diagram-shell{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:rgba(22,27,34,.94)}.diagram-head{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 17px;border-bottom:1px solid var(--line)}.diagram-head h1{margin:0;font:800 clamp(22px,3vw,36px) Inter,ui-sans-serif,system-ui,sans-serif}.tabs{display:flex;gap:7px;overflow:auto;padding:12px 14px;border-bottom:1px solid var(--line)}.tab{white-space:nowrap;padding:8px 11px;border:1px solid var(--line);border-radius:8px;color:var(--muted);background:#111827;cursor:pointer}.tab.active{color:#fff;border-color:var(--violet);background:linear-gradient(135deg,var(--violet),#7c3aed);font-weight:900}.toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line)}.toolbar button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;color:var(--text);background:#1c2333;cursor:pointer}.canvas{overflow:auto;min-height:72vh;padding:22px;background:#e8edf4}.canvas img{display:block;width:100%;max-width:none;height:auto;margin:auto;filter:drop-shadow(0 10px 22px rgba(20,50,64,.18));transform-origin:top left}
+.caption{padding:10px 15px;color:var(--muted);font-size:11px}.empty{padding:40px;text-align:center;color:var(--muted)}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:relative;top:auto;max-height:none}.catalog{grid-template-columns:1fr 1fr}}@media(max-width:620px){.actions{display:none}.catalog{grid-template-columns:1fr}.document{padding:22px 17px}.diagram-head{align-items:flex-start;flex-direction:column}.canvas{padding:8px}}
+@media print{.top,.toc,.toolbar,.tabs{display:none}.layout,.diagram-layout{display:block;width:100%;margin:0}.document,.diagram-shell{border:0;box-shadow:none}.canvas{overflow:visible;padding:0;background:white}.canvas img{width:100%!important;transform:none!important}}
+</style></head>
+<body><header class="top"><a class="brand" href="/"><img class="mark" src="/logo.svg" alt="BrainzBytes"><span><b>BrainzBytes · ContextWeaver</b><small>Rendered document</small></span></a><div class="actions"><a class="button" href="/">BrainzBytes home</a><a class="button primary" href="/docs/">Documentation home</a><a class="button" href="../content/continuous-entitlement-enforcement.md">View source</a></div></header>
+<main class="layout"><aside class="toc"><h2>On this page</h2><ul><li class="level-1"><a href="#continuous-entitlement-and-runtime-authorization">Continuous Entitlement and Runtime Authorization</a></li><li class="level-2"><a href="#executive-invariant">Executive invariant</a></li><li class="level-2"><a href="#login-establishes-identity-not-tool-authority">Login establishes identity, not tool authority</a></li><li class="level-2"><a href="#three-authorization-layers">Three authorization layers</a></li><li class="level-2"><a href="#request-time-whole-graph-preflight">Request-time whole-graph preflight</a></li><li class="level-2"><a href="#runtime-per-action-enforcement">Runtime per-action enforcement</a></li><li class="level-2"><a href="#dynamic-branches-and-tool-discovery">Dynamic branches and tool discovery</a></li><li class="level-2"><a href="#reauthorization-triggers">Reauthorization triggers</a></li><li class="level-2"><a href="#decision-and-evidence-model">Decision and evidence model</a></li><li class="level-2"><a href="#failure-behavior">Failure behavior</a></li><li class="level-2"><a href="#enforcement-ownership">Enforcement ownership</a></li><li class="level-2"><a href="#caching-rules">Caching rules</a></li><li class="level-2"><a href="#current-implementation-status">Current implementation status</a></li></ul></aside><article class="document"><h1 id="continuous-entitlement-and-runtime-authorization">Continuous Entitlement and Runtime Authorization <a href="#continuous-entitlement-and-runtime-authorization" aria-label="Permalink">#</a></h1>
+<p><strong>Specification date:</strong> September 21, 2026 <strong>Status:</strong> Normative architecture; implementation pending</p>
+<h2 id="executive-invariant">Executive invariant <a href="#executive-invariant" aria-label="Permalink">#</a></h2>
+<p>Authentication establishes identity. It does not grant ambient authority to run a Service, Workflow, Agent, MCP, tool, model, RAG query, artifact transfer, or disclosure action.</p>
+<p>ContextWeaver authorizes at two mandatory boundaries:</p>
+<ol>
+<li><strong>request-time whole-graph preflight</strong> proves that the principal may start</li>
+<p>the selected Service and its complete reachable execution plan; and</p>
+<li><strong>runtime per-action enforcement</strong> proves that the exact action remains</li>
+<p>authorized immediately before it executes.</p>
+</ol>
+<p>Neither decision replaces the other. Request-time evaluation prevents the platform from creating an unauthorized plan. Runtime evaluation prevents stale authority, dynamic branches, changed arguments, revocation, and confused-deputy behavior from producing an unauthorized side effect.</p>
+<h2 id="login-establishes-identity-not-tool-authority">Login establishes identity, not tool authority <a href="#login-establishes-identity-not-tool-authority" aria-label="Permalink">#</a></h2>
+<p>After login, Identity Context normalizes:</p>
+<ul>
+<li>tenant and principal identifiers;</li>
+<li>groups, roles, relationships, and service assignments;</li>
+<li>authentication method, strength, session, device, and environment;</li>
+<li>consent and declared purpose context;</li>
+<li>identity, entitlement, relationship, policy, and revocation epochs; and</li>
+<li>privacy-safe correlation identifiers.</li>
+</ul>
+<p>The user interface may use a bounded entitlement summary to hide unavailable Services and actions. That summary is an optimization and user-experience control. It is never accepted as an execution authorization decision.</p>
+<h2 id="three-authorization-layers">Three authorization layers <a href="#three-authorization-layers" aria-label="Permalink">#</a></h2>
+<table><thead><tr><th>Layer</th><th>Question</th></tr></thead><tbody><tr><td>Service entitlement</td><td>May this principal use this published Service and Workflow version?</td></tr><tr><td>Capability authorization</td><td>May this plan invoke these Agents, MCPs, tools, models, RAG scopes, fallbacks, and compensation operations?</td></tr><tr><td>Resource/action authorization</td><td>May this exact tool operation act on this exact resource with these arguments, classification, purpose, and risk at this moment?</td></tr></tbody></table>
+<p>A user does not require access to every tool registered on the platform. The user requires access to every mandatory capability reachable by the selected plan, every pre-authorized fallback or compensation capability, and every dynamic capability before that branch is selected.</p>
+<h2 id="request-time-whole-graph-preflight">Request-time whole-graph preflight <a href="#request-time-whole-graph-preflight" aria-label="Permalink">#</a></h2>
+<p>Before creating or dispatching a run:</p>
+<ol>
+<li>API Gateway validates the authenticated session and anti-forgery context.</li>
+<li>Identity Context resolves the canonical tenant, principal, groups, roles,</li>
+<p>relationships, authentication strength, consent, and purpose.</p>
+<li>Entitlement Service validates the selected Service and Workflow.</li>
+<li>Workflow Compiler resolves the versioned DAG and computes the complete</li>
+<p>transitive closure of:</p>
+</ol>
+<ul>
+<li>required nodes;</li>
+<li>optional nodes;</li>
+<li>conditional branches;</li>
+<li>fallback and alternate capabilities;</li>
+<li>compensation operations;</li>
+<li>Agents, MCPs, and exact tool categories;</li>
+<li>RAG sources and logical namespaces;</li>
+<li>model, region, retention, and classification constraints;</li>
+<li>artifacts, field projections, renderers, recipients, and destinations.</li>
+</ul>
+<ol>
+<li>Policy Decision Service evaluates the complete Authorization Manifest.</li>
+<li>A required denial rejects the request before any protected dispatch.</li>
+<li>An optional branch may be removed only when its omission is explicitly</li>
+<p>permitted by schema and policy and the final report remains constructable.</p>
+<li>The compiler freezes an Authorized Immutable Execution Plan.</li>
+</ol>
+<p>The plan records hashes, versions, decision references, permitted capability envelopes, field projections, token constraints, fallback sets, expiry, and revocation epochs. It never stores bearer tokens or credential values.</p>
+<h2 id="runtime-per-action-enforcement">Runtime per-action enforcement <a href="#runtime-per-action-enforcement" aria-label="Permalink">#</a></h2>
+<p>Before every protected node or MCP tool call, Run Coordinator and the applicable policy-enforcement point evaluate:</p>
+<ul>
+<li>tenant, originating principal, delegated workload, workflow, run, and node;</li>
+<li>immutable plan and Authorization Manifest hashes;</li>
+<li>selected Agent, MCP, service, tool, and version;</li>
+<li>exact operation, validated arguments, target resource, and destination;</li>
+<li>read, write, financial, deployment, disclosure, or other side-effect class;</li>
+<li>purpose, classification, residency, consent, relationship, and environment;</li>
+<li>current entitlement, relationship, policy, credential, and revocation</li>
+<p>epochs;</p>
+<li>required HITL approval, separation of duties, and approval expiry;</li>
+<li>rate, concurrency, cost, token, and time budgets; and</li>
+<li>replay, nonce, and idempotency constraints.</li>
+</ul>
+<p>An allow decision produces a short-lived capability token bound to:</p>
+<pre><code class="language-yaml">subject: principal://tenant-a/user-a
+audience: mcp://mcp-sre
+service: service://incident-response/4.1.0
+workflow: workflow://triage/3.2.0
+run: run://01J...
+node: node://query-production-health
+tool: query_geneva
+operations: [read]
+resources: [service://payments]
+purpose: incident-investigation
+planHash: sha256:...
+policyDecisionId: decision://...
+nonce: nonce://...
+expiresAt: 2026-09-21T13:15:00Z</code></pre>
+<p>The token is audience-specific, non-transferable, short-lived, and narrower than the user's overall entitlement. The MCP ingress validates it again and enforces tool schema, operation, resource, and argument constraints. Agents cannot mint, widen, exchange, inspect, or reuse these tokens.</p>
+<h2 id="dynamic-branches-and-tool-discovery">Dynamic branches and tool discovery <a href="#dynamic-branches-and-tool-discovery" aria-label="Permalink">#</a></h2>
+<p>The orchestrator exposes only authorized capability metadata to a planner or model. Discovery itself is authorization-filtered.</p>
+<p>If runtime selection requests a capability outside the frozen envelope:</p>
+<ol>
+<li>pause the run;</li>
+<li>compile a child plan revision;</li>
+<li>rebuild the Authorization Manifest;</li>
+<li>repeat entitlement and policy evaluation;</li>
+<li>require HITL when policy demands it; and</li>
+<li>continue only with a newly signed plan revision linked to the parent hash.</li>
+</ol>
+<p>Model output, prompt text, retrieved content, tool output, or an Agent cannot add a tool, endpoint, scope, recipient, or privilege to the authorized plan.</p>
+<h2 id="reauthorization-triggers">Reauthorization triggers <a href="#reauthorization-triggers" aria-label="Permalink">#</a></h2>
+<p>Runtime authorization is mandatory:</p>
+<ul>
+<li>immediately before every MCP, model, RAG, artifact, and disclosure call;</li>
+<li>after a timer, external wait, or HITL pause;</li>
+<li>after pod recovery, retry, redelivery, or checkpoint resume;</li>
+<li>when a policy, entitlement, relationship, consent, credential, service</li>
+<p>trust, or revocation epoch changes;</p>
+<li>when a fallback, alternate, or compensation path is selected;</li>
+<li>before an irreversible or high-risk action;</li>
+<li>before credential exchange; and</li>
+<li>when the previous decision or capability token expires.</li>
+</ul>
+<p>A hard revocation stops subsequent protected work. Completed actions remain in the immutable audit trail and are reconciled or compensated according to their side-effect contract.</p>
+<h2 id="decision-and-evidence-model">Decision and evidence model <a href="#decision-and-evidence-model" aria-label="Permalink">#</a></h2>
+<p>Every request-time and runtime decision records:</p>
+<ul>
+<li>decision ID and timestamp;</li>
+<li>subject, tenant, workload, workflow, run, and node references;</li>
+<li>action, capability, resource, purpose, classification, and risk;</li>
+<li>policy version and snapshot hash;</li>
+<li>entitlement, relationship, credential, and revocation epochs;</li>
+<li>allow, deny, conditional, or HITL-required result;</li>
+<li>privacy-safe reason and obligation codes;</li>
+<li>plan, manifest, argument, and result hashes where applicable;</li>
+<li>expiry and revalidation deadline; and</li>
+<li>links to approval, execution, provider, compensation, and audit receipts.</li>
+</ul>
+<p>Sensitive data, bearer tokens, credentials, raw authorization headers, and unapproved tool arguments are excluded from decision evidence.</p>
+<h2 id="failure-behavior">Failure behavior <a href="#failure-behavior" aria-label="Permalink">#</a></h2>
+<table><thead><tr><th>Condition</th><th>Required behavior</th></tr></thead><tbody><tr><td>Required capability denied during preflight</td><td>Reject before run creation or protected dispatch</td></tr><tr><td>Optional capability denied</td><td>Prune only when schema and policy explicitly permit omission</td></tr><tr><td>Runtime decision unavailable</td><td>Fail closed for protected work</td></tr><tr><td>Decision expired</td><td>Pause and reauthorize</td></tr><tr><td>Entitlement or policy epoch changed</td><td>Re-evaluate before the next protected node</td></tr><tr><td>MCP rejects capability token</td><td>Record denial and stop, retry, fallback, or compensate according to the plan</td></tr><tr><td>Dynamic tool outside the authorized envelope</td><td>Require a new compiled and authorized plan revision</td></tr><tr><td>User loses access during HITL or timer wait</td><td>Do not resume until current authorization succeeds</td></tr><tr><td>Credential revoked</td><td>Deny exchange and prevent the operation from reaching the external system</td></tr></tbody></table>
+<h2 id="enforcement-ownership">Enforcement ownership <a href="#enforcement-ownership" aria-label="Permalink">#</a></h2>
+<table><thead><tr><th>Component</th><th>Enforcement responsibility</th></tr></thead><tbody><tr><td>Authentication Gateway</td><td>Authenticate the human and maintain the revocable session</td></tr><tr><td>Identity Context</td><td>Normalize tenant, principal, groups, roles, relationships, device, purpose, and epochs</td></tr><tr><td>Entitlement Service</td><td>Resolve Service, Workflow, Agent, MCP, and tool entitlements</td></tr><tr><td>Workflow Compiler</td><td>Build the complete capability closure and Authorization Manifest</td></tr><tr><td>Policy Decision Service</td><td>Evaluate preflight and exact runtime actions</td></tr><tr><td>Run Coordinator</td><td>Require a current decision before dispatch, retry, resume, fallback, or compensation</td></tr><tr><td>Credential Broker</td><td>Mint the minimum short-lived delegated credential without exposing it to the Agent</td></tr><tr><td>Agent/A2A ingress</td><td>Validate node-scoped delegation and plan binding</td></tr><tr><td>MCP discovery and ingress</td><td>Filter visible tools and independently enforce exact calls</td></tr><tr><td>RAG and data gateways</td><td>Apply tenant, ACL, purpose, classification, and row/field predicates in the query</td></tr><tr><td>Model Gateway</td><td>Enforce model, provider, region, retention, training, classification, and projection policy</td></tr><tr><td>Disclosure Gateway</td><td>Authorize fields, renderer, recipient, destination, delivery, and download</td></tr><tr><td>Audit Service</td><td>Preserve privacy-safe decision and execution evidence</td></tr></tbody></table>
+<h2 id="caching-rules">Caching rules <a href="#caching-rules" aria-label="Permalink">#</a></h2>
+<p>Entitlement and policy results may be cached only when:</p>
+<ul>
+<li>the cache key includes tenant, principal, action, resource, purpose,</li>
+<p>classification, environment, policy version, and all applicable epochs;</p>
+<li>the TTL never exceeds the earliest source decision expiry;</li>
+<li>hard revocation invalidates or supersedes the cached result;</li>
+<li>high-risk writes and disclosures use live or near-live evaluation; and</li>
+<li>failure to refresh does not become an implicit allow.</li>
+</ul>
+<h2 id="current-implementation-status">Current implementation status <a href="#current-implementation-status" aria-label="Permalink">#</a></h2>
+<p>The complete model is present in the conceptual architecture, but the runtime services are not yet implemented end to end. <code>cw-entitlement-service</code>, <code>cw-policy-decision-service</code>, <code>cw-workflow-compiler</code>, and <code>cw-run-coordinator</code> currently remain scaffolds.</p>
+<p>The next executable slice must implement:</p>
+<ol>
+<li>persistent identity, group, role, relationship, and entitlement records;</li>
+<li>bulk whole-graph entitlement and policy evaluation;</li>
+<li>deterministic Authorization Manifest generation;</li>
+<li>immutable authorized plan persistence;</li>
+<li>short-lived plan/node/tool-bound capability tokens;</li>
+<li>runtime reauthorization and epoch invalidation;</li>
+<li>MCP ingress token and argument enforcement;</li>
+<li>durable decision receipts and authorization-negative tests; and</li>
+<li>recovery tests proving that resumed work cannot reuse stale authority.</li>
+</ol></article></main></body></html>

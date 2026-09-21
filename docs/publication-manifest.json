@@ -1,0 +1,89 @@
+{
+  "publishedAt": "2026-09-21",
+  "source": "contextweaver-nextgen-docs",
+  "documents": [
+    {
+      "title": "Agent Sandbox Security Intent",
+      "href": "agent-sandbox-security.html",
+      "source": "agent-sandbox-security.md"
+    },
+    {
+      "title": "Azure Production Platform Architecture and End-to-End Proof of Concept",
+      "href": "azure-production-platform-and-poc.html",
+      "source": "azure-production-platform-and-poc.md"
+    },
+    {
+      "title": "Cloud-Neutral Infrastructure and Delivery Design",
+      "href": "cloud-neutral-infrastructure.html",
+      "source": "cloud-neutral-infrastructure.md"
+    },
+    {
+      "title": "Reusable Enterprise Agentic AI Platform Conceptual Design",
+      "href": "conceptual-design.html",
+      "source": "conceptual-design.md"
+    },
+    {
+      "title": "Continuous Entitlement and Runtime Authorization",
+      "href": "continuous-entitlement-enforcement.html",
+      "source": "continuous-entitlement-enforcement.md"
+    },
+    {
+      "title": "Credential Non-Possession and Delegated Authority",
+      "href": "credential-non-possession.html",
+      "source": "credential-non-possession.md"
+    },
+    {
+      "title": "Durable Microservice Resilience and Cross-Pod Work Recovery",
+      "href": "durable-microservice-resilience.html",
+      "source": "durable-microservice-resilience.md"
+    },
+    {
+      "title": "Dynamic Agent and MCP Admission, Deployment, and Discovery",
+      "href": "dynamic-agent-mcp-lifecycle.html",
+      "source": "dynamic-agent-mcp-lifecycle.md"
+    },
+    {
+      "title": "Governed, Fresh, and Version-Safe RAG",
+      "href": "governed-rag-ingestion.html",
+      "source": "governed-rag-ingestion.md"
+    },
+    {
+      "title": "Agent and MCP Observability Standard",
+      "href": "observability-standard.html",
+      "source": "observability-standard.md"
+    },
+    {
+      "title": "ContextWeaver NextGen Parity and Deployment Readiness",
+      "href": "parity-readiness.html",
+      "source": "parity-readiness.md"
+    },
+    {
+      "title": "RAG Storage and Search Infrastructure Readiness",
+      "href": "rag-storage-search-readiness.html",
+      "source": "rag-storage-search-readiness.md"
+    },
+    {
+      "title": "Source Code and End-to-End State Structure",
+      "href": "source-code-structure.html",
+      "source": "source-code-structure.md"
+    },
+    {
+      "title": "A Spec-Driven Platform for AI Services, Governance, and Operations",
+      "href": "spec-driven-ai-platform-whitepaper.html",
+      "source": "spec-driven-ai-platform-whitepaper.md"
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Contextweaver Nextgen Architecture",
+      "href": "contextweaver-nextgen-architecture.html",
+      "source": "contextweaver-nextgen-architecture.drawio",
+      "pages": 11
+    }
+  ],
+  "excludedInternalDocuments": [
+    "contextweaver-nextgen-migration-plan.md",
+    "nextgen-architecture-session.md",
+    "private-azure-deployment.md"
+  ]
+}

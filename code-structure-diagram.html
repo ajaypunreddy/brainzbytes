@@ -73,9 +73,18 @@
   .panel code{background:rgba(255,255,255,0.07);padding:1px 6px;border-radius:5px;font-size:.78rem;color:#a78bfa;font-family:'Cascadia Code',monospace}
   .panel .close{position:absolute;top:.9rem;right:1.1rem;cursor:pointer;color:rgba(255,255,255,0.35);font-size:1.4rem;line-height:1}
   .panel .close:hover{color:#fff}
+  .brandbar{max-width:1180px;margin:0 auto 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem 1rem;border:1px solid rgba(188,140,255,.28);border-radius:14px;background:linear-gradient(135deg,rgba(188,140,255,.1),rgba(88,166,255,.07))}
+  .brandbar .brand{display:flex;align-items:center;gap:.7rem;color:#e6edf3;text-decoration:none;font-weight:800}.brandbar img{width:42px;height:42px}.brandbar small{display:block;color:rgba(255,255,255,.45);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase}
+  .brandbar .docs{padding:8px 13px;border-radius:9px;background:linear-gradient(135deg,#bc8cff,#7c3aed);color:#fff;text-decoration:none;font-size:.75rem;font-weight:800}
+  .status-note{max-width:940px;margin:0 auto 1.2rem;padding:.7rem 1rem;border:1px solid rgba(188,140,255,.25);border-radius:10px;background:rgba(188,140,255,.07);color:rgba(255,255,255,.62);font-size:.76rem;line-height:1.5;text-align:center}.status-note a{color:#bc8cff;font-weight:800}
 </style>
 </head>
 <body>
+
+<div class="brandbar">
+  <a class="brand" href="index.html"><img src="logo.svg" alt="BrainzBytes"><span>BrainzBytes<small>ContextWeaver source reference</small></span></a>
+  <a class="docs" href="docs/index.html">Architecture Documentation</a>
+</div>
 
 <div class="nav">
   <a class="active" href="code-structure-diagram.html">🗂️ Source Structure</a>
@@ -86,6 +95,7 @@
 
 <h1>🗂️ ContextWeaver — Source Code Structure</h1>
 <p class="subtitle">How the <code style="background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:4px;color:#a78bfa">cerebro</code> repository is organized — a Flask monolith (<b>app.py</b>, 246 routes) fronting a vanilla-JS SPA, delegating to domain modules, governed by a separate MCP control plane. Click any block for detail.</p>
+<div class="status-note"><b>Implementation reference:</b> this diagram explains the current codebase. For the normative production architecture and explicit implementation status, use the <a href="docs/index.html">public documentation portal</a>.</div>
 
 <div class="diagram">
 

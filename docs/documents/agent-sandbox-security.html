@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Agent Sandbox Security Intent"><title>Agent Sandbox Security Intent | BrainzBytes ContextWeaver</title><link rel="icon" type="image/svg+xml" href="/logo.svg"><style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2333;--line:rgba(255,255,255,.1);--text:#e6edf3;--muted:#8b949e;--cyan:#58a6ff;--blue:#58a6ff;--violet:#bc8cff;--green:#34d399;--amber:#fbbf24;--rose:#fb7185}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 12% 8%,rgba(88,166,255,.11) 0,transparent 34%),radial-gradient(circle at 88% 18%,rgba(188,140,255,.13) 0,transparent 30%),var(--bg);color:var(--text);font:15px/1.68 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--cyan)}.top{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px max(18px,calc((100vw - 1420px)/2));border-bottom:1px solid var(--line);background:rgba(13,17,23,.94);backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}.mark{display:block;width:40px;height:40px}.brand b,.brand small{display:block}.brand small{color:var(--muted);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.actions{display:flex;flex-wrap:wrap;gap:7px}.button{padding:7px 10px;border:1px solid var(--line);border-radius:8px;color:var(--text);background:rgba(255,255,255,.04);font-size:11px;font-weight:800;text-decoration:none}.button.primary{color:#fff;background:linear-gradient(135deg,var(--violet),#7c3aed);border-color:var(--violet)}
+.layout{display:grid;grid-template-columns:275px minmax(0,1fr);gap:22px;width:min(1420px,calc(100% - 28px));margin:22px auto 50px}.toc{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:18px;border:1px solid var(--line);border-radius:15px;background:rgba(12,29,48,.86)}.toc h2{margin:0 0 12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase}.toc ul{margin:0;padding-left:17px}.toc li{margin:5px 0;color:var(--muted);font-size:11px}.toc a{color:inherit;text-decoration:none}.toc a:hover{color:var(--cyan)}
+.document{min-width:0;padding:clamp(24px,4vw,55px);border:1px solid var(--line);border-radius:20px;background:rgba(22,27,34,.92);box-shadow:0 22px 70px rgba(0,0,0,.25)}.document>h1:first-child{margin-top:0;font:800 clamp(34px,5vw,64px)/1.02 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.045em;background:linear-gradient(135deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}.document h1,.document h2,.document h3,.document h4{scroll-margin-top:84px;color:#f3f8ff}.document h2{margin-top:2.1em;padding-top:.35em;border-top:1px solid var(--line);font:750 32px/1.15 Inter,ui-sans-serif,system-ui,sans-serif}.document h3{margin-top:1.7em;color:#c4b5fd}.document p,.document li{color:#c7d0da}.document blockquote{margin:1.3em 0;padding:13px 18px;border-left:4px solid var(--violet);background:rgba(188,140,255,.08);color:#e1d9ef}.document code{color:#7dd3fc;background:rgba(88,166,255,.1);padding:.12em .3em;border-radius:4px}.document pre{overflow:auto;padding:17px;border:1px solid #30363d;border-radius:11px;background:#090d12}.document pre code{padding:0;background:none}.document table{display:block;max-width:100%;overflow:auto;border-collapse:collapse}.document th,.document td{padding:10px 12px;border:1px solid var(--line);text-align:left;vertical-align:top}.document th{color:#ede9fe;background:#211a33}.document img{max-width:100%;height:auto;border-radius:10px}.document hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+.catalog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.card b,.card small{display:block}.card small{margin-top:5px;color:var(--muted)}.card a{text-decoration:none}
+.diagram-layout{width:min(1500px,calc(100% - 28px));margin:20px auto 45px}.diagram-shell{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:rgba(22,27,34,.94)}.diagram-head{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 17px;border-bottom:1px solid var(--line)}.diagram-head h1{margin:0;font:800 clamp(22px,3vw,36px) Inter,ui-sans-serif,system-ui,sans-serif}.tabs{display:flex;gap:7px;overflow:auto;padding:12px 14px;border-bottom:1px solid var(--line)}.tab{white-space:nowrap;padding:8px 11px;border:1px solid var(--line);border-radius:8px;color:var(--muted);background:#111827;cursor:pointer}.tab.active{color:#fff;border-color:var(--violet);background:linear-gradient(135deg,var(--violet),#7c3aed);font-weight:900}.toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line)}.toolbar button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;color:var(--text);background:#1c2333;cursor:pointer}.canvas{overflow:auto;min-height:72vh;padding:22px;background:#e8edf4}.canvas img{display:block;width:100%;max-width:none;height:auto;margin:auto;filter:drop-shadow(0 10px 22px rgba(20,50,64,.18));transform-origin:top left}
+.caption{padding:10px 15px;color:var(--muted);font-size:11px}.empty{padding:40px;text-align:center;color:var(--muted)}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:relative;top:auto;max-height:none}.catalog{grid-template-columns:1fr 1fr}}@media(max-width:620px){.actions{display:none}.catalog{grid-template-columns:1fr}.document{padding:22px 17px}.diagram-head{align-items:flex-start;flex-direction:column}.canvas{padding:8px}}
+@media print{.top,.toc,.toolbar,.tabs{display:none}.layout,.diagram-layout{display:block;width:100%;margin:0}.document,.diagram-shell{border:0;box-shadow:none}.canvas{overflow:visible;padding:0;background:white}.canvas img{width:100%!important;transform:none!important}}
+</style></head>
+<body><header class="top"><a class="brand" href="/"><img class="mark" src="/logo.svg" alt="BrainzBytes"><span><b>BrainzBytes · ContextWeaver</b><small>Rendered document</small></span></a><div class="actions"><a class="button" href="/">BrainzBytes home</a><a class="button primary" href="/docs/">Documentation home</a><a class="button" href="../content/agent-sandbox-security.md">View source</a></div></header>
+<main class="layout"><aside class="toc"><h2>On this page</h2><ul><li class="level-1"><a href="#agent-sandbox-security-intent">Agent Sandbox Security Intent</a></li><li class="level-2"><a href="#executive-summary">Executive summary</a></li><li class="level-2"><a href="#why-recent-agent-sandbox-research-matters">Why recent Agent sandbox research matters</a></li><li class="level-2"><a href="#the-intended-security-boundary">The intended security boundary</a></li><li class="level-3"><a href="#1-the-agent-is-not-deployed-on-a-developer-endpoint">1. The Agent is not deployed on a developer endpoint</a></li><li class="level-3"><a href="#2-the-agent-pod-is-hardened-as-hostile-code">2. The Agent pod is hardened as hostile code</a></li><li class="level-3"><a href="#3-a-stronger-runtime-separates-the-agent-from-the-node-kernel">3. A stronger runtime separates the Agent from the node kernel</a></li><li class="level-3"><a href="#4-network-access-is-denied-by-default">4. Network access is denied by default</a></li><li class="level-3"><a href="#5-rabbitmq-is-a-controlled-capability-boundary">5. RabbitMQ is a controlled capability boundary</a></li><li class="level-3"><a href="#credential-non-possession-is-mandatory">Credential non-possession is mandatory</a></li><li class="level-3"><a href="#6-the-llm-gateway-is-the-only-inference-boundary">6. The LLM Gateway is the only inference boundary</a></li><li class="level-3"><a href="#7-mcp-services-are-separate-sandboxes">7. MCP services are separate sandboxes</a></li><li class="level-3"><a href="#8-agent-created-artifacts-never-become-trusted-executable-input">8. Agent-created artifacts never become trusted executable input</a></li><li class="level-2"><a href="#does-the-design-harden-the-security-boundary">Does the design harden the security boundary?</a></li><li class="level-2"><a href="#rapid-mitigation-when-an-issue-arises">Rapid mitigation when an issue arises</a></li><li class="level-3"><a href="#phase-1-detect">Phase 1: Detect</a></li><li class="level-3"><a href="#phase-2-contain">Phase 2: Contain</a></li><li class="level-3"><a href="#phase-3-preserve-evidence">Phase 3: Preserve evidence</a></li><li class="level-3"><a href="#phase-4-assess-blast-radius">Phase 4: Assess blast radius</a></li><li class="level-3"><a href="#phase-5-recover-safely">Phase 5: Recover safely</a></li><li class="level-2"><a href="#suggested-response-objectives">Suggested response objectives</a></li><li class="level-2"><a href="#rabbitmq-as-a-rapid-control-point">RabbitMQ as a rapid control point</a></li><li class="level-2"><a href="#residual-risks">Residual risks</a></li><li class="level-2"><a href="#security-claims-the-platform-should-and-should-not-make">Security claims the platform should and should not make</a></li><li class="level-3"><a href="#appropriate-claims">Appropriate claims</a></li><li class="level-3"><a href="#claims-to-avoid">Claims to avoid</a></li><li class="level-2"><a href="#final-intent">Final intent</a></li><li class="level-2"><a href="#companion-architecture">Companion architecture</a></li><li class="level-2"><a href="#references">References</a></li></ul></aside><article class="document"><h1 id="agent-sandbox-security-intent">Agent Sandbox Security Intent <a href="#agent-sandbox-security-intent" aria-label="Permalink">#</a></h1>
+<h2 id="executive-summary">Executive summary <a href="#executive-summary" aria-label="Permalink">#</a></h2>
+<p>The intent is not to claim that an AI Agent can <strong>never</strong> escape a sandbox. No container runtime, virtual machine, kernel, network control, message broker, or policy engine can provide an absolute guarantee against every future vulnerability.</p>
+<p>The intent is to make an Agent escape both <strong>materially harder</strong> and <strong>far less valuable</strong> to an attacker.</p>
+<p>Every Agent is treated as untrusted workload code. It runs in a hardened, ephemeral Kubernetes sandbox with only two permitted network destinations:</p>
+<ol>
+<li>RabbitMQ, for typed asynchronous platform communication.</li>
+<li>An internal LLM Gateway, for governed model inference.</li>
+</ol>
+<p>The Agent has no direct route to MCP services, databases, object storage, Redis, the Kubernetes API, cloud metadata services, other pods, model providers, developer workstations, privileged local daemons, or the public internet.</p>
+<p>This creates a narrow and measurable security boundary:</p>
+<pre><code class="language-text">                  ONLY TWO ALLOWED NETWORK PATHS
+
+          +-------------------------------------------+
+          |       HARDENED AGENT SANDBOX              |
+          |                                           |
+          |  non-root        read-only filesystem     |
+          |  no Kube token   no Linux capabilities    |
+          |  seccomp         gVisor or Kata runtime   |
+          |  no host mounts  bounded CPU/memory/time  |
+          +---------------------+---------------------+
+                                |
+                    +-----------+-----------+
+                    |                       |
+                    v                       v
+             +-------------+         +-------------+
+             |  RabbitMQ   |         | Internal    |
+             |  AMQPS/mTLS |         | LLM Gateway |
+             +-------------+         +-------------+
+
+        DENIED: MCP endpoints, data stores, Kubernetes API,
+        metadata services, other pods, host, and public internet</code></pre>
+<p>All useful effects must cross a policy enforcement point. RabbitMQ messages can be authenticated, authorized, schema-validated, rate-limited, size-limited, expired, quarantined, audited, and replayed. LLM requests can be identity checked, model restricted, DLP scanned, quota controlled, logged, and stopped. There is no broad, ambient network authority for the Agent to inherit.</p>
+<p>The design therefore changes the question from:</p>
+<blockquote>"Can we prove that an Agent will never escape?"</blockquote>
+<p>to:</p>
+<blockquote>"If an Agent or sandbox is compromised, what authority can it actually obtain, how quickly will we see it, and how quickly can we remove it?"</blockquote>
+<p>That is the correct security model for a reusable enterprise Agent platform.</p>
+<h2 id="why-recent-agent-sandbox-research-matters">Why recent Agent sandbox research matters <a href="#why-recent-agent-sandbox-research-matters" aria-label="Permalink">#</a></h2>
+<p>Recent research against AI coding Agents has shown two distinct classes of failure:</p>
+<ol>
+<li><strong>Direct boundary failure.</strong> A flaw in sandbox policy, path validation,</li>
+<p>local API authorization, container runtime, or operating-system isolation allows the Agent to obtain authority outside its intended environment.</p>
+<li><strong>Trust handoff failure.</strong> The Agent stays inside the sandbox but writes a</li>
+<p>hook, task, interpreter, Git configuration, workspace file, or other artifact that a trusted process outside the sandbox later executes.</p>
+</ol>
+<p>The second class is especially important. The Cloud Security Alliance's July 2026 analysis of Pillar Security's research states that none of the seven disclosed issues had to break the process sandbox itself. Instead, they exploited the point where an unsandboxed IDE, hook engine, Python extension, Git integration, task runner, or Docker daemon trusted an Agent-influenced artifact.</p>
+<p>OX Research's September 2026 disclosure for DeepSeek Harness, CVE-2026-82533, demonstrates the other danger: a sandbox left loopback networking open, while an unauthenticated local control API trusted a client-supplied <code>Host</code> header. A sandboxed Agent could call that API and change its own session to unrestricted execution.</p>
+<p>These findings produce several architectural lessons:</p>
+<ul>
+<li>A filesystem boundary alone is not enough.</li>
+<li>Loopback and local control APIs are network attack surfaces.</li>
+<li>Anything the Agent can write must remain untrusted after it leaves the</li>
+<p>sandbox.</p>
+<li>Docker sockets, host mounts, editor extensions, task runners, and local</li>
+<p>daemons can silently transfer host authority into a sandbox.</p>
+<li>Command-name allowlists are weaker than full invocation and effect policy.</li>
+<li>Approval prompts are not a security boundary if another path can disable or</li>
+<p>bypass them.</p>
+<li>The Agent's blast radius includes everything that consumes its output.</li>
+</ul>
+<p>This Kubernetes design explicitly addresses those lessons.</p>
+<h2 id="the-intended-security-boundary">The intended security boundary <a href="#the-intended-security-boundary" aria-label="Permalink">#</a></h2>
+<h3 id="1-the-agent-is-not-deployed-on-a-developer-endpoint">1. The Agent is not deployed on a developer endpoint <a href="#1-the-agent-is-not-deployed-on-a-developer-endpoint" aria-label="Permalink">#</a></h3>
+<p>The Agent runs as a dedicated Kubernetes workload, not inside an IDE, a user shell, or a workstation containing SSH keys, browser sessions, package credentials, cloud CLIs, or production access.</p>
+<p>It does not share a workspace with unsandboxed host tools. It cannot write a <code>.vscode</code> task for an editor to execute, replace a local virtual environment interpreter, install a Git hook for a desktop client, or reach a developer's Docker socket.</p>
+<p>This removes much of the ambient authority and downstream trust surface that made recent coding-Agent findings exploitable.</p>
+<h3 id="2-the-agent-pod-is-hardened-as-hostile-code">2. The Agent pod is hardened as hostile code <a href="#2-the-agent-pod-is-hardened-as-hostile-code" aria-label="Permalink">#</a></h3>
+<p>Every Agent workload must satisfy a Restricted Pod Security profile and additional admission policy:</p>
+<ul>
+<li>Run as a dedicated non-root UID and GID.</li>
+<li>Require a read-only root filesystem.</li>
+<li>Disable privilege escalation.</li>
+<li>Drop every Linux capability.</li>
+<li>Use <code>seccompProfile: RuntimeDefault</code> or a more restrictive tested profile.</li>
+<li>Do not mount <code>hostPath</code>, device, Docker/containerd socket, host process,</li>
+<p>host network, host PID, or host IPC resources.</p>
+<li>Do not mount writable persistent volumes into the Agent.</li>
+<li>Disable automatic Kubernetes service-account token mounting.</li>
+<li>Do not inject cloud, database, object-store, or plugin credentials.</li>
+<li>Use bounded ephemeral storage, process count, CPU, memory, concurrency, and</li>
+<p>wall-clock execution time.</p>
+<li>Run only signed images pinned by digest and admitted from approved</li>
+<p>registries.</p>
+</ul>
+<p>These controls reduce both escape primitives and post-compromise persistence. The Agent pod is disposable. Completion, timeout, policy violation, or quarantine destroys it.</p>
+<h3 id="3-a-stronger-runtime-separates-the-agent-from-the-node-kernel">3. A stronger runtime separates the Agent from the node kernel <a href="#3-a-stronger-runtime-separates-the-agent-from-the-node-kernel" aria-label="Permalink">#</a></h3>
+<p>Standard Linux containers share the host kernel. Namespaces, capabilities, seccomp, AppArmor, or SELinux are important, but they should not be the only boundary for untrusted Agent execution.</p>
+<p>The platform should use a sandboxed Kubernetes <code>RuntimeClass</code>:</p>
+<ul>
+<li><strong>gVisor</strong> moves the system-call interface into a per-sandbox userspace</li>
+<p>application kernel, reducing direct exposure to the host kernel.</p>
+<li><strong>Kata Containers</strong> runs the workload inside a lightweight virtual machine,</li>
+<p>adding hardware-virtualized separation.</p>
+</ul>
+<p>The choice can be policy driven. A high-density, lower-risk Agent may use gVisor. A high-risk, regulated, third-party, or code-executing Agent may require Kata or another VM-isolated runtime.</p>
+<p>Agent workloads should also run on dedicated, tainted node pools. This does not replace the sandbox, but it prevents unrelated trusted workloads from sharing the same node and limits the blast radius of a node-level failure.</p>
+<h3 id="4-network-access-is-denied-by-default">4. Network access is denied by default <a href="#4-network-access-is-denied-by-default" aria-label="Permalink">#</a></h3>
+<p>Kubernetes pods are normally open to outbound traffic unless a network policy isolates them. The design therefore requires:</p>
+<ul>
+<li>Default-deny ingress and egress policies in every Agent namespace.</li>
+<li>A CNI that actually enforces NetworkPolicy; merely creating policy objects</li>
+<p>is not enough.</p>
+<li>Explicit egress rules only for the RabbitMQ listener and internal LLM</li>
+<p>Gateway.</p>
+<li>Matching ingress restrictions on those destinations.</li>
+<li>DNS restrictions so the Agent cannot use arbitrary name resolution as an</li>
+<p>egress path.</p>
+<li>Explicit blocking of cloud instance-metadata endpoints.</li>
+<li>No general NAT or internet route from Agent node pools.</li>
+<li>Service-mesh mTLS and workload identity in addition to IP/port policy.</li>
+</ul>
+<p>No local management API is present in the Agent pod or reachable over loopback. The Agent cannot change its own RuntimeClass, NetworkPolicy, deployment, approval mode, or security context. Those controls live in separate namespaces behind separate identities.</p>
+<h3 id="5-rabbitmq-is-a-controlled-capability-boundary">5. RabbitMQ is a controlled capability boundary <a href="#5-rabbitmq-is-a-controlled-capability-boundary" aria-label="Permalink">#</a></h3>
+<p>All Agent-to-Agent and Agent-to-MCP communication is asynchronous through RabbitMQ. The broker is not merely transport; it is a narrow policy and containment boundary.</p>
+<p>Each Agent version receives its own workload identity and least-privilege RabbitMQ permissions:</p>
+<ul>
+<li>Publish only to approved result or request exchanges.</li>
+<li>Consume only from its assigned command queues.</li>
+<li>No configuration, management, user, vhost, policy, binding, or queue</li>
+<p>creation permission.</p>
+<li>No wildcard access to every Agent or MCP routing key.</li>
+<li>TLS/mTLS and short-lived credentials.</li>
+<li>Versioned envelope and payload schemas.</li>
+<li>Message size, rate, TTL, priority, and delivery limits.</li>
+<li>Publisher confirms and manual consumer acknowledgements.</li>
+<li>Bounded retry exchanges and dead-letter quarantine.</li>
+<li>Idempotency keys, replay protection, and inbox/outbox records.</li>
+<li>Content classification and artifact-reference policy.</li>
+</ul>
+<p>A compromised Agent may try to publish malicious or excessive messages, but it cannot silently open a direct socket to another service. The attempted effect is visible at the broker boundary and can be rejected, throttled, expired, dead-lettered, or quarantined.</p>
+<p>RabbitMQ policing is not sufficient by itself. Consumers must continue to treat every message as untrusted, even when it came from an authenticated Agent. Authentication says which workload sent a message; it does not make the message safe.</p>
+<h3 id="credential-non-possession-is-mandatory">Credential non-possession is mandatory <a href="#credential-non-possession-is-mandatory" aria-label="Permalink">#</a></h3>
+<p>An Agent receives a narrow workload identity and opaque references, never a user credential, refresh token, provider key, cloud key, database password, connection string, object-store credential, private key, connector secret, or model-provider credential.</p>
+<p>Plans and messages may carry <code>identityRef</code>, <code>delegationRef</code>, <code>policyDecisionRef</code>, and <code>credentialRef</code>. A trusted MCP, model, data, or connector gateway resolves the reference only after validating the exact tenant, principal, purpose, workflow, run, node, operation, resource, audience, policy version, consent state, and revocation epoch. The short-lived credential remains inside that trusted workload and is never returned to the Agent or written to a message, artifact, log, trace, metric, audit record, or dead-letter queue.</p>
+<p>The canonical executable requirements and current implementation status are defined in <a href="credential-non-possession.html">Credential Non-Possession and Delegated Authority</a>.</p>
+<h3 id="6-the-llm-gateway-is-the-only-inference-boundary">6. The LLM Gateway is the only inference boundary <a href="#6-the-llm-gateway-is-the-only-inference-boundary" aria-label="Permalink">#</a></h3>
+<p>Agents do not receive model-provider credentials and do not call external LLM endpoints directly. They call an internal LLM Gateway that enforces:</p>
+<ul>
+<li>Workload identity and Agent version.</li>
+<li>Tenant, user, purpose, and run binding.</li>
+<li>Approved model and region allowlists.</li>
+<li>Input and output size limits.</li>
+<li>Token, cost, request-rate, concurrency, and timeout budgets.</li>
+<li>Prompt-injection and data-loss-prevention controls.</li>
+<li>Data classification, residency, retention, and provider policy.</li>
+<li>Redaction or tokenization where required.</li>
+<li>Complete request/result metadata and decision audit without placing secrets,</li>
+<p>prompts, PII, or PHI in Prometheus labels.</p>
+</ul>
+<p>Only the LLM Gateway has controlled external provider egress. Revoking an Agent's LLM authorization immediately removes its model access without changing the Agent image.</p>
+<h3 id="7-mcp-services-are-separate-sandboxes">7. MCP services are separate sandboxes <a href="#7-mcp-services-are-separate-sandboxes" aria-label="Permalink">#</a></h3>
+<p>An Agent never connects directly to an MCP endpoint. It publishes a typed tool request to RabbitMQ.</p>
+<p>Each MCP worker is separately deployed and separately isolated. It may access:</p>
+<ol>
+<li>Its assigned RabbitMQ queues.</li>
+<li>Exactly one approved plugin or external-system domain.</li>
+</ol>
+<p>For example, a Gmail MCP can reach approved Gmail APIs but not a payment processor, another MCP, a database, or the Kubernetes API. A payment MCP can reach the approved payment gateway but not Gmail.</p>
+<p>This preserves the platform's cardinality while limiting authority:</p>
+<pre><code class="language-text">Agent -&gt; 0..N MCP capabilities through RabbitMQ
+MCP   -&gt; exactly one plugin/configuration domain
+Plugin domain -&gt; 1..N versioned operations</code></pre>
+<p>Credentials remain in a secrets broker or workload identity system and are issued just in time. They are not sent to the Agent in a message.</p>
+<h3 id="8-agent-created-artifacts-never-become-trusted-executable-input">8. Agent-created artifacts never become trusted executable input <a href="#8-agent-created-artifacts-never-become-trusted-executable-input" aria-label="Permalink">#</a></h3>
+<p>This is the most important defense against trust handoff attacks.</p>
+<p>The Agent cannot access object storage directly. Trusted Context Workers hydrate source artifacts, apply authorization and minimum-necessary field projection, and publish a bounded, signed ContextPack to the Agent queue.</p>
+<p>The Agent returns typed outputs through RabbitMQ. Trusted Artifact Workers then:</p>
+<ul>
+<li>Parse against the exact pinned output or error schema.</li>
+<li>Reject unknown fields and malformed structures.</li>
+<li>Apply policy, classification, redaction, and provenance checks.</li>
+<li>Verify expected producer, run, node, operation, and idempotency identity.</li>
+<li>Persist the result as an immutable artifact.</li>
+<li>Never execute Agent-authored scripts, hooks, binaries, templates, build</li>
+<p>files, interpreter paths, Git configuration, or task definitions.</p>
+<li>Render content in a separate constrained renderer when presentation is</li>
+<p>required.</p>
+</ul>
+<p>No host-side IDE, task runner, shell, package manager, Git client, Docker daemon, or extension automatically consumes Agent-authored workspace content. An Agent output remains data until an explicitly authorized and type-specific consumer validates it.</p>
+<h2 id="does-the-design-harden-the-security-boundary">Does the design harden the security boundary? <a href="#does-the-design-harden-the-security-boundary" aria-label="Permalink">#</a></h2>
+<p>Yes. It materially hardens the boundary in five ways:</p>
+<table><thead><tr><th>Security property</th><th>Conventional Agent harness</th><th>This design</th></tr></thead><tbody><tr><td>Runtime location</td><td>Developer machine or shared application pod</td><td>Ephemeral isolated pod on dedicated sandbox nodes</td></tr><tr><td>Kernel boundary</td><td>Native process/container controls</td><td>Restricted container plus gVisor or Kata</td></tr><tr><td>Network authority</td><td>Loopback, local services, internet, inherited host routes</td><td>Only RabbitMQ and internal LLM Gateway</td></tr><tr><td>Credentials</td><td>Ambient user, cloud, filesystem, or provider credentials</td><td>No Agent credentials except narrow workload identities</td></tr><tr><td>Tool access</td><td>Direct local shell/API/plugin calls</td><td>Typed asynchronous MCP commands through RabbitMQ</td></tr><tr><td>Artifact trust</td><td>Workspace files may be executed by host helpers</td><td>Outputs remain untrusted data; trusted workers validate but never execute</td></tr><tr><td>State access</td><td>Agent may read/write local or shared state</td><td>No direct PostgreSQL, object-store, or Redis access</td></tr><tr><td>Control plane</td><td>Agent and harness management can share a process/API</td><td>Orchestrator, admission, registry, and policy are separate trust domains</td></tr><tr><td>Detection</td><td>Endpoint logs and optional prompts</td><td>Broker, CNI, runtime, identity, policy, Kubernetes, LLM, and workflow telemetry</td></tr><tr><td>Revocation</td><td>Stop a local process or update a client</td><td>Revoke identity, queue ACL, model authorization, image digest, and deployment centrally</td></tr></tbody></table>
+<p>The greatest improvement is not any single control. It is that the controls are independent:</p>
+<ul>
+<li>A prompt-injection failure does not grant network access.</li>
+<li>A NetworkPolicy mistake does not grant credentials.</li>
+<li>A stolen RabbitMQ identity does not grant Kubernetes or database authority.</li>
+<li>A malformed message does not pass schema and policy validation.</li>
+<li>A container escape still lands on a dedicated node without cloud credentials</li>
+<p>or a general internet route.</p>
+<li>An Agent-authored artifact is not automatically executed outside the</li>
+<p>sandbox.</p>
+</ul>
+<p>An attacker must defeat several different technologies and trust domains rather than find one permissive handoff.</p>
+<h2 id="rapid-mitigation-when-an-issue-arises">Rapid mitigation when an issue arises <a href="#rapid-mitigation-when-an-issue-arises" aria-label="Permalink">#</a></h2>
+<p>The platform must assume that new model behaviors, prompt-injection techniques, dependency vulnerabilities, runtime CVEs, and configuration mistakes will continue to appear. The response mechanism should therefore be part of the architecture, not an improvised operational procedure.</p>
+<h3 id="phase-1-detect">Phase 1: Detect <a href="#phase-1-detect" aria-label="Permalink">#</a></h3>
+<p>Detection signals should be correlated by Agent ID, immutable version, image digest, run ID, Workflow node, queue identity, and policy snapshot in protected telemetry:</p>
+<ul>
+<li>Denied egress or unexpected DNS requests.</li>
+<li>Connections attempted to the Kubernetes API, metadata service, node</li>
+<p>addresses, other pods, or unapproved internet destinations.</p>
+<li>Unexpected process creation, shell execution, syscall profile, file write,</li>
+<p>privilege action, or namespace behavior.</p>
+<li>RabbitMQ authorization failures, routing-key violations, message floods,</li>
+<p>size violations, schema rejection, redelivery spikes, or DLQ growth.</p>
+<li>LLM Gateway model-policy denials, unusual token volume, DLP triggers, prompt</li>
+<p>attack indicators, or rapid request bursts.</p>
+<li>Invalid Agent output schemas, forbidden artifact types, executable content,</li>
+<p>provenance mismatch, or repeated policy failures.</p>
+<li>Unusual Agent duration, memory, CPU, process count, crash loop, or restart</li>
+<p>pattern.</p>
+<li>Attempts to obtain credentials, enumerate environment data, or reach local</li>
+<p>control endpoints.</p>
+</ul>
+<p>Prometheus and Grafana provide aggregate health and alerting. High-cardinality investigation data belongs in protected OpenTelemetry traces, security events, Kubernetes audit logs, CNI flow logs, RabbitMQ logs, and immutable audit records.</p>
+<h3 id="phase-2-contain">Phase 2: Contain <a href="#phase-2-contain" aria-label="Permalink">#</a></h3>
+<p>Containment should be executable centrally without waiting for every application team:</p>
+<ol>
+<li>Mark the Agent Card/version <code>quarantined</code> in the capability registry.</li>
+<li>Stop new Workflow compilation from selecting that version.</li>
+<li>Revoke its workload identity and LLM Gateway authorization.</li>
+<li>Disable or remove its RabbitMQ user/permission and stop its consumers.</li>
+<li>Route outstanding messages to a quarantine queue without discarding them.</li>
+<li>Apply an emergency zero-egress NetworkPolicy to the selected pods.</li>
+<li>Scale the affected deployment to zero or delete the precisely identified</li>
+<p>pods.</p>
+<li>Deny the affected image digest through admission policy.</li>
+<li>Cordon and isolate the dedicated node if runtime or node compromise is</li>
+<p>suspected.</p>
+<li>Pause affected Workflow runs at durable checkpoints.</li>
+</ol>
+<p>These controls operate at different layers. If a compromised Agent blocks its own process shutdown, identity revocation and network policy still remove its useful authority. If network policy is suspected, RabbitMQ and LLM Gateway revocation still close the two allowed endpoints. If the image is compromised, admission policy prevents redeployment.</p>
+<h3 id="phase-3-preserve-evidence">Phase 3: Preserve evidence <a href="#phase-3-preserve-evidence" aria-label="Permalink">#</a></h3>
+<p>Before destructive cleanup removes volatile evidence, the response automation should preserve:</p>
+<ul>
+<li>Agent image digest, SBOM, signature, and admission decision.</li>
+<li>Pod specification, RuntimeClass, node, namespace, security context, and</li>
+<p>NetworkPolicies.</p>
+<li>Protected runtime, CNI, DNS, identity, LLM Gateway, RabbitMQ, and Kubernetes</li>
+<p>audit events.</p>
+<li>Exact immutable run plan, policy snapshot, Agent Card, MCP manifest, schema</li>
+<p>versions, ContextPack hashes, message IDs, idempotency keys, and artifact lineage.</p>
+<li>Container memory or node evidence when policy and tooling permit.</li>
+<li>All related dead-letter and quarantine messages.</li>
+</ul>
+<p>Evidence is stored immutably with access control and retention policy. It is not copied into general dashboards or ticket comments if it contains sensitive content.</p>
+<h3 id="phase-4-assess-blast-radius">Phase 4: Assess blast radius <a href="#phase-4-assess-blast-radius" aria-label="Permalink">#</a></h3>
+<p>The platform can answer bounded questions because authority is explicit:</p>
+<ul>
+<li>Which exact Agent version and image digest ran?</li>
+<li>Which queues could its RabbitMQ identity publish to or consume from?</li>
+<li>Which LLM models, tenants, scopes, and budgets were permitted?</li>
+<li>Which ContextPacks were delivered?</li>
+<li>Which MCP operations were requested?</li>
+<li>Which side effects committed, and which receipts prove them?</li>
+<li>Did any message pass validation and reach a downstream consumer?</li>
+<li>Did any egress attempt succeed?</li>
+<li>Which runs used the affected immutable version?</li>
+</ul>
+<p>This is substantially faster than investigating a local Agent running with a developer's ambient credentials and unrestricted network access.</p>
+<h3 id="phase-5-recover-safely">Phase 5: Recover safely <a href="#phase-5-recover-safely" aria-label="Permalink">#</a></h3>
+<p>Recovery follows controlled promotion:</p>
+<ol>
+<li>Patch the Agent, dependency, sandbox profile, gateway, policy, or platform</li>
+<p>component that caused the issue.</p>
+<li>Build a new immutable image and Agent Card version.</li>
+<li>Generate an updated SBOM, run security and contract tests, and sign the</li>
+<p>artifact.</p>
+<li>Validate the exact escape or abuse path as a regression test.</li>
+<li>Rotate any potentially exposed workload, RabbitMQ, model, plugin, or</li>
+<p>platform credentials.</p>
+<li>Deploy to an isolated security-test environment.</li>
+<li>Canary the new version under tighter quotas and enhanced telemetry.</li>
+<li>Promote through the governed lifecycle only after policy and health gates</li>
+<p>pass.</p>
+<li>Resume safe runs from durable checkpoints or replay commands from the</li>
+<p>transactional outbox.</p>
+<li>Use the Orchestrated Saga to compensate committed reversible actions.</li>
+<li>Route irreversible or partially compensated cases to manual remediation.</li>
+</ol>
+<p>Runs remain pinned to their original versions. They do not silently switch to a new Agent in the middle of a transaction. A governed migration or restart decision is recorded explicitly.</p>
+<h2 id="suggested-response-objectives">Suggested response objectives <a href="#suggested-response-objectives" aria-label="Permalink">#</a></h2>
+<p>These are engineering targets, not guarantees. They should be tested through regular exercises:</p>
+<table><thead><tr><th>Objective</th><th>Suggested target</th></tr></thead><tbody><tr><td>Detect a high-confidence sandbox or policy violation</td><td>Under 1 minute</td></tr><tr><td>Stop new selection of a quarantined Agent version</td><td>Under 1 minute</td></tr><tr><td>Revoke RabbitMQ and LLM Gateway authority</td><td>Under 2 minutes</td></tr><tr><td>Pause affected Workflow runs and isolate pods</td><td>Under 5 minutes</td></tr><tr><td>Identify all runs using an affected immutable version</td><td>Under 10 minutes</td></tr><tr><td>Preserve minimum investigation evidence</td><td>Under 15 minutes</td></tr><tr><td>Produce a first bounded blast-radius report</td><td>Under 30 minutes</td></tr><tr><td>Deploy a policy-only emergency mitigation</td><td>Under 1 hour</td></tr></tbody></table>
+<p>The platform should continuously test these objectives by simulating denied egress, stolen queue credentials, malformed messages, compromised Agent images, model abuse, registry quarantine, node isolation, and rollback.</p>
+<h2 id="rabbitmq-as-a-rapid-control-point">RabbitMQ as a rapid control point <a href="#rabbitmq-as-a-rapid-control-point" aria-label="Permalink">#</a></h2>
+<p>The decision to route all Agent and MCP communication through RabbitMQ creates a particularly useful emergency control plane:</p>
+<ul>
+<li>Revoke one Agent without disrupting unrelated Agents.</li>
+<li>Disable one routing key or exchange binding.</li>
+<li>Stop consumption while preserving durable commands.</li>
+<li>Quarantine suspicious messages for investigation.</li>
+<li>Lower per-user or per-vhost connection, channel, publish, and delivery</li>
+<p>limits.</p>
+<li>Expire stale commands by TTL.</li>
+<li>Enforce delivery limits and prevent infinite poison-message loops.</li>
+<li>Pause one MCP capability without changing every Agent.</li>
+<li>Replay safe messages after remediation using idempotency records.</li>
+<li>Observe queue depth, unacknowledged messages, redelivery, consumer</li>
+<p>utilization, publish confirms, and DLQ volume.</p>
+</ul>
+<p>The broker does not decide business authorization and must not become authoritative workflow state. The Policy Plane authorizes, PostgreSQL records truth, and RabbitMQ enforces narrow transport permissions and durable delivery.</p>
+<h2 id="residual-risks">Residual risks <a href="#residual-risks" aria-label="Permalink">#</a></h2>
+<p>This architecture reduces risk; it does not eliminate it.</p>
+<p>Residual risks include:</p>
+<ul>
+<li>A vulnerability in gVisor, Kata, the hypervisor, container runtime, kernel,</li>
+<p>CNI, service mesh, or Kubernetes control plane.</p>
+<li>A compromised base image, dependency, build pipeline, registry, or signing</li>
+<p>authority.</p>
+<li>Misconfigured NetworkPolicy, workload identity, RabbitMQ ACL, LLM Gateway,</li>
+<p>or admission rule.</p>
+<li>A compromised RabbitMQ or LLM Gateway control plane.</li>
+<li>A valid but malicious message that satisfies structural schema while</li>
+<p>exploiting downstream business logic.</p>
+<li>Prompt injection that causes harmful but still authorized behavior.</li>
+<li>An overly broad Agent or MCP capability definition.</li>
+<li>Excessive data included in an otherwise authorized ContextPack.</li>
+<li>A trusted Artifact Worker, renderer, Orchestrator, MCP, or policy service</li>
+<p>executing or trusting Agent-controlled content incorrectly.</p>
+<li>Insider abuse or compromise of administrative identities.</li>
+<li>Availability attacks through allowed endpoints.</li>
+<li>Cross-tenant defects in platform control or state services.</li>
+</ul>
+<p>These risks require patch management, least privilege, multi-party administration, separation of duties, independent penetration testing, threat modeling, fuzzing, policy tests, chaos engineering, incident exercises, and continuous review of new Agent escape research.</p>
+<h2 id="security-claims-the-platform-should-and-should-not-make">Security claims the platform should and should not make <a href="#security-claims-the-platform-should-and-should-not-make" aria-label="Permalink">#</a></h2>
+<h3 id="appropriate-claims">Appropriate claims <a href="#appropriate-claims" aria-label="Permalink">#</a></h3>
+<ul>
+<li>Agents are treated as untrusted workloads.</li>
+<li>Agent network access is deny by default.</li>
+<li>Agents have only two explicitly permitted service destinations.</li>
+<li>Agents cannot directly access MCPs, platform state, object storage, Redis,</li>
+<p>Kubernetes, provider endpoints, or the internet under the approved configuration.</p>
+<li>Agent outputs remain untrusted and are never automatically executed by</li>
+<p>trusted host components.</p>
+<li>Every useful interaction crosses an authenticated, authorized, monitored,</li>
+<p>and revocable enforcement point.</p>
+<li>A compromised Agent's authority and blast radius are deliberately bounded.</li>
+<li>The platform can centrally quarantine a version and revoke its useful</li>
+<p>authority within defined response objectives.</p>
+</ul>
+<h3 id="claims-to-avoid">Claims to avoid <a href="#claims-to-avoid" aria-label="Permalink">#</a></h3>
+<ul>
+<li>"An Agent can never escape."</li>
+<li>"Kubernetes containers are a complete sandbox."</li>
+<li>"NetworkPolicy alone prevents all egress."</li>
+<li>"Messages from an authenticated Agent are trusted."</li>
+<li>"Schema validation proves business safety."</li>
+<li>"Human approval prevents every harmful action."</li>
+<li>"A message queue makes Agent behavior safe."</li>
+<li>"No sensitive information can ever leak."</li>
+</ul>
+<p>Security confidence comes from tested layers, evidence, and response capability, not absolute language.</p>
+<h2 id="final-intent">Final intent <a href="#final-intent" aria-label="Permalink">#</a></h2>
+<p>The platform assumes that Agents will process untrusted instructions, models will sometimes behave unexpectedly, software vulnerabilities will continue to be discovered, and a preventive control may eventually fail.</p>
+<p>The answer is not to give an Agent broad authority and hope its sandbox holds. The answer is to make the Agent a small, disposable, untrusted compute unit inside several independent boundaries:</p>
+<pre><code class="language-text">Untrusted input
+      |
+      v
+Schema + policy + context projection
+      |
+      v
+Ephemeral Agent sandbox
+      |
+      +----&gt; RabbitMQ ----&gt; typed, policed, revocable effects
+      |
+      +----&gt; LLM Gateway -&gt; governed, budgeted inference
+      |
+      X----&gt; everything else is denied</code></pre>
+<p>If the Agent is manipulated, the sandbox limits execution.</p>
+<p>If the sandbox is bypassed, network policy limits reach.</p>
+<p>If network policy is bypassed, the Agent still lacks broad credentials.</p>
+<p>If a permitted endpoint is abused, RabbitMQ and the LLM Gateway enforce identity, scope, rate, schema, and audit controls.</p>
+<p>If a malicious output is produced, trusted workers validate it as data and do not execute it.</p>
+<p>If suspicious behavior is detected, the platform can quarantine the version, revoke both allowed endpoints, stop deployment, preserve evidence, identify affected runs, compensate safe side effects, and recover from durable state.</p>
+<p>That is the core security intent: <strong>not an unbreakable box, but a narrow, layered, observable, rapidly revocable system in which one Agent failure does not become a platform, tenant, cloud, or enterprise compromise.</strong></p>
+<h2 id="companion-architecture">Companion architecture <a href="#companion-architecture" aria-label="Permalink">#</a></h2>
+<ul>
+<li><a href="durable-microservice-resilience.html">Browser deployment view</a></li>
+<li><a href="../diagrams/contextweaver-nextgen-architecture.drawio">Editable Draw.io diagram</a></li>
+</ul>
+<h2 id="references">References <a href="#references" aria-label="Permalink">#</a></h2>
+<ol>
+<li>Pillar Security, <a href="https://www.pillar.security/blog/the-week-of-sandbox-escapes">The Week of Sandbox Escapes</a>, 2026.</li>
+<li>Cloud Security Alliance AI Safety Initiative, <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-ai-coding-agent-sandbox-escapes-20260722-c/">AI Coding Agent Sandbox Escapes: The Trust Handoff Flaw</a>, July 22, 2026.</li>
+<li>OX Research, <a href="https://www.ox.security/blog/cve-2026-82533-deepseek-harness-ai-agent-sandbox-escape/">CVE-2026-82533: DeepSeek Harness AI Agent Sandbox Escape</a>, September 2026.</li>
+<li>Kubernetes, <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/">Pod Security Standards</a>.</li>
+<li>Kubernetes, <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Network Policies</a>.</li>
+<li>gVisor, <a href="https://gvisor.dev/docs/">What is gVisor?</a>.</li>
+<li>Kata Containers, <a href="https://katacontainers.io/">Kata Containers</a>.</li>
+</ol></article></main></body></html>

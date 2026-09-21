@@ -24,12 +24,14 @@
   var BASE = (function() {
     var p = location.pathname;
     if (p.indexOf('/contextweaver/') >= 0) return '../';
+    if (p.indexOf('/docs/') >= 0) return '../';
     return '';
   })();
 
   var NAV_SECTIONS = [
     { label: 'Home', href: BASE + 'index.html', icon: '🏠' },
     { label: 'Product', href: BASE + 'contextweaver/index.html', icon: '🧠' },
+    { label: 'Docs', href: BASE + 'docs/index.html', icon: '📚' },
     { label: 'Architecture', href: BASE + 'architecture.html', icon: '🏗️',
       children: [
         { label: 'Overview', href: BASE + 'architecture.html' },
@@ -74,6 +76,7 @@
   var PAGE_ORDER = [
     { href: 'index.html', title: 'Home' },
     { href: 'contextweaver/index.html', title: 'Product Overview' },
+    { href: 'docs/index.html', title: 'Documentation' },
     { href: 'architecture.html', title: 'Architecture Overview' },
     { href: 'architecture-azure.html', title: 'Architecture — Azure' },
     { href: 'architecture-aws.html', title: 'Architecture — AWS' },
@@ -99,10 +102,10 @@
   ];
 
   function getCurrentPageIndex() {
-    var p = location.pathname.replace(/^\//, '');
-    if (p === '' || p === '/') p = 'index.html';
+    var p = location.pathname.replace(/^\/+/, '');
+    if (p === '' || p.endsWith('/')) p += 'index.html';
     for (var i = 0; i < PAGE_ORDER.length; i++) {
-      if (p === PAGE_ORDER[i].href || p.endsWith('/' + PAGE_ORDER[i].href) || p.endsWith(PAGE_ORDER[i].href)) {
+      if (p === PAGE_ORDER[i].href) {
         return i;
       }
     }
@@ -110,14 +113,13 @@
   }
 
   function isActivePage(href) {
-    // Extract filename from current URL and href, compare exactly
-    var p = location.pathname.replace(/.*\//, '') || 'index.html';
-    var h = href.replace(/.*\//, '') || 'index.html';
-    // Special case: contextweaver/index.html vs root index.html
-    if (href.indexOf('contextweaver/') >= 0) {
-      return location.pathname.indexOf('contextweaver/') >= 0 && p === h;
+    var current = new URL(location.href);
+    var target = new URL(href, current);
+    function normalize(path) {
+      path = path.replace(/^\/+/, '');
+      return path === '' || path.endsWith('/') ? path + 'index.html' : path;
     }
-    return p === h && location.pathname.indexOf('contextweaver/') < 0;
+    return normalize(current.pathname) === normalize(target.pathname);
   }
 
   function isSectionActive(section) {
@@ -246,6 +248,28 @@
     return footer;
   }
 
+  function buildArchitectureStatusNotice() {
+    var path = location.pathname.replace(/^\/+/, '');
+    var pages = [
+      'architecture.html',
+      'architecture-azure.html',
+      'architecture-aws.html',
+      'architecture-gcp.html',
+      'architecture-diagram.html',
+      'dual-auth-diagram.html',
+      'flows.html',
+      'contextweaver/index.html'
+    ];
+    if (pages.indexOf(path || 'index.html') < 0) return null;
+
+    var notice = document.createElement('aside');
+    notice.className = 'bb-architecture-status';
+    notice.innerHTML = '<strong>Architecture status:</strong> This page includes current or legacy implementation details. '
+      + 'Use the <a href="' + BASE + 'docs/index.html">public architecture documentation</a> '
+      + 'for the normative production target, implementation status, and governed security model.';
+    return notice;
+  }
+
   // ── Inject Navigation on DOMContentLoaded ─────────────────
   document.addEventListener('DOMContentLoaded', function() {
     // Inject global nav at top of body
@@ -254,6 +278,9 @@
 
     // Add body padding for fixed nav
     document.body.style.paddingTop = '64px';
+
+    var statusNotice = buildArchitectureStatusNotice();
+    if (statusNotice) nav.insertAdjacentElement('afterend', statusNotice);
 
     // Inject prev/next page navigation
     var pageNav = buildPageNav();

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="RAG Storage and Search Infrastructure Readiness"><title>RAG Storage and Search Infrastructure Readiness | BrainzBytes ContextWeaver</title><link rel="icon" type="image/svg+xml" href="/logo.svg"><style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2333;--line:rgba(255,255,255,.1);--text:#e6edf3;--muted:#8b949e;--cyan:#58a6ff;--blue:#58a6ff;--violet:#bc8cff;--green:#34d399;--amber:#fbbf24;--rose:#fb7185}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 12% 8%,rgba(88,166,255,.11) 0,transparent 34%),radial-gradient(circle at 88% 18%,rgba(188,140,255,.13) 0,transparent 30%),var(--bg);color:var(--text);font:15px/1.68 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--cyan)}.top{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px max(18px,calc((100vw - 1420px)/2));border-bottom:1px solid var(--line);background:rgba(13,17,23,.94);backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}.mark{display:block;width:40px;height:40px}.brand b,.brand small{display:block}.brand small{color:var(--muted);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.actions{display:flex;flex-wrap:wrap;gap:7px}.button{padding:7px 10px;border:1px solid var(--line);border-radius:8px;color:var(--text);background:rgba(255,255,255,.04);font-size:11px;font-weight:800;text-decoration:none}.button.primary{color:#fff;background:linear-gradient(135deg,var(--violet),#7c3aed);border-color:var(--violet)}
+.layout{display:grid;grid-template-columns:275px minmax(0,1fr);gap:22px;width:min(1420px,calc(100% - 28px));margin:22px auto 50px}.toc{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:18px;border:1px solid var(--line);border-radius:15px;background:rgba(12,29,48,.86)}.toc h2{margin:0 0 12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase}.toc ul{margin:0;padding-left:17px}.toc li{margin:5px 0;color:var(--muted);font-size:11px}.toc a{color:inherit;text-decoration:none}.toc a:hover{color:var(--cyan)}
+.document{min-width:0;padding:clamp(24px,4vw,55px);border:1px solid var(--line);border-radius:20px;background:rgba(22,27,34,.92);box-shadow:0 22px 70px rgba(0,0,0,.25)}.document>h1:first-child{margin-top:0;font:800 clamp(34px,5vw,64px)/1.02 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.045em;background:linear-gradient(135deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}.document h1,.document h2,.document h3,.document h4{scroll-margin-top:84px;color:#f3f8ff}.document h2{margin-top:2.1em;padding-top:.35em;border-top:1px solid var(--line);font:750 32px/1.15 Inter,ui-sans-serif,system-ui,sans-serif}.document h3{margin-top:1.7em;color:#c4b5fd}.document p,.document li{color:#c7d0da}.document blockquote{margin:1.3em 0;padding:13px 18px;border-left:4px solid var(--violet);background:rgba(188,140,255,.08);color:#e1d9ef}.document code{color:#7dd3fc;background:rgba(88,166,255,.1);padding:.12em .3em;border-radius:4px}.document pre{overflow:auto;padding:17px;border:1px solid #30363d;border-radius:11px;background:#090d12}.document pre code{padding:0;background:none}.document table{display:block;max-width:100%;overflow:auto;border-collapse:collapse}.document th,.document td{padding:10px 12px;border:1px solid var(--line);text-align:left;vertical-align:top}.document th{color:#ede9fe;background:#211a33}.document img{max-width:100%;height:auto;border-radius:10px}.document hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+.catalog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.card b,.card small{display:block}.card small{margin-top:5px;color:var(--muted)}.card a{text-decoration:none}
+.diagram-layout{width:min(1500px,calc(100% - 28px));margin:20px auto 45px}.diagram-shell{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:rgba(22,27,34,.94)}.diagram-head{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 17px;border-bottom:1px solid var(--line)}.diagram-head h1{margin:0;font:800 clamp(22px,3vw,36px) Inter,ui-sans-serif,system-ui,sans-serif}.tabs{display:flex;gap:7px;overflow:auto;padding:12px 14px;border-bottom:1px solid var(--line)}.tab{white-space:nowrap;padding:8px 11px;border:1px solid var(--line);border-radius:8px;color:var(--muted);background:#111827;cursor:pointer}.tab.active{color:#fff;border-color:var(--violet);background:linear-gradient(135deg,var(--violet),#7c3aed);font-weight:900}.toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line)}.toolbar button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;color:var(--text);background:#1c2333;cursor:pointer}.canvas{overflow:auto;min-height:72vh;padding:22px;background:#e8edf4}.canvas img{display:block;width:100%;max-width:none;height:auto;margin:auto;filter:drop-shadow(0 10px 22px rgba(20,50,64,.18));transform-origin:top left}
+.caption{padding:10px 15px;color:var(--muted);font-size:11px}.empty{padding:40px;text-align:center;color:var(--muted)}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:relative;top:auto;max-height:none}.catalog{grid-template-columns:1fr 1fr}}@media(max-width:620px){.actions{display:none}.catalog{grid-template-columns:1fr}.document{padding:22px 17px}.diagram-head{align-items:flex-start;flex-direction:column}.canvas{padding:8px}}
+@media print{.top,.toc,.toolbar,.tabs{display:none}.layout,.diagram-layout{display:block;width:100%;margin:0}.document,.diagram-shell{border:0;box-shadow:none}.canvas{overflow:visible;padding:0;background:white}.canvas img{width:100%!important;transform:none!important}}
+</style></head>
+<body><header class="top"><a class="brand" href="/"><img class="mark" src="/logo.svg" alt="BrainzBytes"><span><b>BrainzBytes · ContextWeaver</b><small>Rendered document</small></span></a><div class="actions"><a class="button" href="/">BrainzBytes home</a><a class="button primary" href="/docs/">Documentation home</a><a class="button" href="../content/rag-storage-search-readiness.md">View source</a></div></header>
+<main class="layout"><aside class="toc"><h2>On this page</h2><ul><li class="level-1"><a href="#rag-storage-and-search-infrastructure-readiness">RAG Storage and Search Infrastructure Readiness</a></li><li class="level-2"><a href="#required-separation">Required separation</a></li><li class="level-2"><a href="#actual-infrastructure-inventory">Actual infrastructure inventory</a></li><li class="level-2"><a href="#initial-production-decision">Initial production decision</a></li><li class="level-2"><a href="#implemented-scalable-foundation">Implemented scalable foundation</a></li><li class="level-2"><a href="#scale-boundaries-and-promotion-criteria">Scale boundaries and promotion criteria</a></li><li class="level-2"><a href="#required-storage-model">Required storage model</a></li><li class="level-2"><a href="#generation-and-publication">Generation and publication</a></li><li class="level-2"><a href="#required-local-changes">Required local changes</a></li><li class="level-2"><a href="#required-azure-changes">Required Azure changes</a></li><li class="level-2"><a href="#current-conclusion">Current conclusion</a></li></ul></aside><article class="document"><h1 id="rag-storage-and-search-infrastructure-readiness">RAG Storage and Search Infrastructure Readiness <a href="#rag-storage-and-search-infrastructure-readiness" aria-label="Permalink">#</a></h1>
+<p><strong>Assessment date:</strong> September 21, 2026 <strong>Status:</strong> Scalable local storage and retrieval foundation implemented; ingestion execution and managed cloud scale-out remain</p>
+<h2 id="required-separation">Required separation <a href="#required-separation" aria-label="Permalink">#</a></h2>
+<p>An embedding model may be external. It is a governed compute provider, not the authoritative index store.</p>
+<pre><code class="language-text">Authorized chunk reference
+        |
+        v
+ContextWeaver Model Gateway
+        |
+        v
+External or internal embedding model
+        |
+        v
+Numeric embedding vector
+        |
+        v
+ContextWeaver-controlled vector/search storage</code></pre>
+<p>The model provider receives only the minimum authorized content and returns a vector. ContextWeaver stores that vector together with tenant, source, revision, ACL, classification, purpose, lineage, model version, chunker version, schema version, and generation metadata.</p>
+<h2 id="actual-infrastructure-inventory">Actual infrastructure inventory <a href="#actual-infrastructure-inventory" aria-label="Permalink">#</a></h2>
+<table><thead><tr><th>Capability</th><th>Local foundation</th><th>Azure Terraform</th><th>Readiness</th></tr></thead><tbody><tr><td>Authoritative source files</td><td>User/group/organization storage by reference</td><td>External owner-controlled storage</td><td>Architectural boundary</td></tr><tr><td>Immutable artifacts</td><td>MinIO with persistent Docker volume</td><td>ZRS Azure Blob Storage with private <code>artifacts</code> container</td><td>Provisioned but not wired to RAG</td></tr><tr><td>Source and freshness metadata</td><td>PostgreSQL with persistent Docker volume</td><td>No managed PostgreSQL resource</td><td>Local only</td></tr><tr><td>Vector storage</td><td>Digest-pinned pgvector PostgreSQL image</td><td>None</td><td>Implemented locally</td></tr><tr><td><code>pgvector</code></td><td>Enabled by the versioned RAG migration</td><td>Not provisioned</td><td>Implemented locally</td></tr><tr><td>Lexical/full-text RAG schema</td><td>Generated <code>tsvector</code>, GIN indexes, hybrid query adapter</td><td>None</td><td>Implemented locally</td></tr><tr><td>Dedicated search service</td><td>None</td><td>No Azure AI Search, OpenSearch, Qdrant, or Milvus</td><td>Missing</td></tr><tr><td>RAG bucket/container initialization</td><td>Idempotent private MinIO bucket bootstrap</td><td>General artifact container only</td><td>Implemented locally</td></tr><tr><td>Ingestion storage wiring</td><td>Durable jobs, deterministic stages, transactional outbox, generation metadata</td><td>None</td><td>Partial</td></tr><tr><td>Retrieval execution</td><td>Active-generation lexical/vector hybrid retrieval with tenant, ACL, purpose, and classification predicates</td><td>None</td><td>Implemented locally</td></tr></tbody></table>
+<h2 id="initial-production-decision">Initial production decision <a href="#initial-production-decision" aria-label="Permalink">#</a></h2>
+<p>The initial implementation uses:</p>
+<ul>
+<li>PostgreSQL HA with JSONB, full-text search, and <code>pgvector</code>;</li>
+<li>S3-compatible object storage over MinIO locally and Blob/S3/GCS in cloud;</li>
+<li>external or internal embedding models only through the Model Gateway; and</li>
+<li>provider-neutral storage and retrieval adapters.</li>
+</ul>
+<p>OpenSearch, Azure AI Search, Qdrant, or Milvus are introduced only after measured recall, latency, capacity, filtering, or operational requirements justify a separate search platform.</p>
+<h2 id="implemented-scalable-foundation">Implemented scalable foundation <a href="#implemented-scalable-foundation" aria-label="Permalink">#</a></h2>
+<p>The local implementation now provides:</p>
+<ul>
+<li>PostgreSQL-backed idempotent ingestion jobs and deterministic stage records;</li>
+<li>transactional outbox events with publish leases, persistent RabbitMQ</li>
+<p>messages, publisher confirmation, and retry backoff;</p>
+<li>versioned generation, alias, document, chunk, embedding, inbox, outbox, and</li>
+<p>deletion-ledger tables;</p>
+<li>tenant row-level-security policies;</li>
+<li>generated lexical vectors and GIN indexes;</li>
+<li>pgvector HNSW indexes for 384, 768, 1024, 1536, and 3072 dimensions;</li>
+<li><code>halfvec</code> indexing for 3072-dimensional embeddings;</li>
+<li>atomic active-generation publication with retained rollback generation;</li>
+<li>governed lexical and hybrid retrieval from only the active generation;</li>
+<li>database-enforced tenant context plus ACL, purpose, and classification</li>
+<p>predicates;</p>
+<li>idempotent creation of private MinIO RAG buckets; and</li>
+<li>HPA, rolling-update, graceful-drain, and PodDisruptionBudget controls for</li>
+<p>ingestion and retrieval.</p>
+</ul>
+<p>Integration validation exercised real pgvector migrations, idempotent job scheduling, 12 durable stage records, transactional outbox delivery to RabbitMQ, atomic generation publication, and lexical and 384-dimensional hybrid retrieval.</p>
+<h2 id="scale-boundaries-and-promotion-criteria">Scale boundaries and promotion criteria <a href="#scale-boundaries-and-promotion-criteria" aria-label="Permalink">#</a></h2>
+<p>PostgreSQL with pgvector is the initial production tier, not an unlimited distributed-search claim. Before each capacity increase, load tests must measure vector count, embedding dimensions, write amplification, filter selectivity, concurrent ingestion, query throughput, p95/p99 latency, recall, replication lag, vacuum pressure, and shadow-generation storage overhead.</p>
+<p>A dedicated distributed search adapter is required when measured objectives cannot be met through PostgreSQL HA, connection pooling, table partitioning, read replicas, bounded tenant collections, and workload isolation. The adapter must preserve the same generation, ACL, purpose, classification, lineage, deletion, and audit contracts.</p>
+<h2 id="required-storage-model">Required storage model <a href="#required-storage-model" aria-label="Permalink">#</a></h2>
+<pre><code class="language-text">Object storage
+  cw-artifacts/
+  cw-rag-source-snapshots/
+  cw-rag-extracted/
+  cw-rag-context-packs/
+
+PostgreSQL
+  rag_sources
+  rag_index_generations
+  rag_documents
+  rag_chunks
+  rag_embeddings
+  rag_generation_aliases
+  rag_ingestion_jobs
+  rag_ingestion_stages
+  rag_deletion_ledger</code></pre>
+<p>Document bodies and normalized artifacts live in object storage. PostgreSQL stores governance metadata, lineage, chunks where appropriate, vectors, lexical search state, generation state, and the active alias.</p>
+<h2 id="generation-and-publication">Generation and publication <a href="#generation-and-publication" aria-label="Permalink">#</a></h2>
+<p>Material updates build a new generation rather than mutating the active generation:</p>
+<pre><code class="language-text">generation N   active
+generation N+1 shadow/building
+
+validate N+1
+  counts | hashes | ACL | lineage | quality | poisoning
+  schema/model compatibility | rollback readability
+
+atomic transaction:
+  active alias -&gt; N+1
+  previous rollback generation -&gt; N</code></pre>
+<p>Retrieval always resolves the active generation through authoritative metadata and applies tenant, user/group, purpose, classification, ACL, freshness, and lifecycle predicates inside the database or search query.</p>
+<h2 id="required-local-changes">Required local changes <a href="#required-local-changes" aria-label="Permalink">#</a></h2>
+<ol>
+<li>Wire Artifact Gateway to object storage.</li>
+<li>Implement extraction, chunking, Model Gateway embedding, and shadow</li>
+<p>generation writers.</p>
+<li>Add queue-consuming stage workers with renewable job leases and</li>
+<p>checkpoint recovery.</p>
+<li>Add connection pooling and tenant/collection partition management.</li>
+<li>Add deletion, rebuild, backup, restore, and cross-pod recovery tests.</li>
+<li>Add representative scale, recall, latency, and noisy-neighbor benchmarks.</li>
+</ol>
+<h2 id="required-azure-changes">Required Azure changes <a href="#required-azure-changes" aria-label="Permalink">#</a></h2>
+<ol>
+<li>Add Azure Database for PostgreSQL Flexible Server.</li>
+<li>Configure zone-redundant HA, backups, point-in-time recovery, private</li>
+<p>networking, and private DNS.</p>
+<li>Enable the approved vector extension.</li>
+<li>Create least-privilege database roles for catalog, ingestion, retrieval,</li>
+<p>and migration.</p>
+<li>Add governed Blob containers or prefixes for RAG artifacts and projections.</li>
+<li>Use workload identity and private endpoints; do not inject storage keys.</li>
+<li>Add an optional private Azure AI Search adapter only when selected by</li>
+<p>measured requirements.</p>
+<li>Publish all endpoints and capabilities through the non-secret platform</li>
+<p>contract consumed by GitOps.</p>
+</ol>
+<h2 id="current-conclusion">Current conclusion <a href="#current-conclusion" aria-label="Permalink">#</a></h2>
+<p>The local stack now contains the durable schema, pgvector indexes, private RAG bucket initialization, transactional job/outbox foundation, atomic generation publication, and functional governed hybrid retrieval. It does not yet execute artifact extraction, chunking, embedding, and shadow writes autonomously, and Azure still lacks managed PostgreSQL and an optional distributed search service. The platform is therefore ready for the next worker/adapters slice, but it is not yet production-complete or proven at massive scale.</p></article></main></body></html>
