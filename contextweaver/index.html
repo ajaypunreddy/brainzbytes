@@ -33,9 +33,10 @@
     .cwx-six{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}.cwx-cap{min-height:205px;padding:22px;border:1px solid var(--brand-line);border-radius:16px;background:#0d1821}.cwx-cap i{color:var(--brand-aqua);font-size:1.2rem}.cwx-cap h3{margin:30px 0 9px;color:var(--brand-ink);font-size:1.04rem}.cwx-cap p{margin:0;color:var(--brand-muted);font-size:.77rem;line-height:1.6}
     .cwx-flow{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:30px}.cwx-flow article{min-height:150px;padding:15px 12px;border:1px solid var(--brand-line);border-radius:12px;background:#0d1821}.cwx-flow b{display:grid;width:25px;height:25px;place-items:center;border-radius:7px;color:#061512;background:var(--brand-aqua);font-size:.57rem}.cwx-flow h3{margin:24px 0 7px;color:var(--brand-ink);font-size:.76rem}.cwx-flow p{margin:0;color:var(--brand-muted);font-size:.6rem;line-height:1.48}
     .cwx-principles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:30px}.cwx-principles article{display:grid;grid-template-columns:40px 1fr;gap:13px;padding:18px;border:1px solid var(--brand-line);border-radius:14px;background:#0d1821}.cwx-principles i{display:grid;width:40px;height:40px;place-items:center;border-radius:10px;color:var(--brand-aqua);background:rgba(110,231,207,.06)}.cwx-principles h3{margin:0;color:var(--brand-ink);font-size:.87rem}.cwx-principles p{margin:6px 0 0;color:var(--brand-muted);font-size:.7rem;line-height:1.52}
+    .cwx-studio{margin-top:28px;overflow:hidden;border:1px solid var(--brand-line);border-radius:18px;background:#08131c}.cwx-studio-tabs{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--brand-line)}.cwx-studio-tabs span{padding:13px 16px;color:#8499a6;border-right:1px solid var(--brand-line);font-size:.67rem;font-weight:800;text-align:center}.cwx-studio-tabs span:last-child{border-right:0}.cwx-studio-tabs .active{color:#071513;background:var(--brand-aqua)}.cwx-studio-body{display:grid;grid-template-columns:.85fr 1.15fr 1fr;gap:1px;background:var(--brand-line)}.cwx-studio-body article{min-height:190px;padding:18px;background:#0b1720}.cwx-studio-body small{color:var(--brand-aqua);font-size:.55rem;font-weight:800;text-transform:uppercase}.cwx-studio-body h3{margin:20px 0 8px;color:var(--brand-ink);font-size:.88rem}.cwx-studio-body p{margin:0;color:var(--brand-muted);font-size:.66rem;line-height:1.55}.cwx-studio-prompt{margin-top:14px;padding:12px;border:1px solid #294554;border-radius:9px;color:#dfe9ed;background:#0d1d28;font-size:.65rem;line-height:1.45}
     @media(max-width:1000px){.cwx-hero-grid{grid-template-columns:1fr}.cwx-flow{grid-template-columns:repeat(4,1fr)}}
-    @media(max-width:750px){.cwx-metrics,.cwx-six,.cwx-principles{grid-template-columns:repeat(2,1fr)}.cwx-flow{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:520px){.cwx-hero-grid>*{min-width:0}.cwx-command{max-width:calc(100vw - 24px)}.cwx-route{grid-template-columns:1fr}.cwx-metrics,.cwx-six,.cwx-principles,.cwx-flow{grid-template-columns:1fr}.cwx-principles article{grid-template-columns:1fr}}
+    @media(max-width:750px){.cwx-metrics,.cwx-six,.cwx-principles{grid-template-columns:repeat(2,1fr)}.cwx-flow{grid-template-columns:repeat(2,1fr)}.cwx-studio-body{grid-template-columns:1fr}}
+    @media(max-width:520px){.cwx-hero-grid>*{min-width:0}.cwx-command{max-width:calc(100vw - 24px)}.cwx-route{grid-template-columns:1fr}.cwx-metrics,.cwx-six,.cwx-principles,.cwx-flow{grid-template-columns:1fr}.cwx-principles article{grid-template-columns:1fr}.cwx-studio-tabs{grid-template-columns:repeat(2,1fr)}}
   </style>
 </head>
 <body>
@@ -46,7 +47,7 @@
     <h2>ContextWeaver<br>platform overview</h2>
     <nav>
       <a class="active" href="#overview"><span>Overview</span></a>
-      <a href="#studios"><span>Four Studios</span></a>
+      <a href="#studios"><span>Unified Studio</span></a>
       <a href="#governs"><span>Governed layers</span></a>
       <a href="#lifecycle"><span>Durable lifecycle</span></a>
       <a href="#experience"><span>Product experience</span></a>
@@ -92,13 +93,21 @@
   <section class="bbx-section bbx-section-alt" id="studios">
     <div class="bbx-container">
       <span class="bbx-eyebrow">The universal AI capability factory</span>
-      <h2 class="bbx-title bbx-title-sm">Four specialized Studios. One governed path from intent to outcome.</h2>
-      <p class="bbx-lead">Builders move through connected rooms rather than disconnected products. Every artifact shares identity, policy, immutable Registry versions, evidence, observability, and the lifecycle Design → Validate → Rehearse → Govern → Publish → Observe.</p>
+      <h2 class="bbx-title bbx-title-sm">One Studio page. Four persistent artifact tabs.</h2>
+      <p class="bbx-lead">At <strong>/studios</strong>, builders describe the outcome once, answer focused clarifying questions, and move among MCP, Agent, Workflow, and Service without leaving the workspace. Conversation, draft history, validation, evidence, and unsaved work remain available while each artifact keeps its own contract.</p>
       <div class="bbx-resource-grid">
         <article class="bbx-resource"><span>01 · MCP Studio</span><h3>Create governed capabilities</h3><p>Tools, connectors, schemas, permissions, policies, credentials by reference, dependencies, tests, and publication.</p></article>
         <article class="bbx-resource"><span>02 · Agent Studio</span><h3>Create governed reasoning roles</h3><p>Prompts, memory, skills, RAG, models, capability access, guardrails, evaluation, rehearsal, and observation.</p></article>
         <article class="bbx-resource"><span>03 · Workflow Studio</span><h3>Compose durable orchestration</h3><p>Typed steps, branches, parallel work, approvals, waits, retries, compensation, recovery, and complete run evidence.</p></article>
         <article class="bbx-resource"><span>04 · Service Studio</span><h3>Package reusable outcomes</h3><p>Stable contracts, exact Workflow associations, required Agents and MCPs, SLOs, deployment, versions, and ownership.</p></article>
+      </div>
+      <div class="cwx-studio" aria-label="Unified Studio product model">
+        <nav class="cwx-studio-tabs" aria-label="Persistent Studio artifact tabs"><span>MCP</span><span>Agent</span><span class="active">Workflow</span><span>Service</span></nav>
+        <div class="cwx-studio-body">
+          <article><small>Shared conversation</small><h3>Describe and clarify</h3><p>The Studio asks about inputs, authority, failure behavior, approvals, and evidence instead of inventing missing requirements.</p><div class="cwx-studio-prompt">“Investigate a release incident in parallel, require approval before rollback, and preserve the evidence.”</div></article>
+          <article><small>Synchronized design</small><h3>Visual · Form · Contract · Code</h3><p>Every projection edits the same typed draft. A conversational change updates the graph and contract; a manual edit updates the explanation and diff.</p><div class="cwx-studio-prompt">Telemetry + release analysis → root-cause join → safety review → human approval</div></article>
+          <article><small>Shared assurance</small><h3>History, validation, evidence</h3><p>Autosave, checkpoints, assumptions, Registry references, findings, rehearsal receipts, policy decisions, and publication provenance stay with the draft.</p><div class="cwx-studio-prompt">12 checks passed · 1 approval required · 4 Registry references pinned</div></article>
+        </div>
       </div>
     </div>
   </section>

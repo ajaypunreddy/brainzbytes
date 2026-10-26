@@ -19,14 +19,23 @@ a{color:var(--cyan)}.top{position:sticky;top:0;z-index:10;display:flex;justify-c
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.architecture-arrow:after{animation:none;top:10px}}
 @media print{.top,.toc,.toolbar,.tabs{display:none}.layout,.diagram-layout{display:block;width:100%;margin:0}.document,.diagram-shell{border:0;box-shadow:none}.canvas{overflow:visible;padding:0;background:white}.canvas img{width:100%!important;transform:none!important}.architecture-arrow:after{animation:none}}
 </style></head>
-<body><div aria-hidden="true" class="bbx-reading-progress"><span></span></div><main class="layout"><aside class="toc"><h2>Explore this page</h2><ul><li class="level-2"><a href="#1-the-four-studios">1. The four Studios</a></li><li class="level-2"><a href="#2-shared-lifecycle">2. Shared lifecycle</a></li><li class="level-2"><a href="#3-factory-journey">3. Factory journey</a></li><li class="level-2"><a href="#4-product-and-runtime-boundaries">4. Product and runtime boundaries</a></li><li class="level-2"><a href="#5-service-capability-versus-business-service">5. Service capability versus business Service</a></li><li class="level-2"><a href="#6-current-implementation-truth">6. Current implementation truth</a></li><li class="level-2"><a href="#7-required-cross-studio-invariants">7. Required cross-Studio invariants</a></li></ul></aside><article class="document"><div class="doc-actions"><a class="button" href="/">BrainzBytes home</a><a class="button primary" href="/docs/">Documentation home</a><a class="button" href="../content/studio-operating-model.md">View source</a></div><h1 id="contextweaver-studio-operating-model">ContextWeaver Studio Operating Model</h1>
-<p><strong>Reviewed:</strong> October 26, 2026<br/>
-<strong>Status:</strong> Product operating model with an implemented application foundation and a broader NextGen target.</p>
-<p>ContextWeaver is <strong>one AI capability factory with four specialized Studios</strong>.
-The Studios are not separate products or isolated builders. They are role-focused
-authoring rooms that share the same Registry, identity, policy, configuration,
-versioning, evidence, observability, and promotion model.</p>
-<h2 id="1-the-four-studios">1. The four Studios</h2>
+<body><div aria-hidden="true" class="bbx-reading-progress"><span></span></div><main class="layout"><aside class="toc"><h2>Explore this page</h2><ul><li class="level-2"><a href="#1-one-page-four-persistent-tabs">1. One page, four persistent tabs</a></li><li class="level-2"><a href="#2-shared-ai-native-authoring-loop">2. Shared AI-native authoring loop</a></li><li class="level-2"><a href="#3-synchronized-views">3. Synchronized views</a></li><li class="level-2"><a href="#4-shared-draft-record">4. Shared draft record</a></li><li class="level-2"><a href="#5-shared-lifecycle">5. Shared lifecycle</a></li><li class="level-2"><a href="#6-factory-journey">6. Factory journey</a></li><li class="level-2"><a href="#7-product-and-runtime-boundaries">7. Product and runtime boundaries</a></li><li class="level-2"><a href="#8-service-capability-versus-business-service">8. Service capability versus business Service</a></li><li class="level-2"><a href="#9-current-implementation-truth">9. Current implementation truth</a></li><li class="level-2"><a href="#10-required-cross-studio-invariants">10. Required cross-Studio invariants</a></li></ul></aside><article class="document"><div class="doc-actions"><a class="button" href="/">BrainzBytes home</a><a class="button primary" href="/docs/">Documentation home</a><a class="button" href="../content/studio-operating-model.md">View source</a></div><h1 id="contextweaver-studio-operating-model">ContextWeaver Studio Operating Model</h1>
+<p><strong>Reviewed:</strong> October 26, 2026<br />
+<strong>Status:</strong> Product operating model and implementation contract for the unified Studio experience.</p>
+<p>ContextWeaver is <strong>one AI capability factory with one Studio page and four
+specialized artifact modes</strong>. The canonical authoring route is <code>/studios</code>.
+MCP, Agent, Workflow, and Service remain distinct definitions, but builders do
+not move between disconnected pages to create them.</p>
+<h2 id="1-one-page-four-persistent-tabs">1. One page, four persistent tabs</h2>
+<p>The Studio header always keeps these tabs visible:</p>
+<p><code>MCP | Agent | Workflow | Service</code></p>
+<p>Changing tabs changes the artifact-specific compiler, canvas, form, contract,
+and code projection. It does not discard the conversation, draft history,
+validation findings, evidence, selected Registry references, or unsaved work.</p>
+<p>The product rule is:</p>
+<blockquote>
+<p>Unify how people build; do not merge the artifact definitions.</p>
+</blockquote>
 <table>
 <thead>
 <tr>
@@ -63,7 +72,50 @@ versioning, evidence, observability, and promotion model.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="2-shared-lifecycle">2. Shared lifecycle</h2>
+<h2 id="2-shared-ai-native-authoring-loop">2. Shared AI-native authoring loop</h2>
+<p>Every tab uses the same conversation and clarification experience:</p>
+<p><code>Describe → Clarify → Resolve → Draft → Visualize → Validate → Rehearse → Review diff → Publish</code></p>
+<ol>
+<li>A builder describes the outcome in ordinary language.</li>
+<li>The Studio asks focused questions when ownership, inputs, outputs, authority,
+   data scope, failure behavior, or evidence requirements are missing.</li>
+<li>Registry resolution prefers approved, compatible capabilities over duplicate
+   connectors, prompts, or orchestration.</li>
+<li>The intent compiler proposes a typed draft and records its assumptions.</li>
+<li>Deterministic platform code validates and applies the proposed change set.</li>
+<li>The builder reviews the visual design, fields, contract, code, policy
+   findings, rehearsal results, and exact diff before publication.</li>
+</ol>
+<p>The model may propose structured changes. It cannot publish, deploy, grant
+permissions, retrieve credentials, bypass governance, or execute side effects.</p>
+<h2 id="3-synchronized-views">3. Synchronized views</h2>
+<p>The same draft is projected into synchronized views:</p>
+<ul>
+<li><strong>Conversation</strong> explains intent, asks questions, and proposes changes.</li>
+<li><strong>Visual</strong> shows topology, dependencies, branches, gates, and data flow.</li>
+<li><strong>Form</strong> exposes accessible fields and guided choices.</li>
+<li><strong>Contract</strong> shows typed inputs, outputs, errors, compatibility, and versions.</li>
+<li><strong>Code</strong> shows the source representation when the artifact supports it.</li>
+</ul>
+<p>An edit in any view updates the shared draft and the other projections. A canvas
+connection can update the contract; a form change can update code; a code edit
+can update the visual graph; and a conversational request produces a reviewable
+change set rather than silently replacing the draft.</p>
+<p>This gives non-programmers a plain-language and visual path while preserving the
+precision, schemas, source, and diffs developers need.</p>
+<h2 id="4-shared-draft-record">4. Shared draft record</h2>
+<p>All four tabs use the same session-level authoring services:</p>
+<ul>
+<li>autosave, checkpoints, undo, redo, and named draft history;</li>
+<li>assumptions, clarifying answers, and immutable Registry references;</li>
+<li>validation findings, policy decisions, evaluation and rehearsal evidence;</li>
+<li>proposed and accepted diffs with actor and timestamp attribution;</li>
+<li>collaboration, comments, ownership, and handoff context; and</li>
+<li>publication provenance and links to later operational evidence.</li>
+</ul>
+<p>Switching artifact tabs or views never requires back-and-forth navigation and
+never creates a second, disconnected source of truth.</p>
+<h2 id="5-shared-lifecycle">5. Shared lifecycle</h2>
 <p>Every Studio follows the same governed lifecycle:</p>
 <p><code>Design → Validate → Rehearse → Govern → Publish → Observe</code></p>
 <ol>
@@ -80,22 +132,24 @@ versioning, evidence, observability, and promotion model.</p>
 <li><strong>Observe</strong> — attach metrics, logs, traces, SLOs, evaluation results, run
    evidence, and operational ownership.</li>
 </ol>
-<h2 id="3-factory-journey">3. Factory journey</h2>
+<h2 id="6-factory-journey">6. Factory journey</h2>
 <p>The typical platform journey is:</p>
-<p><code>Workspace → MCP Studio → Agent Studio → Workflow Studio → Service Studio → Registry → Operations &amp; Evidence</code></p>
+<p><code>Workspace → /studios → Registry → Operations &amp; Evidence</code></p>
 <ul>
 <li>A <strong>Workspace</strong> gives a builder a governed development environment.</li>
-<li><strong>MCP Studio</strong> creates or discovers the capabilities that can act on systems.</li>
-<li><strong>Agent Studio</strong> gives a reasoning role the minimum approved capability set.</li>
-<li><strong>Workflow Studio</strong> turns those roles and tools into durable controlled work.</li>
-<li><strong>Service Studio</strong> packages the complete outcome behind a stable business
-  contract and pins exact immutable dependencies.</li>
+<li>The shared <strong>Studio conversation</strong> captures the outcome and unresolved
+  requirements once.</li>
+<li>The <strong>MCP tab</strong> creates or discovers capabilities that can act on systems.</li>
+<li>The <strong>Agent tab</strong> gives a reasoning role the minimum approved capability set.</li>
+<li>The <strong>Workflow tab</strong> turns roles and tools into durable controlled work.</li>
+<li>The <strong>Service tab</strong> packages the outcome behind a stable business contract and
+  pins exact immutable dependencies.</li>
 <li>The <strong>Registry</strong> makes approved versions discoverable and resolvable.</li>
 <li><strong>Operations &amp; Evidence</strong> prove what ran, who authorized it, what information
   was used, which side effects occurred, and whether the outcome met policy and
   SLOs.</li>
 </ul>
-<h2 id="4-product-and-runtime-boundaries">4. Product and runtime boundaries</h2>
+<h2 id="7-product-and-runtime-boundaries">7. Product and runtime boundaries</h2>
 <p>The Studio is the <strong>authoring and operating experience</strong>. It is not itself the
 runtime:</p>
 <ul>
@@ -108,7 +162,7 @@ runtime:</p>
 <li>Services retain exact Workflow, Agent, MCP, model, retrieval, configuration,
   policy, and evidence references required for reconstruction.</li>
 </ul>
-<h2 id="5-service-capability-versus-business-service">5. Service capability versus business Service</h2>
+<h2 id="8-service-capability-versus-business-service">8. Service capability versus business Service</h2>
 <p>The current application service catalog contains reusable <strong>service engines</strong>:
 shared MCP capability providers such as communication or payment services.
 These are building blocks available to Service Studio.</p>
@@ -121,7 +175,7 @@ RAG profiles, approvals, SLOs, and deployment metadata.</p>
 <li>a Workflow coordinates work;</li>
 <li>a business Service packages the complete reusable outcome.</li>
 </ul>
-<h2 id="6-current-implementation-truth">6. Current implementation truth</h2>
+<h2 id="9-current-implementation-truth">9. Current implementation truth</h2>
 <p>The existing application provides the foundation for the four-Studio model:</p>
 <ul>
 <li><strong>MCP Studio foundation:</strong> the Visual Designer, Plugin Library, engine
@@ -135,10 +189,14 @@ RAG profiles, approvals, SLOs, and deployment metadata.</p>
   metadata, reusable Workflow definitions, and navigation across the other
   Studios.</li>
 </ul>
-<p>This branding and composition layer does <strong>not</strong> claim that every NextGen
-business Service contract, arbitrary Agent/MCP dispatch path, immutable
-promotion control, or production qualification requirement is complete.</p>
-<h2 id="7-required-cross-studio-invariants">7. Required cross-Studio invariants</h2>
+<p>The unified <code>/studios</code> product contract adds one persistent four-tab shell,
+shared conversation and clarification, synchronized projections, and shared
+draft history, validation, and evidence. Artifact-specific compilers and
+renderers continue to evolve independently. This operating model does <strong>not</strong>
+claim that every NextGen business Service contract, arbitrary Agent/MCP dispatch
+path, immutable promotion control, or production qualification requirement is
+complete.</p>
+<h2 id="10-required-cross-studio-invariants">10. Required cross-Studio invariants</h2>
 <p>Every published artifact must have:</p>
 <ul>
 <li>a stable identity, owner, version, origin, and lifecycle state;</li>
