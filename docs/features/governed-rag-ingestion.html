@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A publication-ready architecture for governed, fresh, secure, and version-safe retrieval-augmented generation.">
+  <meta name="author" content="BrainzBytes">
+  <meta name="theme-color" content="#081d29">
+  <title>Governed, Fresh, and Version-Safe RAG | ContextWeaver</title>
+  <style>
+    :root {
+      --ink: #102b3b;
+      --muted: #5a7280;
+      --paper: #f2f7f8;
+      --surface: #ffffff;
+      --navy: #081d29;
+      --navy-2: #12374a;
+      --line: #cfe0e5;
+      --teal: #159b91;
+      --teal-soft: #dff5f1;
+      --blue: #3d7fc4;
+      --blue-soft: #e7f0fb;
+      --violet: #7155b7;
+      --violet-soft: #eee9f8;
+      --amber: #b87615;
+      --amber-soft: #fff2da;
+      --red: #b84255;
+      --red-soft: #fde8eb;
+      --green: #14785d;
+      --green-soft: #e2f3ec;
+      --shadow: 0 22px 65px rgba(15, 57, 76, .11);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--paper); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 6% 8%, rgba(21,155,145,.10), transparent 25rem),
+        radial-gradient(circle at 94% 24%, rgba(113,85,183,.08), transparent 28rem),
+        var(--paper);
+      font: 15px/1.62 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; }
+    code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    .topbar {
+      position: sticky;
+      z-index: 20;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      padding: 12px max(24px, calc((100vw - 1280px) / 2));
+      border-bottom: 1px solid rgba(199,220,227,.9);
+      background: rgba(247,251,252,.92);
+      backdrop-filter: blur(18px);
+    }
+    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(145deg, #0c3544, #28366b);
+      font-weight: 900;
+      letter-spacing: -.08em;
+    }
+    .brand b, .brand small { display: block; }
+    .brand small { color: var(--muted); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; }
+    nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+    nav a {
+      padding: 7px 10px;
+      border-radius: 8px;
+      color: #526d7b;
+      font-size: 11px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    nav a:hover { color: #0c5f67; background: #e5f2f3; }
+    main { width: min(1280px, calc(100% - 32px)); margin: 20px auto 54px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(290px, .55fr);
+      gap: 36px;
+      min-height: 470px;
+      padding: clamp(34px, 6vw, 72px);
+      border-radius: 28px;
+      color: white;
+      background:
+        linear-gradient(115deg, rgba(8,29,41,.99), rgba(12,53,67,.97) 62%, rgba(41,40,78,.96)),
+        var(--navy);
+      box-shadow: var(--shadow);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -110px;
+      bottom: -180px;
+      width: 480px;
+      height: 480px;
+      border: 1px solid rgba(102,224,214,.22);
+      border-radius: 50%;
+      box-shadow: 0 0 0 55px rgba(102,224,214,.035), 0 0 0 110px rgba(117,91,190,.035);
+    }
+    .hero-copy, .hero-side { position: relative; z-index: 2; }
+    .eyebrow {
+      display: block;
+      margin-bottom: 10px;
+      color: #5fd9d1;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 850px;
+      margin: 0;
+      font: 700 clamp(34px, 4vw, 52px)/1.04 Georgia, "Times New Roman", serif;
+      letter-spacing: -.055em;
+    }
+    h1 em { color: #6ce0d8; font-style: normal; }
+    .lede { max-width: 850px; margin: 20px 0 0; color: #c2d5dc; font-size: clamp(15px, 1.6vw, 20px); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px; }
+    .button {
+      padding: 10px 14px;
+      border: 1px solid #3c6877;
+      border-radius: 10px;
+      color: #d4e6eb;
+      background: rgba(17,57,72,.75);
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .button.primary { border-color: #56cfc7; color: #062b31; background: #66ddd5; }
+    .hero-side { display: grid; align-content: end; gap: 12px; }
+    .principle {
+      padding: 18px;
+      border: 1px solid rgba(107,209,202,.35);
+      border-radius: 15px;
+      color: #bfd4db;
+      background: rgba(8,29,41,.58);
+    }
+    .principle b { display: block; margin-bottom: 5px; color: white; font: 700 18px/1.15 Georgia, serif; }
+    .meta { display: flex; gap: 8px; color: #9fb9c4; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+    section { scroll-margin-top: 88px; margin-top: 22px; }
+    .section-card {
+      padding: clamp(25px, 4vw, 46px);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 12px 36px rgba(27,72,90,.06);
+    }
+    .section-head { max-width: 860px; margin-bottom: 25px; }
+    .section-head .eyebrow { color: var(--teal); }
+    h2 { margin: 0; font: 700 clamp(26px, 3vw, 36px)/1.12 Georgia, "Times New Roman", serif; letter-spacing: -.03em; }
+    h3 { margin: 0; font: 700 21px/1.18 Georgia, "Times New Roman", serif; }
+    .section-head p { margin: 10px 0 0; color: var(--muted); font-size: 16px; }
+    .outcomes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .outcome, .service, .control, .status-card {
+      padding: 17px;
+      border: 1px solid #d9e6ea;
+      border-radius: 13px;
+      background: #fbfdfd;
+    }
+    .outcome b {
+      display: grid;
+      place-items: center;
+      width: 29px;
+      height: 29px;
+      margin-bottom: 12px;
+      border-radius: 9px;
+      color: white;
+      background: var(--teal);
+      font-size: 12px;
+    }
+    .outcome span { display: block; color: #385767; font-size: 13px; line-height: 1.45; }
+    .guarantee {
+      margin-top: 14px;
+      padding: 20px 22px;
+      border-left: 5px solid var(--teal);
+      border-radius: 10px;
+      color: #24515a;
+      background: var(--teal-soft);
+      font-size: 16px;
+    }
+    .guarantee strong { color: #0a625b; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 24px 12px;
+    }
+    .flow-node {
+      position: relative;
+      display: grid;
+      align-content: center;
+      min-height: 92px;
+      padding: 13px 10px;
+      border: 1px solid #bedadf;
+      border-radius: 12px;
+      color: #174653;
+      background: linear-gradient(145deg, #f8fdfd, #eaf6f6);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .flow-node:not(:nth-child(6n))::after {
+      content: ">";
+      position: absolute;
+      right: -19px;
+      top: 34px;
+      color: var(--teal);
+      font-size: 22px;
+      font-weight: 900;
+    }
+    .flow-node:nth-child(n+7) { border-color: #d2c7e8; background: linear-gradient(145deg, #fdfcff, #f0ecf8); }
+    .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+    .service { border-top: 4px solid var(--blue); }
+    .service:nth-child(3n+2) { border-top-color: var(--violet); }
+    .service:nth-child(3n) { border-top-color: var(--teal); }
+    .service code { display: block; margin-bottom: 7px; color: #235f96; font-size: 12px; font-weight: 900; }
+    .service p { margin: 0; color: var(--muted); font-size: 12px; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .code-card {
+      overflow: hidden;
+      border: 1px solid #1e4658;
+      border-radius: 14px;
+      background: var(--navy);
+    }
+    .code-title { padding: 10px 15px; color: #87dcd6; background: #113446; font-size: 10px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+    pre { overflow-x: auto; margin: 0; padding: 19px; color: #c9dce3; font-size: 12px; line-height: 1.58; }
+    .state-stack { display: grid; gap: 10px; }
+    .state {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid #d7e5e9;
+      border-radius: 11px;
+      background: white;
+    }
+    .state b { padding: 6px 9px; border-radius: 7px; color: var(--green); background: var(--green-soft); text-align: center; font-size: 11px; text-transform: uppercase; }
+    .state.blocked b { color: var(--red); background: var(--red-soft); }
+    .state span { color: var(--muted); font-size: 12px; }
+    .pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px; counter-reset: stage; }
+    .pipeline article {
+      position: relative;
+      min-height: 115px;
+      padding: 16px 14px 14px 48px;
+      border: 1px solid #d7e4e8;
+      border-radius: 12px;
+      background: #fbfdfd;
+      counter-increment: stage;
+    }
+    .pipeline article::before {
+      content: counter(stage);
+      position: absolute;
+      left: 14px;
+      top: 15px;
+      display: grid;
+      place-items: center;
+      width: 25px;
+      height: 25px;
+      border-radius: 8px;
+      color: white;
+      background: var(--violet);
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .pipeline b { display: block; margin-bottom: 4px; color: #3c345f; font-size: 12px; }
+    .pipeline span { color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .publication {
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px dashed #bfae81;
+      border-radius: 12px;
+      color: #68521f;
+      background: var(--amber-soft);
+      text-align: center;
+      font-weight: 800;
+    }
+    table { width: 100%; border-collapse: collapse; border-spacing: 0; }
+    th, td { padding: 13px 14px; border-bottom: 1px solid #dce7ea; text-align: left; vertical-align: top; }
+    th { color: #214e60; background: #edf5f7; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+    td { color: #496672; font-size: 12px; }
+    td:first-child { color: #183f50; font-weight: 900; }
+    .plan-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 16px; }
+    .plan-list { display: grid; gap: 8px; }
+    .plan-list div {
+      padding: 11px 13px;
+      border: 1px solid #d7e5e9;
+      border-radius: 10px;
+      color: #47636f;
+      background: #fafcfd;
+      font-size: 12px;
+    }
+    .plan-list b { color: #185d62; }
+    .version-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 18px; }
+    .version-flow article {
+      min-height: 100px;
+      padding: 15px;
+      border: 1px solid #d8d0e9;
+      border-radius: 12px;
+      background: var(--violet-soft);
+    }
+    .version-flow b { display: block; margin-bottom: 5px; color: #514080; font-size: 12px; }
+    .version-flow span { color: #665f78; font-size: 11px; }
+    .release-gate {
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+      gap: 18px;
+      padding: 20px;
+      border: 1px solid #bfcfdd;
+      border-radius: 15px;
+      background: linear-gradient(120deg, #eaf2fa, #f8fbfd);
+    }
+    .release-gate code { color: #275f99; font-weight: 900; }
+    .checks { display: flex; flex-wrap: wrap; gap: 7px; }
+    .checks span { padding: 7px 9px; border: 1px solid #c8dae7; border-radius: 8px; color: #3d647c; background: white; font-size: 10px; font-weight: 800; }
+    .control-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 11px; }
+    .control b { display: block; margin-bottom: 5px; color: #2d5968; font-size: 12px; }
+    .control span { color: var(--muted); font-size: 11px; }
+    .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .status-card.done { border-top: 4px solid var(--green); }
+    .status-card.next { border-top: 4px solid var(--amber); }
+    .status-card h3 { margin-bottom: 12px; }
+    .status-card ul { margin: 0; padding-left: 19px; color: var(--muted); font-size: 12px; }
+    .status-card li + li { margin-top: 7px; }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      width: min(1280px, calc(100% - 32px));
+      margin: 0 auto 30px;
+      color: #6d818b;
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 980px) {
+      .hero, .plan-grid, .release-gate { grid-template-columns: 1fr; }
+      .outcomes, .pipeline { grid-template-columns: repeat(2, 1fr); }
+      .flow { grid-template-columns: repeat(3, 1fr); }
+      .flow-node:not(:nth-child(6n))::after { display: none; }
+      .services, .control-grid { grid-template-columns: repeat(2, 1fr); }
+      .version-flow { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .topbar { align-items: flex-start; }
+      nav { display: none; }
+      main { width: min(100% - 18px, 1280px); margin-top: 9px; }
+      .hero { min-height: 0; padding: 30px 23px; border-radius: 18px; }
+      .outcomes, .services, .split, .pipeline, .control-grid, .status-grid, .version-flow { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: repeat(2, 1fr); }
+      .section-card { padding: 24px 18px; border-radius: 17px; }
+      .state { grid-template-columns: 1fr; }
+      table { display: block; overflow-x: auto; }
+      footer { display: block; }
+      footer span { display: block; margin-top: 5px; }
+    }
+    @media print {
+      .topbar { position: static; }
+      nav, .hero-actions { display: none; }
+      body { background: white; font-size: 11px; }
+      main { width: 100%; }
+      .hero, .section-card { break-inside: avoid; box-shadow: none; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top">
+      <span class="mark">CW</span>
+      <span><b>ContextWeaver</b><small>Architecture Publication</small></span>
+    </a>
+    <nav aria-label="Page navigation">
+      <a href="#architecture">Architecture</a>
+      <a href="#freshness">Freshness</a>
+      <a href="#admission">Admission</a>
+      <a href="#precedence">Precedence</a>
+      <a href="#versioning">Versioning</a>
+      <a href="#implementation">Implementation</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Authoritative sources. Governed context. Reproducible answers.</span>
+        <h1>Governed, Fresh, and <em>Version-Safe RAG</em></h1>
+        <p class="lede">A cross-vertical architecture that keeps source data under user, group, or organization control while making every retrieval authorization-first, revision-aware, traceable, and safe across service upgrades and downgrades.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#architecture">Explore the architecture</a>
+          <a class="button" href="../documents/governed-rag-ingestion.html">Read the formatted design source</a>
+          <a class="button" href="../diagram-viewer/contextweaver-nextgen-architecture.html">Open the Draw.io architecture</a>
+        </div>
+      </div>
+      <aside class="hero-side">
+        <div class="principle"><b>The measurable promise</b>Known-stale data is never returned. Exact-freshness requests fail closed, wait for atomic publication, or use an explicitly approved authoritative lookup.</div>
+        <div class="principle"><b>Data stays where it belongs</b>Control APIs receive references, revisions, hashes, policy metadata, and lineage - never document bodies, credentials, or secrets.</div>
+        <div class="meta"><span>Reviewed September 25, 2026</span><span>&bull;</span><span>Operational local foundation</span></div>
+      </aside>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Non-negotiable outcomes</span>
+        <h2>Freshness and governance are runtime invariants, not background aspirations.</h2>
+      </div>
+      <div class="outcomes">
+        <article class="outcome"><b>1</b><span>Sources remain in storage owned by a user, group, or organization.</span></article>
+        <article class="outcome"><b>2</b><span>Access is delegated by reference with the least privilege needed for an approved purpose.</span></article>
+        <article class="outcome"><b>3</b><span>Events reduce lag, while periodic reconciliation guarantees eventual detection of missed change.</span></article>
+        <article class="outcome"><b>4</b><span>Changed, deleted, revoked, quarantined, or legal-hold sources are immediately ineligible.</span></article>
+        <article class="outcome"><b>5</b><span>New index generations remain dark until every security, quality, lineage, and compatibility gate passes.</span></article>
+        <article class="outcome"><b>6</b><span>Publication is an atomic logical-alias switch, never an in-place mutation of the active index.</span></article>
+        <article class="outcome"><b>7</b><span>Active work pins exact source, policy, service, contract, parser, chunker, model, and index versions.</span></article>
+        <article class="outcome"><b>8</b><span>Old and new service versions overlap so upgrades and approved downgrades do not interrupt work.</span></article>
+      </div>
+      <div class="guarantee"><strong>Distributed-systems reality:</strong> absolute zero propagation delay is impossible. The enforceable guarantee is that once ContextWeaver knows a revision is stale or access has changed, that projection cannot be retrieved.</div>
+    </section>
+
+    <section id="architecture" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Service boundaries</span>
+        <h2>From authoritative storage to citation-ready context.</h2>
+        <p>Every boundary has one responsibility and emits durable evidence for the next decision.</p>
+      </div>
+      <div class="flow" aria-label="Governed RAG processing flow">
+        <div class="flow-node">User / group / organization storage</div>
+        <div class="flow-node">Delegated read-only connector</div>
+        <div class="flow-node">Source Catalog + Freshness Ledger</div>
+        <div class="flow-node">Change event + reconciler</div>
+        <div class="flow-node">Admission + security scans</div>
+        <div class="flow-node">Immutable artifact reference</div>
+        <div class="flow-node">Versioned extraction + chunking</div>
+        <div class="flow-node">Approved embeddings</div>
+        <div class="flow-node">Shadow index generation</div>
+        <div class="flow-node">Validation + compatibility gate</div>
+        <div class="flow-node">Atomic alias publication</div>
+        <div class="flow-node">Authorized ContextPack + citations</div>
+      </div>
+      <div class="services">
+        <article class="service"><code>cw-source-catalog</code><p>Ownership, authority, purpose, ACL revision, residency, retention, tombstones, lineage, and freshness.</p></article>
+        <article class="service"><code>cw-rag-ingestion</code><p>Event and reconcile scheduling, admission, version-pinned processing, validation, publication, retirement, and deletion.</p></article>
+        <article class="service"><code>cw-artifact-gateway</code><p>Immutable normalized content, content hashes, and controlled artifact access.</p></article>
+        <article class="service"><code>cw-policy-decision-service</code><p>Registration, ingestion, publication, retrieval, disclosure, correction, export, and deletion decisions.</p></article>
+        <article class="service"><code>cw-model-gateway</code><p>Approved aliases and policy for embedding, reranking, and model providers.</p></article>
+        <article class="service"><code>cw-rag-retrieval</code><p>Effective Retrieval Plans, query-time ACLs, precedence, conflict handling, and freshness enforcement.</p></article>
+        <article class="service"><code>cw-context-citation</code><p>ContextPack, CitationManifest, source revisions, confidence, and lineage evidence.</p></article>
+        <article class="service"><code>cw-context-memory</code><p>Policy-bound continuity that never replaces the authoritative source of record.</p></article>
+        <article class="service"><code>cw-audit-service</code><p>Immutable decisions and evidence for access, publication, revocation, deletion, and release activity.</p></article>
+      </div>
+    </section>
+
+    <section id="freshness" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Source Catalog + Freshness Ledger</span>
+        <h2>Revision equality is necessary. Authorization is still decisive.</h2>
+      </div>
+      <div class="split">
+        <div class="code-card">
+          <div class="code-title">Queryable-state invariant</div>
+          <pre>state == current
+AND sourceRevision == indexedRevision
+AND current ACL and purpose decision permits access
+AND generation, schema, and model versions are allowed
+AND no revocation, deletion, quarantine,
+    or legal-hold tombstone applies</pre>
+        </div>
+        <div class="state-stack">
+          <div class="state"><b>Current</b><span>The indexed revision exactly matches the observed source and all current policy checks permit retrieval.</span></div>
+          <div class="state blocked"><b>Stale</b><span>A newer source or ACL revision is known. Exact-freshness retrieval blocks until a validated generation is published.</span></div>
+          <div class="state blocked"><b>Denied</b><span>Revocation, deletion, quarantine, legal hold, classification, residency, retention, or purpose rules make the source ineligible.</span></div>
+        </div>
+      </div>
+      <div class="publication">Events optimize detection latency. Reconciliation supplies correctness by comparing stable IDs, revisions, hashes, ACL snapshots, classification, retention, and deletion state.</div>
+    </section>
+
+    <section id="admission" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Ingestion admission</span>
+        <h2>Twelve gates stand between a source reference and a queryable generation.</h2>
+      </div>
+      <div class="pipeline">
+        <article><b>Identity</b><span>Verify connector identity, source authority, tenant, principal, and approved purpose.</span></article>
+        <article><b>Resource limits</b><span>Constrain file type, size, parser, archive depth, decompression, and execution budgets.</span></article>
+        <article><b>Malware</b><span>Scan content and containers before any parser or transformation can consume them.</span></article>
+        <article><b>Classification + DLP</b><span>Detect handling constraints and assign the most restrictive applicable classification.</span></article>
+        <article><b>Regulated data</b><span>Detect secrets, PII, PHI, PCI, export controls, and other governed categories.</span></article>
+        <article><b>Prompt injection</b><span>Find invisible instructions, hidden text, coercive content, and tool-manipulation attempts.</span></article>
+        <article><b>Trust + poisoning</b><span>Evaluate anomalies, duplicates, source reputation, provenance, and poisoning indicators.</span></article>
+        <article><b>Rights + consent</b><span>Validate licensing, copyright, consent, retention, and allowed AI use.</span></article>
+        <article><b>Immutable commit</b><span>Commit normalized artifacts and hashes without turning projections into a source of truth.</span></article>
+        <article><b>Versioned transform</b><span>Pin parser, extractor, chunker, tokenizer, embedding, and index-schema versions.</span></article>
+        <article><b>Publication proof</b><span>Validate counts, hashes, ACL filters, lineage, quality, poisoning, and reader compatibility.</span></article>
+        <article><b>Publish or quarantine</b><span>Atomically promote the complete generation or isolate it with an auditable reason.</span></article>
+      </div>
+      <div class="guarantee"><strong>Inheritance rule:</strong> vectors, lexical indexes, entities, summaries, caches, memory references, and ContextPacks inherit the classification and lifecycle of their source.</div>
+    </section>
+
+    <section id="precedence" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Dimensional precedence</span>
+        <h2>There is no universal organization &gt; group &gt; user hierarchy.</h2>
+        <p>Governance first determines what is eligible. Application ranking operates only inside that authorized set.</p>
+      </div>
+      <table>
+        <thead><tr><th>Dimension</th><th>Resolution rule</th></tr></thead>
+        <tbody>
+          <tr><td>Authorization</td><td>Explicit deny and missing purpose authorization win before any similarity search.</td></tr>
+          <tr><td>Mandatory policy</td><td>Applicable regulatory and organization obligations cannot be removed by group, workflow, service, or user configuration.</td></tr>
+          <tr><td>Content authority</td><td>The designated owner or system of record wins for the facts it governs.</td></tr>
+          <tr><td>Personalization</td><td>User preferences may override defaults only when no legal, security, or organizational obligation conflicts.</td></tr>
+          <tr><td>Classification</td><td>The most restrictive applicable handling and disclosure requirement wins.</td></tr>
+          <tr><td>Retention</td><td>Legal hold wins; otherwise the approved governing retention policy applies.</td></tr>
+          <tr><td>Residency</td><td>The most restrictive applicable location rule controls storage and processing.</td></tr>
+          <tr><td>Workflow policy</td><td>A workflow can narrow authority and context, but it cannot expand them.</td></tr>
+          <tr><td>Ranking</td><td>Task relevance and preference weights affect only already-authorized candidates.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Effective Retrieval Plan</span>
+        <h2>Every query becomes an immutable, auditable retrieval contract.</h2>
+      </div>
+      <div class="plan-grid">
+        <div class="plan-list">
+          <div><b>Identity:</b> tenant, principal, roles, groups, and delegated authority</div>
+          <div><b>Purpose:</b> service, workflow, prompt intent, and allowed use</div>
+          <div><b>Authority:</b> mandatory sources, systems of record, and conflict rules</div>
+          <div><b>Eligibility:</b> ACL, freshness, classification, retention, residency, and consent</div>
+          <div><b>Ranking:</b> weights, context budget, task relevance, diversity, and reranking</div>
+          <div><b>Evidence:</b> exact policy, source, index, parser, model, and service versions</div>
+        </div>
+        <div class="code-card">
+          <div class="code-title">Example plan</div>
+          <pre>tenant: tenant-a
+principal: user-a
+purpose: travel_booking
+workflow: workflow://travel/4.1.0
+
+mandatory:
+  company_travel_policy:
+    authority: policy
+    maximumAgeSeconds: 0
+
+eligible:
+  user_preferences: { weight: 1.0 }
+  engineering_group: { weight: 0.6 }
+
+conflicts:
+  policy_obligation: organization_authoritative
+  personal_preference: user_authoritative
+  factual_record: designated_system_of_record
+  unresolved: return_both_with_citations
+
+controls:
+  authorizationBeforeSimilarity: true
+  currentRevisionRequired: true
+  citationsRequired: true
+  rawContentLogging: prohibited</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="versioning" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Seamless upgrades and safe downgrades</span>
+        <h2>Aliases move. Active work does not.</h2>
+        <p>New work resolves stable aliases to promoted immutable versions. Existing workflows and ingestion jobs finish on their pinned version graph.</p>
+      </div>
+      <div class="version-flow">
+        <article><b>1. Expand</b><span>Register candidate contracts and apply backward-compatible, expand-only schema changes.</span></article>
+        <article><b>2. Overlap</b><span>Start new replicas while old replicas remain ready and continue pinned work.</span></article>
+        <article><b>3. Prove</b><span>Run synthetic, shadow, mixed-version, canary, rollback-readability, and policy tests.</span></article>
+        <article><b>4. Promote</b><span>Atomically move service and index aliases for newly compiled work.</span></article>
+        <article><b>5. Drain</b><span>Retire old versions only after active runs and queues reach zero and the rollback window closes.</span></article>
+      </div>
+      <div class="release-gate">
+        <div>
+          <span class="eyebrow">Implemented local Registry capability</span>
+          <h3><code>POST /v1/releases/validate</code></h3>
+          <p>The registry validates one-service or multi-service release bundles and topologically orders dependencies before consumers.</p>
+        </div>
+        <div class="checks">
+          <span>Immutable from/to versions</span><span>Backward-compatible contract</span><span>Mixed-version safety</span>
+          <span>Pinned active work</span><span>Minimum two replicas</span><span>maxUnavailable: 0</span>
+          <span>Graceful drain</span><span>Expand-migrate-contract</span><span>Rollback artifacts</span>
+          <span>Previous-reader compatibility</span><span>Rollback index generation</span><span>Cycle rejection</span>
+        </div>
+      </div>
+      <div class="guarantee"><strong>Downgrade boundary:</strong> if the previous binary cannot read current data, old contracts are unavailable, the prior authorized index is gone, active work requires new-only behavior, or side effects cannot be compensated, the required action is a forward fix.</div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Cross-vertical control plane</span>
+        <h2>Controls that survive industry changes.</h2>
+      </div>
+      <div class="control-grid">
+        <article class="control"><b>Temporal truth</b><span>Effective-from, effective-until, supersession, correction, and historically reproducible answers.</span></article>
+        <article class="control"><b>Immediate revocation</b><span>ACL and consent changes deny retrieval before projection cleanup completes.</span></article>
+        <article class="control"><b>Legal hold</b><span>Preservation never implies AI retrieval permission or broader disclosure.</span></article>
+        <article class="control"><b>Field-level lineage</b><span>Trace claims through chunks and normalized artifacts to the precise authoritative revision.</span></article>
+        <article class="control"><b>Data sovereignty</b><span>Residency, cryptographic isolation, tenant keys, export controls, and approved processing locations.</span></article>
+        <article class="control"><b>Multimodal confidence</b><span>OCR, audio, video, and image extraction carry modality-specific confidence and provenance.</span></article>
+        <article class="control"><b>Human stewardship</b><span>Ownership, dispute handling, correction, approval, and accountable exception paths.</span></article>
+        <article class="control"><b>Version drift</b><span>Detect model, parser, tokenizer, chunker, embedding, and index-schema drift.</span></article>
+        <article class="control"><b>Disposable projections</b><span>Indexes are rebuilt from authoritative sources and lineage rather than treated as irreplaceable truth.</span></article>
+      </div>
+    </section>
+
+    <section id="implementation" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Implementation status</span>
+        <h2>The control-plane foundation is running locally.</h2>
+      </div>
+      <div class="status-grid">
+        <article class="status-card done">
+          <h3>Implemented</h3>
+          <ul>
+            <li><code>cw-source-catalog</code> with SQLite and PostgreSQL adapters, migrations, contracts, lifecycle operations, tests, container, and zero-downtime Helm chart.</li>
+            <li><code>cw-rag-ingestion</code> with reference-only contracts, version-pinned receipts, stale-source blocking, shadow generation, atomic publication, rollback generation, tests, and rollout controls.</li>
+            <li>Source registration, revision observation, exact-revision publication, quarantine, revocation, deletion, legal hold, and freshness states.</li>
+            <li>Registry release compatibility API with dependency ordering, downgrade validation, cycle rejection, and six release phases.</li>
+            <li>Documentation, topology, local Compose wiring, hardened images, publication pages, and Draw.io architecture.</li>
+          </ul>
+        </article>
+        <article class="status-card next">
+          <h3>Next implementation slices</h3>
+          <ul>
+            <li>Production storage connectors, change-event adapters, and recurring reconciliation workers.</li>
+            <li>Malware, DLP, secrets, prompt-injection, poisoning, licensing, and consent integrations.</li>
+            <li>Production artifact providers, richer extraction, managed embedding/reranking, distributed deletion, and tombstone adapters.</li>
+            <li>Centralized policy integration and production-scale Effective Retrieval Plan enforcement.</li>
+            <li>Persistence, governed approval, execution, and atomic promotion of registry-validated release bundles.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>ContextWeaver NextGen &bull; BrainzBytes</span>
+    <span>Governed, Fresh, and Version-Safe RAG &bull; Reviewed September 25, 2026</span>
+  </footer>
+</body>
+</html>

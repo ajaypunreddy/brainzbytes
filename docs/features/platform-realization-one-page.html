@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Publication-ready ContextWeaver one-page operating model from infrastructure and capability onboarding through governed inference, commit, and Saga rollback.">
+  <meta name="author" content="BrainzBytes">
+  <meta name="theme-color" content="#f4f8fa">
+  <title>ContextWeaver — Platform Realization and Governed Execution</title>
+  <style>
+    :root {
+      --ink: #102737;
+      --muted: #5f7684;
+      --paper: #f4f8fa;
+      --surface: #ffffff;
+      --navy: #071a26;
+      --line: #cfdee5;
+      --blue: #397fca;
+      --cyan: #12a9a4;
+      --violet: #7657bd;
+      --amber: #c88418;
+      --green: #168264;
+      --red: #bd4859;
+      --shadow: 0 18px 50px rgba(19,55,75,.11);
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--paper); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 7% 8%, rgba(18,169,164,.09), transparent 24rem),
+        radial-gradient(circle at 95% 90%, rgba(118,87,189,.08), transparent 28rem),
+        var(--paper);
+      font: 14px/1.45 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .page { width: min(1720px, calc(100% - 32px)); margin: 16px auto; }
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+      padding: 10px 4px;
+    }
+    .brand { display: flex; align-items: center; gap: 11px; color: inherit; text-decoration: none; }
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(145deg, #0d3241, #263464);
+      font-weight: 900;
+      letter-spacing: -.08em;
+    }
+    .brand strong, .brand small { display: block; }
+    .brand small { margin-top: 2px; color: var(--muted); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; }
+    .edition { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .sheet {
+      overflow: hidden;
+      border: 1px solid #bfd2dc;
+      border-radius: 24px;
+      background: rgba(255,255,255,.96);
+      box-shadow: var(--shadow);
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(300px, .6fr);
+      gap: 34px;
+      align-items: end;
+      padding: 28px 34px 24px;
+      color: white;
+      background:
+        linear-gradient(90deg, rgba(7,26,38,.99), rgba(12,45,58,.97) 60%, rgba(34,34,67,.96)),
+        var(--navy);
+    }
+    .eyebrow { margin: 0 0 7px; color: #69e1d9; font-size: 9px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { margin: 0; font: 700 clamp(30px, 3.4vw, 50px)/1.05 Georgia, "Times New Roman", serif; letter-spacing: -.032em; }
+    h1 em { color: #73e3dc; font-style: normal; }
+    .hero p { max-width: 1030px; margin: 11px 0 0; color: #b8ccd5; font-size: clamp(12px, 1.2vw, 16px); }
+    .hero-principle {
+      padding: 16px 18px;
+      border: 1px solid #356070;
+      border-radius: 14px;
+      color: #c8d9e0;
+      background: rgba(12,38,51,.72);
+      font-size: 12px;
+    }
+    .hero-principle b { display: block; margin-bottom: 5px; color: white; font-size: 14px; }
+    .content { padding: 20px 24px 24px; }
+    .foundation {
+      display: grid;
+      grid-template-columns: 145px repeat(4, 1fr);
+      gap: 9px;
+      align-items: stretch;
+      margin-bottom: 12px;
+      padding: 10px;
+      border: 1px solid #c6d8e1;
+      border-radius: 15px;
+      background: linear-gradient(90deg, #eff6fa, #f8fbfc);
+    }
+    .rail-title { display: grid; align-content: center; padding: 7px 10px; }
+    .rail-title b { font-size: 11px; letter-spacing: .09em; text-transform: uppercase; }
+    .rail-title span { margin-top: 3px; color: var(--muted); font-size: 9px; }
+    .foundation article {
+      min-height: 58px;
+      padding: 9px 11px;
+      border-left: 3px solid var(--blue);
+      border-radius: 8px;
+      background: white;
+    }
+    .foundation article:nth-child(3) { border-color: var(--violet); }
+    .foundation article:nth-child(4) { border-color: var(--cyan); }
+    .foundation article:nth-child(5) { border-color: var(--amber); }
+    .foundation b, .foundation small { display: block; }
+    .foundation b { font-size: 11px; }
+    .foundation small { margin-top: 3px; color: var(--muted); font-size: 9px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 17px;
+      align-items: stretch;
+      margin-bottom: 12px;
+    }
+    .stage {
+      position: relative;
+      overflow: visible;
+      min-height: 278px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--surface);
+    }
+    .stage:not(:last-child)::after {
+      content: "›";
+      position: absolute;
+      z-index: 5;
+      right: -15px;
+      top: 48%;
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border: 1px solid #bcd1da;
+      border-radius: 50%;
+      color: var(--cyan);
+      background: white;
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .stage::before { content: ""; position: absolute; left: 16%; right: 16%; top: -1px; height: 3px; border-radius: 0 0 5px 5px; background: var(--blue); }
+    .stage:nth-child(2)::before { background: var(--violet); }
+    .stage:nth-child(3)::before { background: var(--cyan); }
+    .stage:nth-child(4)::before { background: linear-gradient(90deg, var(--cyan), var(--blue)); }
+    .stage:nth-child(5)::before { background: var(--amber); }
+    .stage-head { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+    .number {
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 29px;
+      height: 29px;
+      border-radius: 9px;
+      color: white;
+      background: var(--blue);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .stage:nth-child(2) .number { background: var(--violet); }
+    .stage:nth-child(3) .number { background: var(--cyan); }
+    .stage:nth-child(4) .number { background: #287da4; }
+    .stage:nth-child(5) .number { background: var(--amber); }
+    .stage h2 { margin: 0; font: 700 20px/1.08 Georgia, "Times New Roman", serif; letter-spacing: -.02em; }
+    .stage > p { min-height: 53px; margin: 0 0 10px; color: var(--muted); font-size: 10px; }
+    .steps { display: grid; gap: 6px; }
+    .step {
+      position: relative;
+      padding: 8px 8px 8px 25px;
+      border: 1px solid #d9e5ea;
+      border-radius: 8px;
+      color: #365565;
+      background: #f8fbfc;
+      font-size: 9px;
+    }
+    .step::before { content: "✓"; position: absolute; left: 9px; color: var(--green); font-weight: 900; }
+    .artifact {
+      margin-top: 9px;
+      padding: 8px;
+      border-radius: 7px;
+      color: #567584;
+      background: #eef5f7;
+      font: 8px/1.45 "SFMono-Regular", Consolas, monospace;
+    }
+    .governance {
+      display: grid;
+      grid-template-columns: 145px repeat(7, 1fr);
+      gap: 7px;
+      align-items: stretch;
+      margin-bottom: 12px;
+      padding: 9px 10px;
+      border: 1px solid #d7caed;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #f5f0fc, #fbf9fe);
+    }
+    .gate {
+      display: grid;
+      place-content: center;
+      min-height: 48px;
+      padding: 7px;
+      border: 1px solid #ddd0ef;
+      border-radius: 8px;
+      color: #644b97;
+      background: white;
+      text-align: center;
+      font-size: 8px;
+      font-weight: 800;
+    }
+    .outcomes {
+      display: grid;
+      grid-template-columns: 145px minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+    .outcome {
+      position: relative;
+      min-height: 115px;
+      padding: 14px 16px 13px 46px;
+      border: 1px solid;
+      border-radius: 13px;
+    }
+    .outcome::before {
+      position: absolute;
+      left: 15px;
+      top: 14px;
+      display: grid;
+      place-items: center;
+      width: 23px;
+      height: 23px;
+      border-radius: 50%;
+      color: white;
+      font-weight: 900;
+    }
+    .success { border-color: #93cfb8; background: #effaf5; }
+    .success::before { content: "✓"; background: var(--green); }
+    .rollback { border-color: #e3aab3; background: #fff3f5; }
+    .rollback::before { content: "↶"; background: var(--red); }
+    .outcome h3 { margin: 0 0 5px; font-size: 12px; }
+    .outcome p { margin: 0; color: var(--muted); font-size: 9px; }
+    .outcome ul { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0 0; padding: 0; list-style: none; }
+    .outcome li { padding: 4px 6px; border: 1px solid currentColor; border-radius: 999px; font-size: 7px; font-weight: 800; text-transform: uppercase; }
+    .success li { color: var(--green); }
+    .rollback li { color: var(--red); }
+    .footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      padding: 12px 25px;
+      color: #9db4bf;
+      background: var(--navy);
+      font-size: 9px;
+    }
+    .footer b { color: white; }
+    .footer a { color: #6edfd8; text-decoration: none; }
+    @media (max-width: 1150px) {
+      .hero { grid-template-columns: 1fr; }
+      .foundation, .governance { grid-template-columns: repeat(2, 1fr); }
+      .rail-title { grid-column: 1 / -1; }
+      .flow { grid-template-columns: 1fr; }
+      .stage { min-height: 0; }
+      .stage > p { min-height: 0; }
+      .stage:not(:last-child)::after { content: "⌄"; right: calc(50% - 14px); top: auto; bottom: -15px; }
+      .outcomes { grid-template-columns: 1fr; }
+    }
+    @page { size: A3 landscape; margin: 7mm; }
+    @media print {
+      html, body { width: 100%; background: white; }
+      .page { width: 100%; margin: 0; }
+      .masthead { margin-bottom: 8px; padding: 0 2px 5px; }
+      .sheet { border-radius: 0; box-shadow: none; break-inside: avoid; }
+      .hero { padding: 18px 24px; }
+      .content { padding: 13px 16px 16px; }
+      .stage { min-height: 250px; }
+      .footer { padding: 8px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <a class="brand" href="../">
+        <span class="mark">CW</span>
+        <span><strong>ContextWeaver</strong><small>BrainzBytes AI Platform</small></span>
+      </a>
+      <span class="edition">Publication edition · September 2026</span>
+    </header>
+
+    <article class="sheet">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">One-page operating model · infrastructure to trusted outcome</p>
+          <h1>Platform realization and <em>governed execution.</em></h1>
+          <p>ContextWeaver turns infrastructure, AI models, retrieval, MCP tools, agents, and services into trusted business outcomes. Nothing executes merely because it is available: specifications, identity, supply-chain evidence, policy, evaluation, and runtime controls must agree.</p>
+        </div>
+        <aside class="hero-principle">
+          <b>Core operating principle</b>
+          Every capability is specified, admitted, signed, discovered, authorized, observed, and either committed with evidence or compensated safely.
+        </aside>
+      </header>
+
+      <div class="content">
+        <section class="foundation" aria-label="Platform foundation">
+          <div class="rail-title"><b>Platform foundation</b><span>Ready before capability execution</span></div>
+          <article><b>Cloud-neutral infrastructure</b><small>Kubernetes · private networking · storage · queues · GitOps</small></article>
+          <article><b>Identity and secrets</b><small>OIDC · workload identity · authorization · secret references</small></article>
+          <article><b>Data, memory, and AI plane</b><small>Source catalog · freshness ledger · governed memory · atomic indexes · models</small></article>
+          <article><b>Observability and evidence</b><small>Metrics · logs · traces · audit · evaluations · provenance</small></article>
+        </section>
+
+        <section class="flow" aria-label="End-to-end realization flow">
+          <article class="stage">
+            <div class="stage-head"><span class="number">1</span><h2>Realize the platform</h2></div>
+            <p>Infrastructure pipelines establish the portable runtime and all mandatory trust dependencies.</p>
+            <div class="steps">
+              <div class="step">Provision private cluster and network boundaries</div>
+              <div class="step">Reconcile storage, queues, registry, and GitOps</div>
+              <div class="step">Bind workload identity and secret stores</div>
+              <div class="step">Connect model, retrieval, and telemetry providers</div>
+            </div>
+            <div class="artifact">OUTPUT · signed platform_contract + ready status</div>
+          </article>
+
+          <article class="stage">
+            <div class="stage-head"><span class="number">2</span><h2>Onboard capability</h2></div>
+            <p>A service, MCP, agent, or workflow enters through one canonical specification envelope.</p>
+            <div class="steps">
+              <div class="step">Declare owner, lifecycle, runbook, and support path</div>
+              <div class="step">Define input/output schemas and compatibility</div>
+              <div class="step">Declare permissions, dependencies, and side effects</div>
+              <div class="step">Attach telemetry, evaluation, and compensation contracts</div>
+            </div>
+            <div class="artifact">OUTPUT · normalized, versioned capability specification</div>
+          </article>
+
+          <article class="stage">
+            <div class="stage-head"><span class="number">3</span><h2>Admit and govern</h2></div>
+            <p>Automated and human gates establish whether the capability may become discoverable.</p>
+            <div class="steps">
+              <div class="step">Validate schema and dependency compatibility</div>
+              <div class="step">Verify signature, provenance, SBOM, license, and secrets</div>
+              <div class="step">Run malware scan, sandbox tests, and held-out evaluations</div>
+              <div class="step">Apply risk policy and approval requirements</div>
+            </div>
+            <div class="artifact">OUTPUT · allow, quarantine, reject, or exception decision</div>
+          </article>
+
+          <article class="stage">
+            <div class="stage-head"><span class="number">4</span><h2>Discover and execute</h2></div>
+            <p>An authorized prompt resolves to a frozen runtime plan before inference or tool use begins.</p>
+            <div class="steps">
+              <div class="step">Resolve compatible signed versions from the registry</div>
+              <div class="step">Bind model, source revisions, RAG scopes, governed memory, services, and version aliases</div>
+              <div class="step">Authorize identity, tenant, role, purpose, and data access</div>
+              <div class="step">Execute inference and schema-safe tool calls within budgets</div>
+            </div>
+            <div class="artifact">OUTPUT · immutable run plan + correlated execution trace</div>
+          </article>
+
+          <article class="stage">
+            <div class="stage-head"><span class="number">5</span><h2>Commit or compensate</h2></div>
+            <p>Postconditions determine whether the business outcome commits or the Saga runs in reverse.</p>
+            <div class="steps">
+              <div class="step">Validate response, state, safety, and business postconditions</div>
+              <div class="step">Commit successful side effects and return provenance</div>
+              <div class="step">On failure, stop forward progress and classify residual risk</div>
+              <div class="step">Compensate in reverse order and preserve evidence</div>
+            </div>
+            <div class="artifact">OUTPUT · committed outcome or controlled rollback</div>
+          </article>
+        </section>
+
+        <section class="governance" aria-label="Admission governance gates">
+          <div class="rail-title"><b>Admission gates</b><span>Promotion requires every applicable gate</span></div>
+          <div class="gate">1 · Parse &amp;<br>normalize</div>
+          <div class="gate">2 · Schema &amp;<br>compatibility</div>
+          <div class="gate">3 · Supply-chain<br>integrity</div>
+          <div class="gate">4 · Security &amp;<br>policy</div>
+          <div class="gate">5 · Sandbox &amp;<br>evaluation</div>
+          <div class="gate">6 · Approval &amp;<br>publication</div>
+          <div class="gate">7 · Deploy &amp;<br>observe</div>
+        </section>
+
+        <section class="outcomes" aria-label="Execution outcomes">
+          <div class="rail-title"><b>Transactional outcomes</b><span>Both paths remain observable and attributable</span></div>
+          <article class="outcome success">
+            <h3>Successful execution — commit with evidence</h3>
+            <p>All postconditions pass. State changes commit, the response includes provenance, and operational, quality, safety, cost, and business KPIs are emitted for continuous evaluation.</p>
+            <ul><li>Committed</li><li>Provenance</li><li>Audit complete</li><li>Continuous evaluation</li></ul>
+          </article>
+          <article class="outcome rollback">
+            <h3>Failed execution — Saga compensation and rollback</h3>
+            <p>Forward execution stops. Completed side effects are compensated in reverse order, unresolved residual risk is escalated, state is restored where possible, and the full evidence chain is retained.</p>
+            <ul><li>Forward path stopped</li><li>Reverse compensation</li><li>Residual risk</li><li>Evidence retained</li></ul>
+          </article>
+        </section>
+      </div>
+
+      <footer class="footer">
+        <span><b>ContextWeaver by BrainzBytes</b> · Spec-driven AI Services, Governance, and Operations Platform</span>
+        <span>Detailed architecture: <a href="spec-driven-ai-platform-whitepaper.html">interactive whitepaper</a></span>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>

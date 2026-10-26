@@ -1,1163 +1,189 @@
 <!DOCTYPE html>
-<!--
-  ═══ IDEAL SECTION ORDER (for future refactor) ═══
-  1. Hero (what is it)
-  2. Entry Points (how do users/apps connect)
-  3. How It Works (the flow)
-  4. Platform Architecture (what's inside)
-  5. Built-in Plugins + Coming Soon (Lego System)
-  6. Industry Verticals (Hierarchical Scope, Customer Isolation, Enterprise Multi-User Security)
-  7. Security
-  8. Visual Designer
-  9. Key Differentiators
-  10. CTA
--->
 <html lang="en" data-theme="midnight">
 <head>
-<script src="/gate.js"></script>
+  <script src="/gate.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ContextWeaver &mdash; Enterprise RAG Orchestration, Agentic AI &amp; Action Platform</title>
-  <meta name="description" content="ContextWeaver: One sentence. Multiple systems. Policy-aware. Per-user credentials. Enterprise RAG Orchestration by BrainzBytes.">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>ContextWeaver | The Governed Enterprise AI Control Plane</title>
+  <meta name="description" content="ContextWeaver composes Services, Workflows, Agents, MCPs, models, RAG, approvals, and durable execution into one governed enterprise AI platform.">
+  <meta property="og:title" content="ContextWeaver | The Governed Enterprise AI Control Plane">
+  <meta property="og:description" content="Build reusable AI Services. Govern the complete graph. Execute durably. Preserve evidence.">
+  <meta property="og:image" content="https://brainzbytes.com/logo.svg">
+  <meta property="og:url" content="https://brainzbytes.com/contextweaver/">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://brainzbytes.com/contextweaver/">
+  <link rel="icon" type="image/svg+xml" href="../logo.svg">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
-    a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-purple)}
-    .card{background:var(--bg-card);border-color:var(--border)}
-    code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.85em}
-    .block{border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem}
-    .block-hub{background:rgba(168,139,250,0.12);border:2px solid rgba(168,139,250,0.4)}
-    .block-mcp{background:rgba(13,202,240,0.08);border:2px solid rgba(13,202,240,0.3)}
-    .block-plugin{background:rgba(25,135,84,0.08);border:2px solid rgba(25,135,84,0.3)}
-    .block-connector{background:rgba(255,193,7,0.08);border:2px solid rgba(255,193,7,0.3)}
-    .block-rag{background:rgba(13,110,253,0.08);border:2px solid rgba(13,110,253,0.3)}
-    .block-vault{background:rgba(220,53,69,0.08);border:2px solid rgba(220,53,69,0.3)}
-    .arrow{text-align:center;font-size:1.5rem;color:var(--text-muted);line-height:1;margin:.25rem 0}
-
-    /* Navbar */
-
-    /* Hero */
-    .hero{padding:5rem 0 4rem;position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(167,139,250,0.08) 0%,transparent 70%);pointer-events:none}
-    .hero h1{font-size:clamp(2.5rem,6vw,4.2rem);font-weight:900;letter-spacing:-.04em;color:var(--accent-purple);margin-bottom:.5rem}
-    .hero .tagline{font-size:1.15rem;color:var(--text);margin-bottom:1.5rem;font-weight:500}
-
-    /* Buttons */
-    .btn-glow{background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;border:none;font-weight:600;padding:.75rem 2rem;border-radius:10px;font-size:1rem;transition:all .3s;box-shadow:0 0 24px rgba(167,139,250,0.25)}
-    .btn-glow:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(167,139,250,0.4);color:#fff}
-    .btn-outline-glow{border:1.5px solid var(--accent-purple);color:var(--accent-purple);background:transparent;font-weight:600;padding:.65rem 1.75rem;border-radius:10px;transition:all .3s}
-    .btn-outline-glow:hover{background:rgba(167,139,250,0.1);color:#c4b5fd}
-
-    /* Sections */
-    .section{padding:4.5rem 0}
-    .section-alt{background:var(--bg-elevated)}
-    .section-title{font-size:2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem}
-    .section-subtitle{color:var(--text-muted);font-size:1.05rem;margin-bottom:2.5rem}
-
-    /* Badge pill animated */
-    .stat-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--bg-card);border:1px solid var(--border);padding:.6rem 1.25rem;border-radius:10px;font-size:.9rem;font-weight:600;transition:all .3s}
-    .stat-badge:hover{border-color:rgba(167,139,250,0.3);transform:translateY(-2px)}
-    .stat-num{color:var(--accent-cyan);font-weight:800;font-size:1.1rem}
-
-    /* Step card */
-    .step-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;text-align:center;position:relative;height:100%;transition:all .3s}
-    .step-card:hover{border-color:rgba(13,202,240,0.3)}
-    .step-num{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;margin-bottom:1rem}
-    .step-arrow{display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.2);font-size:1.5rem}
-
-    /* Connector card */
-    .connector-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;height:100%;transition:all .3s}
-    .connector-card:hover{border-color:rgba(255,193,7,0.3);transform:translateY(-2px)}
-    .connector-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:1rem}
-
-    /* Architecture layer */
-    .arch-layer{border-radius:14px;padding:1.5rem;margin-bottom:1rem;position:relative}
-    .arch-label{position:absolute;top:-10px;left:20px;background:var(--bg);padding:0 .5rem;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-
-    /* Scope cascade */
-    .scope-level{border-radius:14px;padding:1.25rem 1.5rem;margin:0 auto;text-align:center;position:relative}
-    .scope-connector{width:2px;height:20px;background:rgba(255,255,255,0.15);margin:0 auto}
-
-    /* Security panel */
-    .sec-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;height:100%;transition:all .3s}
-    .sec-panel:hover{border-color:rgba(220,53,69,0.3)}
-
-    /* Scenario card */
-    .scenario-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:2rem;height:100%;transition:all .3s;display:flex;flex-direction:column}
-    .scenario-card:hover{border-color:rgba(167,139,250,0.3);transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
-
-    /* Lego method card */
-    .lego-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;height:100%;transition:all .3s}
-    .lego-card:hover{border-color:rgba(25,135,84,0.3)}
-
-    /* Industry tag */
-    .industry-tag{display:inline-block;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);color:var(--text-muted);padding:.25rem .7rem;border-radius:8px;font-size:.78rem;font-weight:500;margin:.15rem}
-
-    /* Feature pill */
-    .feat-pill{display:inline-block;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:var(--accent-purple);padding:.3rem .85rem;border-radius:20px;font-size:.8rem;font-weight:600;margin:.2rem}
-
-    /* Footer */
-    .bb-footer{background:var(--bg-nav);border-top:1px solid var(--border);padding:2.5rem 0;margin-top:3rem}
-    .bb-footer a{color:var(--text-muted)}.bb-footer a:hover{color:var(--text)}
-
-    /* Animations */
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-    .float-anim{animation:float 3s ease-in-out infinite}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    .fade-up{animation:fadeInUp .6s ease-out both}
-    .fade-up-d1{animation-delay:.1s}.fade-up-d2{animation-delay:.2s}.fade-up-d3{animation-delay:.3s}
-    .fade-up-d4{animation-delay:.4s}.fade-up-d5{animation-delay:.5s}.fade-up-d6{animation-delay:.6s}
-
-    /* Breadcrumb */
-    .bb-breadcrumb{font-size:.85rem;color:var(--text-muted);margin-bottom:0}
-    .bb-breadcrumb a{color:var(--text-muted)}.bb-breadcrumb a:hover{color:var(--text)}
-
-    /* Swappable box */
-    .swap-box{background:var(--bg);border:1px dashed rgba(255,255,255,0.15);border-radius:8px;padding:.6rem .75rem;text-align:center;font-size:.8rem;font-weight:600;transition:all .2s}
-    .swap-box:hover{border-color:var(--accent-cyan);color:var(--accent-cyan)}
-  </style>
-
-  <link rel="stylesheet" href="../theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="../theme.css" rel="stylesheet">
+  <link href="../brand-site.css" rel="stylesheet">
   <script src="../theme.js" defer></script>
+  <style>
+    .cwx-hero{padding-top:76px}.cwx-hero-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(470px,1.18fr);gap:28px;align-items:start}
+    .cwx-kicker{display:inline-flex;gap:9px;align-items:center;padding:7px 10px;border:1px solid var(--brand-line);border-radius:999px;color:var(--brand-aqua);background:rgba(110,231,207,.05);font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .cwx-hero h1{margin:17px 0 0;color:var(--brand-ink);font-size:clamp(2.2rem,3.35vw,2.9rem);font-weight:820;letter-spacing:-.05em;line-height:1}
+    .cwx-hero h1 span{color:var(--brand-aqua)}.cwx-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:34px;overflow:hidden;border:1px solid var(--brand-line);border-radius:14px;background:var(--brand-line)}
+    .cwx-metrics div{padding:19px;background:#0d1821}.cwx-metrics strong{display:block;color:var(--brand-ink);font-size:1.05rem}.cwx-metrics span{display:block;margin-top:3px;color:var(--brand-muted);font-size:.62rem}
+    .cwx-command{overflow:hidden;border:1px solid var(--brand-line);border-radius:19px;background:#08121a;box-shadow:0 36px 100px rgba(0,0,0,.34)}
+    .cwx-command-top{display:flex;justify-content:space-between;align-items:center;padding:15px 17px;border-bottom:1px solid #1b2d39;color:#6f8492;font-size:.62rem}.cwx-command-top strong{color:#dce7eb}
+    .cwx-command-body{padding:22px}.cwx-intent{padding:18px;border:1px solid #294554;border-radius:12px;background:#0c1b25}.cwx-intent small{color:var(--brand-aqua);font-size:.54rem;font-weight:800;text-transform:uppercase}.cwx-intent p{margin:9px 0 0;color:#e5eef1;font-size:.86rem;line-height:1.55}
+    .cwx-route{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.cwx-route article{position:relative;min-height:126px;padding:14px;border:1px solid #203845;border-radius:11px;background:#0b1720}.cwx-route article::before{display:grid;width:25px;height:25px;place-items:center;border-radius:7px;color:var(--brand-blue);background:rgba(116,167,255,.1);font-size:.52rem;font-weight:800;content:attr(data-step)}
+    .cwx-route h3{margin:18px 0 6px;color:#dce7eb;font-size:.68rem}.cwx-route p{margin:0;color:#6d8390;font-size:.53rem;line-height:1.5}.cwx-result{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-top:12px;padding:14px;border:1px solid rgba(110,231,207,.24);border-radius:11px;background:rgba(110,231,207,.045)}
+    .cwx-result strong{display:block;color:#dff7f1;font-size:.67rem}.cwx-result span{display:block;margin-top:4px;color:#7d948f;font-size:.53rem}.cwx-result em{padding:5px 8px;border-radius:999px;color:#061512;background:var(--brand-aqua);font-size:.5rem;font-style:normal;font-weight:800}
+    .cwx-six{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}.cwx-cap{min-height:205px;padding:22px;border:1px solid var(--brand-line);border-radius:16px;background:#0d1821}.cwx-cap i{color:var(--brand-aqua);font-size:1.2rem}.cwx-cap h3{margin:30px 0 9px;color:var(--brand-ink);font-size:1.04rem}.cwx-cap p{margin:0;color:var(--brand-muted);font-size:.77rem;line-height:1.6}
+    .cwx-flow{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:30px}.cwx-flow article{min-height:150px;padding:15px 12px;border:1px solid var(--brand-line);border-radius:12px;background:#0d1821}.cwx-flow b{display:grid;width:25px;height:25px;place-items:center;border-radius:7px;color:#061512;background:var(--brand-aqua);font-size:.57rem}.cwx-flow h3{margin:24px 0 7px;color:var(--brand-ink);font-size:.76rem}.cwx-flow p{margin:0;color:var(--brand-muted);font-size:.6rem;line-height:1.48}
+    .cwx-principles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:30px}.cwx-principles article{display:grid;grid-template-columns:40px 1fr;gap:13px;padding:18px;border:1px solid var(--brand-line);border-radius:14px;background:#0d1821}.cwx-principles i{display:grid;width:40px;height:40px;place-items:center;border-radius:10px;color:var(--brand-aqua);background:rgba(110,231,207,.06)}.cwx-principles h3{margin:0;color:var(--brand-ink);font-size:.87rem}.cwx-principles p{margin:6px 0 0;color:var(--brand-muted);font-size:.7rem;line-height:1.52}
+    @media(max-width:1000px){.cwx-hero-grid{grid-template-columns:1fr}.cwx-flow{grid-template-columns:repeat(4,1fr)}}
+    @media(max-width:750px){.cwx-metrics,.cwx-six,.cwx-principles{grid-template-columns:repeat(2,1fr)}.cwx-flow{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:520px){.cwx-hero-grid>*{min-width:0}.cwx-command{max-width:calc(100vw - 24px)}.cwx-route{grid-template-columns:1fr}.cwx-metrics,.cwx-six,.cwx-principles,.cwx-flow{grid-template-columns:1fr}.cwx-principles article{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-
-  <div class="container">
-    <!-- Breadcrumb -->
-    <div class="py-3">
-      <nav class="bb-breadcrumb">
-        <a href="../index.html">Home</a> <span class="mx-1">/</span>
-        <a href="../index.html#products">Products</a> <span class="mx-1">/</span>
-        <span style="color:var(--accent-purple)">ContextWeaver</span>
-      </nav>
-    </div>
-  </div>
-
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="hero text-center">
-    <div class="container">
-      <h1 class="fade-up">ContextWeaver</h1>
-      <p class="tagline fade-up fade-up-d1">One sentence. Multiple systems. Policy-aware. Per-user credentials.</p>
-      <div class="d-flex flex-wrap justify-content-center gap-3 fade-up fade-up-d2">
-        <div class="stat-badge"><span class="stat-num">&infin;</span> Extensible Tools</div>
-        <div class="stat-badge"><span class="stat-num">&infin;</span> Plugin Ecosystem</div>
-        <div class="stat-badge"><span class="stat-num">5</span> Vault Backends</div>
-        <div class="stat-badge"><span class="stat-num">7</span>-Step Wizard</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ ENTRY POINTS ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div style="text-align:center;margin-bottom:1rem">
-        <h4 style="font-weight:700">Multiple Entry Points</h4>
-      </div>
-      <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:2rem">
-        <div style="background:rgba(13,202,240,0.08);border:1px solid rgba(13,202,240,0.3);border-radius:10px;padding:10px 16px;text-align:center;min-width:130px">
-          <div style="font-size:1.3rem">💬</div>
-          <div style="font-weight:600;font-size:.85rem;color:#0dcaf0">Chat UI</div>
-          <div style="font-size:.7rem;color:rgba(255,255,255,0.4)">User speaks naturally in the AI Hub</div>
-        </div>
-        <div style="background:rgba(25,135,84,0.08);border:1px solid rgba(25,135,84,0.3);border-radius:10px;padding:10px 16px;text-align:center;min-width:130px">
-          <div style="font-size:1.3rem">🔌</div>
-          <div style="font-weight:600;font-size:.85rem;color:#198754">REST API</div>
-          <div style="font-size:.7rem;color:rgba(255,255,255,0.4)">Secure API for 3rd-party apps (OAuth2 + JWT)</div>
-        </div>
-        <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.3);border-radius:10px;padding:10px 16px;text-align:center;min-width:130px">
-          <div style="font-size:1.3rem">🤖</div>
-          <div style="font-weight:600;font-size:.85rem;color:#a78bfa">MCP Client</div>
-          <div style="font-size:.7rem;color:rgba(255,255,255,0.4)">Claude Desktop, Cursor, VS Code Copilot</div>
-        </div>
-        <div style="background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.3);border-radius:10px;padding:10px 16px;text-align:center;min-width:130px">
-          <div style="font-size:1.3rem">⚡</div>
-          <div style="font-weight:600;font-size:.85rem;color:#ffc107">Webhooks</div>
-          <div style="font-size:.7rem;color:rgba(255,255,255,0.4)">Event-driven triggers from any system</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-subtitle">From natural language to cross-system execution in four steps</p>
-      </div>
-      <div class="row g-3 align-items-stretch">
-        <div class="col-md-3">
-          <div class="step-card">
-            <div class="step-num" style="background:rgba(13,202,240,0.15);color:var(--accent-cyan)">1</div>
-            <div style="font-size:2rem;margin-bottom:.75rem">&#x1F5E3;&#xFE0F;</div>
-            <h6 class="fw-bold mb-2">User Speaks</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">"Book a flight BOS&rarr;NYC and charge my Amex"</p>
+<main class="bbx-shell">
+  <div class="bbx-reading-progress" aria-hidden="true"><span></span></div>
+  <aside class="bbx-page-nav" aria-label="Explore ContextWeaver">
+    <span class="bbx-page-nav-label">Explore this page</span>
+    <h2>ContextWeaver<br>platform overview</h2>
+    <nav>
+      <a class="active" href="#overview"><span>Overview</span></a>
+      <a href="#studios"><span>Four Studios</span></a>
+      <a href="#governs"><span>Governed layers</span></a>
+      <a href="#lifecycle"><span>Durable lifecycle</span></a>
+      <a href="#experience"><span>Product experience</span></a>
+      <a href="#principles"><span>Design principles</span></a>
+      <a href="#start"><span>Get started</span></a>
+    </nav>
+    <p>Understand the product first, then move into the detailed architecture and operational guides.</p>
+  </aside>
+  <section class="bbx-section cwx-hero" id="overview">
+    <div class="bbx-container">
+      <div class="cwx-hero-grid">
+        <div>
+          <span class="cwx-kicker"><i class="bi bi-diagram-3"></i> BrainzBytes flagship platform</span>
+          <h1>The control plane for <span>governed AI work.</span></h1>
+          <p class="bbx-lead">ContextWeaver turns business intent into authorized, durable, observable execution. It gives Services, Workflows, Agents, MCP tools, models, RAG, approvals, and evidence one shared operating model.</p>
+          <div class="bbx-actions">
+            <a class="bbx-btn bbx-btn-primary" href="https://app.brainzbytes.com">Launch the platform <i class="bi bi-box-arrow-up-right"></i></a>
+            <a class="bbx-btn" href="../docs/index.html">Read the technical documentation</a>
+          </div>
+          <div class="cwx-metrics">
+            <div><strong>Versioned</strong><span>Immutable definitions</span></div>
+            <div><strong>Durable</strong><span>Recoverable execution</span></div>
+            <div><strong>Typed</strong><span>Contracts and artifacts</span></div>
+            <div><strong>Auditable</strong><span>Evidence and revisions</span></div>
           </div>
         </div>
-        <div class="col-auto d-none d-md-flex step-arrow"><i class="bi bi-chevron-right"></i></div>
-        <div class="col-md-3">
-          <div class="step-card">
-            <div class="step-num" style="background:rgba(167,139,250,0.15);color:var(--accent-purple)">2</div>
-            <div style="font-size:2rem;margin-bottom:.75rem">&#x1F916;</div>
-            <h6 class="fw-bold mb-2">Agent Orchestrates</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">AI Hub decomposes intent, applies RAG policies, selects tools</p>
-          </div>
-        </div>
-        <div class="col-auto d-none d-md-flex step-arrow"><i class="bi bi-chevron-right"></i></div>
-        <div class="col-md-3">
-          <div class="step-card">
-            <div class="step-num" style="background:rgba(255,193,7,0.15);color:#ffc107">3</div>
-            <div style="font-size:2rem;margin-bottom:.75rem">&#x26A1;</div>
-            <h6 class="fw-bold mb-2">Connectors Execute</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">MCP connectors call APIs &mdash; flights, payments, email &mdash; with user credentials</p>
-          </div>
-        </div>
-        <div class="col-auto d-none d-md-flex step-arrow"><i class="bi bi-chevron-right"></i></div>
-        <div class="col-md">
-          <div class="step-card">
-            <div class="step-num" style="background:rgba(220,53,69,0.15);color:#dc3545">4</div>
-            <div style="font-size:2rem;margin-bottom:.75rem">&#x1F6E1;&#xFE0F;</div>
-            <h6 class="fw-bold mb-2">Policies Enforce</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">RAG policies &amp; vault rules enforce limits, approvals &amp; compliance at every step</p>
+        <div class="cwx-command" aria-label="ContextWeaver governed execution preview">
+          <header class="cwx-command-top"><strong>Governed execution</strong><span>run_9f20 · active</span></header>
+          <div class="cwx-command-body">
+            <article class="cwx-intent"><small>Business intent</small><p>Assess the release, cite the approved evidence, obtain authorization, and publish the decision.</p></article>
+            <div class="cwx-route">
+              <article data-step="01"><h3>Resolve Service</h3><p>Intent routes to Hello World Governed AI 1.5.0 and its exact immutable Workflow graph.</p></article>
+              <article data-step="02"><h3>Authorize graph</h3><p>User, entitlement, data scope, budgets, Agent skills, and MCP tools are checked.</p></article>
+              <article data-step="03"><h3>Execute durably</h3><p>RAG, reasoning, HITL, publication, and verification continue through durable state.</p></article>
+            </div>
+            <div class="cwx-result"><div><strong>Waiting for approving officer</strong><span>Five nodes complete · four verified citations · no side effect executed</span></div><em>HITL</em></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ PLATFORM ARCHITECTURE ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container" style="max-width:800px">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Platform Architecture</h2>
-        <p class="section-subtitle">Three pillars &mdash; 🧠 Cerebro, 🌐 Loom, 🧶 Weave. Every backend swappable. Zero lock-in.</p>
-      </div>
-
-      <!-- 🧠 Cerebro — Application Layer -->
-      <div class="arch-layer block-hub">
-        <span class="arch-label" style="color:#0dcaf0">🧠 Cerebro &mdash; Runtime Platform</span>
-        <div class="row g-3 mt-2">
-          <div class="col-sm-4 text-center"><i class="bi bi-chat-dots-fill me-1"></i><strong>Chat UI</strong></div>
-          <div class="col-sm-4 text-center"><i class="bi bi-terminal-fill me-1"></i><strong>CLI / SDK</strong></div>
-          <div class="col-sm-4 text-center"><i class="bi bi-code-slash me-1"></i><strong>REST API</strong></div>
-        </div>
-      </div>
-      <div class="arrow">&darr;</div>
-
-      <!-- 🧶 Weave — Knowledge & Plugin Layer -->
-      <div class="arch-layer block-mcp">
-        <span class="arch-label" style="color:#198754">🧶 Weave &mdash; Knowledge &amp; Plugin Orchestration</span>
-        <div class="row g-3 mt-2">
-          <div class="col-sm-4 text-center"><i class="bi bi-robot me-1"></i><strong>AI Hub</strong></div>
-          <div class="col-sm-4 text-center"><i class="bi bi-plug me-1"></i><strong>MCP Server</strong></div>
-          <div class="col-sm-4 text-center"><i class="bi bi-file-earmark-text me-1"></i><strong>RAG Engine</strong></div>
-        </div>
-      </div>
-      <div class="arrow">&darr;</div>
-
-      <!-- 🌐 Loom — Infrastructure Layer -->
-      <div class="arch-layer" style="background:rgba(167,139,250,0.06);border:2px solid rgba(167,139,250,0.25)">
-        <span class="arch-label" style="color:#a78bfa">🌐 Loom &mdash; Infrastructure Layer</span>
-        <div class="row g-2 mt-2">
-          <div class="col-4 col-md-2"><div class="swap-box"><i class="bi bi-cpu d-block mb-1"></i>LLM</div></div>
-          <div class="col-4 col-md-2"><div class="swap-box"><i class="bi bi-search d-block mb-1"></i>Search</div></div>
-          <div class="col-4 col-md-2"><div class="swap-box"><i class="bi bi-database d-block mb-1"></i>Database</div></div>
-          <div class="col-4 col-md-2"><div class="swap-box"><i class="bi bi-safe d-block mb-1"></i>Vault</div></div>
-          <div class="col-4 col-md-2"><div class="swap-box"><i class="bi bi-person-badge d-block mb-1"></i>Auth</div></div>
-          <div class="col-4 col-md-2"><div class="swap-box"><i class="bi bi-cloud d-block mb-1"></i>Infra</div></div>
-        </div>
+  <section class="bbx-section bbx-section-alt" id="studios">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">The universal AI capability factory</span>
+      <h2 class="bbx-title bbx-title-sm">Four specialized Studios. One governed path from intent to outcome.</h2>
+      <p class="bbx-lead">Builders move through connected rooms rather than disconnected products. Every artifact shares identity, policy, immutable Registry versions, evidence, observability, and the lifecycle Design → Validate → Rehearse → Govern → Publish → Observe.</p>
+      <div class="bbx-resource-grid">
+        <article class="bbx-resource"><span>01 · MCP Studio</span><h3>Create governed capabilities</h3><p>Tools, connectors, schemas, permissions, policies, credentials by reference, dependencies, tests, and publication.</p></article>
+        <article class="bbx-resource"><span>02 · Agent Studio</span><h3>Create governed reasoning roles</h3><p>Prompts, memory, skills, RAG, models, capability access, guardrails, evaluation, rehearsal, and observation.</p></article>
+        <article class="bbx-resource"><span>03 · Workflow Studio</span><h3>Compose durable orchestration</h3><p>Typed steps, branches, parallel work, approvals, waits, retries, compensation, recovery, and complete run evidence.</p></article>
+        <article class="bbx-resource"><span>04 · Service Studio</span><h3>Package reusable outcomes</h3><p>Stable contracts, exact Workflow associations, required Agents and MCPs, SLOs, deployment, versions, and ownership.</p></article>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ BUILT-IN CONNECTORS ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Built-in Plugin Catalog</h2>
-        <p class="section-subtitle">15 plugins · 124 tools · Production-ready integrations with per-user credentials and RAG enforcement</p>
-      </div>
-      <h5 class="fw-bold mb-3" style="color:var(--accent-cyan)"><i class="bi bi-check-circle-fill me-2"></i>Available Now — 4 Plugins · 33 Tools</h5>
-      <div class="row g-4 mb-5">
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card">
-            <div class="connector-icon" style="background:rgba(13,202,240,0.12)"><i class="bi bi-envelope-fill" style="color:var(--accent-cyan)"></i></div>
-            <h5 class="fw-bold mb-1">Email Assistant</h5>
-            <p class="mb-2" style="color:var(--accent-cyan);font-weight:700;font-size:.85rem">Production</p>
-            <p class="text-muted mb-0" style="font-size:.85rem">Gmail, Outlook, 10+ providers &mdash; send, search, drafts, labels, folders with per-user OAuth</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card">
-            <div class="connector-icon" style="background:rgba(167,139,250,0.12)"><i class="bi bi-github" style="color:var(--accent-purple)"></i></div>
-            <h5 class="fw-bold mb-1">GitHub Assistant</h5>
-            <p class="mb-2" style="color:var(--accent-purple);font-weight:700;font-size:.85rem">Production</p>
-            <p class="text-muted mb-0" style="font-size:.85rem">Repos, issues, PRs, actions, code search, commits</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card">
-            <div class="connector-icon" style="background:rgba(255,193,7,0.12)"><i class="bi bi-credit-card-fill" style="color:#ffc107"></i></div>
-            <h5 class="fw-bold mb-1">Payments (Stripe)</h5>
-            <p class="mb-2" style="color:#ffc107;font-weight:700;font-size:.85rem">Production</p>
-            <p class="text-muted mb-0" style="font-size:.85rem">Charges, refunds, cards, invoices, subscriptions &mdash; PCI Level 1 compliant</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card">
-            <div class="connector-icon" style="background:rgba(25,135,84,0.12)"><i class="bi bi-airplane-fill" style="color:#198754"></i></div>
-            <h5 class="fw-bold mb-1">Travel Services</h5>
-            <p class="mb-2" style="color:#198754;font-weight:700;font-size:.85rem">Production</p>
-            <p class="text-muted mb-0" style="font-size:.85rem">Proxy to upstream MCP servers &mdash; flights, hotels, itinerary management</p>
-          </div>
-        </div>
-      </div>
-      <h5 class="fw-bold mb-3" style="color:rgba(255,255,255,0.5)"><i class="bi bi-clock-history me-2"></i>Coming Soon — 11 Plugins · 91 Tools</h5>
-      <div class="row g-3">
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">📅</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Calendar</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">Meetings, free slots, invites</p></div></div>
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">📋</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Jira / Project</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">Tickets, sprints, boards</p></div></div>
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">💬</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Slack / Teams</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">Messages, channels, search</p></div></div>
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">📄</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Document</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">Create, edit, share, PDF</p></div></div>
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">🗄</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Database</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">SQL/NoSQL, schema, writes</p></div></div>
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">☁</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Cloud Ops</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">K8s, VMs, DNS, certs</p></div></div>
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">📊</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Analytics</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">Datadog, Splunk, dashboards</p></div></div>
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">🔔</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Notifications</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">PagerDuty, Twilio, push</p></div></div>
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">👤</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Identity</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">Okta, Entra, group sync</p></div></div>
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">📦</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Storage</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">S3, Blob, GCS, pre-signed</p></div></div>
-        <div class="col-6 col-md-4 col-lg-3"><div class="connector-card" style="padding:1rem;opacity:0.8"><div style="font-size:1.3rem;margin-bottom:.3rem">🔐</div><h6 class="fw-bold mb-0" style="font-size:.82rem">Secrets</h6><p class="mb-0" style="color:var(--accent-cyan);font-weight:700;font-size:.75rem">Coming soon</p><p class="text-muted mb-0" style="font-size:.72rem">Rotate keys, check expiry</p></div></div>
-      </div>
-      <p class="text-center mt-4 mb-0" style="color:rgba(255,255,255,0.4);font-size:.85rem"><i class="bi bi-plus-circle me-1"></i>Build unlimited plugins with the no-code Plugin Builder &mdash; or extend existing ones</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════ INDUSTRY VERTICAL PLUGINS ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Industry Vertical Plugin Roadmap</h2>
-        <p class="section-subtitle">Industry-specific plugin roadmap &mdash; one platform, every vertical, unlimited expansion</p>
-        <div class="d-flex justify-content-center gap-3 mt-3">
-          <div class="stat-badge"><span class="stat-num">&infin;</span> Industry Plugins</div>
-          <div class="stat-badge"><span class="stat-num">&infin;</span> Specialized Tools</div>
-          <div class="stat-badge"><span class="stat-num">8</span> Verticals</div>
-        </div>
-      </div>
-      <div class="row g-4">
-        <!-- Healthcare & Biotech -->
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card" style="border-color:rgba(220,53,69,0.2)">
-            <div class="connector-icon" style="background:rgba(220,53,69,0.12)"><span style="font-size:1.3rem">🏥</span></div>
-            <h5 class="fw-bold mb-1">Healthcare &amp; Biotech</h5>
-            <p class="mb-2" style="color:#dc3545;font-weight:700;font-size:.85rem">Multi-Plugin Suite</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>Epic EHR</strong> &mdash;<br>Patient lookup, lab results, prescriptions, referrals, vitals, allergies, encounters, orders, scheduling</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>HL7 FHIR</strong> &mdash;<br>Resource read/write/search, bundle, patient match, CDS hooks, terminology, consent</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>Clinical Trials</strong> &mdash;<br>Protocol search, enrollment, adverse events, site management, patient matching</p>
-            <p class="text-muted mb-0" style="font-size:.8rem"><strong>Drug Interaction</strong> &mdash;<br>Interactions, contraindications, dosage calc, formulary lookup</p>
-          </div>
-        </div>
-        <!-- Financial Services -->
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card" style="border-color:rgba(255,193,7,0.2)">
-            <div class="connector-icon" style="background:rgba(255,193,7,0.12)"><span style="font-size:1.3rem">💰</span></div>
-            <h5 class="fw-bold mb-1">Financial Services</h5>
-            <p class="mb-2" style="color:#ffc107;font-weight:700;font-size:.85rem">Multi-Plugin Suite</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>Bloomberg Terminal</strong> &mdash;<br>Quotes, portfolio, risk analytics, trade execution, compliance, FX rates, yield curve</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>Plaid Banking</strong> &mdash;<br>Account link, balance, transactions, identity verify, income verify, transfers</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>QuickBooks</strong> &mdash;<br>Invoices, payments, expenses, P&amp;L, balance sheet, tax summary</p>
-            <p class="text-muted mb-0" style="font-size:.8rem"><strong>Compliance/KYC</strong> &mdash;<br>Identity verify, sanctions screen, PEP check, risk score, audit trail</p>
-          </div>
-        </div>
-        <!-- Aerospace & Defense -->
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card" style="border-color:rgba(13,202,240,0.2)">
-            <div class="connector-icon" style="background:rgba(13,202,240,0.12)"><span style="font-size:1.3rem">🚀</span></div>
-            <h5 class="fw-bold mb-1">Aerospace &amp; Defense</h5>
-            <p class="mb-2" style="color:var(--accent-cyan);font-weight:700;font-size:.85rem">Multi-Plugin Suite</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>Jira Aerospace</strong> &mdash;<br>Requirement trace, DO-178C compliance, change request, FMEA, certification, audit</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>Supply Chain</strong> &mdash;<br>Parts lookup, ITAR compliance, vendor qualify, procurement, quality inspection</p>
-            <p class="text-muted mb-0" style="font-size:.8rem"><strong>Fleet Management</strong> &mdash;<br>Aircraft status, maintenance schedule, airworthiness directive, MEL/CDL check</p>
-          </div>
-        </div>
-        <!-- Legal -->
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card" style="border-color:rgba(167,139,250,0.2)">
-            <div class="connector-icon" style="background:rgba(167,139,250,0.12)"><span style="font-size:1.3rem">⚖</span></div>
-            <h5 class="fw-bold mb-1">Legal</h5>
-            <p class="mb-2" style="color:var(--accent-purple);font-weight:700;font-size:.85rem">Multi-Plugin Suite</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>Westlaw/LexisNexis</strong> &mdash;<br>Case search, statute lookup, citation check, brief analysis, precedent find</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>DocuSign/e-Sign</strong> &mdash;<br>Envelope create, sign request, status check, download signed, bulk send</p>
-            <p class="text-muted mb-0" style="font-size:.8rem"><strong>Billing/Timesheet</strong> &mdash;<br>Time entry, invoice generate, matter track, trust account, LEDES export</p>
-          </div>
-        </div>
-        <!-- Manufacturing & Supply Chain -->
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card" style="border-color:rgba(25,135,84,0.2)">
-            <div class="connector-icon" style="background:rgba(25,135,84,0.12)"><span style="font-size:1.3rem">🏭</span></div>
-            <h5 class="fw-bold mb-1">Manufacturing</h5>
-            <p class="mb-2" style="color:#198754;font-weight:700;font-size:.85rem">Multi-Plugin Suite</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>SAP Integration</strong> &mdash;<br>Material master, purchase order, production order, inventory, quality, billing, MRP run</p>
-            <p class="text-muted mb-0" style="font-size:.8rem"><strong>IoT/SCADA</strong> &mdash;<br>Sensor read, alert threshold, device status, predictive maintenance, OEE calculate</p>
-          </div>
-        </div>
-        <!-- Education -->
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card" style="border-color:rgba(111,66,193,0.2)">
-            <div class="connector-icon" style="background:rgba(111,66,193,0.12)"><span style="font-size:1.3rem">🏫</span></div>
-            <h5 class="fw-bold mb-1">Education</h5>
-            <p class="mb-2" style="color:#6f42c1;font-weight:700;font-size:.85rem">Multi-Plugin Suite</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>Canvas/Blackboard</strong> &mdash;<br>Grade submit, assignment create, roster sync, quiz generate, plagiarism check</p>
-            <p class="text-muted mb-0" style="font-size:.8rem"><strong>Student Information</strong> &mdash;<br>Enrollment, transcript, financial aid, advising, degree audit, registration</p>
-          </div>
-        </div>
-        <!-- Retail & E-Commerce -->
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card" style="border-color:rgba(253,126,20,0.2)">
-            <div class="connector-icon" style="background:rgba(253,126,20,0.12)"><span style="font-size:1.3rem">🛒</span></div>
-            <h5 class="fw-bold mb-1">Retail &amp; E-Commerce</h5>
-            <p class="mb-2" style="color:#fd7e14;font-weight:700;font-size:.85rem">Multi-Plugin Suite</p>
-            <p class="text-muted mb-2" style="font-size:.8rem"><strong>Shopify</strong> &mdash;<br>Product manage, order process, inventory sync, discount create, fulfillment, analytics</p>
-            <p class="text-muted mb-0" style="font-size:.8rem"><strong>Salesforce CRM</strong> &mdash;<br>Lead create, opportunity update, contact search, case create, forecast, campaign</p>
-          </div>
-        </div>
-        <!-- Build Your Own -->
-        <div class="col-md-6 col-lg-3">
-          <div class="connector-card" style="border-color:rgba(13,202,240,0.2);background:rgba(13,202,240,0.03)">
-            <div class="connector-icon" style="background:rgba(13,202,240,0.12)"><span style="font-size:1.3rem">✨</span></div>
-            <h5 class="fw-bold mb-1">Build Your Own</h5>
-            <p class="mb-2" style="color:var(--accent-cyan);font-weight:700;font-size:.85rem">Unlimited Plugins</p>
-            <p class="text-muted mb-0" style="font-size:.8rem">Use the <strong>no-code wizard</strong> to create a new MCP connector from any REST/gRPC API. Paste an OpenAPI spec, configure tools, and deploy in minutes. Build custom verticals for any industry.</p>
-          </div>
-        </div>
-      </div>
-      <p class="text-center mt-4 mb-0" style="color:rgba(255,255,255,0.5);font-size:.9rem"><i class="bi bi-globe me-2"></i>One platform, every industry &mdash; build many verticals on a single foundation</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════ THE LEGO SYSTEM ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">The Lego System</h2>
-        <p class="section-subtitle">Build, Proxy, or Extend &mdash; snap connectors together like building blocks</p>
-      </div>
-      <div class="row g-4 mb-5">
-        <div class="col-md-4">
-          <div class="lego-card">
-            <div class="mb-3" style="font-size:1.75rem">&#x1F527;</div>
-            <h5 class="fw-bold mb-2">Build</h5>
-            <p class="text-muted mb-0" style="font-size:.9rem">Use the 7-step wizard to create a new MCP connector from any REST/gRPC API. No code required &mdash; just paste the OpenAPI spec.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="lego-card">
-            <div class="mb-3" style="font-size:1.75rem">&#x1F310;</div>
-            <h5 class="fw-bold mb-2">Proxy</h5>
-            <p class="text-muted mb-0" style="font-size:.9rem">Wrap legacy systems behind the MCP protocol. Internal APIs, SOAP services, mainframes &mdash; all become AI-accessible tools.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="lego-card">
-            <div class="mb-3" style="font-size:1.75rem">&#x1F9E9;</div>
-            <h5 class="fw-bold mb-2">Extend</h5>
-            <p class="text-muted mb-0" style="font-size:.9rem">Add custom logic to existing connectors &mdash; validation rules, data transforms, approval workflows &mdash; without touching the core.</p>
-          </div>
-        </div>
-      </div>
-      <div class="text-center mb-3"><h6 class="text-muted text-uppercase" style="letter-spacing:.1em;font-size:.8rem">Industry Applications</h6></div>
-      <div class="row g-2 justify-content-center">
-        <div class="col-auto"><span class="industry-tag"><i class="bi bi-code-slash me-1"></i>B2B DevOps</span></div>
-        <div class="col-auto"><span class="industry-tag"><i class="bi bi-airplane me-1"></i>B2C Travel</span></div>
-        <div class="col-auto"><span class="industry-tag"><i class="bi bi-heart-pulse me-1"></i>Healthcare</span></div>
-        <div class="col-auto"><span class="industry-tag"><i class="bi bi-graph-up me-1"></i>FinTech</span></div>
-        <div class="col-auto"><span class="industry-tag"><i class="bi bi-shop me-1"></i>Commerce</span></div>
-        <div class="col-auto"><span class="industry-tag"><i class="bi bi-headset me-1"></i>ITSM</span></div>
+  <section class="bbx-section bbx-section-alt" id="governs">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">What ContextWeaver governs</span>
+      <h2 class="bbx-title bbx-title-sm">Every layer needed to make AI operational.</h2>
+      <p class="bbx-lead">ContextWeaver is not an Agent framework wrapped in a dashboard. It is the platform around Agents: how capabilities are defined, admitted, authorized, connected to knowledge, executed, paused, recovered, verified, and operated.</p>
+      <div class="cwx-six">
+        <article class="cwx-cap"><i class="bi bi-grid-1x2"></i><h3>Services</h3><p>Versioned business capabilities with intent, contracts, risk, budgets, authorization, Workflows, lifecycle state, and publication history.</p></article>
+        <article class="cwx-cap"><i class="bi bi-diagram-3"></i><h3>Workflows</h3><p>Reusable typed graphs with parallel branches, serial dependencies, artifacts, retries, human waits, verification, and compensation.</p></article>
+        <article class="cwx-cap"><i class="bi bi-cpu"></i><h3>Agents and MCPs</h3><p>Registry-discovered skills and tools with immutable versions, typed contracts, requirements, configuration, health, metrics, and dashboards.</p></article>
+        <article class="cwx-cap"><i class="bi bi-database"></i><h3>Knowledge and RAG</h3><p>Owned sources, ingestion generations, retrieval profiles, embedding aliases, access policies, freshness, verified citations, and evidence lineage.</p></article>
+        <article class="cwx-cap"><i class="bi bi-shield-check"></i><h3>Identity and policy</h3><p>Whole-graph preflight, runtime reauthorization, capability tokens, credential isolation, budgets, human authority, and complete audit context.</p></article>
+        <article class="cwx-cap"><i class="bi bi-activity"></i><h3>Execution and operations</h3><p>Durable acceptance, queues, replaceable workers, checkpoints, timers, HITL, Saga state, compact run history, metrics, logs, traces, and SLOs.</p></article>
       </div>
     </div>
   </section>
 
-
-  <!-- ═══════════════ PLUGIN BUILDER ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">&#x1F527; No-Code Plugin Builder</h2>
-        <p class="section-subtitle">Create production-ready MCP connectors in minutes &mdash; no coding required</p>
+  <section class="bbx-section" id="lifecycle">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">Prompt to verified result</span>
+      <h2 class="bbx-title bbx-title-sm">The browser observes the run. It never owns it.</h2>
+      <p class="bbx-lead">Once accepted, work continues independently of a web request or one pod. The durable execution contract allows another worker to resume safely after failures without losing the decision trail.</p>
+      <div class="cwx-flow">
+        <article><b>1</b><h3>Understand</h3><p>Normalize intent and select the right Service version.</p></article>
+        <article><b>2</b><h3>Authorize</h3><p>Validate the complete graph against identity and entitlements.</p></article>
+        <article><b>3</b><h3>Accept</h3><p>Commit run, plan, task, event, and outbox records transactionally.</p></article>
+        <article><b>4</b><h3>Dispatch</h3><p>Publish persistent commands to role-specific durable queues.</p></article>
+        <article><b>5</b><h3>Execute</h3><p>Lease work, checkpoint progress, retry safely, and wait durably.</p></article>
+        <article><b>6</b><h3>Verify</h3><p>Check contracts, citations, side effects, and result invariants.</p></article>
+        <article><b>7</b><h3>Deliver</h3><p>Publish canonical result, evidence, receipts, and replayable events.</p></article>
       </div>
-      <div class="row g-4 align-items-center">
-        <div class="col-lg-6">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem">
-            <h5 class="fw-bold mb-3" style="color:var(--accent-cyan)"><i class="bi bi-magic me-2"></i>7-Step Wizard</h5>
-            <div class="d-flex align-items-start mb-3">
-              <span style="background:rgba(167,139,250,0.15);color:var(--accent-purple);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;margin-right:.75rem;margin-top:2px">1</span>
-              <div><strong>Name &amp; describe</strong> your plugin<br><span class="text-muted" style="font-size:.85rem">Give it a name, description, and icon</span></div>
-            </div>
-            <div class="d-flex align-items-start mb-3">
-              <span style="background:rgba(167,139,250,0.15);color:var(--accent-purple);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;margin-right:.75rem;margin-top:2px">2</span>
-              <div><strong>Paste OpenAPI spec</strong> or enter endpoints manually<br><span class="text-muted" style="font-size:.85rem">Swagger, OpenAPI 3.x, or raw REST endpoints</span></div>
-            </div>
-            <div class="d-flex align-items-start mb-3">
-              <span style="background:rgba(167,139,250,0.15);color:var(--accent-purple);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;margin-right:.75rem;margin-top:2px">3</span>
-              <div><strong>Select tools</strong> &mdash; choose which endpoints become AI tools<br><span class="text-muted" style="font-size:.85rem">Each tool gets a name, description, and parameters</span></div>
-            </div>
-            <div class="d-flex align-items-start mb-3">
-              <span style="background:rgba(167,139,250,0.15);color:var(--accent-purple);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;margin-right:.75rem;margin-top:2px">4</span>
-              <div><strong>Configure auth</strong> &mdash; OAuth2, API key, Bearer, or Basic<br><span class="text-muted" style="font-size:.85rem">Vault-backed credential resolution per user</span></div>
-            </div>
-            <div class="d-flex align-items-start mb-3">
-              <span style="background:rgba(167,139,250,0.15);color:var(--accent-purple);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;margin-right:.75rem;margin-top:2px">5</span>
-              <div><strong>Set scopes &amp; permissions</strong><br><span class="text-muted" style="font-size:.85rem">Org, Group, or User level visibility</span></div>
-            </div>
-            <div class="d-flex align-items-start mb-3">
-              <span style="background:rgba(167,139,250,0.15);color:var(--accent-purple);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;margin-right:.75rem;margin-top:2px">6</span>
-              <div><strong>Test &amp; preview</strong> in a sandbox<br><span class="text-muted" style="font-size:.85rem">Run tool calls against your API before publishing</span></div>
-            </div>
-            <div class="d-flex align-items-start">
-              <span style="background:rgba(13,202,240,0.15);color:var(--accent-cyan);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;margin-right:.75rem;margin-top:2px">7</span>
-              <div><strong>Publish &amp; deploy</strong><br><span class="text-muted" style="font-size:.85rem">One click &mdash; instantly available to all authorized users</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem">
-            <h5 class="fw-bold mb-3" style="color:var(--accent-purple)"><i class="bi bi-lightning-charge me-2"></i>Why It Matters</h5>
-            <div class="mb-3 p-3" style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.15);border-radius:10px">
-              <p class="mb-1"><strong style="color:var(--accent-purple)">Traditional approach:</strong></p>
-              <p class="text-muted mb-0" style="font-size:.85rem">Hire a developer &rarr; write SDK integration &rarr; handle auth &rarr; write tests &rarr; deploy &rarr; maintain. <strong>Weeks to months.</strong></p>
-            </div>
-            <div class="mb-4 p-3" style="background:rgba(13,202,240,0.06);border:1px solid rgba(13,202,240,0.15);border-radius:10px">
-              <p class="mb-1"><strong style="color:var(--accent-cyan)">With Plugin Builder:</strong></p>
-              <p class="text-muted mb-0" style="font-size:.85rem">Paste OpenAPI spec &rarr; select tools &rarr; configure auth &rarr; publish. <strong>Minutes.</strong></p>
-            </div>
-            <h6 class="fw-bold mb-2" style="font-size:.9rem">Supported API Types</h6>
-            <div class="mb-3">
-              <span class="feat-pill">REST</span>
-              <span class="feat-pill">gRPC</span>
-              <span class="feat-pill">GraphQL</span>
-              <span class="feat-pill">SOAP</span>
-              <span class="feat-pill">WebSocket</span>
-            </div>
-            <h6 class="fw-bold mb-2" style="font-size:.9rem">Auth Methods</h6>
-            <div class="mb-3">
-              <span class="feat-pill">OAuth2</span>
-              <span class="feat-pill">API Key</span>
-              <span class="feat-pill">Bearer Token</span>
-              <span class="feat-pill">Basic Auth</span>
-              <span class="feat-pill">mTLS</span>
-            </div>
-            <h6 class="fw-bold mb-2" style="font-size:.9rem">Built-in Features</h6>
-            <ul class="text-muted" style="font-size:.85rem;line-height:1.8">
-              <li>Auto-generates tool definitions from OpenAPI spec</li>
-              <li>Vault-backed per-user credential injection</li>
-              <li>Rate limiting &amp; retry with exponential backoff</li>
-              <li>Full audit trail on every tool call</li>
-              <li>Version control &amp; rollback support</li>
-            </ul>
-          </div>
-        </div>
+      <div class="bbx-actions">
+        <a class="bbx-btn bbx-btn-primary" href="../docs/documents/durable-asynchronous-execution.html">Read durable execution</a>
+        <a class="bbx-btn" href="../docs/diagram-viewer/contextweaver-nextgen-architecture.html">Open architecture diagrams</a>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ HIERARCHICAL SCOPE ═══════════════ -->
-  <section class="section">
-    <div class="container" style="max-width:700px">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Hierarchical Scope</h2>
-        <p class="section-subtitle">Credentials and policies cascade from Org &rarr; Group &rarr; User</p>
-      </div>
-      <div class="row g-4">
-        <!-- Credentials cascade -->
-        <div class="col-md-6">
-          <h6 class="text-center fw-bold mb-3"><i class="bi bi-key-fill me-2" style="color:#ffc107"></i>Credential Cascade</h6>
-          <div class="scope-level block-vault" style="max-width:320px">
-            <i class="bi bi-building me-1"></i><strong>Organization</strong>
-            <div class="small text-muted">Shared API keys, service accounts</div>
-          </div>
-          <div class="scope-connector"></div>
-          <div class="scope-level block-rag" style="max-width:260px">
-            <i class="bi bi-people-fill me-1"></i><strong>Group</strong>
-            <div class="small text-muted">Team tokens, department keys</div>
-          </div>
-          <div class="scope-connector"></div>
-          <div class="scope-level block-plugin" style="max-width:200px">
-            <i class="bi bi-person-fill me-1"></i><strong>User</strong>
-            <div class="small text-muted">Personal OAuth, API tokens</div>
-          </div>
-        </div>
-        <!-- Policy cascade -->
-        <div class="col-md-6">
-          <h6 class="text-center fw-bold mb-3"><i class="bi bi-file-earmark-ruled-fill me-2" style="color:var(--accent)"></i>RAG Policy Cascade</h6>
-          <div class="scope-level block-hub" style="max-width:320px">
-            <i class="bi bi-building me-1"></i><strong>Organization</strong>
-            <div class="small text-muted">Global compliance rules, spending caps</div>
-          </div>
-          <div class="scope-connector"></div>
-          <div class="scope-level block-mcp" style="max-width:260px">
-            <i class="bi bi-people-fill me-1"></i><strong>Group</strong>
-            <div class="small text-muted">Department budgets, tool access</div>
-          </div>
-          <div class="scope-connector"></div>
-          <div class="scope-level block-connector" style="max-width:200px">
-            <i class="bi bi-person-fill me-1"></i><strong>User</strong>
-            <div class="small text-muted">Personal preferences, limits</div>
-          </div>
-        </div>
+  <section class="bbx-section bbx-section-alt" id="experience">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">Product experience</span>
+      <h2 class="bbx-title bbx-title-sm">A compact UI for a complex platform.</h2>
+      <p class="bbx-lead">The interface uses progressive disclosure: first show the estate and current state, then let a user drill into exact versions, graph nodes, configuration provenance, run attempts, artifacts, decisions, and evidence.</p>
+      <div class="bbx-resource-grid">
+        <a class="bbx-resource" href="#studios"><span>MCP Studio</span><h3>Capabilities with boundaries</h3><p>Design and publish typed tools, connectors, policies, dependencies, and operational profiles.</p></a>
+        <a class="bbx-resource" href="#studios"><span>Agent Studio</span><h3>Reasoning with guardrails</h3><p>Test roles, prompts, RAG, memory, skills, models, and approved capability access.</p></a>
+        <a class="bbx-resource" href="#studios"><span>Workflow Studio</span><h3>Durable orchestration</h3><p>Build and rehearse branching, approvals, retries, waits, parallel execution, and recovery.</p></a>
+        <a class="bbx-resource" href="#studios"><span>Service Studio</span><h3>Reusable outcome contracts</h3><p>Package exact immutable Workflows and their capability graph for publication and operation.</p></a>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ SECURITY ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Enterprise Security</h2>
-        <p class="section-subtitle">Security by architecture, not by afterthought</p>
+  <section class="bbx-section" id="principles">
+    <div class="bbx-container bbx-architecture">
+      <div>
+        <span class="bbx-eyebrow">Design principles</span>
+        <h2 class="bbx-title bbx-title-sm">Governance belongs in the platform, not the prompt.</h2>
+        <p class="bbx-lead">The model may propose. The runtime decides what is allowed, what must wait, which credential reference may be used, and which evidence is required before the work becomes canonical.</p>
+        <div class="bbx-actions"><a class="bbx-btn bbx-btn-primary" href="../docs/documents/continuous-entitlement-enforcement.html">Explore security</a><a class="bbx-btn" href="../docs/documents/azure-production-platform-and-poc.html">Explore NextGen architecture</a></div>
       </div>
-      <div class="row g-3">
-        <div class="col-md-6 col-lg-4">
-          <div class="sec-panel">
-            <div class="mb-2"><i class="bi bi-eye-slash-fill" style="color:var(--accent-cyan);font-size:1.5rem"></i></div>
-            <h6 class="fw-bold">AI Sees Tool Names Only</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">The LLM receives tool definitions, never credentials or raw data. Zero-knowledge by design.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="sec-panel">
-            <div class="mb-2"><i class="bi bi-arrow-repeat" style="color:var(--accent-purple);font-size:1.5rem"></i></div>
-            <h6 class="fw-bold">Engine Resolves &amp; Discards</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">Credentials are fetched from Vault at execution time, used once, then discarded. Never cached in memory.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="sec-panel">
-            <div class="mb-2"><i class="bi bi-safe-fill" style="color:#dc3545;font-size:1.5rem"></i></div>
-            <h6 class="fw-bold">Vault (AES-256)</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">5 vault backends supported. All secrets encrypted at rest with AES-256. Rotate keys without downtime.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="sec-panel">
-            <div class="mb-2"><i class="bi bi-credit-card-fill" style="color:#ffc107;font-size:1.5rem"></i></div>
-            <h6 class="fw-bold">Stripe PCI Level 1</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">Payment processing through Stripe&rsquo;s PCI DSS Level 1 certified infrastructure. Card data never touches our servers.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="sec-panel">
-            <div class="mb-2"><i class="bi bi-person-badge-fill" style="color:#198754;font-size:1.5rem"></i></div>
-            <h6 class="fw-bold">SSO &amp; RBAC</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">SAML/OIDC single sign-on, role-based access control, and hierarchical permission scoping per user, group, and org.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="sec-panel">
-            <div class="mb-2"><i class="bi bi-file-earmark-lock-fill" style="color:var(--accent);font-size:1.5rem"></i></div>
-            <h6 class="fw-bold">RAG Policies</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">Ingest policies from PDFs, URLs, wikis, databases, and blob storage. Sources are chunked, vectorized, and stored in AI search indexes. The agent performs semantic search before every action &mdash; enforcing rules automatically. No coding required.</p>
-          </div>
-        </div>
+      <div class="cwx-principles">
+        <article><i class="bi bi-person-lock"></i><div><h3>Human authority</h3><p>High-risk actions, approvals, external communication, merges, and rollbacks remain explicit human decisions.</p></div></article>
+        <article><i class="bi bi-key"></i><div><h3>Credential non-possession</h3><p>Agents receive capability references and authority context, never raw secret values.</p></div></article>
+        <article><i class="bi bi-box-seam"></i><div><h3>Replaceable workers</h3><p>Execution state lives in durable stores, allowing another replica to recover accepted work.</p></div></article>
+        <article><i class="bi bi-file-earmark-check"></i><div><h3>Evidence-first results</h3><p>Sources, citations, policy decisions, revisions, artifacts, and side-effect receipts stay attached to the run.</p></div></article>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ KEY DIFFERENTIATORS ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Key Differentiators</h2>
-        <p class="section-subtitle">What makes ContextWeaver fundamentally different from everything else on the market</p>
-      </div>
-
-      <!-- Detailed comparison table -->
-      <div class="card mb-4" style="overflow-x:auto">
-        <div class="card-body p-0">
-          <table class="table table-sm mb-0" style="color:var(--text);font-size:.85rem">
-            <thead>
-              <tr style="background:rgba(167,139,250,0.1)">
-                <th style="width:22%;padding:.75rem;border-color:rgba(255,255,255,0.08)">Capability</th>
-                <th style="width:13%;padding:.75rem;border-color:rgba(255,255,255,0.08);text-align:center">LangChain /<br>CrewAI</th>
-                <th style="width:13%;padding:.75rem;border-color:rgba(255,255,255,0.08);text-align:center">Microsoft<br>Copilot</th>
-                <th style="width:13%;padding:.75rem;border-color:rgba(255,255,255,0.08);text-align:center">ServiceNow<br>Now Assist</th>
-                <th style="width:13%;padding:.75rem;border-color:rgba(255,255,255,0.08);text-align:center">Salesforce<br>Einstein</th>
-                <th style="width:13%;padding:.75rem;border-color:rgba(255,255,255,0.08);text-align:center;color:#a78bfa"><strong>Context<br>Weaver</strong></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>Multi-system orchestration</strong><br><span class="text-muted" style="font-size:.75rem">Chain tools across different platforms in one request</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; Code only<br><span style="font-size:.7rem;color:var(--text-muted)">Requires Python dev</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; M365 only<br><span style="font-size:.7rem;color:var(--text-muted)">Single ecosystem</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; ITSM only<br><span style="font-size:.7rem;color:var(--text-muted)">ServiceNow ecosystem</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; CRM only<br><span style="font-size:.7rem;color:var(--text-muted)">Salesforce ecosystem</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>Any system</strong><br><span style="font-size:.7rem;color:var(--text-muted)">MCP protocol, unlimited</span></td>
-              </tr>
-              <tr style="background:rgba(255,255,255,0.02)">
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>Per-user credential isolation</strong><br><span class="text-muted" style="font-size:.75rem">Different users get different API keys automatically</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; Shared env vars</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; M365 tokens</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; ITSM sessions</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; CRM tokens</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>Vault cascade</strong><br><span style="font-size:.7rem;color:var(--text-muted)">User &rarr; Group &rarr; Org</span></td>
-              </tr>
-              <tr>
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>Hierarchical policy enforcement</strong><br><span class="text-muted" style="font-size:.75rem">Org rules + team rules + user preferences, all via document upload</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; None</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; None</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; Workflow rules<br><span style="font-size:.7rem;color:var(--text-muted)">Hardcoded, not RAG</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; None</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>RAG-based</strong><br><span style="font-size:.7rem;color:var(--text-muted)">Any data source &rarr; vector index</span></td>
-              </tr>
-              <tr style="background:rgba(255,255,255,0.02)">
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>No-code plugin builder</strong><br><span class="text-muted" style="font-size:.75rem">Non-developers can create new AI integrations</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; Python only</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; No custom</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; Flow Designer<br><span style="font-size:.7rem;color:var(--text-muted)">ITSM-specific</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; Einstein Builder<br><span style="font-size:.7rem;color:var(--text-muted)">CRM-specific</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>7-step wizard</strong><br><span style="font-size:.7rem;color:var(--text-muted)">Any system, drag &amp; drop</span></td>
-              </tr>
-              <tr>
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>Cloud-agnostic deployment</strong><br><span class="text-muted" style="font-size:.75rem">Run on any cloud or on-premises</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; Self-host</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; Azure only</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; SaaS only</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; SaaS only</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>Any cloud + on-prem</strong><br><span style="font-size:.7rem;color:var(--text-muted)">6 swappable backends</span></td>
-              </tr>
-              <tr style="background:rgba(255,255,255,0.02)">
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>Open protocol (MCP)</strong><br><span class="text-muted" style="font-size:.75rem">Industry-standard protocol, not proprietary lock-in</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; Custom API</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; Proprietary</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; Proprietary</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; Proprietary</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>MCP standard</strong><br><span style="font-size:.7rem;color:var(--text-muted)">Anthropic's open protocol</span></td>
-              </tr>
-              <tr>
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>Multi-connector plugins</strong><br><span class="text-muted" style="font-size:.75rem">One plugin can access multiple external systems</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; Code wiring</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; No</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; No</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; No</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>N:N attach</strong><br><span style="font-size:.7rem;color:var(--text-muted)">UI checkbox attach</span></td>
-              </tr>
-              <tr style="background:rgba(255,255,255,0.02)">
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>Policy via multi-source knowledge ingestion</strong><br><span class="text-muted" style="font-size:.75rem">Ingest from PDFs, URLs, wikis, databases &mdash; vectorized into searchable indexes</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; No</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; No</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; No</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; No</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>Multi-source RAG</strong><br><span style="font-size:.7rem;color:var(--text-muted)">Files, URLs, wikis, DBs &rarr; vector index</span></td>
-              </tr>
-              <tr>
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>Same request, different users</strong><br><span class="text-muted" style="font-size:.75rem">Different policies, credentials, and outcomes per user</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; Same for all</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; M365 role-based</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; ITSM roles</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; CRM profiles</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>Full cascade</strong><br><span style="font-size:.7rem;color:var(--text-muted)">Creds + policies + prefs</span></td>
-              </tr>
-              <tr style="background:rgba(255,255,255,0.02)">
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>LLM / AI model choice</strong><br><span class="text-muted" style="font-size:.75rem">Swap between AI models without code changes</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; Any model</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; GPT-4 only</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; Their model</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; Their model</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>Any LLM</strong><br><span style="font-size:.7rem;color:var(--text-muted)">Azure, Ollama, any API</span></td>
-              </tr>
-              <tr>
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>Connector marketplace potential</strong><br><span class="text-muted" style="font-size:.75rem">Ecosystem of third-party integrations</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; PyPI packages</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; Copilot Plugins</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; NOW Store</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#ffc107">&#x26A0;&#xFE0F; AppExchange</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>MCP ecosystem</strong><br><span style="font-size:.7rem;color:var(--text-muted)">Build + proxy + extend</span></td>
-              </tr>
-              <tr style="background:rgba(255,255,255,0.02)">
-                <td style="padding:.6rem .75rem;border-color:rgba(255,255,255,0.05)"><strong>Pricing model</strong><br><span class="text-muted" style="font-size:.75rem">Cost structure for enterprises</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; Open source</td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; $30/user/mo<br><span style="font-size:.7rem;color:var(--text-muted)">+ M365 required</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; $100+/user/mo<br><span style="font-size:.7rem;color:var(--text-muted)">Enterprise lock-in</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#dc3545">&#x274C; $50+/user/mo<br><span style="font-size:.7rem;color:var(--text-muted)">Per cloud pricing</span></td>
-                <td style="text-align:center;border-color:rgba(255,255,255,0.05);color:#198754">&#x2705; <strong>Free + $29/$99</strong><br><span style="font-size:.7rem;color:var(--text-muted)">Community tier free</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Differentiator detail cards -->
-      <div class="row g-4 mt-2">
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #a78bfa">
-            <h5 style="color:#a78bfa"><i class="bi bi-layers"></i> Platform, Not Point Solution</h5>
-            <p class="text-muted mb-2" style="font-size:.85rem">Copilot works with M365. Einstein works with Salesforce. Now Assist works with ServiceNow. Each solves ONE ecosystem.</p>
-            <p style="font-size:.85rem">ContextWeaver connects to <strong>any system</strong> &mdash; your CRM, ERP, ITSM, DevOps, comms, payments, and custom internal tools &mdash; all in one platform. One prompt can chain actions across all of them.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #0dcaf0">
-            <h5 style="color:#0dcaf0"><i class="bi bi-shield-lock"></i> Security-First Architecture</h5>
-            <p class="text-muted mb-2" style="font-size:.85rem">Other platforms share one API key for everyone. Or worse &mdash; put credentials in environment variables.</p>
-            <p style="font-size:.85rem">ContextWeaver resolves credentials <strong>per-user, per-request</strong> from an encrypted vault. The LLM never sees secrets. Cards never touch the platform. Each tool call is an isolated execution &mdash; like <strong>separate locked rooms</strong>.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #198754">
-            <h5 style="color:#198754"><i class="bi bi-file-earmark-pdf"></i> Multi-Source Knowledge Ingestion &amp; Policy Enforcement</h5>
-            <p class="text-muted mb-2" style="font-size:.85rem">Traditional systems enforce rules through code. Change a policy = code change + deploy + testing cycle.</p>
-            <p style="font-size:.85rem">ContextWeaver ingests policy data from <strong>any source</strong> &mdash; PDFs, web pages, wikis (Azure DevOps, Confluence), databases, blob storage, even pasted text. Each source is <strong>chunked, embedded into vectors, and stored in searchable AI indexes</strong> (Azure AI Search, Elasticsearch, or ChromaDB). Before every action, the AI performs a <strong>semantic vector search</strong> across these indexes to find applicable rules &mdash; at three scope levels: company &gt; team &gt; personal. Change a policy document &rarr; the AI's behavior changes instantly. No code. No deploy.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row g-4 mt-1">
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #ffc107">
-            <h5 style="color:#ffc107"><i class="bi bi-bricks"></i> Lego Architecture</h5>
-            <p class="text-muted mb-2" style="font-size:.85rem">Other AI platforms are monolithic &mdash; you get what they built, nothing more.</p>
-            <p style="font-size:.85rem">ContextWeaver is a <strong>Lego system</strong>. Every connector is a block. Snap them together: Jira + GitHub + K8s = DevOps automation. Stripe + Travel + Email = booking service. <strong>Build new connectors, proxy existing MCP servers, or extend and combine</strong> &mdash; unlimited possibilities for any industry.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #dc3545">
-            <h5 style="color:#dc3545"><i class="bi bi-cloud-arrow-down"></i> Zero Vendor Lock-in</h5>
-            <p class="text-muted mb-2" style="font-size:.85rem">Copilot requires Azure. Einstein requires Salesforce Cloud. Now Assist requires ServiceNow instances.</p>
-            <p style="font-size:.85rem">ContextWeaver runs on <strong>any infrastructure</strong>: Azure, AWS, GCP, or your own servers. Swap the LLM (GPT-4, Claude, Llama, Ollama). Swap the database (Cosmos, MongoDB, PostgreSQL). Swap the vault (Azure KV, HashiCorp, AWS). <strong>The application stays the same.</strong></p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #0d6efd">
-            <h5 style="color:#0d6efd"><i class="bi bi-people"></i> B2B + B2C Ready</h5>
-            <p class="text-muted mb-2" style="font-size:.85rem">Most enterprise AI platforms serve only internal employees. Consumer-facing AI has no governance.</p>
-            <p style="font-size:.85rem">ContextWeaver serves <strong>both</strong>. B2B: hierarchical RBAC, audit trails, on-prem deploy, SOC2. B2C: PCI-compliant payments, OAuth social login, per-user isolation, GDPR. <strong>Same platform, same security model</strong> &mdash; whether you have 10 employees or 10 million customers.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #20c997">
-            <h5 style="color:#20c997"><i class="bi bi-code-square"></i> Infrastructure as Code</h5>
-            <p class="text-muted mb-2" style="font-size:.85rem">Other platforms require days of manual setup, clicking through cloud consoles, and tribal knowledge.</p>
-            <p style="font-size:.85rem">Deploy the entire ContextWeaver platform from scratch in <strong>~20 minutes</strong> with Terraform. 9 cloud-agnostic modules, 2 Helm charts (cerebro-app rev 5, mcp1 rev 3), one command. Day-2 operations via <code>helm upgrade</code> / <code>helm rollback</code>. Swap between <strong>Azure, AWS, or GCP</strong> by changing one directory &mdash; same app code, same Helm charts, same security model.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #ff6b6b">
-            <h5 style="color:#ff6b6b"><i class="bi bi-graph-up-arrow"></i> Built-in SRE Observability</h5>
-            <p class="text-muted mb-2" style="font-size:.85rem">Most AI platforms ship with zero monitoring. When something breaks, you're flying blind.</p>
-            <p style="font-size:.85rem">Built-in SRE monitoring with <strong>Prometheus + Grafana + Loki 3</strong>. 7 dashboards, 12 alert rules, centralized log aggregation with LogQL search, zero PII &mdash; all user IDs are <code>sha256</code>-hashed. Embedded in the app via the <strong>Monitoring</strong> tab with an iframe dashboard switcher, plus a <strong>Cluster View</strong> tab showing all namespaces and pod details. Not bolted on as an afterthought.</p>
-          </div>
+  <section class="bbx-section bbx-section-alt" id="start">
+    <div class="bbx-container">
+      <div class="bbx-cta">
+        <span class="bbx-eyebrow">Go from overview to implementation</span>
+        <h2 class="bbx-title bbx-title-sm">See how the complete platform fits together.</h2>
+        <p class="bbx-lead">The documentation separates implemented foundations, normative contracts, and production targets so architects, developers, security teams, and operators can evaluate the platform honestly.</p>
+        <div class="bbx-actions">
+          <a class="bbx-btn bbx-btn-primary" href="../docs/index.html">Open documentation</a>
+          <a class="bbx-btn" href="../docs/diagram-viewer/contextweaver-nextgen-architecture.html">Explore all architecture diagrams</a>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- ═══════════════ SCENARIOS ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">See It In Action</h2>
-        <p class="section-subtitle">Deep-dive walkthroughs showing ContextWeaver end-to-end</p>
-      </div>
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="scenario-card">
-            <div style="font-size:2.5rem;margin-bottom:1rem">&#x2708;&#xFE0F;</div>
-            <h5 class="fw-bold mb-2">Travel Planner</h5>
-            <p class="text-muted flex-grow-1" style="font-size:.9rem">Book flights, charge cards, send confirmations &mdash; all from one sentence with policy enforcement at every step.</p>
-            <a href="../scenario-travel-planner.html" class="fw-semibold" style="color:var(--accent-purple)">View Scenario &rarr;</a>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="scenario-card">
-            <div style="font-size:2.5rem;margin-bottom:1rem">&#x2699;&#xFE0F;</div>
-            <h5 class="fw-bold mb-2">DevOps Pipeline</h5>
-            <p class="text-muted flex-grow-1" style="font-size:.9rem">Create repos, configure CI/CD, manage PRs and deployments using natural language commands.</p>
-            <a href="../scenario-devops.html" class="fw-semibold" style="color:var(--accent-purple)">View Scenario &rarr;</a>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="scenario-card">
-            <div style="font-size:2.5rem;margin-bottom:1rem">&#x1F4C8;</div>
-            <h5 class="fw-bold mb-2">Smart Trading</h5>
-            <p class="text-muted flex-grow-1" style="font-size:.9rem">AI-powered portfolio analysis, trade execution, and risk management with real-time compliance checks.</p>
-            <a href="../scenario-trading.html" class="fw-semibold" style="color:var(--accent-purple)">View Scenario &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ CUSTOMER ISOLATION ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title">&#x1F3E2; Customer Isolation &mdash; One Platform, Complete Separation</h2>
-        <p class="section-subtitle">Every customer shares the same infrastructure but has <strong>complete data and resource isolation</strong>.</p>
-      </div>
-      <div class="row g-4 justify-content-center">
-        <div class="col-md-3 col-6">
-          <div class="block block-hub text-center" style="height:100%">
-            <div style="font-size:1.8rem;margin-bottom:.5rem">&#x1F310;</div>
-            <h6 class="fw-bold" style="font-size:.85rem">Namespace Isolation</h6>
-            <p class="text-muted mb-0" style="font-size:.78rem">Each customer runs in its own K8s namespace with strict NetworkPolicy</p>
-          </div>
-        </div>
-        <div class="col-md-3 col-6">
-          <div class="block block-vault text-center" style="height:100%">
-            <div style="font-size:1.8rem;margin-bottom:.5rem">&#x1F464;</div>
-            <h6 class="fw-bold" style="font-size:.85rem">Identity Isolation</h6>
-            <p class="text-muted mb-0" style="font-size:.78rem">Per-customer Managed Identity &mdash; can only access its own resources</p>
-          </div>
-        </div>
-        <div class="col-md-3 col-6">
-          <div class="block block-plugin text-center" style="height:100%">
-            <div style="font-size:1.8rem;margin-bottom:.5rem">&#x1F5C4;&#xFE0F;</div>
-            <h6 class="fw-bold" style="font-size:.85rem">Data Isolation</h6>
-            <p class="text-muted mb-0" style="font-size:.78rem">Separate vault, database, and search indexes &mdash; data never crosses</p>
-          </div>
-        </div>
-        <div class="col-md-3 col-6">
-          <div class="block block-mcp text-center" style="height:100%">
-            <div style="font-size:1.8rem;margin-bottom:.5rem">&#x1F6E1;&#xFE0F;</div>
-            <h6 class="fw-bold" style="font-size:.85rem">Network Isolation</h6>
-            <p class="text-muted mb-0" style="font-size:.78rem">Istio mTLS encrypts all traffic &mdash; no cross-namespace access allowed</p>
-          </div>
-        </div>
-      </div>
-      <div class="text-center mt-4">
-        <a href="../architecture.html" class="btn btn-outline-glow me-2"><i class="bi bi-diagram-3 me-1"></i>Isolation Architecture &rarr;</a>
-        <a href="../flows.html" class="btn btn-outline-glow"><i class="bi bi-arrow-repeat me-1"></i>Platform Flows &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ ENTERPRISE MULTI-USER SECURITY ═══════════════ -->
-  <section class="section" style="border-top:3px solid rgba(25,135,84,0.4)">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title" style="color:#22c55e"><i class="bi bi-shield-lock-fill me-2"></i>Enterprise Multi-User Security</h2>
-        <p class="section-subtitle" style="max-width:740px;margin:0 auto 1.5rem">
-          <strong style="color:#f8d7da;font-size:1.1rem"><i class="bi bi-exclamation-triangle-fill me-2" style="color:#dc3545"></i>The #1 problem with agentic AI: every user shares the same credentials, the same data, and the same permissions</strong>
-        </p>
-        <p class="text-muted" style="max-width:640px;margin:0 auto 2.5rem;font-size:.95rem;line-height:1.7">ContextWeaver was built from day one for multi-user enterprise environments. Identity, credentials, and knowledge boundaries are enforced at the engine level &mdash; not bolted on after the fact.</p>
-      </div>
-
-      <div class="row g-4">
-        <!-- Identity-Aware MCP -->
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #22c55e;background:var(--bg-card)">
-            <div class="d-flex align-items-center gap-2 mb-3">
-              <div style="width:44px;height:44px;border-radius:12px;background:rgba(34,197,94,0.15);display:flex;align-items:center;justify-content:center">
-                <i class="bi bi-person-badge-fill" style="color:#22c55e;font-size:1.2rem"></i>
-              </div>
-              <h5 class="fw-bold mb-0" style="color:#22c55e">Identity-Aware MCP</h5>
-            </div>
-            <p class="text-muted mb-0" style="font-size:.88rem;line-height:1.7">Every tool call carries the authenticated user's identity, injected and enforced at the MCP engine level. The AI agent never decides who the user is &mdash; the platform does. No prompt injection can bypass it. <strong>MFA-ready via Entra Conditional Access</strong> &mdash; customer admins can enforce multi-factor authentication on every login.</p>
-          </div>
-        </div>
-        <!-- Per-User Credential Vault -->
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #22c55e;background:var(--bg-card)">
-            <div class="d-flex align-items-center gap-2 mb-3">
-              <div style="width:44px;height:44px;border-radius:12px;background:rgba(34,197,94,0.15);display:flex;align-items:center;justify-content:center">
-                <i class="bi bi-key-fill" style="color:#22c55e;font-size:1.2rem"></i>
-              </div>
-              <h5 class="fw-bold mb-0" style="color:#22c55e">Per-User Credential Vault</h5>
-            </div>
-            <p class="text-muted mb-0" style="font-size:.88rem;line-height:1.7">Credentials resolve through a cascade: User &rarr; Group &rarr; Org. Each user's API keys live in an encrypted vault partition. The AI agent never sees raw secrets &mdash; only the platform injects them at execution time.</p>
-          </div>
-        </div>
-        <!-- 5-Level Knowledge Isolation -->
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #22c55e;background:var(--bg-card)">
-            <div class="d-flex align-items-center gap-2 mb-3">
-              <div style="width:44px;height:44px;border-radius:12px;background:rgba(34,197,94,0.15);display:flex;align-items:center;justify-content:center">
-                <i class="bi bi-layers-fill" style="color:#22c55e;font-size:1.2rem"></i>
-              </div>
-              <h5 class="fw-bold mb-0" style="color:#22c55e">5-Level Knowledge Isolation</h5>
-            </div>
-            <p class="text-muted mb-0" style="font-size:.88rem;line-height:1.7">RAG indexes are scoped across five levels: User &rarr; Group &rarr; Org &rarr; Plugin &rarr; Engine. Private data is invisible to other users. Policies are enforced in code with index-naming conventions and ACLs &mdash; not in prompts.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center mt-4">
-        <a href="../security.html" class="fw-semibold" style="color:#22c55e;font-size:1.05rem"><i class="bi bi-shield-check me-1"></i>Learn More &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ VISUAL DESIGNER ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title"><i class="bi bi-palette me-2"></i>Visual Designer</h2>
-        <p class="section-subtitle">Design, configure, and deploy entire MCP engine topologies from an interactive SVG canvas &mdash; no code required</p>
-      </div>
-
-      <!-- Full-width annotated diagram -->
-      <div class="mb-5" style="border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.4)">
-        <img src="../visual-designer-diagram.svg" alt="ContextWeaver Visual Designer — annotated diagram showing engine, plugins, connectors, sources, and security toggles" style="width:100%;display:block">
-      </div>
-
-      <div class="row g-4">
-        <!-- SVG Canvas -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #a78bfa">
-            <h5 style="color:#a78bfa"><i class="bi bi-bounding-box-circles me-1"></i> Drag &amp; Drop SVG Canvas</h5>
-            <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.7">Design MCP engine topologies visually on a pure SVG canvas. Drag engines, plugins, connectors, and sources into place. Every interactive element has real-time tooltips for instant guidance.</p>
-          </div>
-        </div>
-        <!-- Plugin Management -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #0dcaf0">
-            <h5 style="color:#0dcaf0"><i class="bi bi-puzzle me-1"></i> Visual Plugin Management</h5>
-            <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.7">Enable or disable plugins with a click. Toggle security settings per-plugin. Attach connectors and configure scopes &mdash; all from consolidated visual cards with inline controls.</p>
-          </div>
-        </div>
-        <!-- Connector Credentials -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #198754">
-            <h5 style="color:#198754"><i class="bi bi-key me-1"></i> Connector Credential Config</h5>
-            <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.7">Configure connector credentials directly on the canvas with integrated vault support. Credentials are resolved through the hierarchical vault cascade &mdash; never exposed to the UI or the LLM.</p>
-          </div>
-        </div>
-        <!-- Source Management -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #ffc107">
-            <h5 style="color:#ffc107"><i class="bi bi-folder2-open me-1"></i> Source Management</h5>
-            <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.7">Manage RAG knowledge sources through consolidated cards grouped by scope (User, Group, Org). Add documents, URLs, wikis, and database connections from a single unified interface.</p>
-          </div>
-        </div>
-        <!-- Ingest Pipeline -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #0d6efd">
-            <h5 style="color:#0d6efd"><i class="bi bi-arrow-repeat me-1"></i> Ingest Pipeline</h5>
-            <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.7">One-click ingest pipeline: chunk &rarr; embed &rarr; index to Azure AI Search. Sources are automatically processed through Azure OpenAI embeddings and stored in searchable vector indexes.</p>
-          </div>
-        </div>
-        <!-- RAG Cascade -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #dc3545">
-            <h5 style="color:#dc3545"><i class="bi bi-diagram-3 me-1"></i> Hierarchical RAG Cascade</h5>
-            <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.7">The visual designer exposes the full RAG cascade: User &rarr; Group &rarr; Org &rarr; Plugin &rarr; Engine. Each level's policies are searched at runtime, giving every user a personalized AI experience.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row g-4 mt-1">
-        <!-- Blueprint Save/Load -->
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #a78bfa">
-            <h5 style="color:#a78bfa"><i class="bi bi-save me-1"></i> Blueprint Save &amp; Load</h5>
-            <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.7">Save your entire engine topology as a blueprint to Cosmos DB. Load, version, and share blueprints across teams. Deploy full topologies from saved designs with one click.</p>
-          </div>
-        </div>
-        <!-- Tooltips / UX -->
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #0dcaf0">
-            <h5 style="color:#0dcaf0"><i class="bi bi-chat-square-text me-1"></i> Real-Time Guidance</h5>
-            <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.7">Every interactive element on the canvas shows contextual tooltips. Hover any button, toggle, or card for an instant explanation &mdash; making the entire topology design self-documenting and beginner-friendly.</p>
-          </div>
-        </div>
-        <!-- Cluster View -->
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #e94560">
-            <h5 style="color:#e94560"><i class="bi bi-hdd-rack me-1"></i> Cluster View</h5>
-            <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.7">Horizontal card layout of all Kubernetes namespaces with expandable pod details &mdash; images, digests, resources, Helm metadata. Double-click to navigate to Visual Designer or Monitoring.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ═══════════════ DEVELOPER WORKSPACES ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">&#x1F4BB; Developer Workspaces</h2>
-        <p class="section-subtitle">Full cloud development environments &mdash; code, experiment, and build directly on the platform</p>
-      </div>
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;height:100%">
-            <div class="mb-3" style="font-size:2rem">&#x1F5A5;&#xFE0F;</div>
-            <h5 class="fw-bold mb-2" style="color:var(--accent-cyan)">Cloud Workspaces</h5>
-            <p class="text-muted mb-3" style="font-size:.9rem;line-height:1.7">Full VS Code environment in the browser via <strong>code-server</strong>. Each user gets an isolated workspace (<code>ws-{username}</code>) with persistent storage, pre-installed tools, and direct access to the platform.</p>
-            <div class="mb-2">
-              <span class="feat-pill">VS Code in Browser</span>
-              <span class="feat-pill">Copilot CLI</span>
-              <span class="feat-pill">Claude Code</span>
-            </div>
-            <div class="mb-2">
-              <span class="feat-pill">Persistent Storage</span>
-              <span class="feat-pill">4 CPU / 4 GB RAM</span>
-              <span class="feat-pill">Per-User Isolation</span>
-            </div>
-            <p class="text-muted mb-0 mt-3" style="font-size:.82rem"><i class="bi bi-shield-check me-1" style="color:#22c55e"></i>Each workspace runs in its own Kubernetes namespace with dedicated Azure Disk PVC</p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;height:100%">
-            <div class="mb-3" style="font-size:2rem">&#x1F4D3;</div>
-            <h5 class="fw-bold mb-2" style="color:var(--accent-purple)">JupyterHub Notebooks</h5>
-            <p class="text-muted mb-3" style="font-size:.9rem;line-height:1.7">Multi-user <strong>JupyterHub</strong> with Entra ID authentication. Each user gets their own notebook server for data exploration, model prototyping, and RAG pipeline experimentation.</p>
-            <div class="mb-2">
-              <span class="feat-pill">Jupyter Notebooks</span>
-              <span class="feat-pill">Python / R / Julia</span>
-              <span class="feat-pill">Entra ID SSO</span>
-            </div>
-            <div class="mb-2">
-              <span class="feat-pill">Per-User Pods</span>
-              <span class="feat-pill">GPU Support</span>
-              <span class="feat-pill">Shared Datasets</span>
-            </div>
-            <p class="text-muted mb-0 mt-3" style="font-size:.82rem"><i class="bi bi-shield-check me-1" style="color:#22c55e"></i>Authenticated via Entra ID &mdash; same identity used across the entire platform</p>
-          </div>
-        </div>
-      </div>
-      <div class="text-center mt-4">
-        <p class="text-muted mb-0" style="font-size:.85rem"><i class="bi bi-info-circle me-1"></i>Workspaces and notebooks share the same Kubernetes cluster, identity provider, and network policies as the rest of the platform</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ CTA ═══════════════ -->
-  <section class="section section-alt text-center">
-    <div class="container" style="max-width:600px">
-      <h2 class="section-title mb-3">Ready to Transform Your Enterprise?</h2>
-      <p class="text-muted mb-4" style="font-size:1rem">See how ContextWeaver turns natural language into secure, cross-system action.</p>
-      <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-        <a href="https://app.brainzbytes.com" class="btn btn-glow"><i class="bi bi-box-arrow-up-right me-1"></i> Launch App</a>
-        <a href="../scenario-travel-planner.html" class="btn btn-outline-glow">See Scenarios &rarr;</a>
-        <a href="../index.html#contact" class="btn btn-outline-glow">Contact Us</a>
-      </div>
-      <p class="text-muted mb-0" style="font-size:.8rem"><i class="bi bi-bookmark-star-fill me-1"></i>Protected under U.S. Patent #768758</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════ FOOTER ═══════════════ -->
-  <footer class="bb-footer">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6">
-          <div class="d-flex align-items-center gap-2 mb-2">
-            <img src="../logo.svg" alt="BrainzBytes" style="width:22px;height:22px">
-            <span class="fw-bold" style="color:var(--accent-purple)">BrainzBytes</span>
-          </div>
-          <p class="text-muted mb-0" style="font-size:.85rem">&copy; 2026 BrainzBytes Inc. All rights reserved.</p>
-        </div>
-        <div class="col-md-6 text-md-end mt-3 mt-md-0">
-          <a href="#" class="me-3" style="font-size:.85rem">Privacy Policy</a>
-          <a href="#" class="me-3" style="font-size:.85rem">Terms of Service</a>
-          <a href="mailto:contact@brainzbytes.com" style="font-size:.85rem">contact@brainzbytes.com</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</main>
 </body>
 </html>

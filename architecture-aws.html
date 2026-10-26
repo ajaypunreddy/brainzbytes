@@ -1,391 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="midnight">
 <head>
-<script src="/gate.js"></script>
+  <script src="/gate.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrainzBytes &mdash; AWS Deployment Architecture</title>
-  <meta name="description" content="ContextWeaver on AWS — EKS, Cognito, DynamoDB, Amazon Bedrock, IRSA, zero secrets. Reference architecture for AWS deployment.">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
-    a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-purple)}
-    .card{background:var(--bg-card);border-color:var(--border)}
-    code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.85em}
-    .dropdown-item.active-item{color:var(--accent-cyan);font-weight:600}
-
-    .hero{padding:5rem 0 3rem;position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(255,153,0,0.06) 0%,transparent 70%);pointer-events:none}
-    .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,#ff9900 0%,#f59e0b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
-    .hero .subtitle{font-size:1.05rem;color:var(--text-muted);max-width:700px;margin:0 auto;line-height:1.75}
-
-    .section{padding:3.5rem 0}.section-alt{background:var(--bg-elevated)}
-    .section-title{font-size:1.8rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem}
-    .section-subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:2rem}
-
-    .block{border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:.75rem}
-    .block-purple{background:rgba(167,139,250,0.08);border:2px solid rgba(167,139,250,0.35)}
-    .block-cyan{background:rgba(13,202,240,0.06);border:2px solid rgba(13,202,240,0.25)}
-    .block-green{background:rgba(25,135,84,0.06);border:2px solid rgba(25,135,84,0.25)}
-    .block-amber{background:rgba(245,158,11,0.06);border:2px solid rgba(245,158,11,0.25)}
-    .block-red{background:rgba(220,53,69,0.06);border:2px solid rgba(220,53,69,0.25)}
-    .block-blue{background:rgba(13,110,253,0.06);border:2px solid rgba(13,110,253,0.25)}
-    .block-orange{background:rgba(255,153,0,0.06);border:2px solid rgba(255,153,0,0.25)}
-
-    .tenant-box{border-radius:16px;padding:1.75rem;position:relative}
-    .tenant-label{position:absolute;top:-14px;left:20px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:2px 12px;border-radius:6px}
-    .arrow-bridge{text-align:center;font-size:1rem;padding:.75rem 0;color:var(--text-muted)}
-
-    .inner-block{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:.6rem}
-    .inner-block h6{font-size:.85rem;font-weight:700;margin-bottom:.4rem}
-    .inner-block .detail{font-size:.8rem;color:var(--text-muted);line-height:1.7}
-    .inner-block code{font-size:.75rem}
-
-    .ns-block{border-radius:10px;padding:1rem 1.25rem;margin-bottom:.6rem}
-    .ns-default{background:rgba(167,139,250,0.06);border:1.5px solid rgba(167,139,250,0.25)}
-    .ns-mcp{background:rgba(13,202,240,0.04);border:1.5px solid rgba(13,202,240,0.2)}
-
-    .role-pill{display:inline-block;background:rgba(255,255,255,0.06);border:1px solid var(--border);padding:2px 8px;border-radius:6px;font-size:.7rem;font-weight:500;margin:2px;color:var(--text-muted)}
-    .svc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;height:100%;transition:all .3s}
-    .svc-card:hover{border-color:rgba(255,153,0,0.3)}
-    .svc-card h6{font-size:.85rem;font-weight:700;margin-bottom:.35rem}
-    .svc-card .svc-detail{font-size:.78rem;color:var(--text-muted);line-height:1.7}
-
-    .sec-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(25,135,84,0.1);border:1px solid rgba(25,135,84,0.3);color:var(--green);padding:.4rem .9rem;border-radius:20px;font-size:.78rem;font-weight:600;margin:.25rem}
-    .feat-pill{display:inline-block;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:var(--accent-purple);padding:.3rem .85rem;border-radius:20px;font-size:.78rem;font-weight:600;margin:.2rem}
-    .pill-cyan{background:rgba(13,202,240,0.1);border-color:rgba(13,202,240,0.25);color:var(--accent-cyan)}
-    .pill-orange{background:rgba(255,153,0,0.1);border-color:rgba(255,153,0,0.25);color:var(--aws-orange)}
-
-    .bb-footer{background:var(--bg-nav);border-top:1px solid var(--border);padding:2.5rem 0;margin-top:3rem}
-    .bb-footer a{color:var(--text-muted)}.bb-footer a:hover{color:var(--text)}
-
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    .fade-up{animation:fadeInUp .6s ease-out both}
-    .fade-up-d1{animation-delay:.1s}.fade-up-d2{animation-delay:.2s}.fade-up-d3{animation-delay:.3s}
-    .fade-up-d4{animation-delay:.4s}.fade-up-d5{animation-delay:.5s}.fade-up-d6{animation-delay:.6s}
-  </style>
-
+  <title>ContextWeaver NextGen &mdash; AWS Portability Architecture</title>
+  <meta name="description" content="AWS portability mapping for the cloud-neutral ContextWeaver NextGen architecture.">
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
   <link rel="stylesheet" href="theme.css">
   <script src="theme.js" defer></script>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",system-ui,sans-serif}.wrap{width:min(1100px,calc(100% - 2rem));margin:auto}
+    .hero{padding:8rem 0 4rem;text-align:center;background:radial-gradient(circle at 50% 0,rgba(245,158,11,.16),transparent 52%)}.eyebrow{color:#fbbf24;font-size:.75rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase}
+    h1{font-size:clamp(2.1rem,4vw,3.15rem);line-height:1.03;letter-spacing:-.04em;margin:.8rem auto 1.2rem;max-width:900px}.lead{max-width:800px;margin:auto;color:var(--text-muted);font-size:1.08rem;line-height:1.75}
+    .actions{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;margin-top:1.8rem}.button{padding:.75rem 1rem;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);text-decoration:none;color:var(--text);font-weight:750}.button.primary{background:#d97706;color:#fff;border-color:#d97706}
+    .section{padding:4.2rem 0}.section.alt{background:var(--bg-elevated)}.section h2{font-size:clamp(1.65rem,3vw,2.3rem);letter-spacing:-.03em;margin:.4rem 0 .65rem}.intro{max-width:780px;color:var(--text-muted);line-height:1.7;margin:0 0 2rem}
+    .map{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}.row{display:grid;grid-template-columns:.72fr 1.28fr;gap:1rem;padding:1rem;border:1px solid var(--border);border-radius:12px;background:var(--bg-card)}.row strong{color:#fbbf24}.row span{color:var(--text-muted);font-size:.84rem;line-height:1.55}
+    .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.rule{padding:1.2rem;border:1px solid var(--border);border-radius:14px;background:var(--bg-card)}.rule b{display:block;margin-bottom:.35rem}.rule p{margin:0;color:var(--text-muted);font-size:.82rem;line-height:1.55}
+    .status{padding:1.1rem 1.25rem;border:1px solid rgba(96,165,250,.35);border-radius:13px;background:rgba(96,165,250,.07);color:var(--text-muted);line-height:1.65}.status strong{color:#60a5fa}
+    @media(max-width:800px){.map,.rules{grid-template-columns:1fr}.row{grid-template-columns:1fr}.hero{padding-top:6.5rem}}
+  </style>
 </head>
 <body>
-
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="hero text-center">
-    <div class="container">
-      <div class="fade-up">
-        <div style="font-size:2.5rem;margin-bottom:.75rem">&#x1F4E6; &#x1F512; &#x1F680;</div>
-        <h1>AWS Deployment Architecture</h1>
-      </div>
-      <p class="lead fade-up fade-up-d1" style="font-size:1.2rem;font-weight:600;color:var(--text)">Reference architecture &mdash; same app, AWS-native platform layer</p>
-      <p class="subtitle fade-up fade-up-d2">Customer identity + BrainzBytes infrastructure, zero API keys, IRSA everywhere. The identical ContextWeaver containers deploy on EKS with AWS-native services.</p>
-      <div class="fade-up fade-up-d3">
-        <a href="architecture.html" class="feat-pill text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Base Architecture</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ CUSTOMER IDENTITY ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <!-- Customer Identity -->
-      <div class="tenant-box block-purple fade-up" style="position:relative">
-        <span class="tenant-label" style="background:rgba(167,139,250,0.25);color:var(--accent-purple)">Customer Identity</span>
-        <div class="row mt-3 g-3">
-          <div class="col-md-4">
-            <div class="inner-block">
-              <h6 style="color:var(--accent-purple)"><i class="bi bi-shield-lock me-2"></i>AWS Cognito</h6>
-              <div class="detail">
-                User Pool for admin SSO<br>
-                Or external OIDC: Okta, Auth0<br>
-                <span style="color:#ec4899">+ Magic Link (passwordless email) for end users</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="inner-block">
-              <h6 style="color:var(--accent-purple)"><i class="bi bi-app-indicator me-2"></i>App Client</h6>
-              <div class="detail">
-                OAuth 2.0 / OIDC client<br>
-                Authorization code flow<br>
-                Custom scopes for roles + groups
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="inner-block">
-              <h6 style="color:var(--accent-purple)"><i class="bi bi-link-45deg me-2"></i>Token Configuration</h6>
-              <div class="detail">
-                OIDC tokens with custom claims<br>
-                Roles + groups in JWT payload<br>
-                Callback: <code>/oidc/callback</code>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Arrow -->
-      <div class="arrow-bridge fade-up fade-up-d1">
-        <div style="font-size:2rem">&#x1F512;</div>
-        <div style="font-size:.85rem"><i class="bi bi-arrow-down me-1"></i>JWT Token (OIDC or Magic Link) &mdash; the ONLY thing crossing the boundary</div>
-      </div>
-
-      <!-- ═══════════════ BRAINZBYTES PLATFORM INFRASTRUCTURE ═══════════════ -->
-      <div class="tenant-box block-orange fade-up fade-up-d2" style="position:relative">
-        <span class="tenant-label" style="background:rgba(255,153,0,0.2);color:var(--aws-orange)">BrainzBytes Platform (AWS Account)</span>
-        <div class="mt-3 mb-2" style="font-size:.85rem;color:var(--text-muted)">
-          <i class="bi bi-geo-alt me-2"></i>Region: <code>us-east-1</code>
-        </div>
-
-        <!-- EKS Cluster -->
-        <div class="block block-green" style="position:relative">
-          <h5 class="fw-bold mb-3" style="color:var(--green)">
-            <i class="bi bi-box-seam me-2"></i>EKS Cluster
-            <span class="badge bg-secondary ms-2" style="font-size:.7rem;font-weight:500">3 nodes &bull; m5.large</span>
-          </h5>
-
-          <!-- Ingress -->
-          <div class="inner-block mb-3">
-            <h6 style="color:var(--amber)"><i class="bi bi-globe2 me-2"></i>Ingress Layer</h6>
-            <div class="row g-2">
-              <div class="col-md-6">
-                <div class="detail">
-                  <strong style="color:var(--aws-orange)">ALB</strong> (Application Load Balancer)<br>
-                  AWS WAF + AWS Shield<br>
-                  ACM-managed TLS certificate
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="detail">
-                  <strong style="color:var(--accent-cyan)">Service Mesh</strong><br>
-                  App Mesh or Istio for mTLS<br>
-                  Envoy sidecar proxies
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Namespaces -->
-          <div class="row g-3">
-            <!-- default namespace -->
-            <div class="col-md-6">
-              <div class="ns-block ns-default">
-                <h6 style="color:var(--accent-purple)"><i class="bi bi-box me-2"></i>default namespace <span class="badge bg-secondary" style="font-size:.6rem">mesh injected</span></h6>
-                <div class="detail">
-                  <div class="mb-2">
-                    <strong>cerebro-app</strong> <span class="badge bg-success" style="font-size:.6rem">2/2</span><br>
-                    <span style="font-size:.75rem">app + envoy sidecar</span>
-                  </div>
-                  <div class="mb-2">
-                    <span style="font-size:.75rem">ServiceAccount <i class="bi bi-arrow-right me-1"></i> IRSA <i class="bi bi-arrow-right me-1"></i> IAM Role</span>
-                  </div>
-                  <div>
-                    <span style="font-size:.75rem"><span class="badge bg-success" style="font-size:.6rem">Zero secrets in pod</span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- mcp1 namespace -->
-            <div class="col-md-6">
-              <div class="ns-block ns-mcp">
-                <h6 style="color:var(--accent-cyan)"><i class="bi bi-gear-wide-connected me-2"></i>mcp1 namespace <span class="badge bg-secondary" style="font-size:.6rem">mesh injected</span></h6>
-                <div class="detail">
-                  <div class="mb-2">
-                    <strong>mcp1 engine</strong> <span class="badge bg-success" style="font-size:.6rem">2/2</span><br>
-                    <span style="font-size:.75rem">engine + envoy sidecar</span>
-                  </div>
-                  <div class="mb-2">
-                    <span style="font-size:.75rem">ServiceAccount <i class="bi bi-arrow-right me-1"></i> IRSA <i class="bi bi-arrow-right me-1"></i> IAM Role</span>
-                  </div>
-                  <div>
-                    <span style="font-size:.75rem"><strong>4 plugins:</strong></span><br>
-                    <span class="role-pill"><i class="bi bi-envelope me-1"></i>email (13 tools)</span>
-                    <span class="role-pill"><i class="bi bi-github me-1"></i>github (6)</span>
-                    <span class="role-pill"><i class="bi bi-credit-card me-1"></i>payments (10)</span>
-                    <span class="role-pill"><i class="bi bi-airplane me-1"></i>travel (4)</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- IRSA -->
-        <div class="inner-block mt-3">
-          <h6 style="color:var(--aws-orange)"><i class="bi bi-fingerprint me-2"></i>IRSA (IAM Roles for Service Accounts)</h6>
-          <div class="detail mb-2">
-            EKS OIDC provider federated with IAM &bull; ServiceAccount annotations bind K8s pods to IAM roles &bull; <strong>Zero secrets in pods</strong>
-          </div>
-          <div>
-            <span class="role-pill">SecretsManager Read/Write</span>
-            <span class="role-pill">Bedrock InvokeModel</span>
-            <span class="role-pill">OpenSearch Access</span>
-            <span class="role-pill">DynamoDB Full Access</span>
-            <span class="role-pill">ECR Pull</span>
-            <span class="role-pill">STS AssumeRole</span>
-          </div>
-        </div>
-
-        <!-- AWS Services -->
-        <h5 class="fw-bold mt-4 mb-3" style="color:var(--aws-orange)"><i class="bi bi-cloud me-2"></i>AWS Services <span class="badge bg-success" style="font-size:.7rem">All via IRSA &mdash; Zero Keys</span></h5>
-        <div class="row g-3">
-          <div class="col-md-4">
-            <div class="svc-card">
-              <h6 style="color:var(--accent-cyan)"><i class="bi bi-box-seam me-2"></i>ECR</h6>
-              <div class="svc-detail">
-                Elastic Container Registry<br>
-                2 container images<br>
-                Pull via IRSA role
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="svc-card">
-              <h6 style="color:var(--red)"><i class="bi bi-key-fill me-2"></i>Secrets Manager</h6>
-              <div class="svc-detail">
-                Connector secrets<br>
-                Already supported in <code>vault_client.py</code><br>
-                IAM policy-based access
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="svc-card">
-              <h6 style="color:var(--accent-purple)"><i class="bi bi-cpu me-2"></i>Amazon Bedrock</h6>
-              <div class="svc-detail">
-                Claude / Llama / Mistral<br>
-                Or SageMaker endpoints<br>
-                InvokeModel via IRSA
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="svc-card">
-              <h6 style="color:#0d6efd"><i class="bi bi-search me-2"></i>OpenSearch Service</h6>
-              <div class="svc-detail">
-                Amazon OpenSearch<br>
-                Vector search (k-NN plugin)<br>
-                Fine-grained access control
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="svc-card">
-              <h6 style="color:var(--accent-cyan)"><i class="bi bi-database me-2"></i>DynamoDB</h6>
-              <div class="svc-detail">
-                Or DocumentDB (Cosmos-compatible)<br>
-                Serverless on-demand capacity<br>
-                IAM-based table access
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="svc-card" style="border-left:3px solid var(--amber)">
-              <h6 style="color:var(--amber)"><i class="bi bi-box-arrow-up-right me-2"></i>External Services</h6>
-              <div class="svc-detail">
-                Credentials in Secrets Manager:<br>
-                <span class="role-pill"><i class="bi bi-credit-card me-1"></i>Stripe API</span>
-                <span class="role-pill"><i class="bi bi-envelope me-1"></i>Gmail / Calendar</span>
-                <span class="role-pill"><i class="bi bi-github me-1"></i>GitHub API</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ CUSTOMER ISOLATION ON AWS ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title fade-up"><i class="bi bi-building-lock me-2"></i>Customer Isolation on AWS</h2>
-        <p class="section-subtitle fade-up fade-up-d1">Every customer gets <strong>dedicated AWS resources</strong> on a shared EKS cluster &mdash; complete separation at every layer.</p>
-      </div>
-
-      <div class="row g-3 mb-4">
-        <div class="col-md-6 fade-up fade-up-d1">
-          <div class="block block-purple" style="height:100%">
-            <h6 class="fw-bold mb-2" style="color:var(--accent-purple)"><i class="bi bi-box-seam me-2"></i>Per-Customer Resources</h6>
-            <div class="text-muted" style="font-size:.82rem;line-height:1.9">
-              &#x1F512; <strong>AWS Secrets Manager</strong> &mdash; separate prefix per customer<br>
-              &#x1F4BE; <strong>DynamoDB</strong> &mdash; separate table per customer<br>
-              &#x1F50D; <strong>OpenSearch</strong> &mdash; separate domain/index per customer<br>
-              &#x1F464; <strong>IAM Role (IRSA)</strong> &mdash; per-customer role scoped to only its own resources
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 fade-up fade-up-d2">
-          <div class="block block-cyan" style="height:100%">
-            <h6 class="fw-bold mb-2" style="color:var(--accent-cyan)"><i class="bi bi-shield-shaded me-2"></i>Isolation Controls</h6>
-            <div class="text-muted" style="font-size:.82rem;line-height:1.9">
-              &#x1F310; <strong>EKS Namespace</strong> &mdash; each customer in its own namespace with NetworkPolicy<br>
-              &#x1F6E1;&#xFE0F; <strong>App Mesh / Istio mTLS</strong> &mdash; strict mutual TLS per namespace<br>
-              &#x1F6A6; <strong>ALB</strong> &mdash; routes by hostname to correct namespace<br>
-              &#x1F511; <strong>IAM Policies</strong> &mdash; each IRSA role only has permissions on its own resources
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center fade-up fade-up-d3">
-        <a href="architecture.html#" class="feat-pill text-decoration-none"><i class="bi bi-arrow-right me-1"></i>Full isolation architecture &rarr; Base Architecture</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ SECURITY BADGES ═══════════════ -->
-  <section class="section section-alt" style="padding:2.5rem 0">
-    <div class="container text-center">
-      <h6 class="text-muted mb-3" style="font-size:.8rem;text-transform:uppercase;letter-spacing:.1em">AWS Security Posture</h6>
-      <div>
-        <span class="sec-badge"><i class="bi bi-shield-lock-fill"></i> Zero API Keys</span>
-        <span class="sec-badge"><i class="bi bi-fingerprint"></i> IRSA</span>
-        <span class="sec-badge"><i class="bi bi-lock-fill"></i> mTLS (App Mesh / Istio)</span>
-        <span class="sec-badge"><i class="bi bi-globe2"></i> ALB + WAF</span>
-        <span class="sec-badge"><i class="bi bi-person-badge"></i> IAM Roles for Service Accounts</span>
-        <span class="sec-badge"><i class="bi bi-key-fill"></i> AWS Secrets Manager</span>
-        <span class="sec-badge"><i class="bi bi-person-lock"></i> Cognito SSO</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ NAV LINKS ═══════════════ -->
-  <section class="section" style="padding:2rem 0">
-    <div class="container">
-      <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a href="architecture.html" class="feat-pill text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Base Architecture</a>
-        <a href="architecture-azure.html" class="feat-pill pill-cyan text-decoration-none"><i class="bi bi-cloud me-1"></i>Azure Architecture</a>
-        <a href="architecture-gcp.html" class="feat-pill pill-cyan text-decoration-none"><i class="bi bi-cloud me-1"></i>GCP Architecture</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ FOOTER ═══════════════ -->
-  <footer class="bb-footer">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6">
-          <div class="d-flex align-items-center gap-2 mb-2">
-            <img src="logo.svg" alt="BrainzBytes" style="width:22px;height:22px">
-            <span class="fw-bold" style="color:var(--accent-purple)">BrainzBytes</span>
-          </div>
-          <p class="text-muted mb-0" style="font-size:.85rem">&copy; 2026 BrainzBytes Inc. All rights reserved.</p>
-        </div>
-        <div class="col-md-6 text-md-end mt-3 mt-md-0">
-          <a href="#" class="me-3" style="font-size:.85rem">Privacy Policy</a>
-          <a href="#" class="me-3" style="font-size:.85rem">Terms of Service</a>
-          <a href="mailto:contact@brainzbytes.com" style="font-size:.85rem">contact@brainzbytes.com</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <header class="hero"><div class="wrap"><span class="eyebrow">Cloud-neutral portability profile</span><h1>ContextWeaver NextGen on AWS</h1><p class="lead">AWS changes the infrastructure bindings, not the platform contract: PostgreSQL remains authoritative, RabbitMQ carries commands and events, Workers remain replaceable, and authorization remains continuous.</p><div class="actions"><a class="button primary" href="docs/documents/cloud-neutral-infrastructure.html">Read the cloud-neutral specification</a><a class="button" href="architecture.html">Back to architecture overview</a><a class="button" href="architecture-azure.html">Azure production target</a></div></div></header>
+  <main>
+    <section class="section alt"><div class="wrap"><span class="eyebrow">AWS mapping</span><h2>Equivalent managed services beneath Kubernetes contracts</h2><p class="intro">The deployment must preserve the same durability, security, identity, network, evidence, and recovery invariants.</p><div class="map">
+      <div class="row"><strong>Identity</strong><span>IAM Identity Center or an approved external OIDC provider for users; EKS Pod Identity or IRSA for workloads.</span></div>
+      <div class="row"><strong>Compute</strong><span>Private Amazon EKS with isolated node groups for system, control, execution, RAG, gateway, and capability workloads.</span></div>
+      <div class="row"><strong>Durable state</strong><span>Amazon RDS for PostgreSQL or Aurora PostgreSQL with Multi-AZ, backups, PITR, pgvector, and tested failover.</span></div>
+      <div class="row"><strong>Messaging</strong><span>RabbitMQ quorum queues on EKS or Amazon MQ for RabbitMQ after compatibility, durability, performance, and recovery validation.</span></div>
+      <div class="row"><strong>Artifacts</strong><span>Amazon S3 with versioning, encryption, retention, tenant prefixes, immutability controls, and lifecycle policies.</span></div>
+      <div class="row"><strong>Secrets</strong><span>OpenBao/Vault as portable broker, optionally integrated with AWS Secrets Manager, KMS, and External Secrets.</span></div>
+      <div class="row"><strong>Models</strong><span>Amazon Bedrock or approved external providers behind the same Model Gateway policy, redaction, budget, and evidence contracts.</span></div>
+      <div class="row"><strong>Search</strong><span>PostgreSQL FTS + pgvector first; OpenSearch only when measured workload characteristics require distributed search.</span></div>
+      <div class="row"><strong>Edge</strong><span>CloudFront, WAF, and ALB/NLB or a supported Kubernetes ingress/gateway, with private service and data endpoints.</span></div>
+      <div class="row"><strong>Operations</strong><span>Prometheus, Grafana, Loki, OpenTelemetry, CloudWatch integration, immutable audit, SLOs, and recovery exercises.</span></div>
+    </div></div></section>
+    <section class="section"><div class="wrap"><span class="eyebrow">Non-negotiable invariants</span><h2>Portability does not weaken the architecture</h2><div class="rules">
+      <article class="rule"><b>No synchronous Agent chain</b><p>Agents consume durable commands and publish events or typed MCP intent through RabbitMQ.</p></article>
+      <article class="rule"><b>No credentials in Agents</b><p>Trusted gateways obtain short-lived scoped authority; Agent pods have no direct provider or MCP route.</p></article>
+      <article class="rule"><b>No pod-local run ownership</b><p>Runs, tasks, leases, checkpoints, timers, HITL, receipts, and compensation remain in durable stores.</p></article>
+      <article class="rule"><b>No cloud-specific workflow logic</b><p>Workflows reference capabilities and contracts, never AWS service endpoints or credentials.</p></article>
+      <article class="rule"><b>No unmeasured search migration</b><p>PostgreSQL remains the default RAG tier until latency, scale, or feature evidence requires expansion.</p></article>
+      <article class="rule"><b>No unverified failover claim</b><p>Queue, database, object, identity, network, and worker recovery must pass fault-injection tests.</p></article>
+    </div></div></section>
+    <section class="section alt"><div class="wrap"><span class="eyebrow">Status</span><h2>Reference portability profile</h2><div class="status"><strong>This is a production design target, not a deployed-environment claim.</strong> Azure remains the detailed initial production blueprint. An AWS rollout requires provider-specific Terraform/GitOps modules, threat modeling, quotas, performance tests, DR evidence, and operational approval while retaining the same platform contracts.</div></div></section>
+  </main>
 </body>
 </html>

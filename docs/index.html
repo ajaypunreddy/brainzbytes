@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ContextWeaver Documentation | Start with Your Role</title>
+  <meta name="description" content="ContextWeaver documentation organized for business users, platform leaders, architects, developers, security reviewers, and operators.">
+  <meta property="og:title" content="ContextWeaver Documentation | Start with Your Role">
+  <meta property="og:description" content="Clear learning paths from product concepts through architecture, security, implementation, and operations.">
+  <meta property="og:image" content="https://brainzbytes.com/logo.svg">
+  <meta property="og:url" content="https://brainzbytes.com/docs/">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://brainzbytes.com/docs/">
+  <link rel="icon" type="image/svg+xml" href="../logo.svg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="../theme.css" rel="stylesheet">
+  <link href="../brand-site.css" rel="stylesheet">
+  <script src="../theme.js" defer></script>
+  <style>
+    .dox-hero{padding:76px 0 50px;text-align:left}.dox-hero-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(400px,1.15fr);gap:28px;align-items:start}
+    .dox-hero h1{max-width:680px;margin:0;color:var(--brand-ink);font-size:clamp(2.2rem,3.35vw,2.9rem);font-weight:820;letter-spacing:-.05em;line-height:1}.dox-hero h1 span{color:var(--brand-aqua)}
+    .dox-start{display:grid;gap:9px;padding:18px;border:1px solid var(--brand-line);border-radius:18px;background:#0d1821}.dox-start>a{display:grid;grid-template-columns:38px 1fr auto;gap:13px;align-items:center;padding:15px;border:1px solid transparent;border-radius:12px;color:inherit!important;text-decoration:none;transition:.2s ease}.dox-start>a:hover{border-color:rgba(110,231,207,.35);background:rgba(110,231,207,.045)}
+    .dox-start b{display:grid;width:38px;height:38px;place-items:center;border-radius:10px;color:#071513;background:var(--brand-aqua);font-size:.72rem}.dox-start strong{display:block;color:var(--brand-ink);font-size:.8rem}.dox-start small{display:block;margin-top:3px;color:var(--brand-muted);font-size:.64rem}.dox-start i{color:#67808e}
+    .dox-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}.dox-role{display:flex;min-height:220px;padding:22px;border:1px solid var(--brand-line);border-radius:16px;color:inherit!important;background:#0d1821;text-decoration:none;flex-direction:column;transition:.22s ease}.dox-role:hover{border-color:rgba(110,231,207,.4);transform:translateY(-3px)}
+    .dox-role-icon{display:grid;width:40px;height:40px;place-items:center;border:1px solid var(--brand-line);border-radius:11px;color:var(--brand-aqua);background:rgba(110,231,207,.05)}.dox-role h3{margin:24px 0 8px;color:var(--brand-ink);font-size:.96rem}.dox-role p{margin:0;color:var(--brand-muted);font-size:.76rem;line-height:1.58}.dox-role span:last-child{margin-top:auto;padding-top:15px;color:var(--brand-aqua);font-size:.64rem;font-weight:800}
+    .dox-questions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:28px}.dox-question{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;padding:16px;border:1px solid var(--brand-line);border-radius:14px;color:inherit!important;background:#0d1821;text-decoration:none}.dox-question i:first-child{display:grid;width:40px;height:40px;place-items:center;border-radius:10px;color:var(--brand-blue);background:rgba(116,167,255,.07)}.dox-question strong{display:block;color:var(--brand-ink);font-size:.83rem}.dox-question span{display:block;margin-top:4px;color:var(--brand-muted);font-size:.66rem;line-height:1.45}.dox-question i:last-child{color:#667f8c}
+    .dox-search{width:min(700px,100%);margin-top:31px;padding:14px 16px;border:1px solid var(--brand-line);border-radius:12px;color:var(--brand-ink);background:#0b161f;outline:none}.dox-search:focus{border-color:rgba(110,231,207,.5);box-shadow:0 0 0 3px rgba(110,231,207,.08)}
+    .dox-library{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.dox-doc{display:block;min-height:170px;padding:20px;border:1px solid var(--brand-line);border-radius:14px;color:inherit!important;background:#0d1821;text-decoration:none;transition:.2s ease}.dox-doc:hover{border-color:rgba(110,231,207,.38);transform:translateY(-2px)}.dox-doc .type{color:var(--brand-aqua);font-size:.59rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.dox-doc h3{margin:26px 0 7px;color:var(--brand-ink);font-size:.9rem}.dox-doc p{margin:0;color:var(--brand-muted);font-size:.7rem;line-height:1.52}.dox-doc.hidden{display:none}
+    .dox-status{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}.dox-status article{padding:17px;border:1px solid var(--brand-line);border-radius:13px;background:#0d1821}.dox-status strong{display:block;font-size:.8rem}.dox-status p{margin:7px 0 0;color:var(--brand-muted);font-size:.68rem;line-height:1.5}.dox-status article:nth-child(1) strong{color:var(--brand-aqua)}.dox-status article:nth-child(2) strong{color:var(--brand-indigo)}.dox-status article:nth-child(3) strong{color:var(--brand-amber)}
+    .dox-visual{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:26px;border:1px solid var(--brand-line);border-radius:18px;background:#0d1821}.dox-visual h3{margin:0 0 8px;color:var(--brand-ink);font-size:1.25rem}.dox-visual p{max-width:760px;margin:0;color:var(--brand-muted);font-size:.76rem;line-height:1.6}
+    @media(max-width:1000px){.dox-hero-grid{grid-template-columns:1fr}.dox-grid,.dox-library{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:700px){.dox-grid,.dox-questions,.dox-library,.dox-status{grid-template-columns:1fr}.dox-visual{grid-template-columns:1fr}.dox-hero{padding-top:58px}.dox-hero h1{font-size:clamp(2rem,9vw,2.55rem)}}
+  </style>
+</head>
+<body>
+<main class="bbx-shell">
+  <div class="bbx-reading-progress" aria-hidden="true"><span></span></div>
+  <aside class="bbx-page-nav" aria-label="Explore documentation">
+    <span class="bbx-page-nav-label">Explore this page</span>
+    <h2>Platform guides<br>and resources</h2>
+    <nav>
+      <a class="active" href="#overview"><span>Overview</span></a>
+      <a href="#audiences"><span>Choose your role</span></a>
+      <a href="#request"><span>Follow one request</span></a>
+      <a href="#questions"><span>Find an answer</span></a>
+      <a href="#library"><span>Technical library</span></a>
+      <a href="#status"><span>Status language</span></a>
+      <a href="#diagrams"><span>Diagram library</span></a>
+    </nav>
+    <p>Start with your role or question, then open only the technical depth you need.</p>
+  </aside>
+  <section class="bbx-section dox-hero" id="overview">
+    <div class="bbx-container dox-hero-grid">
+      <div>
+        <span class="bbx-eyebrow">ContextWeaver documentation</span>
+        <h1>Start with your role. <span>Go deeper when needed.</span></h1>
+        <p class="bbx-lead">You do not need to read the entire architecture to understand ContextWeaver. Choose what you are trying to accomplish, follow the short path, and open detailed specifications only when they answer your next question.</p>
+        <div class="bbx-actions">
+          <a class="bbx-btn bbx-btn-primary" href="#audiences">Choose your role</a>
+          <a class="bbx-btn" href="../contextweaver/index.html">Product overview</a>
+        </div>
+      </div>
+      <aside class="dox-start" aria-label="Recommended starting points">
+        <a href="../contextweaver/index.html"><b>1</b><span><strong>Understand the product</strong><small>Plain-language overview · 8 minutes</small></span><i class="bi bi-arrow-right"></i></a>
+        <a href="#request"><b>2</b><span><strong>Follow one request</strong><small>Identity to verified result · 12 minutes</small></span><i class="bi bi-arrow-right"></i></a>
+        <a href="#library"><b>3</b><span><strong>Open a technical topic</strong><small>Focused specifications by question</small></span><i class="bi bi-arrow-right"></i></a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="bbx-section bbx-section-alt" id="audiences">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">Documentation by audience</span>
+      <h2 class="bbx-title bbx-title-sm">What do you need from ContextWeaver?</h2>
+      <p class="bbx-lead">Each path starts with outcomes and decisions, then links to the detailed contracts that matter to that role.</p>
+      <div class="dox-grid">
+        <a class="dox-role" href="../index.html#why"><span class="dox-role-icon"><i class="bi bi-briefcase"></i></span><h3>Business and executive reader</h3><p>Understand the problem, platform value, operating model, deployment choices, and why governance is part of the product.</p><span>Start with the business story →</span></a>
+        <a class="dox-role" href="../index.html#product"><span class="dox-role-icon"><i class="bi bi-person-workspace"></i></span><h3>Product and service designer</h3><p>Learn how Services, Workflows, visual composition, Agents, MCPs, RAG, approvals, and versions fit together.</p><span>Explore the product experience →</span></a>
+        <a class="dox-role" href="documents/azure-production-platform-and-poc.html"><span class="dox-role-icon"><i class="bi bi-building-gear"></i></span><h3>Enterprise architect</h3><p>Evaluate planes, service boundaries, state ownership, private deployment, portability, resilience, and implementation phases.</p><span>Open the architecture guide →</span></a>
+        <a class="dox-role" href="documents/source-code-structure.html"><span class="dox-role-icon"><i class="bi bi-code-square"></i></span><h3>Developer and platform engineer</h3><p>Find repository ownership, contracts, runtime interactions, queues, persistence, APIs, source structure, and build order.</p><span>Open the engineering guide →</span></a>
+        <a class="dox-role" href="documents/continuous-entitlement-enforcement.html"><span class="dox-role-icon"><i class="bi bi-shield-lock"></i></span><h3>Security and governance reviewer</h3><p>Inspect identity, entitlements, authorization, credential isolation, sandboxing, data boundaries, audit, and evidence.</p><span>Open the security path →</span></a>
+        <a class="dox-role" href="documents/observability-standard.html"><span class="dox-role-icon"><i class="bi bi-activity"></i></span><h3>Operator and SRE</h3><p>Understand durable work, failure recovery, retries, run state, SLOs, metrics, logs, traces, alerts, and day-two operations.</p><span>Open the operations path →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section" id="request">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">The shortest useful explanation</span>
+      <h2 class="bbx-title bbx-title-sm">What happens after someone asks ContextWeaver to do something?</h2>
+      <div class="dox-questions">
+        <a class="dox-question" href="../contextweaver/index.html"><i class="bi bi-1-circle"></i><span><strong>ContextWeaver selects a published Service</strong><span>The user's intent resolves to an immutable Service and exact Workflow versions.</span></span><i class="bi bi-arrow-right"></i></a>
+        <a class="dox-question" href="documents/continuous-entitlement-enforcement.html"><i class="bi bi-2-circle"></i><span><strong>The complete execution graph is authorized</strong><span>Identity, entitlements, Agents, MCPs, tools, data, models, budgets, and fallbacks are checked.</span></span><i class="bi bi-arrow-right"></i></a>
+        <a class="dox-question" href="documents/durable-asynchronous-execution.html"><i class="bi bi-3-circle"></i><span><strong>The run is accepted durably</strong><span>State and outbox records commit before the request ends, so work does not belong to one browser or pod.</span></span><i class="bi bi-arrow-right"></i></a>
+        <a class="dox-question" href="documents/governed-rag-ingestion.html"><i class="bi bi-4-circle"></i><span><strong>Workers execute typed nodes</strong><span>Agents, MCP tools, models, RAG, approvals, and verification exchange governed artifacts.</span></span><i class="bi bi-arrow-right"></i></a>
+        <a class="dox-question" href="documents/credential-non-possession.html"><i class="bi bi-5-circle"></i><span><strong>Authority is checked again before action</strong><span>Agents never receive raw credentials, and side effects require current authorization.</span></span><i class="bi bi-arrow-right"></i></a>
+        <a class="dox-question" href="documents/observability-standard.html"><i class="bi bi-6-circle"></i><span><strong>The result includes proof</strong><span>Citations, decisions, revisions, attempts, receipts, metrics, logs, and traces remain available for review.</span></span><i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section bbx-section-alt" id="questions">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">Find the answer by question</span>
+      <h2 class="bbx-title bbx-title-sm">You should not need to know the document name.</h2>
+      <div class="dox-questions">
+        <a class="dox-question" href="../contextweaver/index.html"><i class="bi bi-question-circle"></i><span><strong>What is ContextWeaver and why does it exist?</strong><span>Product purpose, capabilities, users, and operating model.</span></span><i class="bi bi-arrow-right"></i></a>
+        <a class="dox-question" href="documents/continuous-entitlement-enforcement.html"><i class="bi bi-person-check"></i><span><strong>Who is allowed to run what?</strong><span>Identity, entitlement, whole-graph preflight, and runtime authorization.</span></span><i class="bi bi-arrow-right"></i></a>
+        <a class="dox-question" href="documents/governed-rag-ingestion.html"><i class="bi bi-database-check"></i><span><strong>How is enterprise knowledge governed?</strong><span>Sources, ingestion, access, retrieval, freshness, versions, and citations.</span></span><i class="bi bi-arrow-right"></i></a>
+        <a class="dox-question" href="documents/durable-microservice-resilience.html"><i class="bi bi-arrow-repeat"></i><span><strong>What happens when something fails?</strong><span>Leases, checkpoints, retry, recovery, graceful shutdown, and compensation.</span></span><i class="bi bi-arrow-right"></i></a>
+        <a class="dox-question" href="documents/cloud-neutral-infrastructure.html"><i class="bi bi-clouds"></i><span><strong>How is the platform deployed?</strong><span>Kubernetes, Terraform, Helm, GitOps, promotion, rollback, and disaster recovery.</span></span><i class="bi bi-arrow-right"></i></a>
+        <a class="dox-question" href="documents/implementation-readiness.html"><i class="bi bi-clipboard-check"></i><span><strong>What is implemented today?</strong><span>Implemented foundation, normative design, production target, and remaining gaps.</span></span><i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section" id="library">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">Focused technical library</span>
+      <h2 class="bbx-title bbx-title-sm">Open one topic at a time.</h2>
+      <p class="bbx-lead">Detailed pages retain tables, schemas, examples, and deep implementation notes. Their contents now show only the major sections, and heading permalink symbols are hidden until needed by tooling.</p>
+      <input id="docSearch" class="dox-search" type="search" placeholder="Search authorization, RAG, recovery, credentials, deployment, observability..." aria-label="Filter technical documentation">
+      <div id="docLibrary" class="dox-library">
+        <a class="dox-doc" data-search="identity entitlement authorization policy capability token revocation" href="documents/continuous-entitlement-enforcement.html"><span class="type">Security</span><h3>Continuous authorization</h3><p>Whole-graph preflight and runtime enforcement for every protected action.</p></a>
+        <a class="dox-doc" data-search="credential secret agent workload identity broker non possession" href="documents/credential-non-possession.html"><span class="type">Security</span><h3>Credential isolation</h3><p>Why Agents receive references and authority but never credential values.</p></a>
+        <a class="dox-doc" data-search="sandbox filesystem network runtime hostile code agent security" href="documents/agent-sandbox-security.html"><span class="type">Security</span><h3>Agent sandbox security</h3><p>Runtime, filesystem, network, tool, and output-boundary protections.</p></a>
+        <a class="dox-doc" data-search="durable asynchronous queue rabbitmq postgres outbox inbox worker lease checkpoint hitl" href="documents/durable-asynchronous-execution.html"><span class="type">Execution</span><h3>Durable asynchronous execution</h3><p>Acceptance, queues, workers, checkpoints, approvals, effects, and replayable events.</p></a>
+        <a class="dox-doc" data-search="resilience recovery retry lease graceful shutdown fault compensation" href="documents/durable-microservice-resilience.html"><span class="type">Reliability</span><h3>Failure recovery</h3><p>How replaceable services resume accepted work safely after failure.</p></a>
+        <a class="dox-doc" data-search="rag retrieval ingestion vector source citation freshness generation access" href="documents/governed-rag-ingestion.html"><span class="type">Data and AI</span><h3>Governed RAG</h3><p>Source ownership, staged ingestion, retrieval profiles, publication, and citations.</p></a>
+        <a class="dox-doc" data-search="agent mcp admission deployment scanning approval registry discovery" href="documents/dynamic-agent-mcp-lifecycle.html"><span class="type">Capabilities</span><h3>Dynamic Agents and MCPs</h3><p>Admission, scanning, approval, deployment, discovery, promotion, and retirement.</p></a>
+        <a class="dox-doc" data-search="azure production private aks entra architecture poc" href="documents/azure-production-platform-and-poc.html"><span class="type">Architecture</span><h3>Azure production platform</h3><p>Complete private Azure topology, controls, implementation phases, and proof of concept.</p></a>
+        <a class="dox-doc" data-search="cloud neutral kubernetes terraform helm gitops delivery rollback disaster recovery" href="documents/cloud-neutral-infrastructure.html"><span class="type">Infrastructure</span><h3>Cloud-neutral delivery</h3><p>Portable boundaries, infrastructure, immutable delivery, upgrades, rollback, and DR.</p></a>
+        <a class="dox-doc" data-search="observability metrics logs traces slo alert dashboard telemetry privacy" href="documents/observability-standard.html"><span class="type">Operations</span><h3>Observability standard</h3><p>Required telemetry, labels, SLOs, alerts, privacy rules, and dashboards.</p></a>
+        <a class="dox-doc" data-search="source repositories code structure services ownership build order" href="documents/source-code-structure.html"><span class="type">Engineering</span><h3>Source and state structure</h3><p>Repository ownership, service layout, state boundaries, and implementation order.</p></a>
+        <a class="dox-doc" data-search="studio mcp agent workflow service authoring lifecycle registry factory design validate rehearse govern publish observe" href="documents/studio-operating-model.html"><span class="type">Product model</span><h3>Four-Studio operating model</h3><p>How MCP, Agent, Workflow, and Service Studios form one governed AI capability factory.</p></a>
+        <a class="dox-doc" data-search="status readiness implemented target roadmap gaps delivery" href="documents/implementation-readiness.html"><span class="type">Status</span><h3>Implementation readiness</h3><p>Clear separation between working foundations, normative contracts, and future work.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section bbx-section-alt" id="status">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">How to read status language</span>
+      <h2 class="bbx-title bbx-title-sm">Design truth and implementation truth stay separate.</h2>
+      <div class="dox-status">
+        <article><strong>Implemented foundation</strong><p>Running code or infrastructure that can be inspected and validated now.</p></article>
+        <article><strong>Normative specification</strong><p>The required contract and intended behavior, whether or not every part is implemented.</p></article>
+        <article><strong>Production target</strong><p>The hardened deployment or operational state that remains to be completed or proven.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section" id="diagrams">
+    <div class="bbx-container">
+      <div class="dox-visual">
+        <div><span class="bbx-eyebrow">Optional visual reference</span><h3>Need the full architecture picture?</h3><p>The diagram library is available as a separate deep-dive tool. It is no longer required reading for understanding the product or finding a specific answer.</p></div>
+        <div class="bbx-actions"><a class="bbx-btn bbx-btn-primary" href="diagrams/intent-to-evidence-flow.html">Watch the animated flow</a><a class="bbx-btn" href="diagram-viewer/contextweaver-nextgen-architecture.html">Open diagram library</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+(function () {
+  var search = document.getElementById("docSearch");
+  var documents = Array.prototype.slice.call(document.querySelectorAll(".dox-doc"));
+  search.addEventListener("input", function () {
+    var query = search.value.trim().toLowerCase();
+    documents.forEach(function (item) {
+      var text = (item.getAttribute("data-search") + " " + item.textContent).toLowerCase();
+      item.classList.toggle("hidden", query && text.indexOf(query) === -1);
+    });
+  });
+})();
+</script>
+</body>
+</html>

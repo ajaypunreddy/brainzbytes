@@ -1,793 +1,392 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="midnight">
 <head>
-<script src="/gate.js"></script>
+  <script src="/gate.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrainzBytes &mdash; Building the Future of Enterprise AI</title>
-  <meta name="description" content="BrainzBytes builds platforms that turn natural language into cross-system action &mdash; securely, at scale, with zero code changes.">
-  <!-- Open Graph -->
-  <meta property="og:title" content="BrainzBytes — Building the Future of Enterprise AI">
-  <meta property="og:description" content="Enterprise-grade agentic AI platform. Multi-user security, MCP orchestration, visual plugin designer.">
+  <title>BrainzBytes | Governed Enterprise AI, Put to Work</title>
+  <meta name="description" content="BrainzBytes builds ContextWeaver, the governed enterprise AI platform for composing Services, Workflows, Agents, MCP tools, RAG, approvals, and durable execution.">
+  <meta property="og:title" content="BrainzBytes | Governed Enterprise AI, Put to Work">
+  <meta property="og:description" content="ContextWeaver turns AI intent into authorized, durable, observable enterprise work.">
   <meta property="og:image" content="https://brainzbytes.com/logo.svg">
   <meta property="og:url" content="https://brainzbytes.com">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://brainzbytes.com/">
   <link rel="icon" type="image/svg+xml" href="/logo.svg">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="/theme.css" rel="stylesheet">
-  <script src="/theme.js"></script>
-  <style>
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
-    a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-purple)}
-    .card{background:var(--bg-card);border-color:var(--border)}
-    code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.85em}
-
-    /* Navbar */
-
-    /* Hero */
-    .hero{padding:7rem 0 5rem;position:relative;overflow:hidden}
-    .hero h1{font-size:clamp(3rem,7vw,5rem);font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,var(--accent-purple) 0%,var(--accent-cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
-    .hero .tagline{font-size:clamp(1.15rem,2.5vw,1.6rem);font-weight:600;color:var(--text);margin-bottom:.75rem}
-    .hero .subtitle{font-size:1.05rem;color:var(--text-muted);max-width:640px;margin:0 auto 2.5rem;line-height:1.75}
-
-    /* Buttons */
-    .btn-glow{background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;border:none;font-weight:600;padding:.75rem 2rem;border-radius:10px;font-size:1rem;transition:all .3s;box-shadow:0 0 24px rgba(167,139,250,0.25)}
-    .btn-glow:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(167,139,250,0.4);color:#fff}
-    .btn-outline-glow{border:1.5px solid var(--accent-purple);color:var(--accent-purple);background:transparent;font-weight:600;padding:.65rem 1.75rem;border-radius:10px;transition:all .3s}
-    .btn-outline-glow:hover{background:rgba(167,139,250,0.1);color:#c4b5fd}
-
-    /* Sections */
-    .section{padding:5rem 0}.section-alt{background:var(--bg-elevated)}
-    .section-title{font-size:2.1rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem}
-    .section-subtitle{color:var(--text-muted);font-size:1.05rem;margin-bottom:3rem}
-
-    /* Product card */
-    .product-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;transition:all .3s;position:relative;overflow:hidden}
-    .product-card:hover{border-color:rgba(167,139,250,0.3);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
-    .product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#a78bfa,#0dcaf0)}
-    .product-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.25rem}
-
-    /* Pillar cards */
-    .pillar-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:2rem;height:100%;transition:all .3s}
-    .pillar-card:hover{border-color:rgba(13,202,240,0.3)}
-    .pillar-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:1rem}
-
-    /* Use-case grid */
-    .usecase-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center;transition:all .3s;height:100%}
-    .usecase-card:hover{border-color:var(--border-hover);transform:translateY(-3px);box-shadow:var(--card-hover-shadow)}
-    .usecase-icon{font-size:2.5rem;margin-bottom:.75rem;display:block}
-
-    /* Feature pill */
-    .feat-pill{display:inline-block;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:var(--accent-purple);padding:.3rem .85rem;border-radius:20px;font-size:.8rem;font-weight:600;margin:.2rem}
-
-    /* Footer */
-    .bb-footer{background:var(--bg-nav);border-top:1px solid var(--border);padding:2.5rem 0;margin-top:3rem}
-    .bb-footer a{color:var(--text-muted)}.bb-footer a:hover{color:var(--text)}
-
-    /* Animations */
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-    .float-anim{animation:float 3s ease-in-out infinite}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    .fade-up{animation:fadeInUp .6s ease-out both}
-    .fade-up-d1{animation-delay:.1s}.fade-up-d2{animation-delay:.2s}.fade-up-d3{animation-delay:.3s}
-    .fade-up-d4{animation-delay:.4s}.fade-up-d5{animation-delay:.5s}.fade-up-d6{animation-delay:.6s}
-
-    /* Future product slot */
-    .product-coming{border:2px dashed rgba(255,255,255,0.1);border-radius:16px;padding:2.5rem;display:flex;align-items:center;justify-content:center;min-height:200px;color:var(--text-muted)}
-  </style>
+  <link href="/brand-site.css" rel="stylesheet">
+  <script src="/theme.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ContextWeaver",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web, Kubernetes",
+    "creator": {"@type": "Organization", "name": "BrainzBytes"},
+    "description": "A governed enterprise AI platform for composing and operating Services, Workflows, Agents, MCP tools, RAG, approvals, and durable execution."
+  }
+  </script>
 </head>
 <body>
+<main class="bbx-shell">
+  <div class="bbx-reading-progress" aria-hidden="true"><span id="homepageProgress"></span></div>
+  <aside class="bbx-page-nav" aria-label="Explore this page">
+    <span class="bbx-page-nav-label">Explore this page</span>
+    <h2>BrainzBytes<br>and ContextWeaver</h2>
+    <nav>
+      <a class="active" href="#overview"><span>Overview</span></a>
+      <a href="#why"><span>Why now</span></a>
+      <a href="#contextweaver"><span>Platform lifecycle</span></a>
+      <a href="#product"><span>Product experience</span></a>
+      <a href="#roles"><span>Who it serves</span></a>
+      <a href="#architecture"><span>Architecture</span></a>
+      <a href="#trust"><span>Trust</span></a>
+      <a href="#resources"><span>Learn more</span></a>
+      <a href="#start"><span>Get started</span></a>
+    </nav>
+    <p>Scan the story here, then open the detailed product and architecture references only where needed.</p>
+  </aside>
 
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="hero text-center">
-    <div class="hero-mesh"></div>
-    <div class="container" style="position:relative;z-index:1">
-      <div class="reveal">
-        <h1>BrainzBytes</h1>
-      </div>
-      <p class="tagline reveal" style="transition-delay:0.1s">Building the Future of Enterprise AI</p>
-      <p class="subtitle reveal" style="transition-delay:0.2s">We create platforms that turn natural language into cross-system action &mdash; securely, at scale, with zero code changes.</p>
-      <div class="reveal" style="transition-delay:0.3s">
-        <a href="contextweaver/index.html" class="btn btn-glow me-3">Explore ContextWeaver &rarr;</a>
-        <a href="flows.html" class="btn btn-outline-glow">Platform Flows &rarr;</a>
-        <a href="https://app.brainzbytes.com" class="btn btn-outline-light" style="padding:.75rem 2rem;border-radius:10px;font-weight:600"><i class="bi bi-box-arrow-up-right me-1"></i> Launch App</a>
-        <a href="#products" class="btn btn-outline-glow">Our Products</a>
-      </div>
-    </div>
-  </section>
+  <section class="bbx-section bbx-hero" id="overview">
+    <div class="bbx-container">
+      <div class="bbx-hero-grid">
+        <div>
+          <span class="bbx-eyebrow">BrainzBytes enterprise AI</span>
+          <h1>Turn AI intent into <span>governed work.</span></h1>
+          <p class="bbx-hero-copy">BrainzBytes builds platforms for the point where AI leaves the chat window and enters the enterprise. ContextWeaver composes Services, Workflows, Agents, MCP tools, RAG, approvals, and evidence into one controlled execution plane.</p>
+          <div class="bbx-actions">
+            <a class="bbx-btn bbx-btn-primary" href="#contextweaver">Explore ContextWeaver <i class="bi bi-arrow-right"></i></a>
+            <a class="bbx-btn" href="/docs/index.html">Read the documentation</a>
+            <a class="bbx-btn" href="https://app.brainzbytes.com">Launch the platform <i class="bi bi-box-arrow-up-right"></i></a>
+          </div>
+          <div class="bbx-proof-row">
+            <span><i class="bi bi-check-circle-fill"></i> Human authority preserved</span>
+            <span><i class="bi bi-check-circle-fill"></i> Durable execution</span>
+            <span><i class="bi bi-check-circle-fill"></i> Cloud-neutral control plane</span>
+            <span><i class="bi bi-check-circle-fill"></i> Evidence by design</span>
+          </div>
+        </div>
 
-  <!-- ═══════════════ PRODUCTS ═══════════════ -->
-  <section id="products" class="section">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <h2 class="section-title">Our Products</h2>
-        <p class="section-subtitle">Enterprise-grade AI platforms, built for real-world complexity</p>
-      </div>
-      <div class="row g-4 justify-content-center">
-        <!-- ContextWeaver -->
-        <div class="col-lg-6">
-          <div class="product-card h-100">
-            <div class="product-icon" style="background:rgba(167,139,250,0.15)">
-              <i class="bi bi-diagram-3-fill" style="color:var(--accent-purple)"></i>
-            </div>
-            <h3 class="fw-bold mb-2">ContextWeaver</h3>
-            <p class="text-muted mb-3">Enterprise RAG Orchestration, Agentic AI &amp; Action Platform</p>
-            <p class="mb-3" style="font-size:.95rem;line-height:1.7">One sentence triggers multi-system workflows &mdash; flights booked, payments charged, emails sent &mdash; all governed by per-user credentials and RAG policies ingested from any data source (documents, URLs, wikis, databases). No code changes required.</p>
-            <div class="mb-3 p-3" style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:10px">
-              <p class="mb-1" style="font-size:.92rem;line-height:1.6"><i class="bi bi-shield-lock-fill me-1" style="color:#22c55e"></i><strong style="color:#22c55e">Enterprise-grade multi-user security</strong> &mdash; per-user credentials, role-based access, 5-level data isolation</p>
-              <p class="text-muted mb-0" style="font-size:.85rem;line-height:1.6">Traditional agentic AI is single-tenant: every user shares credentials and data. ContextWeaver solves this with identity-aware MCP, vault cascade resolution, and hierarchical RAG isolation &mdash; enforced in code, not prompts.</p>
-            </div>
-            <div class="mb-3 p-3" style="background:rgba(13,202,240,0.06);border:1px solid rgba(13,202,240,0.2);border-radius:10px">
-              <div class="d-flex gap-4 justify-content-center flex-wrap" style="font-size:.85rem;line-height:1.6">
-                <span><strong style="color:#0dcaf0">🧠 Cerebro</strong> — Runtime brain</span>
-                <span><strong style="color:#a78bfa">🌐 Loom</strong> — Infrastructure</span>
-                <span><strong style="color:#198754">🧶 Weave</strong> — Plugins &amp; RAG</span>
+        <div class="bbx-product-window" aria-label="ContextWeaver Services Studio product preview">
+          <div class="bbx-window-bar">
+            <span class="bbx-window-dot"></span><span class="bbx-window-dot"></span><span class="bbx-window-dot"></span>
+            <div class="bbx-window-address">app.brainzbytes.com / services / build</div>
+          </div>
+          <div class="bbx-app">
+            <aside class="bbx-app-sidebar">
+              <div class="bbx-app-brand"><span class="bbx-app-mark">CW</span><span>ContextWeaver</span></div>
+              <nav class="bbx-app-nav">
+                <span class="active"><i class="bi bi-grid-1x2"></i><span>Services</span></span>
+                <span><i class="bi bi-diagram-3"></i><span>Workflows</span></span>
+                <span><i class="bi bi-cpu"></i><span>Agents &amp; MCPs</span></span>
+                <span><i class="bi bi-database"></i><span>Knowledge</span></span>
+                <span><i class="bi bi-clock-history"></i><span>Run history</span></span>
+                <span><i class="bi bi-activity"></i><span>Observability</span></span>
+              </nav>
+            </aside>
+            <section class="bbx-app-main">
+              <header class="bbx-app-heading">
+                <div><small>Services Studio</small><h2>Build governed AI services</h2><p>Compose reusable capabilities into an executable contract.</p></div>
+                <span class="bbx-app-cta">Publish version</span>
+              </header>
+              <div class="bbx-app-tabs">
+                <div class="active"><b>1</b><strong>Service</strong><small>Choose or create</small></div>
+                <div><b>2</b><strong>Workflows</strong><small>Select flows</small></div>
+                <div><b>3</b><strong>Visual flow</strong><small>Arrange execution</small></div>
+                <div><b>4</b><strong>Review</strong><small>Validate and publish</small></div>
               </div>
-            </div>
-            <p class="mb-3" style="font-size:.92rem;line-height:1.7"><strong style="color:var(--accent-cyan)"><i class="bi bi-palette me-1"></i>NEW &mdash; Visual Designer:</strong> Design entire MCP engine topologies from an interactive SVG drag-and-drop canvas. Manage plugins, connectors, sources, and RAG pipelines visually. Save blueprints to Cosmos DB and deploy with one click.</p>
-            <div class="mb-3">
-              <span class="feat-pill"><i class="bi bi-robot me-1"></i>Agentic AI</span>
-              <span class="feat-pill"><i class="bi bi-file-earmark-text me-1"></i>RAG Policies</span>
-              <span class="feat-pill"><i class="bi bi-shield-lock me-1"></i>Vault Cascade</span>
-              <span class="feat-pill"><i class="bi bi-plug me-1"></i>Extensible Plugin Ecosystem</span>
-              <span class="feat-pill"><i class="bi bi-palette me-1"></i>Visual Designer</span>
-            </div>
-            <a href="contextweaver/index.html" class="fw-semibold" style="color:var(--accent-purple)">Learn More &rarr;</a>
-          </div>
-        </div>
-        <!-- Future product slot -->
-        <div class="col-lg-6">
-          <div class="product-coming h-100">
-            <div class="text-center">
-              <i class="bi bi-plus-circle" style="font-size:2.5rem;opacity:0.3"></i>
-              <p class="mt-2 mb-0" style="font-size:.9rem">More products coming soon</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ WHY BRAINZBYTES ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <h2 class="section-title">Why BrainzBytes</h2>
-        <p class="section-subtitle">Three pillars that set us apart</p>
-      </div>
-      <div class="row g-4">
-        <!-- Enterprise Security -->
-        <div class="col-md-4">
-          <div class="pillar-card">
-            <div class="pillar-icon" style="background:rgba(220,53,69,0.12)">
-              <i class="bi bi-shield-lock-fill" style="color:#dc3545"></i>
-            </div>
-            <h5 class="fw-bold mb-2">Enterprise Security</h5>
-            <p class="text-muted mb-3" style="font-size:.92rem;line-height:1.7">Security isn't an afterthought &mdash; it's the architecture.</p>
-            <ul class="list-unstyled mb-0" style="font-size:.88rem">
-              <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>5 Vault backends (AES-256 encrypted)</li>
-              <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>PCI DSS Level 1 compliant (Stripe)</li>
-              <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>SOC 2 Type II ready architecture</li>
-              <li><i class="bi bi-check-circle-fill text-success me-2"></i>AI never sees raw credentials</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Open Standards -->
-        <div class="col-md-4">
-          <div class="pillar-card">
-            <div class="pillar-icon" style="background:rgba(13,202,240,0.12)">
-              <i class="bi bi-globe2" style="color:var(--accent-cyan)"></i>
-            </div>
-            <h5 class="fw-bold mb-2">Open Standards</h5>
-            <p class="text-muted mb-3" style="font-size:.92rem;line-height:1.7">No vendor lock-in. Every layer is swappable.</p>
-            <ul class="list-unstyled mb-0" style="font-size:.88rem">
-              <li class="mb-2"><i class="bi bi-check-circle-fill text-info me-2"></i>MCP protocol &mdash; open, standard, extensible</li>
-              <li class="mb-2"><i class="bi bi-check-circle-fill text-info me-2"></i>Cloud-agnostic (AWS, Azure, GCP, on-prem)</li>
-              <li class="mb-2"><i class="bi bi-check-circle-fill text-info me-2"></i>Any LLM &mdash; OpenAI, Anthropic, local models</li>
-              <li><i class="bi bi-check-circle-fill text-info me-2"></i>REST/gRPC connectors for any system</li>
-            </ul>
-          </div>
-        </div>
-        <!-- No-Code -->
-        <div class="col-md-4">
-          <div class="pillar-card">
-            <div class="pillar-icon" style="background:rgba(25,135,84,0.12)">
-              <i class="bi bi-magic" style="color:#198754"></i>
-            </div>
-            <h5 class="fw-bold mb-2">No-Code Platform</h5>
-            <p class="text-muted mb-3" style="font-size:.92rem;line-height:1.7">Deploy AI-powered automation without writing a single line of code.</p>
-            <ul class="list-unstyled mb-0" style="font-size:.88rem">
-              <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color:#198754"></i>7-step wizard builds plugins in minutes</li>
-              <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color:#198754"></i>Multi-source policy ingestion &mdash; documents, URLs, wikis, databases vectorized into RAG indexes</li>
-              <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color:#198754"></i>Drag-and-drop connector configuration</li>
-              <li><i class="bi bi-check-circle-fill me-2" style="color:#198754"></i>Visual scope &amp; permission management</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ USE CASES ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <h2 class="section-title">Use Cases</h2>
-        <p class="section-subtitle">Transforming industries with intelligent automation</p>
-      </div>
-      <div class="row g-3">
-        <div class="col-6 col-md-4 col-lg-2 reveal-scale">
-          <div class="usecase-card">
-            <span class="usecase-icon">&#x1F3E5;</span>
-            <h6 class="fw-bold mb-1" style="font-size:.9rem">Healthcare</h6>
-            <p class="text-muted mb-0" style="font-size:.78rem">HIPAA-compliant patient workflows &amp; scheduling</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2 reveal-scale">
-          <div class="usecase-card">
-            <span class="usecase-icon">&#x1F4B8;</span>
-            <h6 class="fw-bold mb-1" style="font-size:.9rem">FinTech</h6>
-            <p class="text-muted mb-0" style="font-size:.78rem">PCI-compliant payments &amp; smart trading bots</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2 reveal-scale">
-          <div class="usecase-card">
-            <span class="usecase-icon">&#x2699;&#xFE0F;</span>
-            <h6 class="fw-bold mb-1" style="font-size:.9rem">DevOps</h6>
-            <p class="text-muted mb-0" style="font-size:.78rem">CI/CD pipelines, PR management &amp; infra ops</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2 reveal-scale">
-          <div class="usecase-card">
-            <span class="usecase-icon">&#x1F4CA;</span>
-            <h6 class="fw-bold mb-1" style="font-size:.9rem">Sales</h6>
-            <p class="text-muted mb-0" style="font-size:.78rem">CRM automation, lead scoring &amp; outreach</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2 reveal-scale">
-          <div class="usecase-card">
-            <span class="usecase-icon">&#x1F465;</span>
-            <h6 class="fw-bold mb-1" style="font-size:.9rem">HR</h6>
-            <p class="text-muted mb-0" style="font-size:.78rem">Onboarding, policy Q&amp;A &amp; leave management</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2 reveal-scale">
-          <div class="usecase-card">
-            <span class="usecase-icon">&#x1F69A;</span>
-            <h6 class="fw-bold mb-1" style="font-size:.9rem">Logistics</h6>
-            <p class="text-muted mb-0" style="font-size:.78rem">Route optimization &amp; supply chain tracking</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ VERTICAL PRODUCTS ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <h2 style="font-size:1.8rem;font-weight:800">Products Built on ContextWeaver</h2>
-        <p style="color:var(--text-muted);font-size:1rem">Vertical AI solutions — each powered by the same secure, multi-user platform</p>
-      </div>
-
-      <div class="row g-4 justify-content-center stagger">
-        <!-- CW HealthAI -->
-        <div class="col-md-4 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;height:100%">
-            <div style="width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#dc3545,#ff6b6b);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem">🏥</div>
-            <h5 style="font-weight:700;font-size:1rem">CW HealthAI</h5>
-            <p style="color:var(--text-muted);font-size:.8rem;line-height:1.6">HIPAA-compliant clinical decision support. EHR integration, drug interactions, clinical trials management.</p>
-            <span style="background:rgba(220,53,69,0.1);color:#dc3545;padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600">Multi-plugin suite</span>
-          </div>
-        </div>
-
-        <!-- CW FinanceAI -->
-        <div class="col-md-4 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;height:100%">
-            <div style="width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#198754,#2dce89);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem">💰</div>
-            <h5 style="font-weight:700;font-size:1rem">CW FinanceAI</h5>
-            <p style="color:var(--text-muted);font-size:.8rem;line-height:1.6">SOC2-compliant trading, compliance, and banking automation. Bloomberg, Plaid, KYC integration.</p>
-            <span style="background:rgba(25,135,84,0.1);color:#198754;padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600">Multi-plugin suite</span>
-          </div>
-        </div>
-
-        <!-- CW AeroAI -->
-        <div class="col-md-4 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;height:100%">
-            <div style="width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#0dcaf0,#4da6ff);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem">🚀</div>
-            <h5 style="font-weight:700;font-size:1rem">CW AeroAI</h5>
-            <p style="color:var(--text-muted);font-size:.8rem;line-height:1.6">ITAR-compliant aerospace engineering. DO-178C certification, fleet management, supply chain tracking.</p>
-            <span style="background:rgba(13,202,240,0.1);color:#0dcaf0;padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600">Multi-plugin suite</span>
-          </div>
-        </div>
-
-        <!-- CW LegalAI -->
-        <div class="col-md-4 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;height:100%">
-            <div style="width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#a78bfa,#c4b5fd);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem">⚖</div>
-            <h5 style="font-weight:700;font-size:1rem">CW LegalAI</h5>
-            <p style="color:var(--text-muted);font-size:.8rem;line-height:1.6">Privilege-aware legal research. Westlaw, DocuSign, contract analysis, e-discovery, time tracking.</p>
-            <span style="background:rgba(167,139,250,0.1);color:#a78bfa;padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600">Multi-plugin suite</span>
-          </div>
-        </div>
-
-        <!-- CW DevOpsAI -->
-        <div class="col-md-4 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;height:100%">
-            <div style="width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#ffc107,#ffdb4d);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem">⚙</div>
-            <h5 style="font-weight:700;font-size:1rem">CW DevOpsAI</h5>
-            <p style="color:var(--text-muted);font-size:.8rem;line-height:1.6">Incident response, deployment automation, infrastructure management. Jira, PagerDuty, Datadog, K8s.</p>
-            <span style="background:rgba(255,193,7,0.1);color:#ffc107;padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600">Multi-plugin suite</span>
-          </div>
-        </div>
-
-        <!-- CW RetailAI -->
-        <div class="col-md-4 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;height:100%">
-            <div style="width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#e6522c,#ff8a65);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem">🛒</div>
-            <h5 style="font-weight:700;font-size:1rem">CW RetailAI</h5>
-            <p style="color:var(--text-muted);font-size:.8rem;line-height:1.6">Inventory, order management, customer service. Shopify, Salesforce, SAP, POS integration.</p>
-            <span style="background:rgba(230,82,44,0.1);color:#e6522c;padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600">Multi-plugin suite</span>
-          </div>
-        </div>
-
-        <!-- CW EduAI -->
-        <div class="col-md-4 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;height:100%">
-            <div style="width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#6c757d,#adb5bd);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem">🎓</div>
-            <h5 style="font-weight:700;font-size:1rem">CW EduAI</h5>
-            <p style="color:var(--text-muted);font-size:.8rem;line-height:1.6">FERPA-compliant education platform. Canvas, grading, student advising, degree audit, tutoring.</p>
-            <span style="background:rgba(108,117,125,0.1);color:#6c757d;padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600">Multi-plugin suite</span>
-          </div>
-        </div>
-
-        <!-- CW MatchAI -->
-        <div class="col-md-4 col-lg-3 reveal-scale">
-          <a href="scenario-matchmaking.html" style="text-decoration:none;color:inherit">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;height:100%">
-            <div style="width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#ff6b9d,#a78bfa);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem">💘</div>
-            <h5 style="font-weight:700;font-size:1rem">CW MatchAI</h5>
-            <p style="color:var(--text-muted);font-size:.8rem;line-height:1.6">Policy-based intelligent matchmaking. Unlimited descriptive preferences, semantic RAG scoring, privacy-first.</p>
-            <span style="background:rgba(255,107,157,0.1);color:#ff6b9d;padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600">Multi-plugin suite</span>
-          </div>
-          </a>
-        </div>
-
-        <!-- More Coming -->
-        <div class="col-md-4 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:2px dashed rgba(255,255,255,0.1);border-radius:16px;padding:1.5rem;text-align:center;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center">
-            <div style="font-size:2rem;margin-bottom:.5rem;opacity:.3">+</div>
-            <h5 style="font-weight:700;font-size:1rem;color:rgba(255,255,255,0.4)">Your Vertical Here</h5>
-            <p style="color:rgba(255,255,255,0.25);font-size:.8rem">Build any industry solution on ContextWeaver's secure multi-user platform</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center mt-4">
-        <span style="color:rgba(255,255,255,0.3);font-size:.85rem">All products share: 🧠 Cerebro runtime · 🌐 Loom infrastructure · 🧶 Weave knowledge orchestration</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ PRICING ═══════════════ -->
-  <section id="pricing" class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <h2 class="section-title">Pricing</h2>
-        <p class="section-subtitle">From solo developers to Fortune 500 — a plan for every stage</p>
-      </div>
-
-      <div class="row g-4 justify-content-center stagger">
-        <!-- Free / Community -->
-        <div class="col-md-6 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center;height:100%;position:relative">
-            <div style="font-size:.7rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Community</div>
-            <div style="font-size:2.8rem;font-weight:900;color:var(--text);margin-bottom:.25rem">Free</div>
-            <div style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.5rem">Forever • No credit card</div>
-            <ul style="list-style:none;padding:0;text-align:left;font-size:.85rem;color:var(--text-muted);line-height:2.2">
-              <li>✅ 1 user</li>
-              <li>✅ Docker / local install</li>
-              <li>✅ 5 MCP connectors</li>
-              <li>✅ 1 knowledge base (500 docs)</li>
-              <li>✅ Community plugins</li>
-              <li>✅ Basic RAG (no hierarchy)</li>
-              <li style="color:rgba(255,255,255,0.3)">— No SSO / RBAC</li>
-              <li style="color:rgba(255,255,255,0.3)">— No priority support</li>
-            </ul>
-            <a href="#contact" class="btn btn-outline-glow w-100 mt-3" style="font-size:.9rem">Get Started</a>
-          </div>
-        </div>
-
-        <!-- Team -->
-        <div class="col-md-6 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center;height:100%;position:relative">
-            <div style="font-size:.7rem;font-weight:700;color:#0dcaf0;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Team</div>
-            <div style="font-size:2.8rem;font-weight:900;color:var(--text);margin-bottom:.25rem">$29<span style="font-size:1rem;font-weight:400;color:var(--text-muted)">/user/mo</span></div>
-            <div style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.5rem">5–50 users • Billed annually</div>
-            <ul style="list-style:none;padding:0;text-align:left;font-size:.85rem;color:var(--text-muted);line-height:2.2">
-              <li>✅ Up to 50 users</li>
-              <li>✅ Cloud or self-hosted K8s</li>
-              <li>✅ Unlimited connectors</li>
-              <li>✅ 10 knowledge bases (10K docs)</li>
-              <li>✅ Group management</li>
-              <li>✅ Magic link auth</li>
-              <li>✅ Hierarchical RAG (2 levels)</li>
-              <li>✅ Email support (48h SLA)</li>
-            </ul>
-            <a href="#contact" class="btn btn-outline-glow w-100 mt-3" style="font-size:.9rem;border-color:#0dcaf0;color:#0dcaf0">Start Free Trial</a>
-          </div>
-        </div>
-
-        <!-- Business -->
-        <div class="col-md-6 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:2px solid var(--accent-purple);border-radius:16px;padding:2rem;text-align:center;height:100%;position:relative;box-shadow:0 0 30px rgba(167,139,250,0.15)">
-            <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;padding:3px 16px;border-radius:20px;font-size:.7rem;font-weight:700">MOST POPULAR</div>
-            <div style="font-size:.7rem;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;margin-top:.5rem">Business</div>
-            <div style="font-size:2.8rem;font-weight:900;color:var(--text);margin-bottom:.25rem">$79<span style="font-size:1rem;font-weight:400;color:var(--text-muted)">/user/mo</span></div>
-            <div style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.5rem">50–500 users • Billed annually</div>
-            <ul style="list-style:none;padding:0;text-align:left;font-size:.85rem;color:var(--text-muted);line-height:2.2">
-              <li>✅ Up to 500 users</li>
-              <li>✅ Multi-cloud (Azure, AWS, GCP)</li>
-              <li>✅ Entra ID / SAML SSO</li>
-              <li>✅ Full Hierarchical RAG</li>
-              <li>✅ Visual Designer (Loom)</li>
-              <li>✅ Plugin Builder</li>
-              <li>✅ RBAC + Vault cascade</li>
-              <li>✅ Priority support (4h SLA)</li>
-            </ul>
-            <a href="#contact" class="btn btn-glow w-100 mt-3" style="font-size:.9rem">Contact Sales</a>
-          </div>
-        </div>
-
-        <!-- Enterprise -->
-        <div class="col-md-6 col-lg-3 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center;height:100%;position:relative">
-            <div style="font-size:.7rem;font-weight:700;color:#198754;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Enterprise</div>
-            <div style="font-size:2.8rem;font-weight:900;color:var(--text);margin-bottom:.25rem">Custom</div>
-            <div style="color:var(--text-muted);font-size:.85rem;margin-bottom:1.5rem">500+ users • Annual contract</div>
-            <ul style="list-style:none;padding:0;text-align:left;font-size:.85rem;color:var(--text-muted);line-height:2.2">
-              <li>✅ Unlimited users</li>
-              <li>✅ Dedicated infrastructure</li>
-              <li>✅ Private endpoints (zero public)</li>
-              <li>✅ Managed Identity (no secrets)</li>
-              <li>✅ Custom vertical development</li>
-              <li>✅ On-prem or air-gapped deploy</li>
-              <li>✅ Full audit + compliance</li>
-              <li>✅ 24/7 support + TAM</li>
-            </ul>
-            <a href="#contact" class="btn btn-outline-glow w-100 mt-3" style="font-size:.9rem;border-color:#198754;color:#198754">Talk to Us</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ DEPLOYMENT MODELS ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <h2 class="section-title">Deployment Models</h2>
-        <p class="section-subtitle">You choose where and how — we make it work everywhere</p>
-      </div>
-
-      <div class="row g-4 stagger">
-        <div class="col-md-4 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;height:100%">
-            <div style="font-size:2.5rem;margin-bottom:1rem">💻</div>
-            <h5 style="font-weight:700;margin-bottom:.75rem">Local / Docker</h5>
-            <p style="color:var(--text-muted);font-size:.85rem;line-height:1.7">Single command to launch on your laptop. <code>docker-compose up</code> — includes Cerebro, MCP engine, and a local knowledge base. Your data never leaves your machine.</p>
-            <div style="margin-top:1rem;padding:.75rem;background:rgba(255,255,255,0.03);border-radius:8px;font-size:.8rem;color:var(--text-muted)">
-              <strong style="color:var(--text)">Best for:</strong> Developers, researchers, POC evaluations, personal productivity
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;height:100%">
-            <div style="font-size:2.5rem;margin-bottom:1rem">☸️</div>
-            <h5 style="font-weight:700;margin-bottom:.75rem">Managed Cloud (SaaS)</h5>
-            <p style="color:var(--text-muted);font-size:.85rem;line-height:1.7">We run everything. Your team gets a tenant on our shared infrastructure with full data isolation. Auto-scaling, backups, upgrades handled by BrainzBytes.</p>
-            <div style="margin-top:1rem;padding:.75rem;background:rgba(255,255,255,0.03);border-radius:8px;font-size:.8rem;color:var(--text-muted)">
-              <strong style="color:var(--text)">Best for:</strong> Startups, SMBs, teams that want zero ops burden
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4 reveal-scale">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;height:100%">
-            <div style="font-size:2.5rem;margin-bottom:1rem">🏢</div>
-            <h5 style="font-weight:700;margin-bottom:.75rem">Self-Hosted / Air-Gapped</h5>
-            <p style="color:var(--text-muted);font-size:.85rem;line-height:1.7">Deploy on your own AKS / EKS / GKE cluster or bare-metal. Helm charts + Terraform modules included. Private endpoints, no public internet exposure. Supports air-gapped environments.</p>
-            <div style="margin-top:1rem;padding:.75rem;background:rgba(255,255,255,0.03);border-radius:8px;font-size:.8rem;color:var(--text-muted)">
-              <strong style="color:var(--text)">Best for:</strong> Regulated industries, government, defense, enterprises with strict data residency
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ PLATFORM vs VERTICALS ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <h2 class="section-title">Platform + Partner Ecosystem</h2>
-        <p class="section-subtitle">BrainzBytes builds the platform. Partners build the verticals.</p>
-      </div>
-
-      <div class="row g-4 align-items-center stagger">
-        <div class="col-lg-6 reveal">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem">
-            <h5 style="font-weight:700;color:#a78bfa;margin-bottom:1rem"><i class="bi bi-building me-2"></i>What BrainzBytes Builds</h5>
-            <ul style="list-style:none;padding:0;font-size:.9rem;color:var(--text-muted);line-height:2.2">
-              <li>🧠 <strong style="color:var(--text)">Cerebro Runtime</strong> — identity-aware agent engine, RBAC, vault, audit</li>
-              <li>🌐 <strong style="color:var(--text)">Loom Designer</strong> — visual workflow builder, drag-and-drop, deploy</li>
-              <li>🧶 <strong style="color:var(--text)">Weave Knowledge</strong> — hierarchical RAG, ingest, search, policy engine</li>
-              <li>🔌 <strong style="color:var(--text)">Core Connectors</strong> — Gmail, Outlook, Jira, GitHub, Slack, Stripe (15+)</li>
-              <li>🛡️ <strong style="color:var(--text)">Security Framework</strong> — SSO, managed identity, private endpoints</li>
-              <li>📦 <strong style="color:var(--text)">Deploy Tooling</strong> — Helm, Terraform, Docker, multi-cloud modules</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-6 reveal">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem">
-            <h5 style="font-weight:700;color:#0dcaf0;margin-bottom:1rem"><i class="bi bi-people me-2"></i>What Partners / Customers Build</h5>
-            <ul style="list-style:none;padding:0;font-size:.9rem;color:var(--text-muted);line-height:2.2">
-              <li>🏥 <strong style="color:var(--text)">Industry Connectors</strong> — EHR, Bloomberg, ITAR systems, custom APIs</li>
-              <li>📋 <strong style="color:var(--text)">Vertical Plugins</strong> — compliance rules, domain workflows, industry logic</li>
-              <li>📚 <strong style="color:var(--text)">Knowledge Packs</strong> — curated domain knowledge bases, policy templates</li>
-              <li>🎨 <strong style="color:var(--text)">Custom Workflows</strong> — Loom visual automations for their specific use cases</li>
-              <li>🏗️ <strong style="color:var(--text)">White-Label Solutions</strong> — branded vertical products on ContextWeaver</li>
-            </ul>
-            <div style="margin-top:1rem;padding:.75rem;background:rgba(13,202,240,0.06);border:1px solid rgba(13,202,240,0.15);border-radius:8px;font-size:.8rem;color:var(--text-muted)">
-              💡 <strong style="color:#0dcaf0">Plugin Builder included</strong> — partners use our code-gen tooling to build MCP connectors in hours, not months. No need to understand the platform internals.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Revenue model -->
-      <div class="row mt-4">
-        <div class="col-12 reveal">
-          <div style="background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(13,202,240,0.06));border:1px solid rgba(167,139,250,0.15);border-radius:16px;padding:1.5rem 2rem;text-align:center">
-            <h5 style="font-weight:700;margin-bottom:.75rem">Revenue Model</h5>
-            <div class="d-flex flex-wrap justify-content-center gap-4" style="font-size:.9rem;color:var(--text-muted)">
-              <span>💳 <strong style="color:var(--text)">Platform SaaS</strong> — per-user subscription</span>
-              <span>🏢 <strong style="color:var(--text)">Enterprise License</strong> — annual contract</span>
-              <span>🔌 <strong style="color:var(--text)">Marketplace Rev-Share</strong> — 20% on partner plugins</span>
-              <span>🎓 <strong style="color:var(--text)">Professional Services</strong> — custom integration + training</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ COMPETITIVE ANALYSIS ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <h2 class="section-title">Competitive Landscape</h2>
-        <p class="section-subtitle">Where ContextWeaver stands in the agentic AI market</p>
-      </div>
-
-      <div class="reveal" style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse;font-size:.85rem;min-width:800px">
-          <thead>
-            <tr style="border-bottom:2px solid rgba(255,255,255,0.1)">
-              <th style="padding:.8rem 1rem;color:var(--text-muted);font-weight:600;text-align:left">Capability</th>
-              <th style="padding:.8rem 1rem;text-align:center;color:#a78bfa;font-weight:700">ContextWeaver</th>
-              <th style="padding:.8rem 1rem;text-align:center;color:var(--text-muted);font-weight:600">LangChain / LlamaIndex</th>
-              <th style="padding:.8rem 1rem;text-align:center;color:var(--text-muted);font-weight:600">Microsoft Copilot Studio</th>
-              <th style="padding:.8rem 1rem;text-align:center;color:var(--text-muted);font-weight:600">OpenAI Assistants</th>
-              <th style="padding:.8rem 1rem;text-align:center;color:var(--text-muted);font-weight:600">Custom DIY</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
-              <td style="padding:.7rem 1rem;color:var(--text)">Multi-user Identity</td>
-              <td style="padding:.7rem 1rem;text-align:center;color:#198754;font-weight:700">✅ Built-in</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ None</td>
-              <td style="padding:.7rem 1rem;text-align:center">⚠️ Azure AD only</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ None</td>
-              <td style="padding:.7rem 1rem;text-align:center">🔧 Build yourself</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02)">
-              <td style="padding:.7rem 1rem;color:var(--text)">Per-User Credentials (Vault)</td>
-              <td style="padding:.7rem 1rem;text-align:center;color:#198754;font-weight:700">✅ Cascade</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Shared keys</td>
-              <td style="padding:.7rem 1rem;text-align:center">⚠️ Partial</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Shared keys</td>
-              <td style="padding:.7rem 1rem;text-align:center">🔧 6+ months</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
-              <td style="padding:.7rem 1rem;color:var(--text)">Hierarchical RAG</td>
-              <td style="padding:.7rem 1rem;text-align:center;color:#198754;font-weight:700">✅ 3-level</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Flat</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Flat</td>
-              <td style="padding:.7rem 1rem;text-align:center">⚠️ Single-user</td>
-              <td style="padding:.7rem 1rem;text-align:center">🔧 12+ months</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02)">
-              <td style="padding:.7rem 1rem;color:var(--text)">Policy Engine (Code-enforced)</td>
-              <td style="padding:.7rem 1rem;text-align:center;color:#198754;font-weight:700">✅ Hierarchical</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Prompt-only</td>
-              <td style="padding:.7rem 1rem;text-align:center">⚠️ Basic</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Prompt-only</td>
-              <td style="padding:.7rem 1rem;text-align:center">🔧 Build yourself</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
-              <td style="padding:.7rem 1rem;color:var(--text)">MCP Protocol Support</td>
-              <td style="padding:.7rem 1rem;text-align:center;color:#198754;font-weight:700">✅ Native</td>
-              <td style="padding:.7rem 1rem;text-align:center">⚠️ Community</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Proprietary</td>
-              <td style="padding:.7rem 1rem;text-align:center">⚠️ Function calls</td>
-              <td style="padding:.7rem 1rem;text-align:center">🔧 Integration</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02)">
-              <td style="padding:.7rem 1rem;color:var(--text)">Visual Workflow Designer</td>
-              <td style="padding:.7rem 1rem;text-align:center;color:#198754;font-weight:700">✅ Loom</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Code only</td>
-              <td style="padding:.7rem 1rem;text-align:center">✅ Built-in</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ None</td>
-              <td style="padding:.7rem 1rem;text-align:center">🔧 Build yourself</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
-              <td style="padding:.7rem 1rem;color:var(--text)">Multi-Cloud Deploy</td>
-              <td style="padding:.7rem 1rem;text-align:center;color:#198754;font-weight:700">✅ Azure/AWS/GCP</td>
-              <td style="padding:.7rem 1rem;text-align:center">⚠️ DIY</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Azure only</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ OpenAI only</td>
-              <td style="padding:.7rem 1rem;text-align:center">🔧 Per-cloud</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02)">
-              <td style="padding:.7rem 1rem;color:var(--text)">Audit Trail</td>
-              <td style="padding:.7rem 1rem;text-align:center;color:#198754;font-weight:700">✅ Every action</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ None</td>
-              <td style="padding:.7rem 1rem;text-align:center">⚠️ Basic</td>
-              <td style="padding:.7rem 1rem;text-align:center">⚠️ Run logs</td>
-              <td style="padding:.7rem 1rem;text-align:center">🔧 Build yourself</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
-              <td style="padding:.7rem 1rem;color:var(--text)">Plugin Marketplace</td>
-              <td style="padding:.7rem 1rem;text-align:center;color:#198754;font-weight:700">✅ + Builder</td>
-              <td style="padding:.7rem 1rem;text-align:center">✅ Hub</td>
-              <td style="padding:.7rem 1rem;text-align:center">⚠️ Copilot plugins</td>
-              <td style="padding:.7rem 1rem;text-align:center">✅ GPT Store</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ N/A</td>
-            </tr>
-            <tr>
-              <td style="padding:.7rem 1rem;color:var(--text)">Open Source</td>
-              <td style="padding:.7rem 1rem;text-align:center;color:#198754;font-weight:700">✅ Core open</td>
-              <td style="padding:.7rem 1rem;text-align:center">✅ Fully open</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Proprietary</td>
-              <td style="padding:.7rem 1rem;text-align:center">❌ Proprietary</td>
-              <td style="padding:.7rem 1rem;text-align:center">✅ You own it</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="text-center mt-4 reveal">
-        <div style="background:linear-gradient(135deg,rgba(25,135,84,0.08),rgba(13,202,240,0.08));border:1px solid rgba(25,135,84,0.2);border-radius:12px;padding:1rem 1.5rem;display:inline-block;font-size:.9rem;color:var(--text-muted)">
-          💡 <strong style="color:#198754">Key Differentiator:</strong> ContextWeaver is the only platform with <strong style="color:var(--text)">identity-aware agentic AI + hierarchical RAG + multi-cloud</strong> in a single product.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ FOUNDER ═══════════════ -->
-  <section class="section" style="padding:4rem 0">
-    <div class="container">
-      <div class="text-center mb-4 reveal">
-        <h2 style="font-size:1.8rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem">Meet the Founder</h2>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-lg-10 reveal">
-          <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:20px;padding:2.5rem;position:relative;overflow:hidden">
-            <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0dcaf0,#a78bfa,#198754)"></div>
-            <div class="row align-items-center g-4">
-              <div class="col-md-4 text-center">
-                <div style="width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,rgba(13,202,240,0.15),rgba(167,139,250,0.15));display:flex;align-items:center;justify-content:center;margin:0 auto;border:2px solid rgba(255,255,255,0.1)">
-                  <span style="font-size:3.5rem">👨‍💻</span>
-                </div>
-                <h4 class="mt-3 mb-1" style="font-weight:700">Ajay Punreddy</h4>
-                <p style="color:var(--accent-purple);font-size:.9rem;font-weight:600;margin-bottom:.5rem">Founder &amp; CEO, BrainzBytes</p>
-                <div class="d-flex justify-content-center gap-2 flex-wrap">
-                  <span class="badge" style="background:rgba(13,202,240,0.12);color:#0dcaf0;font-size:.7rem">28+ Years in Tech</span>
-                  <span class="badge" style="background:rgba(25,135,84,0.12);color:#198754;font-size:.7rem">Patent Holder</span>
-                  <span class="badge" style="background:rgba(167,139,250,0.12);color:#a78bfa;font-size:.7rem">5 Patents</span>
-                </div>
-              </div>
-              <div class="col-md-8">
-                <p style="font-size:.95rem;line-height:1.8;color:var(--text)">
-                  Ajay Punreddy is a veteran systems architect and engineering leader with <strong>28+ years</strong> building mission-critical infrastructure across networking, telecom, cloud, and enterprise AI. He founded <strong>BrainzBytes</strong> to solve the fundamental security and orchestration gap in agentic AI — culminating in <strong>ContextWeaver</strong>, an enterprise platform for multi-user, policy-aware AI agents.
-                </p>
-                <p style="font-size:.88rem;line-height:1.8;color:rgba(255,255,255,0.7)">
-                  His career spans the full arc of modern networking and cloud infrastructure — from <strong>firmware at Cabletron Systems</strong> (pioneering Ethernet switching) and <strong>ATM/SONET at Bay Networks/Nortel &amp; Synoptics</strong>, to <strong>frame-relay &amp; ATM switching at Cascade Communications</strong> (acquired by Lucent). He was an <strong>early engineer at Castle Networks</strong> (acquired by Siemens), building carrier-grade VoIP with SIP, MGCP, and H.248 protocols, and a <strong>founding engineer at BlueNote Networks</strong> (acquired by Aspect Software), where he architected SIP/RTP-based unified communications from scratch.
-                </p>
-                <p style="font-size:.88rem;line-height:1.8;color:rgba(255,255,255,0.7)">
-                  At <strong>Aspect Software</strong> he rose to <strong>Technical Director / Software Architect</strong>, migrating enterprise call-center platforms to AWS cloud-native Kubernetes with full CI/CD, IAM (OAuth2/OIDC/SAML), and microservices architecture. He also contributed to <strong>Verivue</strong> (video streaming), <strong>Affirmed Networks</strong> (mobile core optimization), and other startups building high-performance network infrastructure.
-                </p>
-                <p style="font-size:.88rem;line-height:1.8;color:rgba(255,255,255,0.7);margin-bottom:1rem">
-                  Currently a <strong>Lead Software Engineer at Microsoft</strong>, Ajay brings deep expertise in Kubernetes, Azure, microservices, and platform engineering. With ContextWeaver, he combines decades of systems architecture experience with cutting-edge AI to create the <strong>first enterprise-grade, multi-user MCP orchestration platform</strong> — where every AI agent call is identity-aware, policy-enforced, and audit-logged.
-                </p>
-
-                <!-- Patents -->
-                <div class="mb-3 p-3" style="background:rgba(25,135,84,0.06);border:1px solid rgba(25,135,84,0.2);border-radius:10px">
-                  <h6 style="color:#198754;font-size:.85rem;margin-bottom:.6rem"><i class="bi bi-award-fill me-1"></i> Intellectual Property</h6>
-                  <div style="font-size:.82rem;line-height:1.7;color:rgba(255,255,255,0.65)">
-                    <div class="mb-1">
-                      <span class="badge bg-success" style="font-size:.62rem">US 9,883,037</span>
-                      <strong style="color:var(--text)">Staff Level Estimation for Multi-Skilled Agents</strong>
-                      <br><small class="ms-4">Contact center workforce optimization · Aspect Software · Granted Jan 2018</small>
+              <div class="bbx-app-layout">
+                <article class="bbx-app-panel">
+                  <header><strong>Published services</strong><span>2 active</span></header>
+                  <div class="bbx-service-list">
+                    <div class="bbx-service selected"><span class="bbx-service-icon"><i class="bi bi-stars"></i></span><div><strong>Hello World Governed AI</strong><small>3 workflows · v1.5.0</small></div><em>Built-in</em></div>
+                    <div class="bbx-service"><span class="bbx-service-icon"><i class="bi bi-megaphone"></i></span><div><strong>Governed Announcement &amp; Callback</strong><small>3 workflows · v1.3.0</small></div><em>Built-in</em></div>
+                    <div class="bbx-service"><span class="bbx-service-icon"><i class="bi bi-plus-lg"></i></span><div><strong>Customer escalation</strong><small>Draft service</small></div><em>Custom</em></div>
+                  </div>
+                </article>
+                <article class="bbx-app-panel">
+                  <header><strong>Hello World Governed AI · visual flow</strong><span>11 nodes</span></header>
+                  <div class="bbx-flow">
+                    <div class="bbx-flow-line"></div>
+                    <div class="bbx-flow-nodes">
+                      <div class="bbx-flow-node"><span class="icon"><i class="bi bi-search"></i></span><strong>Retrieve evidence</strong><small>Governed hybrid RAG with source policy.</small></div>
+                      <div class="bbx-flow-node"><span class="icon"><i class="bi bi-cpu"></i></span><strong>Assess readiness</strong><small>Agent reasoning through an approved model alias.</small></div>
+                      <div class="bbx-flow-node"><span class="icon"><i class="bi bi-person-check"></i></span><strong>Human approval</strong><small>Durable wait before any side effect.</small></div>
                     </div>
-                    <div class="mb-1">
-                      <span class="badge bg-success" style="font-size:.62rem">US 9,374,393</span>
-                      <strong style="color:var(--text)">Dynamic Call-Progress Analysis &amp; Call Processing</strong>
-                      <br><small class="ms-4">Real-time media stream analysis for call routing · Aspect Software · Granted Jun 2016</small>
-                    </div>
-                    <div class="mb-1">
-                      <span class="badge bg-success" style="font-size:.62rem">GRANTED</span>
-                      <strong style="color:var(--text)">Deployment of Pod Cohorts</strong> — US App 413306-US-NP
-                      <br><small class="ms-4">Manifest-driven Kubernetes cohort lifecycle management · Microsoft · Filed Jun 2023 · Approved</small>
-                    </div>
-                    <div class="mb-1">
-                      <span class="badge bg-info text-dark" style="font-size:.62rem">IN EXAM</span>
-                      <strong style="color:var(--text)">Continuation: Pod Cohort Deployment</strong> — US App 18/626,203
-                      <br><small class="ms-4">Continuation patent expanding on cohort orchestration methods · Microsoft</small>
-                    </div>
-                    <div class="mb-1">
-                      <span class="badge bg-warning text-dark" style="font-size:.62rem">PENDING</span>
-                      <strong style="color:var(--text)">ContextWeaver: Enterprise MCP Orchestration</strong> — App #99741331
-                      <br><small class="ms-4">Multi-user identity-aware agentic AI with hierarchical RAG &amp; MCP security boundary · BrainzBytes</small>
+                    <div class="bbx-flow-footer">
+                      <div><span>Decision</span><strong>1.5.0 · 8 nodes</strong></div>
+                      <div><span>Publication</span><strong>1.4.0 · 2 nodes</strong></div>
+                      <div><span>Verification</span><strong>1.3.0 · 1 node</strong></div>
                     </div>
                   </div>
-                </div>
-
-                <div class="d-flex flex-wrap gap-2">
-                  <span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:.68rem">BlueNote Networks <small style="opacity:.6">(→ Aspect)</small></span>
-                  <span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:.68rem">Castle Networks <small style="opacity:.6">(→ Siemens)</small></span>
-                  <span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:.68rem">Cascade Comm <small style="opacity:.6">(→ Lucent)</small></span>
-                  <span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:.68rem">Bay Networks <small style="opacity:.6">(→ Nortel)</small></span>
-                  <span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:.68rem">Cabletron Systems</span>
-                  <span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:.68rem">Verivue</span>
-                  <span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:.68rem">Affirmed Networks</span>
-                  <span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:.68rem">Aspect Software</span>
-                  <span class="badge" style="background:rgba(13,202,240,0.12);color:#0dcaf0;font-size:.68rem">Microsoft</span>
-                  <span class="badge" style="background:rgba(167,139,250,0.15);color:#a78bfa;font-size:.68rem;font-weight:600">BrainzBytes</span>
-                </div>
+                </article>
               </div>
-            </div>
+            </section>
           </div>
+        </div>
+      </div>
+
+      <div class="bbx-trust-band">
+        <div><strong>Identity-aware</strong><span>Every request is bound to a user, role, organization, and entitlement context.</span></div>
+        <div><strong>Policy-enforced</strong><span>Prompts do not decide authority. The execution graph is authorized before and during work.</span></div>
+        <div><strong>Recoverable</strong><span>Accepted runs survive browser, worker, and pod failures through durable state and queues.</span></div>
+        <div><strong>Inspectable</strong><span>Runs produce citations, decisions, revisions, metrics, audit events, and side-effect receipts.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section bbx-section-alt" id="why">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">Why BrainzBytes</span>
+      <h2 class="bbx-title bbx-title-sm">Enterprise AI needs an operating model, not another demo.</h2>
+      <p class="bbx-lead">Models can generate. Agents can reason. Tools can act. The hard part is making the whole system authorized, composable, observable, recoverable, and understandable to the people accountable for it.</p>
+      <div class="bbx-problem-grid">
+        <article class="bbx-card"><span class="bbx-card-index">01 / FRAGMENTATION</span><h3>Disconnected AI parts</h3><p>Prompts, models, retrieval, tools, approvals, and infrastructure are often managed as separate projects with no common contract.</p></article>
+        <article class="bbx-card"><span class="bbx-card-index">02 / AUTHORITY</span><h3>Identity disappears at execution</h3><p>A user may be authenticated at the front door while downstream Agents and tools operate with broad shared credentials and unclear authority.</p></article>
+        <article class="bbx-card"><span class="bbx-card-index">03 / OPERATIONS</span><h3>Work vanishes into the runtime</h3><p>Long-running AI work needs checkpoints, retries, human waits, evidence, cost controls, and a run record that operators can investigate.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section" id="contextweaver">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">ContextWeaver platform</span>
+      <h2 class="bbx-title bbx-title-sm">One lifecycle from business intent to verified result.</h2>
+      <p class="bbx-lead">ContextWeaver makes AI capabilities reusable and governable. Teams publish immutable Services and Workflows, bind approved Agents, MCPs, models, and knowledge, then execute through one durable control plane.</p>
+      <div class="bbx-lifecycle">
+        <article>
+          <span class="number">01—03</span><h3>Design the capability</h3>
+          <p>Define the Service contract, compose its typed Workflows, and bind approved Agents, MCP tools, models, and governed knowledge.</p>
+          <div class="bbx-phase-steps"><span><b>Define</b> Service Registry</span><span><b>Compose</b> Workflow Studio</span><span><b>Bind</b> Capability Registry</span></div>
+        </article>
+        <article>
+          <span class="number">04—05</span><h3>Govern and execute</h3>
+          <p>Authorize the complete graph, preserve user authority, isolate credentials, accept work durably, and recover safely across waits and failures.</p>
+          <div class="bbx-phase-steps"><span><b>Govern</b> Policy Plane</span><span><b>Execute</b> Durable Runtime</span></div>
+        </article>
+        <article>
+          <span class="number">06—07</span><h3>Verify and operate</h3>
+          <p>Validate outputs and side effects, publish evidence-backed results, then investigate runs, SLOs, revisions, and replayable events.</p>
+          <div class="bbx-phase-steps"><span><b>Verify</b> Evidence &amp; Receipts</span><span><b>Operate</b> Operations</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section bbx-section-alt" id="product">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">The product's own concepts</span>
+      <h2 class="bbx-title bbx-title-sm">One AI capability factory. Four connected Studios.</h2>
+      <p class="bbx-lead">MCP Studio creates governed capabilities. Agent Studio creates governed reasoning roles. Workflow Studio composes durable work. Service Studio packages the complete outcome. All four share one Registry, policy model, lifecycle, observability standard, and evidence trail.</p>
+      <div class="bbx-resource-grid" style="margin-bottom:30px">
+        <article class="bbx-resource"><span>MCP Studio</span><h3>Build the capabilities</h3><p>Design tools, connectors, typed schemas, permissions, policy, dependency boundaries, and reusable Registry versions.</p></article>
+        <article class="bbx-resource"><span>Agent Studio</span><h3>Build the reasoning role</h3><p>Define prompts, memory, RAG access, approved skills, guardrails, evaluation, and the minimum capability set.</p></article>
+        <article class="bbx-resource"><span>Workflow Studio</span><h3>Build the durable journey</h3><p>Compose branching, parallel work, approvals, waits, retries, compensation, notifications, and recovery.</p></article>
+        <article class="bbx-resource"><span>Service Studio</span><h3>Package the outcome</h3><p>Publish a stable contract with exact Workflow, Agent, MCP, model, RAG, policy, SLO, and deployment references.</p></article>
+      </div>
+      <p class="bbx-lead"><strong>Shared lifecycle:</strong> Design → Validate → Rehearse → Govern → Publish → Observe.</p>
+      <nav class="bbx-showcase-tabs" aria-label="Product showcase">
+        <button class="active" type="button" data-screen="services">Service Studio</button>
+        <button type="button" data-screen="runs">Run history</button>
+        <button type="button" data-screen="capabilities">Agents &amp; MCPs</button>
+        <button type="button" data-screen="evidence">Governance &amp; evidence</button>
+      </nav>
+      <div class="bbx-showcase">
+        <article class="bbx-showcase-copy">
+          <div>
+            <span class="bbx-card-index" id="showcaseIndex">01 / SERVICE STUDIO</span>
+            <h3 id="showcaseTitle">See the complete service estate without losing the details.</h3>
+            <p id="showcaseText">Catalog, build, and compare immutable Service versions in one place. Exact Workflow associations remain visible, so an older valid Decision Workflow never disappears behind a newer version.</p>
+            <ul id="showcaseList">
+              <li>Built-in and Custom origin shown separately</li>
+              <li>Exact Workflow versions and node counts</li>
+              <li>Visual composition with validation before publish</li>
+            </ul>
+          </div>
+          <a class="bbx-btn" href="/contextweaver/index.html">Full product overview <i class="bi bi-arrow-right"></i></a>
+        </article>
+        <div class="bbx-showcase-screen">
+          <section class="bbx-screen active" data-panel="services">
+            <header class="bbx-screen-head"><div><small>Services / Catalog</small><h4>Service estate explorer</h4><p>2 executable Services · exact immutable Workflow associations</p></div><span class="bbx-screen-status">Registry healthy</span></header>
+            <div class="bbx-capability-grid">
+              <article><span class="kind">Built-in Service</span><h5>Hello World Governed AI and RAG</h5><p>Decision 1.5.0 · Publication 1.4.0 · Verification 1.3.0</p><footer><span>3 workflows</span><span>11 nodes</span></footer></article>
+              <article><span class="kind">Built-in Service</span><h5>Governed Announcement and Callback</h5><p>Decision 1.4.0 · Publication 1.4.0 · Verification 1.3.0</p><footer><span>3 workflows</span><span>11 nodes</span></footer></article>
+              <article><span class="kind">Custom Draft</span><h5>Customer Escalation</h5><p>Reusable risk review, human approval, and controlled notification.</p><footer><span>Draft</span><span>Not executable</span></footer></article>
+              <article><span class="kind">Workflow</span><h5>Decision 1.5.0</h5><p>Eight nodes with approved model and governed hybrid retrieval bindings.</p><footer><span>8 nodes</span><span>Active</span></footer></article>
+            </div>
+          </section>
+          <section class="bbx-screen" data-panel="runs">
+            <header class="bbx-screen-head"><div><small>Operations / Runs</small><h4>Compact run history</h4><p>Scan the estate first, then open the timeline, artifacts, and evidence.</p></div><span class="bbx-screen-status">Illustrative view</span></header>
+            <div class="bbx-run-grid">
+              <article class="bbx-run-list">
+                <div class="bbx-run-row"><span class="bbx-run-dot"></span><div><strong>Hello World Governed AI · run_9f20</strong><small>Assess release · 5 of 8 decision nodes complete</small></div><span>Running</span></div>
+                <div class="bbx-run-row"><span class="bbx-run-dot waiting"></span><div><strong>Governed Announcement · run_98d1</strong><small>Waiting for approving officer</small></div><span>HITL</span></div>
+                <div class="bbx-run-row"><span class="bbx-run-dot done"></span><div><strong>Hello World Governed AI · run_973c</strong><small>Verified result with governed citations</small></div><span>Complete</span></div>
+                <div class="bbx-run-row"><span class="bbx-run-dot done"></span><div><strong>Hello World Governed AI · run_96a8</strong><small>Completed with publication receipt</small></div><span>Complete</span></div>
+              </article>
+              <aside class="bbx-run-detail">
+                <h5>Selected run timeline</h5>
+                <div class="bbx-timeline">
+                  <div>Intent routed to Hello World Governed AI 1.5.0</div>
+                  <div>Entitlements and complete graph authorized</div>
+                  <div>Governed RAG returned 4 source citations</div>
+                  <div>Readiness Agent produced typed assessment</div>
+                  <div class="wait">Human approval is required to continue</div>
+                </div>
+              </aside>
+            </div>
+          </section>
+          <section class="bbx-screen" data-panel="capabilities">
+            <header class="bbx-screen-head"><div><small>Registry / Components</small><h4>Discovered Agents and MCPs</h4><p>Configuration, contracts, skills, tools, health, metrics, and dashboards in one standard profile.</p></div><span class="bbx-screen-status">2 components</span></header>
+            <div class="bbx-capability-grid">
+              <article><span class="kind">Agent · No setup</span><h5>Release Advisor Agent</h5><p>Skill: assess-release. Publishes typed contracts and one MCP requirement.</p><footer><span>1 skill</span><span>Active 1.2.0</span></footer></article>
+              <article><span class="kind">MCP · Configurable</span><h5>Operations MCP</h5><p>Tool: diagnose-service. Organization, group, and user overlays resolve safely.</p><footer><span>1 tool</span><span>Active 1.0.0</span></footer></article>
+              <article><span class="kind">Discovery</span><h5>Standard endpoints</h5><p>Health, contracts, capabilities, metrics, dashboards, and invocation metadata.</p><footer><span>Typed</span><span>Versioned</span></footer></article>
+              <article><span class="kind">Configuration</span><h5>Scoped resolution</h5><p>Component defaults to organization, group, and user, with immutable revision history.</p><footer><span>Digest</span><span>Provenance</span></footer></article>
+            </div>
+          </section>
+          <section class="bbx-screen" data-panel="evidence">
+            <header class="bbx-screen-head"><div><small>Governance / Evidence</small><h4>Authority and proof travel with the run</h4><p>Every important decision is attributable, inspectable, and recoverable.</p></div><span class="bbx-screen-status">Audit ready</span></header>
+            <div class="bbx-evidence-grid">
+              <article><i class="bi bi-person-badge"></i><strong>Identity context</strong><span>User, organization, groups, role, entitlement, and correlation identifiers.</span></article>
+              <article><i class="bi bi-shield-check"></i><strong>Policy decisions</strong><span>Whole-graph preflight, runtime reauthorization, budgets, and human gates.</span></article>
+              <article><i class="bi bi-file-earmark-check"></i><strong>Source evidence</strong><span>Versioned artifacts, verified citations, retrieval profile, and source ownership.</span></article>
+              <article><i class="bi bi-arrow-repeat"></i><strong>Durable state</strong><span>Runs, tasks, attempts, leases, timers, inbox/outbox, and checkpoints.</span></article>
+              <article><i class="bi bi-receipt"></i><strong>Side-effect receipts</strong><span>Idempotency keys, MCP invocation record, result digest, and compensation state.</span></article>
+              <article><i class="bi bi-graph-up"></i><strong>Operational telemetry</strong><span>Metrics, logs, traces, SLOs, dashboards, alerts, and revision history.</span></article>
+            </div>
+          </section>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ FOOTER ═══════════════ -->
-  <footer id="contact" class="bb-footer">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6">
-          <div class="d-flex align-items-center gap-2 mb-2">
-            <img src="logo.svg" alt="BrainzBytes" style="width:22px;height:22px">
-            <span class="fw-bold" style="color:var(--accent-purple)">BrainzBytes</span>
-          </div>
-          <p class="text-muted mb-0" style="font-size:.85rem">&copy; 2026 BrainzBytes Inc. All rights reserved.</p>
+  <section class="bbx-section" id="roles">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">Built for accountable teams</span>
+      <h2 class="bbx-title bbx-title-sm">One platform, different views of the same truth.</h2>
+      <div class="bbx-role-grid">
+        <article class="bbx-card"><span class="bbx-role-icon"><i class="bi bi-building-gear"></i></span><h3>Platform leaders</h3><p>Standardize how AI capabilities are admitted, composed, deployed, governed, measured, and retired across the organization.</p></article>
+        <article class="bbx-card"><span class="bbx-role-icon"><i class="bi bi-bezier2"></i></span><h3>Service designers</h3><p>Turn business intent into reusable Services and visual Workflows without binding the definition to one model or endpoint.</p></article>
+        <article class="bbx-card"><span class="bbx-role-icon"><i class="bi bi-shield-lock"></i></span><h3>Security and risk</h3><p>Inspect authority, data scope, model and tool bindings, human gates, credentials, evidence, revisions, and audit history.</p></article>
+        <article class="bbx-card"><span class="bbx-role-icon"><i class="bi bi-activity"></i></span><h3>Operators</h3><p>See active runs, waits, retries, failed nodes, recovery state, SLOs, metrics, logs, traces, and the exact next action.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section bbx-section-alt" id="architecture">
+    <div class="bbx-container bbx-architecture">
+      <div>
+        <span class="bbx-eyebrow">Open, layered architecture</span>
+        <h2 class="bbx-title bbx-title-sm">The control plane stays stable while the ecosystem changes.</h2>
+        <p class="bbx-lead">Models, search engines, vector stores, clouds, Agents, and MCP servers will keep changing. ContextWeaver makes them governed bindings behind portable contracts rather than permanent application dependencies.</p>
+        <div class="bbx-actions">
+          <a class="bbx-btn bbx-btn-primary" href="/docs/documents/azure-production-platform-and-poc.html">Explore NextGen architecture</a>
+          <a class="bbx-btn" href="/docs/diagram-viewer/contextweaver-nextgen-architecture.html">Open diagram viewer</a>
+          <a class="bbx-btn" href="/docs/diagrams/intent-to-evidence-flow.html">Watch the animated flow</a>
         </div>
-        <div class="col-md-6 text-md-end mt-3 mt-md-0">
-          <a href="#" class="me-3" style="font-size:.85rem">Privacy Policy</a>
-          <a href="#" class="me-3" style="font-size:.85rem">Terms of Service</a>
-          <a href="mailto:contact@brainzbytes.com" style="font-size:.85rem">contact@brainzbytes.com</a>
+      </div>
+      <div>
+        <div class="bbx-arch-stack">
+          <article class="bbx-arch-layer"><strong>Experience</strong><div><span>Web UI</span><span>REST API</span><span>CLI / SDK</span><span>Event streams</span></div></article>
+          <article class="bbx-arch-layer"><strong>Control plane</strong><div><span>Registry</span><span>Configuration</span><span>Policy</span><span>Entitlements</span><span>Identity</span></div></article>
+          <article class="bbx-arch-layer"><strong>Execution</strong><div><span>Run coordinator</span><span>Workflow compiler</span><span>Durable workers</span><span>HITL</span><span>Saga</span></div></article>
+          <article class="bbx-arch-layer"><strong>Capabilities</strong><div><span>Agents</span><span>MCP servers</span><span>Models</span><span>RAG profiles</span><span>Plugins</span></div></article>
+          <article class="bbx-arch-layer"><strong>Foundation</strong><div><span>Kubernetes</span><span>PostgreSQL</span><span>RabbitMQ</span><span>Object storage</span><span>Observability</span></div></article>
+        </div>
+        <p class="bbx-architecture-note"><strong>Cloud neutral by contract.</strong> Deploy to Azure, AWS, GCP, or private Kubernetes. Infrastructure choices are injected through configuration, Secrets, and portable interfaces rather than embedded in the execution model.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section" id="trust">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">Trust and deployment</span>
+      <h2 class="bbx-title bbx-title-sm">Built to be inspected before it is trusted.</h2>
+      <p class="bbx-lead">ContextWeaver does not ask governance teams to accept a black box. Architecture, authorization boundaries, credential handling, data movement, operational state, and known readiness gaps are documented explicitly.</p>
+      <div class="bbx-problem-grid">
+        <article class="bbx-card"><span class="bbx-card-index">IDENTITY &amp; AUTHORITY</span><h3>Agents never become users</h3><p>Human identity and entitlement context remain separate from workload identity. Agents receive scoped capability references, not open-ended credentials.</p></article>
+        <article class="bbx-card"><span class="bbx-card-index">DATA &amp; KNOWLEDGE</span><h3>Governed RAG, not bulk context</h3><p>Sources, generations, retrieval profiles, citations, freshness, ownership, and access scope are versioned and policy controlled.</p></article>
+        <article class="bbx-card"><span class="bbx-card-index">DEPLOYMENT &amp; OPERATIONS</span><h3>Private or hosted foundations</h3><p>Run on Kubernetes with standard data, messaging, object storage, and observability contracts. Keep sensitive integrations inside your environment.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section bbx-section-alt" id="resources">
+    <div class="bbx-container">
+      <span class="bbx-eyebrow">Go deeper</span>
+      <h2 class="bbx-title bbx-title-sm">From product story to implementation detail.</h2>
+      <div class="bbx-resource-grid">
+        <a class="bbx-resource" href="/docs/index.html"><span>Documentation</span><h3>Choose your path</h3><p>Start with the user journey or go directly into identity, authorization, durable execution, RAG, dynamic capabilities, and operations.</p></a>
+        <a class="bbx-resource" href="/docs/documents/durable-asynchronous-execution.html"><span>Execution</span><h3>Trace durable work</h3><p>Follow requests through governed workflow execution, approval waits, retries, recovery, and evidence capture.</p></a>
+        <a class="bbx-resource" href="/docs/documents/continuous-entitlement-enforcement.html"><span>Trust</span><h3>Inspect the boundaries</h3><p>Review continuous authorization, credential isolation, tenancy, network controls, audit, observability, and secure deployment patterns.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bbx-section" id="start">
+    <div class="bbx-container">
+      <div class="bbx-cta">
+        <span class="bbx-eyebrow">BrainzBytes + ContextWeaver</span>
+        <h2 class="bbx-title bbx-title-sm">Move from AI experiments to governed enterprise capability.</h2>
+        <p class="bbx-lead">Explore the product, examine the architecture, and see how Services, Workflows, Agents, MCPs, RAG, approvals, and operations become one coherent platform.</p>
+        <div class="bbx-actions">
+          <a class="bbx-btn bbx-btn-primary" href="https://app.brainzbytes.com">Launch ContextWeaver <i class="bi bi-box-arrow-up-right"></i></a>
+          <a class="bbx-btn" href="/docs/index.html">Read the technical documentation</a>
         </div>
       </div>
     </div>
-  </footer>
+  </section>
+</main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+  var content = {
+    services: {
+      index: "01 / SERVICE STUDIO",
+      title: "See the complete service estate without losing the details.",
+      text: "Catalog, build, and compare immutable Service versions in one place. Exact Workflow associations remain visible, so an older valid Decision Workflow never disappears behind a newer version.",
+      items: ["Built-in and Custom origin shown separately", "Exact Workflow versions and node counts", "Visual composition with validation before publish"]
+    },
+    runs: {
+      index: "02 / RUN HISTORY",
+      title: "Scan first. Drill into the exact run only when needed.",
+      text: "A compact history keeps active work, durable waits, failures, and completed results easy to scan. Opening a run reveals its node timeline, artifacts, citations, approvals, retries, and recovery state.",
+      items: ["Running, waiting, failed, and complete at a glance", "Durable HITL clearly separated from stalled work", "Timeline, evidence, attempts, and receipts on demand"]
+    },
+    capabilities: {
+      index: "03 / AGENTS & MCPS",
+      title: "Discover capabilities through one standard contract.",
+      text: "Agents and MCP servers publish identity, versions, contracts, skills, tools, dependencies, health, metrics, dashboards, and optional configuration. Configuration-free Agents remain visible without fake settings.",
+      items: ["Latest active immutable version selected", "Configuration-free and configurable profiles", "Skills, tools, contracts, metrics, and dashboards"]
+    },
+    evidence: {
+      index: "04 / GOVERNANCE & EVIDENCE",
+      title: "Make every important decision attributable and inspectable.",
+      text: "Identity, authorization, source evidence, durable state, human decisions, side effects, and operational telemetry travel with the run instead of being reconstructed after an incident.",
+      items: ["Whole-graph preflight plus runtime reauthorization", "Verified citations and versioned source artifacts", "Side-effect receipts, audit events, and revisions"]
+    }
+  };
+  var tabs = document.querySelectorAll("[data-screen]");
+  var panels = document.querySelectorAll("[data-panel]");
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      var id = tab.getAttribute("data-screen");
+      var item = content[id];
+      tabs.forEach(function (button) { button.classList.toggle("active", button === tab); });
+      panels.forEach(function (panel) { panel.classList.toggle("active", panel.getAttribute("data-panel") === id); });
+      document.getElementById("showcaseIndex").textContent = item.index;
+      document.getElementById("showcaseTitle").textContent = item.title;
+      document.getElementById("showcaseText").textContent = item.text;
+      document.getElementById("showcaseList").innerHTML = item.items.map(function (value) { return "<li>" + value + "</li>"; }).join("");
+    });
+  });
+
+})();
+</script>
 </body>
 </html>

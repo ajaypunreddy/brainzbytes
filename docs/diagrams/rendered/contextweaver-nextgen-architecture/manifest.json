@@ -1,0 +1,79 @@
+{
+  "source": "contextweaver-nextgen-architecture.drawio",
+  "sourceSha256": "5bd8cfb9143b822935eae8bdb6b9b8171099f0b55e87cefdb2d0eb4c5c4c04c6",
+  "exporter": "draw.io desktop CLI",
+  "pages": [
+    {
+      "name": "Layered Architecture",
+      "file": "01-layered-architecture.svg"
+    },
+    {
+      "name": "Deployment Pipeline",
+      "file": "02-deployment-pipeline.svg"
+    },
+    {
+      "name": "Namespace Topology",
+      "file": "03-namespace-topology.svg"
+    },
+    {
+      "name": "Governed Agentic Platform",
+      "file": "04-governed-agentic-platform.svg"
+    },
+    {
+      "name": "RAG Freshness and Versioning",
+      "file": "05-rag-freshness-and-versioning.svg"
+    },
+    {
+      "name": "Durable Work Recovery",
+      "file": "06-durable-work-recovery.svg"
+    },
+    {
+      "name": "Credential Non-Possession",
+      "file": "07-credential-non-possession.svg"
+    },
+    {
+      "name": "Dynamic Agent and MCP Lifecycle",
+      "file": "08-dynamic-agent-and-mcp-lifecycle.svg"
+    },
+    {
+      "name": "Continuous Entitlement Enforcement",
+      "file": "09-continuous-entitlement-enforcement.svg"
+    },
+    {
+      "name": "Azure Production Platform",
+      "file": "10-azure-production-platform.svg"
+    },
+    {
+      "name": "Hello World Approval PoC",
+      "file": "11-hello-world-approval-poc.svg"
+    },
+    {
+      "name": "Durable Async Execution",
+      "file": "12-durable-async-execution.svg"
+    },
+    {
+      "name": "Asynchronous RAG Ingestion",
+      "file": "13-asynchronous-rag-ingestion.svg"
+    },
+    {
+      "name": "Azure Data and Operations",
+      "file": "14-azure-data-and-operations.svg"
+    },
+    {
+      "name": "Hello World Execution Detail",
+      "file": "15-hello-world-execution-detail.svg"
+    },
+    {
+      "name": "Durable Recovery and Replay",
+      "file": "16-durable-recovery-and-replay.svg"
+    },
+    {
+      "name": "RAG Publication and Freshness",
+      "file": "17-rag-publication-and-freshness.svg"
+    },
+    {
+      "name": "Authorization Runtime Sequence",
+      "file": "18-authorization-runtime-sequence.svg"
+    }
+  ]
+}

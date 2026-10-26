@@ -1,948 +1,148 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="midnight">
 <head>
+  <script src="/gate.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrainzBytes &mdash; Cloud-Agnostic Architecture</title>
-  <meta name="description" content="Customer / Platform Provider, zero-secret multi-cloud architecture for ContextWeaver — deployable on Azure, AWS, GCP, or on-prem with no code changes.">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
-    a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-purple)}
-    .card{background:var(--bg-card);border-color:var(--border)}
-    code{background:var(--code-bg);padding:2px 6px;border-radius:4px;font-size:.85em}
-
-    /* Navbar */
-    .dropdown-item.active-item{color:var(--accent-cyan);font-weight:600}
-
-    /* Hero */
-    .hero{padding:5rem 0 3rem;position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(167,139,250,0.08) 0%,transparent 70%);pointer-events:none}
-    .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,#a78bfa 0%,#0dcaf0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
-    .hero .subtitle{font-size:1.05rem;color:var(--text-muted);max-width:700px;margin:0 auto;line-height:1.75}
-
-    /* Section */
-    .section{padding:3.5rem 0}.section-alt{background:var(--bg-elevated)}
-    .section-title{font-size:1.8rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem}
-    .section-subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:2rem}
-
-    /* Blocks */
-    .block{border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:.75rem}
-    .block-purple{background:rgba(167,139,250,0.08);border:2px solid rgba(167,139,250,0.35)}
-    .block-cyan{background:rgba(13,202,240,0.06);border:2px solid rgba(13,202,240,0.25)}
-    .block-green{background:rgba(25,135,84,0.06);border:2px solid rgba(25,135,84,0.25)}
-    .block-amber{background:rgba(245,158,11,0.06);border:2px solid rgba(245,158,11,0.25)}
-    .block-red{background:rgba(220,53,69,0.06);border:2px solid rgba(220,53,69,0.25)}
-    .block-blue{background:rgba(13,110,253,0.06);border:2px solid rgba(13,110,253,0.25)}
-
-    /* Diagram */
-    .tenant-box{border-radius:16px;padding:1.75rem;position:relative}
-    .tenant-box .tenant-label{position:absolute;top:-14px;left:20px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:2px 12px;border-radius:6px}
-    .arrow-bridge{text-align:center;font-size:1.1rem;padding:1rem 0;color:var(--text-muted)}
-    .arrow-bridge .arrow-line{display:inline-block;padding:.6rem 1.5rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;font-size:.85rem}
-    .arrow-down{text-align:center;font-size:1.5rem;color:rgba(255,255,255,0.25);line-height:1;margin:.25rem 0}
-
-    /* Swap grid */
-    .swap-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;height:100%;transition:all .3s;border-top:3px solid transparent}
-    .swap-card:hover{border-color:rgba(255,255,255,0.15);transform:translateY(-2px)}
-    .swap-card h6{font-size:.9rem;font-weight:700;margin-bottom:.5rem}
-    .swap-card .options{font-size:.8rem;color:var(--text-muted);line-height:1.8}
-
-    /* Security badges */
-    .sec-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(25,135,84,0.1);border:1px solid rgba(25,135,84,0.3);color:var(--green);padding:.4rem .9rem;border-radius:20px;font-size:.78rem;font-weight:600;margin:.25rem}
-
-    /* Pod diagram */
-    .pod-box{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;position:relative}
-    .pod-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
-    .pod-cerebro::before{background:var(--accent-purple)}
-    .pod-mcp::before{background:var(--accent-cyan)}
-    .pod-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
-
-    /* Cloud link cards */
-    .cloud-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;text-align:center;transition:all .3s;height:100%}
-    .cloud-card:hover{border-color:rgba(167,139,250,0.3);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
-    .cloud-card .cloud-icon{font-size:2.5rem;margin-bottom:.75rem}
-
-    /* Pill */
-    .feat-pill{display:inline-block;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:var(--accent-purple);padding:.3rem .85rem;border-radius:20px;font-size:.78rem;font-weight:600;margin:.2rem}
-
-    /* Footer */
-    .bb-footer{background:var(--bg-nav);border-top:1px solid var(--border);padding:2.5rem 0;margin-top:3rem}
-    .bb-footer a{color:var(--text-muted)}.bb-footer a:hover{color:var(--text)}
-
-    /* Animations */
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    .fade-up{animation:fadeInUp .6s ease-out both}
-    .fade-up-d1{animation-delay:.1s}.fade-up-d2{animation-delay:.2s}.fade-up-d3{animation-delay:.3s}
-    .fade-up-d4{animation-delay:.4s}.fade-up-d5{animation-delay:.5s}.fade-up-d6{animation-delay:.6s}
-  </style>
-
+  <title>BrainzBytes ContextWeaver &mdash; NextGen Architecture</title>
+  <meta name="description" content="ContextWeaver NextGen architecture: Entra identity, durable asynchronous execution, governed Agents and MCPs, scalable RAG, continuous authorization, and cloud-neutral Kubernetes delivery.">
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
   <link rel="stylesheet" href="theme.css">
   <script src="theme.js" defer></script>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",system-ui,sans-serif}
+    a{color:inherit}
+    .wrap{width:min(1180px,calc(100% - 2rem));margin:0 auto}
+    .hero{position:relative;overflow:hidden;padding:8rem 0 4.5rem;text-align:center}
+    .hero::before{content:"";position:absolute;inset:-25% 0 auto;height:700px;background:radial-gradient(circle at 50% 45%,rgba(124,58,237,.2),transparent 55%);pointer-events:none}
+    .eyebrow{display:inline-block;color:var(--accent-cyan);font-size:.75rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem}
+    h1{position:relative;font-size:clamp(2.2rem,4vw,3.2rem);line-height:1;letter-spacing:-.045em;margin:0 auto 1.4rem;max-width:1000px;background:linear-gradient(120deg,var(--accent-purple),var(--accent-cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero-copy{position:relative;max-width:820px;margin:0 auto;color:var(--text-muted);font-size:clamp(1rem,2vw,1.22rem);line-height:1.75}
+    .actions{position:relative;display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+    .button{display:inline-flex;align-items:center;justify-content:center;padding:.8rem 1.1rem;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);text-decoration:none;font-weight:750}
+    .button.primary{color:#fff;background:linear-gradient(135deg,#7c3aed,#2563eb);border-color:transparent}
+    .button:hover{border-color:var(--accent-purple);transform:translateY(-2px)}
+    .status-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem;text-align:left}
+    .status{padding:1rem 1.1rem;border:1px solid var(--border);border-radius:13px;background:rgba(22,27,34,.72)}
+    .status b{display:block;font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem}
+    .status p{margin:0;color:var(--text-muted);font-size:.83rem;line-height:1.55}
+    .implemented b{color:#4ade80}.specified b{color:#fbbf24}.target b{color:#60a5fa}
+    .section{padding:4.5rem 0}.section.alt{background:var(--bg-elevated)}
+    .section-head{max-width:780px;margin-bottom:2rem}
+    .section-head h2{font-size:clamp(1.7rem,3vw,2.35rem);letter-spacing:-.03em;margin:.35rem 0 .65rem}
+    .section-head p{color:var(--text-muted);line-height:1.7;margin:0}
+    .architecture{display:grid;gap:1rem}
+    .lane{position:relative;border:1px solid var(--border);border-radius:17px;padding:1.2rem;background:var(--bg-card);overflow:hidden}
+    .lane::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--lane)}
+    .lane-head{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1rem}
+    .lane-number{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:color-mix(in srgb,var(--lane) 16%,transparent);color:var(--lane);font-weight:900}
+    .lane h3{margin:0 0 .25rem;font-size:1.05rem}.lane-head p{margin:0;color:var(--text-muted);font-size:.84rem;line-height:1.5}
+    .nodes{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
+    .node{padding:.85rem;border:1px solid var(--border);border-radius:11px;background:var(--bg-elevated);font-size:.78rem;line-height:1.45}
+    .node strong{display:block;color:var(--text);font-size:.84rem;margin-bottom:.2rem}.node span{color:var(--text-muted)}
+    .flow{display:grid;grid-template-columns:repeat(7,1fr);gap:.65rem;align-items:stretch}
+    .step{position:relative;padding:1rem .75rem;border:1px solid var(--border);border-radius:13px;background:var(--bg-card);min-height:150px}
+    .step:not(:last-child)::after{content:"";position:absolute;top:50%;right:-.66rem;width:.66rem;border-top:2px solid var(--accent-purple)}
+    .step b{display:block;color:var(--accent-cyan);font-size:.7rem;letter-spacing:.08em;margin-bottom:.55rem}.step h3{font-size:.92rem;margin:0 0 .45rem}.step p{font-size:.76rem;line-height:1.55;color:var(--text-muted);margin:0}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .card{display:block;padding:1.25rem;border:1px solid var(--border);border-radius:15px;background:var(--bg-card);text-decoration:none;transition:.2s}
+    .card:hover{border-color:var(--accent-purple);transform:translateY(-3px);box-shadow:var(--card-hover-shadow)}
+    .card .tag{display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-cyan);margin-bottom:.65rem}
+    .card h3{font-size:1rem;margin:0 0 .45rem}.card p{font-size:.82rem;line-height:1.6;color:var(--text-muted);margin:0}
+    .diagram{display:grid;grid-template-columns:1.4fr .6fr;gap:1rem;align-items:stretch}
+    .diagram-preview{display:block;padding:1rem;border:1px solid var(--border);border-radius:17px;background:#f7fbfc;text-decoration:none}
+    .diagram-preview img{display:block;width:100%;height:auto;border-radius:10px}
+    .principles{display:grid;gap:.7rem}
+    .principle{padding:1rem;border:1px solid var(--border);border-radius:13px;background:var(--bg-card)}
+    .principle strong{display:block;font-size:.88rem;margin-bottom:.3rem}.principle span{display:block;color:var(--text-muted);font-size:.78rem;line-height:1.5}
+    .callout{padding:1.2rem 1.35rem;border:1px solid rgba(251,191,36,.35);border-radius:14px;background:rgba(251,191,36,.07);color:var(--text-muted);line-height:1.65}
+    .callout strong{color:#fbbf24}
+    @media(max-width:1000px){.nodes{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(2,1fr)}.step:not(:last-child)::after{display:none}.grid{grid-template-columns:repeat(2,1fr)}.diagram{grid-template-columns:1fr}.status-strip{grid-template-columns:1fr}}
+    @media(max-width:640px){.hero{padding-top:6.5rem}.nodes,.flow,.grid{grid-template-columns:1fr}.section{padding:3.2rem 0}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
 </head>
 <body>
-
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="hero text-center">
-    <div class="container">
-      <div class="fade-up">
-        <div style="font-size:2.5rem;margin-bottom:.75rem">&#x1F3D7;&#xFE0F; &#x2601;&#xFE0F; &#x1F512;</div>
-        <h1>Cloud-Agnostic Architecture</h1>
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">ContextWeaver NextGen &middot; Architecture target</span>
+      <h1>Durable, governed AI services &mdash; not a synchronous chatbot chain</h1>
+      <p class="hero-copy">ContextWeaver accepts typed work, freezes an authorized execution plan, commits it to PostgreSQL, dispatches commands through RabbitMQ, and lets replaceable workers execute Agents, RAG, models, approvals, and MCP effects safely across pod failures.</p>
+      <div class="actions">
+        <a class="button primary" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html">Open the 18-page architecture viewer</a>
+        <a class="button" href="docs/documents/durable-asynchronous-execution.html">Read the execution specification</a>
+        <a class="button" href="docs/features/contextweaver-product-brochure.html">Explore the product story</a>
       </div>
-      <p class="lead fade-up fade-up-d1" style="font-size:1.35rem;font-weight:600;color:var(--text);margin-bottom:.5rem">Your Identity, Our Infrastructure, Zero Secrets</p>
-      <p class="subtitle fade-up fade-up-d2">One architecture that deploys identically on Azure, AWS, GCP, or on-prem. The application code never changes &mdash; only the platform bindings underneath.</p>
-      <div class="row g-3 justify-content-center mt-4 fade-up fade-up-d3" style="max-width:750px;margin:0 auto">
-        <div class="col-md-4">
-          <div class="card p-2 h-100" style="border-left:3px solid #0dcaf0;background:var(--bg-card)">
-            <h6 class="mb-1" style="color:#0dcaf0;font-size:.85rem">🧠 Cerebro</h6>
-            <p class="text-muted mb-0" style="font-size:.75rem">Runtime brain &mdash; dashboard, AI agent, MCP engine</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card p-2 h-100" style="border-left:3px solid #a78bfa;background:var(--bg-card)">
-            <h6 class="mb-1" style="color:#a78bfa;font-size:.85rem">🌐 Loom</h6>
-            <p class="text-muted mb-0" style="font-size:.75rem">Infrastructure &mdash; Terraform, Helm, K8s, monitoring</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card p-2 h-100" style="border-left:3px solid #198754;background:var(--bg-card)">
-            <h6 class="mb-1" style="color:#198754;font-size:.85rem">🧶 Weave</h6>
-            <p class="text-muted mb-0" style="font-size:.75rem">Plugins, connectors, RAG, scope cascade</p>
-          </div>
-        </div>
+      <div class="status-strip">
+        <div class="status implemented"><b>Implemented foundation</b><p>Local PostgreSQL, RabbitMQ, object storage, pgvector, registry, authentication foundation, metrics, logs, and branded platform shell.</p></div>
+        <div class="status specified"><b>Normative specification</b><p>Continuous authorization, inbox/outbox, leases, checkpoints, persistent HITL, capability admission, MCP isolation, and recovery behavior.</p></div>
+        <div class="status target"><b>Azure production target</b><p>Entra confidential BFF, private AKS, managed PostgreSQL, RabbitMQ, object storage, OpenBao/Vault, policy services, and governed gateways.</p></div>
       </div>
     </div>
-  </section>
+  </header>
 
-  <!-- ═══════════════ SECTION 1: CUSTOMER / PLATFORM PROVIDER MODEL ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title fade-up"><i class="bi bi-building me-2"></i>The Customer / Platform Provider Model</h2>
-        <p class="section-subtitle fade-up fade-up-d1">Identity and infrastructure are completely separated. Nothing crosses the boundary except a signed JWT.</p>
+  <main>
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Platform planes</span><h2>One platform, separated by durable and security boundaries</h2><p>The architecture scales each responsibility independently. Browser sessions and Kubernetes pods never own a run.</p></div>
+        <div class="architecture">
+          <article class="lane" style="--lane:#a78bfa"><div class="lane-head"><div class="lane-number">1</div><div><h3>Experience and edge</h3><p>REST APIs and conversational interfaces authenticate users, validate requests, and return a durable run identifier.</p></div></div><div class="nodes"><div class="node"><strong>Web / chat / API</strong><span>Prompt-to-result, uploads, run graph, citations, approvals.</span></div><div class="node"><strong>Entra BFF</strong><span>Authorization code + PKCE, opaque secure browser session.</span></div><div class="node"><strong>Edge API</strong><span>Schema, tenancy, idempotency, quotas, admission.</span></div><div class="node"><strong>Replayable SSE</strong><span>Ordered durable events with Last-Event-ID recovery.</span></div></div></article>
+          <article class="lane" style="--lane:#0dcaf0"><div class="lane-head"><div class="lane-number">2</div><div><h3>Governance and control plane</h3><p>Intent becomes a typed, immutable, fully authorized plan before execution begins.</p></div></div><div class="nodes"><div class="node"><strong>Service and workflow compiler</strong><span>DAG, contracts, bindings, versions, budgets.</span></div><div class="node"><strong>Entitlement + policy</strong><span>Whole-graph preflight and runtime per-action checks.</span></div><div class="node"><strong>Capability registry</strong><span>Services, Workflows, Agents, MCPs, schemas, health.</span></div><div class="node"><strong>Capability Operator</strong><span>Scanned, signed Helm releases and automatic discovery.</span></div></div></article>
+          <article class="lane" style="--lane:#4ade80"><div class="lane-head"><div class="lane-number">3</div><div><h3>Durable asynchronous backbone</h3><p>PostgreSQL owns truth. RabbitMQ transports commands and events. Workers acknowledge only after durable commit.</p></div></div><div class="nodes"><div class="node"><strong>PostgreSQL</strong><span>Runs, tasks, leases, timers, HITL, inbox/outbox, checkpoints, Saga, receipts.</span></div><div class="node"><strong>RabbitMQ quorum queues</strong><span>Persistent commands/events, confirms, retries, DLQ, redelivery.</span></div><div class="node"><strong>Coordinator + scheduler</strong><span>Ready sets, fan-out/fan-in, joins, cancellation, compensation.</span></div><div class="node"><strong>Artifact storage</strong><span>Immutable inputs, outputs, evidence, citations, large payloads.</span></div></div></article>
+          <article class="lane" style="--lane:#fbbf24"><div class="lane-head"><div class="lane-number">4</div><div><h3>Replaceable execution workers</h3><p>Workers lease one task, reauthorize it, checkpoint progress, and can be replaced by another pod.</p></div></div><div class="nodes"><div class="node"><strong>Agent workers</strong><span>RabbitMQ + Model Gateway only; no direct MCP, data, or internet route.</span></div><div class="node"><strong>MCP Gateway workers</strong><span>Policy enforcement, JIT token, provider idempotency, receipts.</span></div><div class="node"><strong>RAG workers</strong><span>Extraction, chunking, embedding, validation, publication, retrieval.</span></div><div class="node"><strong>HITL service</strong><span>Persist wait state, release worker, resume from an approval event.</span></div></div></article>
+          <article class="lane" style="--lane:#60a5fa"><div class="lane-head"><div class="lane-number">5</div><div><h3>Data, models, operations, and evidence</h3><p>Pluggable providers remain behind trusted gateways and production-grade telemetry.</p></div></div><div class="nodes"><div class="node"><strong>Model Gateway</strong><span>Approved models, redaction, policy, cost, residency, fallback.</span></div><div class="node"><strong>Governed RAG</strong><span>PostgreSQL FTS + pgvector first; distributed search when measured.</span></div><div class="node"><strong>Observability</strong><span>Prometheus, Grafana, Loki, OTLP traces, SLOs, audit correlation.</span></div><div class="node"><strong>Security services</strong><span>OpenBao/Vault, workload identity, policy decisions, immutable audit.</span></div></div></article>
+        </div>
       </div>
+    </section>
 
-      <div class="row g-4 justify-content-center">
-        <!-- Customer Identity -->
-        <div class="col-lg-5">
-          <div class="tenant-box block-purple fade-up fade-up-d1" style="min-height:280px">
-            <span class="tenant-label" style="background:rgba(167,139,250,0.25);color:var(--accent-purple)">Customer Identity</span>
-            <div class="mt-3">
-              <h5 class="fw-bold" style="color:var(--accent-purple)"><i class="bi bi-person-badge me-2"></i>Identity Provider</h5>
-              <p class="text-muted mb-3" style="font-size:.9rem">Users authenticate here. This tenant owns <strong>nothing</strong> except identity.</p>
-              <div class="mb-2">
-                <span class="feat-pill"><i class="bi bi-shield-lock me-1"></i>Entra ID</span>
-                <span class="feat-pill"><i class="bi bi-shield-lock me-1"></i>AWS Cognito</span>
-                <span class="feat-pill"><i class="bi bi-shield-lock me-1"></i>Okta</span>
-                <span class="feat-pill"><i class="bi bi-shield-lock me-1"></i>Keycloak</span>
-              </div>
-              <ul class="list-unstyled mb-0" style="font-size:.85rem">
-                <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>App Registration / OAuth Client</li>
-                <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>OIDC authorization code flow</li>
-                <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>JWT tokens with roles + groups</li>
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>MFA via Conditional Access (customer-controlled)</li>
-              </ul>
-            </div>
-          </div>
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Prompt to result</span><h2>The synchronous request ends after durable admission</h2><p>Everything after acceptance is resumable, observable, and independent of the browser or accepting API pod.</p></div>
+        <div class="flow">
+          <article class="step"><b>01 REQUEST</b><h3>Authenticate and validate</h3><p>Resolve tenant, principal, purpose, schema, and idempotency.</p></article>
+          <article class="step"><b>02 PLAN</b><h3>Compile and authorize</h3><p>Freeze the typed DAG, versions, capabilities, policy, and budgets.</p></article>
+          <article class="step"><b>03 COMMIT</b><h3>Create durable run</h3><p>Atomically persist run, plan, first tasks, and pending outbox.</p></article>
+          <article class="step"><b>04 ACCEPT</b><h3>Return HTTP 202</h3><p>Return runId, statusUrl, and eventsUrl after the commit succeeds.</p></article>
+          <article class="step"><b>05 DISPATCH</b><h3>Publish commands</h3><p>Confirmed outbox publishers send persistent RabbitMQ messages.</p></article>
+          <article class="step"><b>06 EXECUTE</b><h3>Lease and checkpoint</h3><p>Workers reauthorize, execute, commit outcomes, then acknowledge.</p></article>
+          <article class="step"><b>07 PROJECT</b><h3>Stream durable events</h3><p>Clients reconnect and replay progress, HITL, evidence, and results.</p></article>
         </div>
+      </div>
+    </section>
 
-        <!-- Arrow -->
-        <div class="col-lg-2 d-flex align-items-center justify-content-center fade-up fade-up-d2">
-          <div class="arrow-bridge">
-            <div style="font-size:2rem">&#x1F512;</div>
-            <div class="arrow-line">
-              <i class="bi bi-arrow-left-right me-1"></i>OIDC JWT Token
-            </div>
-            <div class="mt-2" style="font-size:.75rem;color:var(--text-muted)">The <strong>ONLY</strong> thing that crosses tenants</div>
-          </div>
-        </div>
-
-        <!-- Platform Provider Infrastructure -->
-        <div class="col-lg-5">
-          <div class="tenant-box block-cyan fade-up fade-up-d3" style="min-height:280px">
-            <span class="tenant-label" style="background:rgba(13,202,240,0.2);color:var(--accent-cyan)">Platform Provider Infrastructure</span>
-            <div class="mt-3">
-              <h5 class="fw-bold" style="color:var(--accent-cyan)"><i class="bi bi-hdd-rack me-2"></i>All Compute + Data</h5>
-              <p class="text-muted mb-3" style="font-size:.9rem">Every workload, every database, every secret lives here.</p>
-              <div class="mb-2">
-                <span class="feat-pill pill-cyan"><i class="bi bi-box me-1"></i>K8s Cluster</span>
-                <span class="feat-pill pill-cyan"><i class="bi bi-box-seam me-1"></i>Container Registry</span>
-                <span class="feat-pill pill-cyan"><i class="bi bi-key me-1"></i>Vault</span>
-              </div>
-              <ul class="list-unstyled mb-0" style="font-size:.85rem">
-                <li class="mb-1"><i class="bi bi-check-circle-fill text-info me-2"></i>LLM / AI endpoints</li>
-                <li class="mb-1"><i class="bi bi-check-circle-fill text-info me-2"></i>Vector search + database</li>
-                <li><i class="bi bi-check-circle-fill text-info me-2"></i>Secret vault + managed identity</li>
-              </ul>
-            </div>
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Visual reference</span><h2>See the complete asynchronous execution model</h2><p>The editable Draw.io source contains 13 architecture views, including production Azure topology, dynamic capability onboarding, authorization, recovery, RAG, and the Hello World approval PoC.</p></div>
+        <div class="diagram">
+          <a class="diagram-preview" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html"><img src="docs/diagram-viewer/contextweaver-nextgen-architecture/12-durable-async-execution.svg" alt="Durable asynchronous ContextWeaver execution architecture"></a>
+          <div class="principles">
+            <div class="principle"><strong>No pod owns the run</strong><span>Expired leases or unacknowledged messages allow another healthy worker to continue.</span></div>
+            <div class="principle"><strong>Agents never possess credentials</strong><span>Trusted gateways obtain short-lived delegated authority only after runtime policy.</span></div>
+            <div class="principle"><strong>At-least-once transport, effectively-once behavior</strong><span>Inbox deduplication, idempotent transitions, receipts, and reconciliation protect business effects.</span></div>
+            <div class="principle"><strong>HITL is durable state</strong><span>An approval pauses the run without holding a thread, process, queue consumer, or pod.</span></div>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Emphasis callout -->
-      <div class="row justify-content-center mt-4">
-        <div class="col-lg-10">
-          <div class="block block-red text-center fade-up fade-up-d4" style="border-style:dashed">
-            <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>
-            <strong>Users NEVER access BrainzBytes infrastructure directly.</strong> Infrastructure NEVER stores user passwords.
-            The JWT is validated on every request &mdash; if it's invalid, access is denied at the ingress.
-          </div>
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Architecture library</span><h2>Drill into each governed capability</h2><p>These pages are generated from the curated NextGen specifications rather than the retired synchronous implementation diagrams.</p></div>
+        <div class="grid">
+          <a class="card" href="docs/documents/azure-production-platform-and-poc.html"><span class="tag">Production target</span><h3>Azure platform and end-to-end PoC</h3><p>Entra ID, private AKS, control and execution planes, dynamic Helm capabilities, RAG, HITL, and recovery.</p></a>
+          <a class="card" href="docs/documents/durable-asynchronous-execution.html"><span class="tag">Execution</span><h3>Durable asynchronous runtime</h3><p>Commands, events, inbox/outbox, leases, checkpoints, retries, compensation, and replayable SSE.</p></a>
+          <a class="card" href="docs/documents/continuous-entitlement-enforcement.html"><span class="tag">Authorization</span><h3>Continuous entitlement enforcement</h3><p>Request-time whole-graph authorization plus runtime enforcement before every protected action.</p></a>
+          <a class="card" href="docs/documents/dynamic-agent-mcp-lifecycle.html"><span class="tag">Control plane</span><h3>Dynamic Agent and MCP lifecycle</h3><p>Specification, scanning, signing, approval, Helm reconciliation, discovery, metrics, dashboards, and rollback.</p></a>
+          <a class="card" href="docs/documents/governed-rag-ingestion.html"><span class="tag">Knowledge</span><h3>Governed asynchronous RAG</h3><p>Source reconciliation, durable stages, shadow generations, atomic publication, authorization-first retrieval.</p></a>
+          <a class="card" href="docs/documents/agent-sandbox-security.html"><span class="tag">Isolation</span><h3>Agent sandbox security</h3><p>Only RabbitMQ and Model Gateway egress; no direct MCP, database, storage, Kubernetes, metadata, or internet route.</p></a>
+          <a class="card" href="architecture-azure.html"><span class="tag">Cloud profile</span><h3>Azure production mapping</h3><p>Map the cloud-neutral planes to Entra, AKS, PostgreSQL, RabbitMQ, storage, Key Vault/OpenBao, and private networking.</p></a>
+          <a class="card" href="architecture-aws.html"><span class="tag">Cloud profile</span><h3>AWS portability mapping</h3><p>Equivalent Kubernetes, identity, relational, broker, object, secrets, model, and observability bindings.</p></a>
+          <a class="card" href="architecture-gcp.html"><span class="tag">Cloud profile</span><h3>Google Cloud portability mapping</h3><p>Equivalent GKE, identity, PostgreSQL, broker, object, secrets, model, and operations bindings.</p></a>
         </div>
+        <div class="callout" style="margin-top:1.5rem"><strong>Architecture status matters.</strong> This site distinguishes implemented foundations, normative specifications, proof-of-concept scope, and production targets. A documented capability is not automatically a currently deployed capability.</div>
       </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ SECTION 2: CONSTANT APPLICATION LAYER ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title fade-up"><i class="bi bi-layers me-2"></i>🧠 Cerebro &mdash; The Constant Application Layer</h2>
-        <p class="section-subtitle fade-up fade-up-d1">These two pods are <strong>always the same</strong> regardless of which cloud you deploy to.</p>
-      </div>
-
-      <div class="row g-4 justify-content-center">
-        <!-- cerebro-app -->
-        <div class="col-lg-5">
-          <div class="pod-box pod-cerebro fade-up fade-up-d1">
-            <div class="pod-label" style="color:var(--accent-purple)">Pod 1</div>
-            <h5 class="fw-bold mb-1"><i class="bi bi-cpu me-2" style="color:var(--accent-purple)"></i>cerebro-app</h5>
-            <p class="text-muted mb-3" style="font-size:.85rem">Flask application &bull; Port <code>5080</code></p>
-            <ul class="list-unstyled mb-3" style="font-size:.85rem">
-              <li class="mb-2"><i class="bi bi-robot text-info me-2"></i><strong>AI Hub</strong> &mdash; LLM orchestration, RAG pipeline</li>
-              <li class="mb-2"><i class="bi bi-palette text-info me-2"></i><strong>Designer</strong> &mdash; Plugin builder, connector config</li>
-              <li class="mb-2"><i class="bi bi-diagram-3 text-info me-2"></i><strong>Agent</strong> &mdash; Agentic reasoning loop</li>
-              <li><i class="bi bi-shield-lock text-info me-2"></i><strong>OIDC</strong> &mdash; Token validation, session management</li>
-            </ul>
-            <div class="d-flex align-items-center gap-2" style="font-size:.8rem">
-              <span class="badge bg-success">2/2</span>
-              <span class="text-muted">app container + istio-proxy sidecar</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- mcp-engine -->
-        <div class="col-lg-5">
-          <div class="pod-box pod-mcp fade-up fade-up-d2">
-            <div class="pod-label" style="color:var(--accent-cyan)">Pod 2</div>
-            <h5 class="fw-bold mb-1"><i class="bi bi-gear-wide-connected me-2" style="color:var(--accent-cyan)"></i>mcp-engine</h5>
-            <p class="text-muted mb-3" style="font-size:.85rem">FastMCP server &bull; Dashboard <code>:5000</code> &bull; MCP <code>:5001</code></p>
-            <ul class="list-unstyled mb-3" style="font-size:.85rem">
-              <li class="mb-2"><i class="bi bi-tools text-info me-2"></i><strong>33+ MCP Tools</strong> from loaded plugins</li>
-              <li class="mb-2"><i class="bi bi-plug text-info me-2"></i><strong>Plugin Runtime</strong> &mdash; Hot-reload, scoped access</li>
-              <li class="mb-2"><i class="bi bi-speedometer2 text-info me-2"></i><strong>Dashboard</strong> &mdash; Tool inspection, health check</li>
-              <li><i class="bi bi-key text-info me-2"></i><strong>Vault Client</strong> &mdash; Credential resolution</li>
-            </ul>
-            <div class="d-flex align-items-center gap-2" style="font-size:.8rem">
-              <span class="badge bg-success">2/2</span>
-              <span class="text-muted">engine container + istio-proxy sidecar</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- mTLS callout -->
-      <div class="row justify-content-center mt-3">
-        <div class="col-lg-10">
-          <div class="text-center fade-up fade-up-d3">
-            <div style="font-size:1.2rem;color:rgba(255,255,255,0.3)">&#x1F503;</div>
-            <span class="sec-badge"><i class="bi bi-shield-lock-fill"></i> Istio / service mesh mTLS between all pods</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ SECTION 2.5: CURRENT AKS TOPOLOGY ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title fade-up"><i class="bi bi-diagram-3 me-2"></i>🏗️ Current AKS Production Topology</h2>
-        <p class="section-subtitle fade-up fade-up-d1"><strong>contextweaver-aks</strong> — 2–6 nodes (Standard_D4ds_v5) with Cluster Autoscaler + HPA</p>
-      </div>
-
-      <!-- Namespace cards -->
-      <div class="row g-3">
-        <!-- cerebro namespace -->
-        <div class="col-lg-6 fade-up fade-up-d1">
-          <div class="card p-3 h-100" style="border-left:4px solid var(--accent-purple)">
-            <h6 class="fw-bold mb-2" style="color:var(--accent-purple)"><i class="bi bi-box me-2"></i>cerebro namespace</h6>
-            <ul class="list-unstyled mb-0" style="font-size:.85rem;line-height:2">
-              <li><i class="bi bi-cpu text-info me-2"></i><strong>cerebro-app</strong> — Flask backend <span class="badge bg-secondary">2–8 replicas (HPA)</span></li>
-              <li><i class="bi bi-window text-info me-2"></i><strong>contextweaver-frontend</strong> — React SPA <span class="badge bg-secondary">2–5 replicas (HPA)</span></li>
-              <li><i class="bi bi-database text-danger me-2"></i><strong>Valkey</strong> — Redis-compatible (sessions, rate limiting)</li>
-              <li><i class="bi bi-code-slash text-info me-2"></i><strong>code-server</strong> — Standalone workspace (data source)</li>
-              <li><i class="bi bi-gear text-muted me-2"></i>ConfigMaps + Secrets (tokens, config)</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- workspaces namespace -->
-        <div class="col-lg-6 fade-up fade-up-d2">
-          <div class="card p-3 h-100" style="border-left:4px solid var(--accent-cyan)">
-            <h6 class="fw-bold mb-2" style="color:var(--accent-cyan)"><i class="bi bi-person-workspace me-2"></i>workspaces namespace</h6>
-            <ul class="list-unstyled mb-0" style="font-size:.85rem;line-height:2">
-              <li><i class="bi bi-person-fill text-info me-2"></i><strong>ws-{username}</strong> — Per-user code-server 4.115.0</li>
-              <li><i class="bi bi-hdd text-info me-2"></i>Azure Disk PVC per user (ext4, persistent)</li>
-              <li><i class="bi bi-terminal text-info me-2"></i>zsh + Oh-My-Zsh + kubectl/helm autocomplete</li>
-              <li><i class="bi bi-tools text-info me-2"></i>Copilot CLI, Node.js 20, Claude Code pre-installed</li>
-              <li><i class="bi bi-memory text-muted me-2"></i>4 cores / 4Gi per workspace pod</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- jupyterhub namespace -->
-        <div class="col-lg-6 fade-up fade-up-d3">
-          <div class="card p-3 h-100" style="border-left:4px solid var(--green)">
-            <h6 class="fw-bold mb-2" style="color:var(--green)"><i class="bi bi-journal-code me-2"></i>jupyterhub namespace</h6>
-            <ul class="list-unstyled mb-0" style="font-size:.85rem;line-height:2">
-              <li><i class="bi bi-server text-info me-2"></i><strong>JupyterHub</strong> — Multi-user notebook server</li>
-              <li><i class="bi bi-person-fill text-info me-2"></i><strong>jupyter-{username}</strong> — Per-user notebook pods</li>
-              <li><i class="bi bi-shield-lock text-info me-2"></i>Entra ID authentication</li>
-              <li><i class="bi bi-terminal text-info me-2"></i>Custom zsh prompts with username</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- monitoring namespace -->
-        <div class="col-lg-3 fade-up fade-up-d4">
-          <div class="card p-3 h-100" style="border-left:4px solid var(--amber)">
-            <h6 class="fw-bold mb-2" style="color:var(--amber)"><i class="bi bi-graph-up me-2"></i>monitoring</h6>
-            <ul class="list-unstyled mb-0" style="font-size:.82rem;line-height:2">
-              <li><i class="bi bi-speedometer2 text-info me-1"></i>Prometheus</li>
-              <li><i class="bi bi-bar-chart text-info me-1"></i>Grafana</li>
-              <li><i class="bi bi-journal-text text-info me-1"></i>Loki + Promtail</li>
-              <li><i class="bi bi-bell text-info me-1"></i>Alertmanager</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- ingress-nginx namespace -->
-        <div class="col-lg-3 fade-up fade-up-d5">
-          <div class="card p-3 h-100" style="border-left:4px solid var(--red)">
-            <h6 class="fw-bold mb-2" style="color:var(--red)"><i class="bi bi-shield-lock me-2"></i>ingress-nginx</h6>
-            <ul class="list-unstyled mb-0" style="font-size:.82rem;line-height:2">
-              <li><i class="bi bi-globe text-info me-1"></i>NGINX Ingress Controller</li>
-              <li><i class="bi bi-lock text-info me-1"></i>TLS termination</li>
-              <li><i class="bi bi-arrow-left-right text-info me-1"></i>SSL redirect</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scaling badges -->
-      <div class="row justify-content-center mt-4">
-        <div class="col-lg-10">
-          <div class="text-center fade-up fade-up-d6">
-            <span class="sec-badge"><i class="bi bi-arrow-up-circle-fill"></i> Cluster Autoscaler: 2–6 nodes</span>
-            <span class="sec-badge"><i class="bi bi-layers-fill"></i> HPA: cerebro-app 2–8, frontend 2–5</span>
-            <span class="sec-badge"><i class="bi bi-database-fill"></i> Valkey: sessions + rate limiting</span>
-            <span class="sec-badge"><i class="bi bi-shield-lock-fill"></i> 20 req/min per-user rate limit</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ SECTION 3: REPLACEABLE PLATFORM LAYER ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title fade-up"><i class="bi bi-arrow-repeat me-2"></i>🌐 Loom &mdash; The Replaceable Platform Layer</h2>
-        <p class="section-subtitle fade-up fade-up-d1">Six swappable backend categories. Application code stays <strong>THE SAME</strong> &mdash; only config changes.</p>
-      </div>
-
-      <div class="row g-3">
-        <!-- LLM Provider -->
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d1">
-          <div class="swap-card" style="border-top-color:var(--accent-purple)">
-            <h6 style="color:var(--accent-purple)"><i class="bi bi-cpu-fill me-2"></i>LLM Provider</h6>
-            <div class="options">
-              <i class="bi bi-check2 text-success me-1"></i>Azure OpenAI<br>
-              <i class="bi bi-check2 text-success me-1"></i>Amazon Bedrock<br>
-              <i class="bi bi-check2 text-success me-1"></i>Google Vertex AI<br>
-              <i class="bi bi-check2 text-success me-1"></i>Ollama (local)
-            </div>
-          </div>
-        </div>
-
-        <!-- Vector Search -->
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d2">
-          <div class="swap-card" style="border-top-color:#0d6efd">
-            <h6 style="color:#0d6efd"><i class="bi bi-search me-2"></i>Vector Search</h6>
-            <div class="options">
-              <i class="bi bi-check2 text-success me-1"></i>Azure AI Search<br>
-              <i class="bi bi-check2 text-success me-1"></i>Amazon OpenSearch<br>
-              <i class="bi bi-check2 text-success me-1"></i>Elasticsearch<br>
-              <i class="bi bi-check2 text-success me-1"></i>ChromaDB (local)
-            </div>
-          </div>
-        </div>
-
-        <!-- Database -->
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d3">
-          <div class="swap-card" style="border-top-color:var(--accent-cyan)">
-            <h6 style="color:var(--accent-cyan)"><i class="bi bi-database me-2"></i>Database</h6>
-            <div class="options">
-              <i class="bi bi-check2 text-success me-1"></i>Azure Cosmos DB<br>
-              <i class="bi bi-check2 text-success me-1"></i>Amazon DynamoDB<br>
-              <i class="bi bi-check2 text-success me-1"></i>MongoDB<br>
-              <i class="bi bi-check2 text-success me-1"></i>PostgreSQL
-            </div>
-          </div>
-        </div>
-
-        <!-- Secret Vault -->
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d4">
-          <div class="swap-card" style="border-top-color:var(--red)">
-            <h6 style="color:var(--red)"><i class="bi bi-key-fill me-2"></i>Secret Vault</h6>
-            <div class="options">
-              <i class="bi bi-check2 text-success me-1"></i>Azure Key Vault<br>
-              <i class="bi bi-check2 text-success me-1"></i>AWS Secrets Manager<br>
-              <i class="bi bi-check2 text-success me-1"></i>HashiCorp Vault<br>
-              <i class="bi bi-check2 text-success me-1"></i>GCP Secret Manager
-            </div>
-          </div>
-        </div>
-
-        <!-- Auth / SSO -->
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d5">
-          <div class="swap-card" style="border-top-color:var(--amber)">
-            <h6 style="color:var(--amber)"><i class="bi bi-person-lock me-2"></i>Auth / SSO</h6>
-            <div class="options">
-              <i class="bi bi-check2 text-success me-1"></i>Entra ID<br>
-              <i class="bi bi-check2 text-success me-1"></i>AWS Cognito<br>
-              <i class="bi bi-check2 text-success me-1"></i>Google Identity<br>
-              <i class="bi bi-check2 text-success me-1"></i>Okta / Keycloak
-            </div>
-          </div>
-        </div>
-
-        <!-- Container Infra -->
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d6">
-          <div class="swap-card" style="border-top-color:var(--green)">
-            <h6 style="color:var(--green)"><i class="bi bi-box-seam me-2"></i>Container Infra</h6>
-            <div class="options">
-              <i class="bi bi-check2 text-success me-1"></i>AKS (Azure)<br>
-              <i class="bi bi-check2 text-success me-1"></i>EKS (AWS)<br>
-              <i class="bi bi-check2 text-success me-1"></i>GKE (Google)<br>
-              <i class="bi bi-check2 text-success me-1"></i>Docker Desktop (local)
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Code stays the same callout -->
-      <div class="row justify-content-center mt-4">
-        <div class="col-lg-8">
-          <div class="block block-green text-center fade-up" style="border-style:dashed">
-            <i class="bi bi-code-square me-2" style="color:var(--green)"></i>
-            <strong>Application code stays THE SAME.</strong> Switch from Azure to AWS by changing
-            <code>config.yaml</code> &mdash; zero code modifications required.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ SECTION: CUSTOMER ISOLATION ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title fade-up"><i class="bi bi-building-lock me-2"></i>Customer Isolation &mdash; One Platform, Complete Separation</h2>
-        <p class="section-subtitle fade-up fade-up-d1">Multiple customers share the same infrastructure while having <strong>complete data and resource isolation</strong>.</p>
-      </div>
-
-      <!-- How It Works -->
-      <h5 class="fw-bold mb-3 fade-up" style="color:var(--accent-cyan)"><i class="bi bi-diagram-3 me-2"></i>How It Works</h5>
-      <div class="row g-3 mb-4">
-        <div class="col-md-4 fade-up fade-up-d1">
-          <div class="block block-purple" style="height:100%">
-            <h6 class="fw-bold mb-2" style="color:var(--accent-purple)">&#x1F3E2; Customer A &mdash; Acme Corp</h6>
-            <div class="text-muted" style="font-size:.82rem;line-height:1.8">
-              <code>acme.brainzbytes.com</code><br>
-              Namespace: <code>acme</code><br>
-              Key Vault: <code>acme-kv</code><br>
-              Database: <code>acme-db</code><br>
-              Search: <code>acme-search</code><br>
-              Managed Identity: <code>acme-mi</code><br>
-              <span class="role-pill mt-1">&#x1F512; accesses ONLY acme resources</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 fade-up fade-up-d2">
-          <div class="block block-cyan" style="height:100%">
-            <h6 class="fw-bold mb-2" style="color:var(--accent-cyan)">&#x1F3ED; Customer B &mdash; MegaCorp</h6>
-            <div class="text-muted" style="font-size:.82rem;line-height:1.8">
-              <code>mega.brainzbytes.com</code><br>
-              Namespace: <code>megacorp</code><br>
-              Key Vault: <code>mega-kv</code><br>
-              Database: <code>mega-db</code><br>
-              Search: <code>mega-search</code><br>
-              Managed Identity: <code>mega-mi</code><br>
-              <span class="role-pill mt-1">&#x1F6E1;&#xFE0F; completely separate</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 fade-up fade-up-d3">
-          <div class="block block-green" style="height:100%">
-            <h6 class="fw-bold mb-2" style="color:var(--green)">&#x1F680; Customer C &mdash; StartupXYZ</h6>
-            <div class="text-muted" style="font-size:.82rem;line-height:1.8">
-              <code>startup.brainzbytes.com</code><br>
-              Namespace: <code>startupxyz</code><br>
-              Key Vault: <code>startup-kv</code><br>
-              Database: <code>startup-db</code><br>
-              Search: <code>startup-search</code><br>
-              Managed Identity: <code>startup-mi</code><br>
-              <span class="role-pill mt-1">&#x2705; same pattern, fully isolated</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="block block-blue text-center mb-5 fade-up fade-up-d4" style="padding:1rem 1.5rem">
-        <strong style="color:var(--accent)">&#x2699;&#xFE0F; Shared Layer:</strong>
-        <span class="text-muted" style="font-size:.88rem"> BrainzBytes Platform &mdash; ACR Images &bull; Connector Marketplace &bull; Control Plane</span>
-      </div>
-
-      <!-- 4 Layers of Isolation -->
-      <h5 class="fw-bold mb-3 fade-up" style="color:var(--accent-cyan)"><i class="bi bi-layers me-2"></i>4 Layers of Isolation</h5>
-      <div class="row g-3 mb-5">
-        <div class="col-md-6 col-lg-3 fade-up fade-up-d1">
-          <div class="block block-green" style="height:100%">
-            <h6 class="fw-bold mb-2"><span style="color:var(--green)">&#x1F310; 1. Namespace Isolation</span></h6>
-            <p class="text-muted mb-0" style="font-size:.82rem">K8s <strong>NetworkPolicy</strong>: Customer&nbsp;A pods can <strong>ONLY</strong> talk to Customer&nbsp;A services. Istio <code>AuthorizationPolicy</code> enforces pod-to-pod auth.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 fade-up fade-up-d2">
-          <div class="block block-purple" style="height:100%">
-            <h6 class="fw-bold mb-2"><span style="color:var(--accent-purple)">&#x1F464; 2. Identity Isolation</span></h6>
-            <p class="text-muted mb-0" style="font-size:.82rem">Each customer has own <strong>Managed Identity</strong> (<code>acme-mi</code>). <code>acme-mi</code> can <strong>ONLY</strong> access <code>acme-kv</code>, <code>acme-db</code>, <code>acme-search</code>. Cannot touch <code>mega-kv</code>.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 fade-up fade-up-d3">
-          <div class="block block-red" style="height:100%">
-            <h6 class="fw-bold mb-2"><span style="color:var(--red)">&#x1F5C4;&#xFE0F; 3. Data Isolation</span></h6>
-            <p class="text-muted mb-0" style="font-size:.82rem">Separate <strong>Key Vault</strong> (credentials never mix). Separate <strong>Database</strong> (plugins, state, connectors). Separate <strong>Search indexes</strong> (RAG data never crosses).</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 fade-up fade-up-d4">
-          <div class="block block-cyan" style="height:100%">
-            <h6 class="fw-bold mb-2"><span style="color:var(--accent-cyan)">&#x1F6E1;&#xFE0F; 4. Network Isolation</span></h6>
-            <p class="text-muted mb-0" style="font-size:.82rem">Istio <strong>mTLS</strong> encrypts all pod-to-pod traffic. No cross-namespace traffic allowed. App Gateway routes by hostname to correct namespace.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- What Each Customer Sees -->
-      <h5 class="fw-bold mb-3 fade-up" style="color:var(--accent-cyan)"><i class="bi bi-person-workspace me-2"></i>What Each Customer Sees</h5>
-      <div class="block block-purple mb-5 fade-up fade-up-d1" style="max-width:700px;margin-left:auto;margin-right:auto">
-        <div class="row g-2">
-          <div class="col-sm-6">
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;margin-bottom:.5rem">
-              <strong style="font-size:.85rem">&#x1F4AC; AI Hub</strong>
-              <div class="text-muted" style="font-size:.78rem">Chat with YOUR connectors only</div>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;margin-bottom:.5rem">
-              <strong style="font-size:.85rem">&#x1F9E9; My Plugins</strong>
-              <div class="text-muted" style="font-size:.78rem">Only plugins YOUR org subscribed to</div>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;margin-bottom:.5rem">
-              <strong style="font-size:.85rem">&#x1F511; My Credentials</strong>
-              <div class="text-muted" style="font-size:.78rem">YOUR vault &mdash; YOUR Stripe, Gmail, Jira keys</div>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;margin-bottom:.5rem">
-              <strong style="font-size:.85rem">&#x2699;&#xFE0F; MCP Engines</strong>
-              <div class="text-muted" style="font-size:.78rem">YOUR engine instances only</div>
-            </div>
-          </div>
-        </div>
-        <p class="text-center text-muted mb-0 mt-2" style="font-size:.82rem;font-style:italic">&#x1F6E1;&#xFE0F; You never see other customers. They never see you.</p>
-      </div>
-
-      <!-- Onboarding a New Customer -->
-      <h5 class="fw-bold mb-3 fade-up" style="color:var(--accent-cyan)"><i class="bi bi-rocket-takeoff me-2"></i>Onboarding a New Customer</h5>
-      <div class="row g-3 mb-5">
-        <div class="col-lg-2 col-md-4 col-6 fade-up fade-up-d1">
-          <div class="block block-blue text-center" style="height:100%">
-            <div style="font-size:1.5rem;margin-bottom:.25rem">&#x1F4DD;</div>
-            <h6 class="fw-bold" style="font-size:.8rem">1. Sign Up</h6>
-            <p class="text-muted mb-0" style="font-size:.75rem">Customer signs up at brainzbytes.com</p>
-          </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-6 fade-up fade-up-d2">
-          <div class="block block-cyan text-center" style="height:100%">
-            <div style="font-size:1.5rem;margin-bottom:.25rem">&#x2699;&#xFE0F;</div>
-            <h6 class="fw-bold" style="font-size:.8rem">2. Provision</h6>
-            <p class="text-muted mb-0" style="font-size:.75rem">Control Plane creates isolated namespace + resources (~5 min)</p>
-          </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-6 fade-up fade-up-d3">
-          <div class="block block-purple text-center" style="height:100%">
-            <div style="font-size:1.5rem;margin-bottom:.25rem">&#x1F511;</div>
-            <h6 class="fw-bold" style="font-size:.8rem">3. Connect IdP</h6>
-            <p class="text-muted mb-0" style="font-size:.75rem">Connect identity provider (Entra / Okta / Cognito)</p>
-          </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-6 fade-up fade-up-d4">
-          <div class="block block-green text-center" style="height:100%">
-            <div style="font-size:1.5rem;margin-bottom:.25rem">&#x1F9E9;</div>
-            <h6 class="fw-bold" style="font-size:.8rem">4. Select Plugins</h6>
-            <p class="text-muted mb-0" style="font-size:.75rem">Choose plugins from the Connector Marketplace</p>
-          </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-6 fade-up fade-up-d5">
-          <div class="block block-red text-center" style="height:100%">
-            <div style="font-size:1.5rem;margin-bottom:.25rem">&#x1F510;</div>
-            <h6 class="fw-bold" style="font-size:.8rem">5. Credentials</h6>
-            <p class="text-muted mb-0" style="font-size:.75rem">Configure credentials via My Credentials vault</p>
-          </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-6 fade-up fade-up-d6">
-          <div class="block block-amber text-center" style="height:100%">
-            <div style="font-size:1.5rem;margin-bottom:.25rem">&#x1F389;</div>
-            <h6 class="fw-bold" style="font-size:.8rem">6. Done!</h6>
-            <p class="text-muted mb-0" style="font-size:.75rem">Team logs in and starts using AI immediately</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Economics -->
-      <h5 class="fw-bold mb-3 fade-up" style="color:var(--accent-cyan)"><i class="bi bi-graph-up-arrow me-2"></i>Economics</h5>
-      <div class="fade-up fade-up-d1" style="max-width:420px;margin:0 auto">
-        <table style="width:100%;border-collapse:separate;border-spacing:0;border-radius:12px;overflow:hidden;border:1px solid var(--border)">
-          <tr style="background:var(--bg-card)">
-            <td style="padding:.65rem 1rem;font-size:.85rem;font-weight:600;border-bottom:1px solid var(--border)">&#x1F4B0; Per-Customer Cost</td>
-            <td style="padding:.65rem 1rem;font-size:.85rem;text-align:right;color:var(--accent-cyan);font-weight:700;border-bottom:1px solid var(--border)">~$60&ndash;75/mo</td>
-          </tr>
-          <tr style="background:var(--bg-elevated)">
-            <td style="padding:.65rem 1rem;font-size:.85rem;font-weight:600;border-bottom:1px solid var(--border)">&#x1F4B5; Revenue (10 users &times; $99)</td>
-            <td style="padding:.65rem 1rem;font-size:.85rem;text-align:right;color:var(--green);font-weight:700;border-bottom:1px solid var(--border)">~$990/mo</td>
-          </tr>
-          <tr style="background:var(--bg-card)">
-            <td style="padding:.65rem 1rem;font-size:.85rem;font-weight:600">&#x1F4C8; Margin</td>
-            <td style="padding:.65rem 1rem;font-size:.85rem;text-align:right;color:var(--green);font-weight:700">92%+</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ SECTION 4: SECURITY PRINCIPLES ═══════════════ -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title fade-up"><i class="bi bi-shield-check me-2"></i>🧠 Cerebro &mdash; Security Principles</h2>
-        <p class="section-subtitle fade-up fade-up-d1">These apply to <strong>ALL</strong> cloud deployments &mdash; non-negotiable.</p>
-      </div>
-
-      <div class="row g-3 justify-content-center">
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d1">
-          <div class="block block-red" style="height:100%">
-            <h6 class="fw-bold mb-2"><i class="bi bi-fingerprint text-danger me-2"></i>Workload Identity</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">Azure Workload Identity / AWS IRSA / GCP Workload Identity Federation &mdash; <strong>zero secrets in pods</strong>. Pods authenticate via platform-native identity, never API keys.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d2">
-          <div class="block block-red" style="height:100%">
-            <h6 class="fw-bold mb-2"><i class="bi bi-shield-lock text-danger me-2"></i>mTLS Between Pods</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">Istio / service mesh encrypts all pod-to-pod traffic with mutual TLS. No unencrypted internal communication.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d3">
-          <div class="block block-red" style="height:100%">
-            <h6 class="fw-bold mb-2"><i class="bi bi-globe2 text-danger me-2"></i>HTTPS Ingress + WAF</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">App Gateway / ALB / Cloud Load Balancer with WAF. All external traffic is TLS-terminated with managed certificates.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d4">
-          <div class="block block-red" style="height:100%">
-            <h6 class="fw-bold mb-2"><i class="bi bi-key text-danger me-2"></i>Vault-Backed Credentials</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">Connector credentials are <strong>never in environment variables</strong>. They're resolved at runtime from the vault with per-request authentication.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d5">
-          <div class="block block-red" style="height:100%">
-            <h6 class="fw-bold mb-2"><i class="bi bi-person-lock text-danger me-2"></i>Per-User Isolation</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">Vault cascade: <code>user &rarr; group &rarr; org</code>. Each user's credentials are isolated. No lateral access.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d6">
-          <div class="block block-red" style="height:100%">
-            <h6 class="fw-bold mb-2"><i class="bi bi-phone-lock text-danger me-2"></i>Two-Tier MFA</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">Customer login via Entra Conditional Access MFA. Provider admin access requires MFA. Runtime uses Managed Identity (X.509 certs) &mdash; stronger than password+MFA.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 fade-up fade-up-d6">
-          <div class="block block-red" style="height:100%">
-            <h6 class="fw-bold mb-2"><i class="bi bi-credit-card text-danger me-2"></i>No Card Data on Platform</h6>
-            <p class="text-muted mb-0" style="font-size:.85rem">Card data never touches the platform. Stripe Checkout handles PCI compliance &mdash; we only store Stripe tokens.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- RAG policy callout -->
-      <div class="row justify-content-center mt-3">
-        <div class="col-lg-8 fade-up">
-          <div class="block block-blue text-center">
-            <i class="bi bi-file-earmark-lock2 me-2" style="color:#0d6efd"></i>
-            <strong>RAG Policy Enforcement</strong> at org / group / user levels &mdash; AI responses are governed by scoped policies ingested from documents, URLs, wikis, and databases.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ SECTION: VISUAL DESIGNER ARCHITECTURE ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title fade-up"><i class="bi bi-palette me-2"></i>🧶 Weave &mdash; Visual Designer Architecture</h2>
-        <p class="section-subtitle fade-up fade-up-d1">An interactive SVG canvas for designing, configuring, and deploying MCP engine topologies &mdash; entirely no-code</p>
-      </div>
-
-      <div class="row g-4">
-        <!-- Frontend -->
-        <div class="col-md-6 fade-up fade-up-d1">
-          <div class="card h-100 p-3" style="border-left:3px solid #a78bfa">
-            <h5 style="color:#a78bfa"><i class="bi bi-window-desktop me-1"></i> Frontend &mdash; SVG Canvas</h5>
-            <ul class="mb-0" style="font-size:.85rem;line-height:1.9;color:var(--text-muted)">
-              <li>Pure SVG canvas rendered in <code>app.js</code> (~2,000 lines)</li>
-              <li>Drag-and-drop engine nodes, plugin cards, connector slots, and source groups</li>
-              <li>Inline toggles for plugin enable/disable and security settings</li>
-              <li>Real-time tooltips on every interactive element for self-documenting UX</li>
-              <li>No external canvas library &mdash; lightweight, zero dependencies</li>
-            </ul>
-          </div>
-        </div>
-        <!-- State Model -->
-        <div class="col-md-6 fade-up fade-up-d2">
-          <div class="card h-100 p-3" style="border-left:3px solid #0dcaf0">
-            <h5 style="color:#0dcaf0"><i class="bi bi-database me-1"></i> State Model</h5>
-            <ul class="mb-0" style="font-size:.85rem;line-height:1.9;color:var(--text-muted)">
-              <li><code>_vdEngines[]</code> &mdash; array of engine objects with plugins, connectors, sources</li>
-              <li>Each engine holds its own plugin list, connector configurations, and source mappings</li>
-              <li>Connector credentials reference vault paths &mdash; never stored in client state</li>
-              <li>Sources grouped by scope level (User, Group, Org) within each plugin</li>
-              <li>Full state serializable to JSON for blueprint save/load</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Backend API -->
-        <div class="col-md-6 fade-up fade-up-d3">
-          <div class="card h-100 p-3" style="border-left:3px solid #198754">
-            <h5 style="color:#198754"><i class="bi bi-hdd-rack me-1"></i> Backend &mdash; API Endpoints</h5>
-            <ul class="mb-0" style="font-size:.85rem;line-height:1.9;color:var(--text-muted)">
-              <li><code>/api/visual-designer/save</code> &mdash; persist blueprint to Cosmos DB</li>
-              <li><code>/api/visual-designer/load</code> &mdash; retrieve saved blueprints</li>
-              <li><code>/api/visual-designer/deploy</code> &mdash; deploy topology as live MCP engines</li>
-              <li><code>/api/visual-designer/ingest</code> &mdash; trigger chunk &rarr; embed &rarr; index pipeline</li>
-              <li><code>/api/visual-designer/cleanup</code> &mdash; remove deployed resources</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Storage & Ingest -->
-        <div class="col-md-6 fade-up fade-up-d4">
-          <div class="card h-100 p-3" style="border-left:3px solid #ffc107">
-            <h5 style="color:#ffc107"><i class="bi bi-cloud-arrow-up me-1"></i> Storage &amp; Ingest Pipeline</h5>
-            <ul class="mb-0" style="font-size:.85rem;line-height:1.9;color:var(--text-muted)">
-              <li><strong>Storage:</strong> Cosmos DB <code>cerebro-visual-designs</code> container for blueprints</li>
-              <li><strong>Ingest:</strong> Azure AI Search indexes + Azure OpenAI embeddings</li>
-              <li>Pipeline: source &rarr; chunk &rarr; embed (text-embedding-ada-002) &rarr; vector index</li>
-              <li>Hierarchical RAG cascade: User &rarr; Group &rarr; Org &rarr; Plugin &rarr; Engine</li>
-              <li><strong>Proxy:</strong> <code>/dash/{slug}/</code> reverse proxy routes to MCP engine dashboards</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ SECTION 5: CLOUD LINKS ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title fade-up"><i class="bi bi-cloud me-2"></i>🌐 Loom &mdash; Cloud Deployments</h2>
-        <p class="section-subtitle fade-up fade-up-d1">See the concrete implementation for each cloud provider</p>
-      </div>
-
-      <div class="row g-4 justify-content-center">
-        <div class="col-md-4 fade-up fade-up-d1">
-          <a href="architecture-azure.html" class="text-decoration-none">
-            <div class="cloud-card">
-              <div class="cloud-icon">&#9729;&#xFE0F;</div>
-              <h5 class="fw-bold mb-2" style="color:var(--accent)">Azure Architecture</h5>
-              <p class="text-muted mb-2" style="font-size:.85rem">AKS &bull; Entra ID &bull; Cosmos DB &bull; Azure OpenAI</p>
-              <span class="badge bg-success">Live &mdash; Production</span>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 fade-up fade-up-d2">
-          <a href="architecture-aws.html" class="text-decoration-none">
-            <div class="cloud-card">
-              <div class="cloud-icon">&#x1F4E6;</div>
-              <h5 class="fw-bold mb-2" style="color:var(--amber)">AWS Architecture</h5>
-              <p class="text-muted mb-2" style="font-size:.85rem">EKS &bull; Cognito &bull; DynamoDB &bull; Bedrock</p>
-              <span class="badge bg-secondary">Reference Architecture</span>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 fade-up fade-up-d3">
-          <a href="architecture-gcp.html" class="text-decoration-none">
-            <div class="cloud-card">
-              <div class="cloud-icon">&#x1F30D;</div>
-              <h5 class="fw-bold mb-2" style="color:var(--red)">GCP Architecture</h5>
-              <p class="text-muted mb-2" style="font-size:.85rem">GKE &bull; Cloud Identity &bull; Firestore &bull; Vertex AI</p>
-              <span class="badge bg-secondary">Reference Architecture</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ INFRASTRUCTURE AS CODE ═══════════════ -->
-  <section id="iac" class="section">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 class="section-title fade-up"><i class="bi bi-code-square me-2"></i>🌐 Loom &mdash; Infrastructure as Code</h2>
-        <p class="section-subtitle fade-up fade-up-d1">Deploy the entire platform from scratch in ~20 minutes with Terraform</p>
-      </div>
-      <div class="row g-4 mb-4">
-        <div class="col-md-3">
-          <div class="card h-100 p-3" style="border-left:3px solid #a78bfa">
-            <h5 style="color:#a78bfa"><i class="bi bi-boxes me-1"></i> 9 Cloud-Agnostic Modules</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)">Kubernetes, database, LLM, search, vault, registry, identity, networking, and DNS — each module provisions the correct cloud-native resource based on a single <code>cloud</code> variable.</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card h-100 p-3" style="border-left:3px solid #0dcaf0">
-            <h5 style="color:#0dcaf0"><i class="bi bi-cloud-check me-1"></i> Azure Primary</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)">Fully tested Azure environment: AKS, Cosmos DB, Azure OpenAI, AI Search, Key Vault, ACR, and DNS. AWS and GCP modules are ready — swap by changing one directory.</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card h-100 p-3" style="border-left:3px solid #198754">
-            <h5 style="color:#198754"><i class="bi bi-diagram-3 me-1"></i> Helm Charts</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)">Two Helm charts (<strong>cerebro-app</strong> rev 5 and <strong>mcp-engine</strong> rev 3) deploy Kubernetes workloads. Day-2 operations via <code>helm upgrade</code> / <code>helm rollback</code>. Infrastructure endpoints are injected automatically by Terraform.</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card h-100 p-3" style="border-left:3px solid #ffc107">
-            <h5 style="color:#ffc107"><i class="bi bi-terminal me-1"></i> Bootstrap Script</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)">One-time <code>bootstrap.sh</code> creates remote state storage and a service principal. Then <code>terraform apply</code> handles everything else — infrastructure + workloads in a single command.</p>
-          </div>
-        </div>
-      </div>
-      <div class="text-center">
-        <a href="#iac" class="fw-semibold" style="color:var(--accent-purple)">Full Terraform documentation &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ SRE OBSERVABILITY ═══════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title fade-up"><i class="bi bi-graph-up-arrow me-2"></i>🌐 Loom &mdash; SRE Observability</h2>
-        <p class="section-subtitle fade-up fade-up-d1">Production-grade monitoring with Prometheus + Grafana + Loki — embedded directly in the platform</p>
-      </div>
-      <div class="row g-4 mb-4">
-        <div class="col-md-3">
-          <div class="card h-100 p-3" style="border-left:3px solid #ff6b6b">
-            <h5 style="color:#ff6b6b"><i class="bi bi-heart-pulse me-1"></i> Prometheus + Grafana</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)">Full metrics stack deployed alongside the application. Prometheus scrapes all services; Grafana provides real-time visualization via the <strong>Monitoring</strong> tab — no context-switching to external tools.</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card h-100 p-3" style="border-left:3px solid #20c997">
-            <h5 style="color:#20c997"><i class="bi bi-journal-text me-1"></i> Loki 3 Log Aggregation</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)"><strong>Loki 3.x</strong> + <strong>Promtail</strong> for centralized log aggregation. Search logs via <strong>LogQL</strong> in Grafana Explore. Log volume histogram colored by <code>detected_level</code>. 7-day retention.</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card h-100 p-3" style="border-left:3px solid #0dcaf0">
-            <h5 style="color:#0dcaf0"><i class="bi bi-speedometer2 me-1"></i> 7 Dashboards</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)"><strong>Overview</strong>, <strong>MCP Engine</strong>, <strong>RAG</strong>, <strong>Security</strong>, <strong>Users</strong>, <strong>Alerts</strong>, and <strong>Logs</strong> — embedded via iframe with a dashboard switcher in the <strong>Monitoring</strong> tab.</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card h-100 p-3" style="border-left:3px solid #ffc107">
-            <h5 style="color:#ffc107"><i class="bi bi-bell me-1"></i> 12 Alerting Rules</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)">Alertmanager rules cover API latency, error rates, MCP tool failures, RAG indexing delays, auth failures, pod restarts, and resource saturation — with severity-based routing.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row g-4 mb-4">
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #198754">
-            <h5 style="color:#198754"><i class="bi bi-shield-lock me-1"></i> Zero PII in Metrics</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)">All user identifiers are <code>sha256</code>-hashed before emission. No raw emails, names, or IPs in Prometheus or Loki — compliant with GDPR, SOC2, and HIPAA audit requirements.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #a78bfa">
-            <h5 style="color:#a78bfa"><i class="bi bi-hdd-rack me-1"></i> Cluster View</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)">Horizontal card layout showing all namespaces (<code>default</code>, <code>mcp1</code>, <code>ingress-nginx</code>, <code>monitoring</code>). Expandable pod details with images, digests, resources, and Helm metadata.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 p-3" style="border-left:3px solid #e94560">
-            <h5 style="color:#e94560"><i class="bi bi-box-seam me-1"></i> Helm-Managed Deployments</h5>
-            <p class="mb-0" style="font-size:.85rem;color:var(--text-muted)">Both workloads managed via Helm charts (<strong>cerebro-app</strong> rev 5, <strong>mcp1</strong> rev 3). Day-2 operations via <code>helm upgrade</code> and <code>helm rollback</code>.</p>
-          </div>
-        </div>
-      </div>
-      <div class="text-center">
-        <span class="text-muted" style="font-size:.85rem"><i class="bi bi-info-circle me-1"></i>Dashboards are embedded in the app via the <strong>Monitoring</strong> tab &mdash; deploy with <code>deploy-monitoring.sh</code>. Logs aggregated via Loki 3 + Promtail with 7-day retention.</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ SECURITY BADGES ═══════════════ -->
-  <section class="section section-alt" style="padding:2.5rem 0">
-    <div class="container text-center">
-      <h6 class="text-muted mb-3" style="font-size:.8rem;text-transform:uppercase;letter-spacing:.1em">Security Guarantees — All Clouds</h6>
-      <div>
-        <span class="sec-badge"><i class="bi bi-shield-lock-fill"></i> Zero API Keys in Pods</span>
-        <span class="sec-badge"><i class="bi bi-fingerprint"></i> Workload Identity</span>
-        <span class="sec-badge"><i class="bi bi-lock-fill"></i> Istio mTLS</span>
-        <span class="sec-badge"><i class="bi bi-globe2"></i> HTTPS + WAF</span>
-        <span class="sec-badge"><i class="bi bi-key-fill"></i> Vault-Backed Secrets</span>
-        <span class="sec-badge"><i class="bi bi-person-lock"></i> Per-User Isolation</span>
-        <span class="sec-badge"><i class="bi bi-phone-lock"></i> Two-Tier MFA</span>
-        <span class="sec-badge"><i class="bi bi-credit-card-2-front"></i> PCI via Stripe</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ FOOTER ═══════════════ -->
-  <footer class="bb-footer">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6">
-          <div class="d-flex align-items-center gap-2 mb-2">
-            <img src="logo.svg" alt="BrainzBytes" style="width:22px;height:22px">
-            <span class="fw-bold" style="color:var(--accent-purple)">BrainzBytes</span>
-          </div>
-          <p class="text-muted mb-0" style="font-size:.85rem">&copy; 2026 BrainzBytes Inc. All rights reserved.</p>
-        </div>
-        <div class="col-md-6 text-md-end mt-3 mt-md-0">
-          <a href="#" class="me-3" style="font-size:.85rem">Privacy Policy</a>
-          <a href="#" class="me-3" style="font-size:.85rem">Terms of Service</a>
-          <a href="mailto:contact@brainzbytes.com" style="font-size:.85rem">contact@brainzbytes.com</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </section>
+  </main>
 </body>
 </html>

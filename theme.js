@@ -23,86 +23,75 @@
   // ── Site Map & Navigation Data ────────────────────────────
   var BASE = (function() {
     var p = location.pathname;
+    if (p.indexOf('/docs/documents/') >= 0
+        || p.indexOf('/docs/features/') >= 0
+        || p.indexOf('/docs/diagram-viewer/') >= 0) return '../../';
     if (p.indexOf('/contextweaver/') >= 0) return '../';
+    if (p.indexOf('/docs/') >= 0) return '../';
     return '';
   })();
 
   var NAV_SECTIONS = [
-    { label: 'Home', href: BASE + 'index.html', icon: '🏠' },
-    { label: 'Product', href: BASE + 'contextweaver/index.html', icon: '🧠' },
-    { label: 'Architecture', href: BASE + 'architecture.html', icon: '🏗️',
+    { label: 'ContextWeaver', href: BASE + 'contextweaver/index.html', icon: '🧠',
       children: [
-        { label: 'Overview', href: BASE + 'architecture.html' },
-        { label: 'Azure', href: BASE + 'architecture-azure.html' },
-        { label: 'AWS', href: BASE + 'architecture-aws.html' },
-        { label: 'GCP', href: BASE + 'architecture-gcp.html' },
-        { label: 'Interactive Diagram', href: BASE + 'architecture-diagram.html' },
-        { label: 'Infrastructure', href: BASE + 'infrastructure-diagram.html' },
-        { label: 'Weave Diagram', href: BASE + 'weave-diagram.html' },
-        { label: 'Workflow Diagram', href: BASE + 'workflow-diagram.html' }
+        { label: 'Platform overview', href: BASE + 'contextweaver/index.html' },
+        { label: 'Why ContextWeaver', href: BASE + 'index.html#why' },
+        { label: 'Governed lifecycle', href: BASE + 'index.html#contextweaver' },
+        { label: 'Product experience', href: BASE + 'index.html#product' },
+        { label: 'Roles and outcomes', href: BASE + 'index.html#roles' }
       ]
     },
-    { label: 'Use Cases', href: BASE + 'scenario.html', icon: '🎯',
+    { label: 'Architecture', href: BASE + 'docs/documents/azure-production-platform-and-poc.html', icon: '🏗️',
       children: [
-        { label: 'Travel Booking (Voice)', href: BASE + 'scenario.html' },
-        { label: 'Travel Planner', href: BASE + 'scenario-travel-planner.html' },
-        { label: 'DevOps & CI/CD', href: BASE + 'scenario-devops.html' },
-        { label: 'Salesforce CRM', href: BASE + 'scenario-salesforce.html' },
-        { label: 'Trading & Finance', href: BASE + 'scenario-trading.html' },
-        { label: 'Tax Preparation', href: BASE + 'scenario-tax.html' },
-        { label: 'Gym & Fitness', href: BASE + 'scenario-gym.html' },
-        { label: 'Matchmaking', href: BASE + 'scenario-matchmaking.html' }
+        { label: 'NextGen platform overview', href: BASE + 'docs/documents/azure-production-platform-and-poc.html' },
+        { label: 'Durable execution', href: BASE + 'docs/documents/durable-asynchronous-execution.html' },
+        { label: 'Cloud-neutral delivery', href: BASE + 'docs/documents/cloud-neutral-infrastructure.html' },
+        { label: 'Source and state structure', href: BASE + 'docs/documents/source-code-structure.html' },
+        { label: 'Optional diagram library', href: BASE + 'docs/diagram-viewer/contextweaver-nextgen-architecture.html' }
       ]
     },
-    { label: 'Security', href: BASE + 'security.html', icon: '🔐',
+    { label: 'Platform guides', href: BASE + 'docs/index.html', icon: '🎯',
       children: [
-        { label: 'Security Deep Dive', href: BASE + 'security.html' },
-        { label: 'Dual Auth Flow', href: BASE + 'dual-auth-diagram.html' }
+        { label: 'Documentation by role', href: BASE + 'docs/index.html#audiences' },
+        { label: 'Services and Workflows', href: BASE + 'contextweaver/index.html' },
+        { label: 'Dynamic Agents and MCPs', href: BASE + 'docs/documents/dynamic-agent-mcp-lifecycle.html' },
+        { label: 'Governed RAG', href: BASE + 'docs/documents/governed-rag-ingestion.html' },
+        { label: 'Operations and SRE', href: BASE + 'docs/documents/observability-standard.html' }
       ]
     },
-    { label: 'Business', href: BASE + 'business.html', icon: '💼',
+    { label: 'Trust', href: BASE + 'docs/documents/continuous-entitlement-enforcement.html', icon: '🔐',
       children: [
-        { label: 'Business Case', href: BASE + 'business.html' },
-        { label: 'Investor Pitch', href: BASE + 'pitch.html' },
-        { label: 'Presentation', href: BASE + 'presentation.html' },
-        { label: 'Video Demo', href: BASE + 'video.html' }
+        { label: 'Trust and deployment', href: BASE + 'index.html#trust' },
+        { label: 'Continuous authorization', href: BASE + 'docs/documents/continuous-entitlement-enforcement.html' },
+        { label: 'Credential isolation', href: BASE + 'docs/documents/credential-non-possession.html' },
+        { label: 'Agent sandbox security', href: BASE + 'docs/documents/agent-sandbox-security.html' },
+        { label: 'Implementation readiness', href: BASE + 'docs/documents/implementation-readiness.html' }
       ]
-    }
+    },
+    { label: 'Resources', href: BASE + 'docs/index.html', icon: '📚',
+      children: [
+        { label: 'Documentation', href: BASE + 'docs/index.html' },
+        { label: 'Technical library', href: BASE + 'docs/index.html#library' },
+        { label: 'Product brochure', href: BASE + 'docs/features/contextweaver-product-brochure.html' },
+        { label: 'NextGen whitepaper', href: BASE + 'docs/documents/spec-driven-ai-platform-whitepaper.html' },
+        { label: 'Diagram library', href: BASE + 'docs/diagram-viewer/contextweaver-nextgen-architecture.html' }
+      ]
+    },
+    { label: 'Launch app ↗', href: 'https://app.brainzbytes.com', icon: '↗' }
   ];
 
   // Ordered page list for prev/next navigation
   var PAGE_ORDER = [
     { href: 'index.html', title: 'Home' },
     { href: 'contextweaver/index.html', title: 'Product Overview' },
-    { href: 'architecture.html', title: 'Architecture Overview' },
-    { href: 'architecture-azure.html', title: 'Architecture — Azure' },
-    { href: 'architecture-aws.html', title: 'Architecture — AWS' },
-    { href: 'architecture-gcp.html', title: 'Architecture — GCP' },
-    { href: 'architecture-diagram.html', title: 'Interactive Architecture Diagram' },
-    { href: 'infrastructure-diagram.html', title: 'Infrastructure Diagram' },
-    { href: 'weave-diagram.html', title: 'Weave Diagram' },
-    { href: 'workflow-diagram.html', title: 'Workflow Diagram' },
-    { href: 'scenario.html', title: 'Use Case — Travel Booking' },
-    { href: 'scenario-travel-planner.html', title: 'Use Case — Travel Planner' },
-    { href: 'scenario-devops.html', title: 'Use Case — DevOps' },
-    { href: 'scenario-salesforce.html', title: 'Use Case — Salesforce' },
-    { href: 'scenario-trading.html', title: 'Use Case — Trading' },
-    { href: 'scenario-tax.html', title: 'Use Case — Tax' },
-    { href: 'scenario-gym.html', title: 'Use Case — Gym' },
-    { href: 'scenario-matchmaking.html', title: 'Use Case — Matchmaking' },
-    { href: 'security.html', title: 'Security Deep Dive' },
-    { href: 'dual-auth-diagram.html', title: 'Dual Auth Flow' },
-    { href: 'business.html', title: 'Business Case' },
-    { href: 'pitch.html', title: 'Investor Pitch' },
-    { href: 'presentation.html', title: 'Presentation' },
-    { href: 'video.html', title: 'Video Demo' }
+    { href: 'docs/index.html', title: 'Documentation' }
   ];
 
   function getCurrentPageIndex() {
-    var p = location.pathname.replace(/^\//, '');
-    if (p === '' || p === '/') p = 'index.html';
+    var p = location.pathname.replace(/^\/+/, '');
+    if (p === '' || p.endsWith('/')) p += 'index.html';
     for (var i = 0; i < PAGE_ORDER.length; i++) {
-      if (p === PAGE_ORDER[i].href || p.endsWith('/' + PAGE_ORDER[i].href) || p.endsWith(PAGE_ORDER[i].href)) {
+      if (p === PAGE_ORDER[i].href) {
         return i;
       }
     }
@@ -110,14 +99,13 @@
   }
 
   function isActivePage(href) {
-    // Extract filename from current URL and href, compare exactly
-    var p = location.pathname.replace(/.*\//, '') || 'index.html';
-    var h = href.replace(/.*\//, '') || 'index.html';
-    // Special case: contextweaver/index.html vs root index.html
-    if (href.indexOf('contextweaver/') >= 0) {
-      return location.pathname.indexOf('contextweaver/') >= 0 && p === h;
+    var current = new URL(location.href);
+    var target = new URL(href, current);
+    function normalize(path) {
+      path = path.replace(/^\/+/, '');
+      return path === '' || path.endsWith('/') ? path + 'index.html' : path;
     }
-    return p === h && location.pathname.indexOf('contextweaver/') < 0;
+    return normalize(current.pathname) === normalize(target.pathname);
   }
 
   function isSectionActive(section) {
@@ -130,8 +118,23 @@
     return false;
   }
 
+  function getActiveSectionLabel() {
+    var i;
+    for (i = 0; i < NAV_SECTIONS.length; i++) {
+      if (isActivePage(NAV_SECTIONS[i].href)) return NAV_SECTIONS[i].label;
+    }
+    for (i = 0; i < NAV_SECTIONS.length; i++) {
+      var children = NAV_SECTIONS[i].children || [];
+      for (var j = 0; j < children.length; j++) {
+        if (isActivePage(children[j].href)) return NAV_SECTIONS[i].label;
+      }
+    }
+    return '';
+  }
+
   // ── Build Navigation Bar ──────────────────────────────────
   function buildNav() {
+    var activeSectionLabel = getActiveSectionLabel();
     var nav = document.createElement('nav');
     nav.id = 'bb-global-nav';
     nav.innerHTML = '<div class="bb-nav-inner">'
@@ -146,7 +149,7 @@
     var linksContainer = nav.querySelector('.bb-nav-links');
     NAV_SECTIONS.forEach(function(section) {
       var item = document.createElement('div');
-      item.className = 'bb-nav-item' + (isSectionActive(section) ? ' active' : '');
+      item.className = 'bb-nav-item' + (section.label === activeSectionLabel ? ' active' : '');
 
       var link = document.createElement('a');
       link.href = section.href;
@@ -215,29 +218,32 @@
     footer.className = 'bb-site-footer';
     footer.innerHTML = '<div class="bb-footer-inner">'
       + '<div class="bb-footer-col">'
-      + '<h4>Product</h4>'
+      + '<h4>ContextWeaver</h4>'
       + '<a href="' + BASE + 'contextweaver/index.html">ContextWeaver</a>'
-      + '<a href="' + BASE + 'architecture.html">Architecture</a>'
-      + '<a href="' + BASE + 'security.html">Security</a>'
+      + '<a href="' + BASE + 'index.html#contextweaver">Governed lifecycle</a>'
+      + '<a href="' + BASE + 'index.html#product">Product experience</a>'
+      + '<a href="' + BASE + 'docs/documents/azure-production-platform-and-poc.html">NextGen architecture</a>'
       + '</div>'
       + '<div class="bb-footer-col">'
-      + '<h4>Use Cases</h4>'
-      + '<a href="' + BASE + 'scenario.html">Travel Booking</a>'
-      + '<a href="' + BASE + 'scenario-devops.html">DevOps</a>'
-      + '<a href="' + BASE + 'scenario-salesforce.html">Salesforce</a>'
-      + '<a href="' + BASE + 'scenario-trading.html">Trading</a>'
+      + '<h4>Platform guides</h4>'
+      + '<a href="' + BASE + 'index.html#roles">Platform teams</a>'
+      + '<a href="' + BASE + 'docs/documents/dynamic-agent-mcp-lifecycle.html">Agents and MCPs</a>'
+      + '<a href="' + BASE + 'docs/documents/governed-rag-ingestion.html">Governed RAG</a>'
+      + '<a href="' + BASE + 'docs/documents/durable-asynchronous-execution.html">Durable execution</a>'
       + '</div>'
       + '<div class="bb-footer-col">'
-      + '<h4>Business</h4>'
-      + '<a href="' + BASE + 'business.html">Business Case</a>'
-      + '<a href="' + BASE + 'pitch.html">Investor Pitch</a>'
-      + '<a href="' + BASE + 'presentation.html">Presentation</a>'
+      + '<h4>Trust</h4>'
+      + '<a href="' + BASE + 'docs/documents/continuous-entitlement-enforcement.html">Continuous authorization</a>'
+      + '<a href="' + BASE + 'docs/documents/credential-non-possession.html">Credential isolation</a>'
+      + '<a href="' + BASE + 'docs/documents/agent-sandbox-security.html">Agent sandbox</a>'
+      + '<a href="' + BASE + 'docs/documents/observability-standard.html">Observability standard</a>'
       + '</div>'
       + '<div class="bb-footer-col">'
-      + '<h4>Platform</h4>'
+      + '<h4>Resources</h4>'
+      + '<a href="' + BASE + 'docs/index.html">Documentation</a>'
+      + '<a href="' + BASE + 'docs/index.html#library">Technical library</a>'
+      + '<a href="' + BASE + 'docs/features/contextweaver-product-brochure.html">Product brochure</a>'
       + '<a href="https://app.brainzbytes.com" target="_blank">Launch App ↗</a>'
-      + '<a href="' + BASE + 'video.html">Video Demo</a>'
-      + '<a href="' + BASE + 'cluster-view-mockups.html">Cluster View</a>'
       + '</div>'
       + '</div>'
       + '<div class="bb-footer-bottom">'
@@ -299,6 +305,48 @@
         }
       });
     });
+
+    // ── Shared reader navigation + progress ─────────────────
+    var readerNav = document.querySelector('.bbx-page-nav, .toc');
+    var readerProgress = document.querySelector('.bbx-reading-progress span');
+    if (readerNav) {
+      var readerLinks = Array.prototype.slice.call(readerNav.querySelectorAll('a[href^="#"]'));
+      var readerSections = readerLinks.map(function(link) {
+        return document.querySelector(link.getAttribute('href'));
+      }).filter(Boolean);
+
+      function setReaderActive(id) {
+        readerLinks.forEach(function(link) {
+          var active = link.getAttribute('href') === '#' + id;
+          link.classList.toggle('active', active);
+          if (active) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var readerObserver = new IntersectionObserver(function(entries) {
+          var visible = entries.filter(function(entry) {
+            return entry.isIntersecting;
+          }).sort(function(a, b) {
+            return b.intersectionRatio - a.intersectionRatio;
+          });
+          if (visible.length) setReaderActive(visible[0].target.id);
+        }, { rootMargin: '-18% 0px -62% 0px', threshold: [0, .1, .35] });
+        readerSections.forEach(function(section) { readerObserver.observe(section); });
+      }
+    }
+
+    function updateReaderProgress() {
+      if (!readerProgress) return;
+      var root = document.documentElement;
+      var remaining = root.scrollHeight - root.clientHeight;
+      var value = remaining > 0 ? Math.min(100, Math.max(0, root.scrollTop / remaining * 100)) : 0;
+      readerProgress.style.width = value + '%';
+    }
+    window.addEventListener('scroll', updateReaderProgress, { passive: true });
+    window.addEventListener('resize', updateReaderProgress);
+    updateReaderProgress();
 
     // ── Close dropdown on outside click ──────────────────────
     document.addEventListener('click', function(e) {

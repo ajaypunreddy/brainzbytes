@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://brainzbytes.com/</loc></url>
+  <url><loc>https://brainzbytes.com/contextweaver/</loc></url>
+  <url><loc>https://brainzbytes.com/docs/</loc></url>
+  <url><loc>https://brainzbytes.com/docs/diagram-viewer/contextweaver-nextgen-architecture.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/diagrams/intent-to-evidence-flow.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/agent-sandbox-security.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/azure-production-platform-and-poc.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/cloud-neutral-infrastructure.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/conceptual-design.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/continuous-entitlement-enforcement.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/credential-non-possession.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/durable-asynchronous-execution.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/durable-microservice-resilience.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/dynamic-agent-mcp-lifecycle.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/governed-rag-ingestion.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/implementation-readiness.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/local-hello-world-poc-plan.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/observability-standard.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/rag-storage-search-readiness.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/source-code-structure.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/documents/spec-driven-ai-platform-whitepaper.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/features/contextweaver-product-brochure.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/features/governed-rag-ingestion.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/features/platform-realization-lifecycle.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/features/platform-realization-one-page.html</loc></url>
+  <url><loc>https://brainzbytes.com/docs/features/spec-driven-ai-platform-whitepaper.html</loc></url>
+</urlset>

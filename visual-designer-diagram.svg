@@ -1,6 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" style="background:#0a0e14;font-family:'Segoe UI',system-ui,sans-serif">
   <!-- Grid dots -->
   <defs>
+    <linearGradient id="canvas" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="55%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#151126"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-25%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#000814" flood-opacity="0.42"/>
+    </filter>
+    <style>
+      g > rect:first-of-type { filter:url(#softShadow); }
+      text { letter-spacing:.08px; }
+    </style>
     <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
       <circle cx="12" cy="12" r="1" fill="rgba(255,255,255,0.05)"/>
     </pattern>
@@ -14,6 +26,7 @@
       <path d="M0,0 L10,3 L0,6 Z"/>
     </marker>
   </defs>
+  <rect width="1100" height="780" fill="url(#canvas)"/>
   <rect width="1100" height="780" fill="url(#grid)"/>
 
   <!-- ═══════ ENGINE NODE ═══════ -->
@@ -50,9 +63,9 @@
   <path d="M680,75 C700,75 710,67 718,67" stroke="#6c757d" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#arr-gray)"/>
 
   <!-- ═══════ CONNECTION LINES: Engine → Plugins ═══════ -->
-  <path d="M550,145 C550,180 200,200 200,220" stroke="#0dcaf0" stroke-width="2" stroke-dasharray="8,4" fill="none" marker-end="url(#arr-cyan)" opacity="0.7"/>
-  <path d="M550,145 C550,180 500,200 500,220" stroke="#0dcaf0" stroke-width="2" stroke-dasharray="8,4" fill="none" marker-end="url(#arr-cyan)" opacity="0.7"/>
-  <path d="M550,145 C550,180 800,200 800,220" stroke="#0dcaf0" stroke-width="2" stroke-dasharray="8,4" fill="none" marker-end="url(#arr-cyan)" opacity="0.7"/>
+  <path d="M550,145 V180 H200 V220" stroke="#0dcaf0" stroke-width="2" stroke-dasharray="8,4" stroke-linecap="round" stroke-linejoin="round" fill="none" marker-end="url(#arr-cyan)" opacity="0.8"/>
+  <path d="M550,145 V220 H500" stroke="#0dcaf0" stroke-width="2" stroke-dasharray="8,4" stroke-linecap="round" stroke-linejoin="round" fill="none" marker-end="url(#arr-cyan)" opacity="0.8"/>
+  <path d="M550,145 V180 H800 V220" stroke="#0dcaf0" stroke-width="2" stroke-dasharray="8,4" stroke-linecap="round" stroke-linejoin="round" fill="none" marker-end="url(#arr-cyan)" opacity="0.8"/>
 
   <!-- ═══════ PLUGIN 1: Email Assistant (Active) ═══════ -->
   <g transform="translate(90,225)">

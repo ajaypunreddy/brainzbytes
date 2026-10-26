@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ContextWeaver is an industry-neutral, spec-driven platform for governed AI services, workflows, agents, MCP tools, RAG, memory, operations, and compliance.">
+  <meta name="author" content="BrainzBytes">
+  <meta name="theme-color" content="#071c29">
+  <title>ContextWeaver | The Governed AI Operating Platform</title>
+  <style>
+    :root {
+      --ink: #102c3b;
+      --muted: #5d7480;
+      --paper: #f2f7f8;
+      --surface: #ffffff;
+      --navy: #071c29;
+      --navy-2: #103548;
+      --line: #cfdee4;
+      --teal: #13988f;
+      --teal-soft: #e1f5f2;
+      --blue: #397dc2;
+      --blue-soft: #e8f1fb;
+      --violet: #7054b5;
+      --violet-soft: #eeeaf8;
+      --amber: #b57415;
+      --amber-soft: #fff2dc;
+      --green: #16785e;
+      --green-soft: #e3f3ec;
+      --red: #b74455;
+      --red-soft: #fce9ec;
+      --shadow: 0 22px 66px rgba(18,56,74,.11);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--paper); }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 6% 7%, rgba(19,152,143,.11), transparent 25rem),
+        radial-gradient(circle at 95% 25%, rgba(112,84,181,.08), transparent 29rem),
+        var(--paper);
+      font: 15px/1.62 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; }
+    code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    .topbar {
+      position: sticky;
+      z-index: 30;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px max(22px, calc((100vw - 1320px) / 2));
+      border-bottom: 1px solid rgba(202,221,227,.92);
+      background: rgba(247,251,252,.92);
+      backdrop-filter: blur(18px);
+    }
+    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 41px;
+      height: 41px;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(145deg, #0b3544, #29376a);
+      font-weight: 900;
+      letter-spacing: -.08em;
+    }
+    .brand b, .brand small { display: block; }
+    .brand small { color: var(--muted); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; }
+    .topbar-nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 5px; }
+    .topbar-nav a {
+      padding: 7px 9px;
+      border-radius: 8px;
+      color: #526c79;
+      font-size: 10px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+    .topbar-nav a:hover { color: #0a6268; background: #e2f2f2; }
+    .reading-progress { position: fixed; z-index: 40; top: 65px; left: 0; right: 0; height: 2px; background: transparent; pointer-events: none; }
+    .reading-progress i { display: block; width: 0; height: 100%; background: linear-gradient(90deg, var(--teal), #48b8d9, var(--violet)); box-shadow: 0 0 12px rgba(19,152,143,.42); }
+    .page-shell {
+      display: grid;
+      grid-template-columns: 224px minmax(0, 1fr);
+      gap: 18px;
+      width: min(1540px, calc(100% - 32px));
+      margin: 20px auto 54px;
+    }
+    main { min-width: 0; margin: 0; }
+    .section-nav { position: sticky; top: 84px; align-self: start; max-height: calc(100vh - 104px); overflow: auto; }
+    .section-nav-card {
+      padding: 16px;
+      border: 1px solid #cadde3;
+      border-radius: 18px;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 14px 40px rgba(20,62,79,.08);
+      backdrop-filter: blur(14px);
+    }
+    .section-nav-card > span { display: block; color: var(--teal); font-size: 9px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+    .section-nav-card > strong { display: block; margin: 5px 0 13px; color: #173f50; font: 700 18px/1.15 Georgia, serif; }
+    .section-links { display: grid; gap: 3px; }
+    .section-links a {
+      position: relative;
+      padding: 7px 9px 7px 20px;
+      border-radius: 8px;
+      color: #617985;
+      font-size: 10.5px;
+      font-weight: 750;
+      line-height: 1.3;
+      text-decoration: none;
+      transition: .18s ease;
+    }
+    .section-links a::before { position: absolute; top: 12px; left: 8px; width: 5px; height: 5px; border-radius: 50%; background: #bdd0d6; content: ""; }
+    .section-links a:hover { color: #155f67; background: #edf7f7; transform: translateX(2px); }
+    .section-links a.active { color: #0b5960; background: linear-gradient(90deg, #e0f5f2, #eff7fa); }
+    .section-links a.active::before { background: var(--teal); box-shadow: 0 0 0 3px rgba(19,152,143,.13); }
+    .section-nav-note { margin: 13px 0 0; padding-top: 12px; border-top: 1px solid #dbe7ea; color: #748993; font-size: 9.5px; line-height: 1.5; }
+    section { scroll-margin-top: 82px; margin-top: 22px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(315px, .55fr);
+      gap: 36px;
+      min-height: 455px;
+      padding: clamp(34px, 5vw, 64px);
+      border-radius: 30px;
+      color: white;
+      background:
+        linear-gradient(112deg, rgba(7,28,41,.995), rgba(12,53,68,.97) 62%, rgba(42,39,79,.96)),
+        var(--navy);
+      box-shadow: var(--shadow);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -130px;
+      bottom: -200px;
+      width: 540px;
+      height: 540px;
+      border: 1px solid rgba(100,222,213,.24);
+      border-radius: 50%;
+      box-shadow: 0 0 0 60px rgba(100,222,213,.035), 0 0 0 120px rgba(119,92,190,.035);
+    }
+    .hero-copy, .hero-side { position: relative; z-index: 2; }
+    .eyebrow {
+      display: block;
+      margin-bottom: 10px;
+      color: #57d8d0;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      font: 700 clamp(32px, 3.6vw, 48px)/1.06 Georgia, "Times New Roman", serif;
+      letter-spacing: -.042em;
+    }
+    h1 em { color: #69dfd7; font-style: normal; }
+    .lede { max-width: 900px; margin: 21px 0 0; color: #c3d6dc; font-size: clamp(16px, 1.65vw, 21px); }
+    .tagline { margin: 18px 0 0; color: #78ddd7; font-size: 13px; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .button {
+      max-width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #3b6776;
+      border-radius: 10px;
+      color: #d5e7eb;
+      background: rgba(16,53,69,.75);
+      font-size: 12px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+    .button.primary { border-color: #5bd3cb; color: #052b31; background: #68ddd5; }
+    .hero-side { display: grid; align-content: end; gap: 12px; }
+    .hero-card {
+      padding: 18px;
+      border: 1px solid rgba(105,211,204,.33);
+      border-radius: 15px;
+      color: #bfd4db;
+      background: rgba(6,27,39,.57);
+    }
+    .hero-card b { display: block; margin-bottom: 5px; color: white; font: 700 18px/1.18 Georgia, serif; }
+    .meta { color: #9db8c2; font-size: 10px; letter-spacing: .11em; text-transform: uppercase; }
+    .hero-stats {
+      position: relative;
+      z-index: 2;
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin-top: 5px;
+    }
+    .hero-stats article {
+      padding: 13px 15px;
+      border: 1px solid rgba(122,190,198,.28);
+      border-radius: 12px;
+      background: rgba(5,25,37,.48);
+    }
+    .hero-stats b, .hero-stats span { display: block; }
+    .hero-stats b { color: #6ce0d8; font: 700 24px Georgia, serif; }
+    .hero-stats span { margin-top: 2px; color: #a9c1ca; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+    .section-card {
+      padding: clamp(25px, 3.5vw, 43px);
+      border: 1px solid var(--line);
+      border-radius: 23px;
+      background: rgba(255,255,255,.97);
+      box-shadow: 0 12px 38px rgba(27,72,90,.06);
+    }
+    .section-head { max-width: 900px; margin-bottom: 27px; }
+    .section-head .eyebrow { color: var(--teal); }
+    h2 { margin: 0; font: 700 clamp(26px, 3vw, 36px)/1.12 Georgia, "Times New Roman", serif; letter-spacing: -.029em; }
+    h3 { margin: 0; font: 700 21px/1.18 Georgia, "Times New Roman", serif; }
+    .section-head p { margin: 11px 0 0; color: var(--muted); font-size: 16px; }
+    .thesis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .thesis article, .pillar, .vertical, .role, .outcome, .status-card {
+      padding: 18px;
+      border: 1px solid #d8e5e9;
+      border-radius: 13px;
+      background: #fbfdfd;
+    }
+    .number {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      margin-bottom: 12px;
+      border-radius: 9px;
+      color: white;
+      background: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .thesis article:nth-child(2) .number { background: var(--blue); }
+    .thesis article:nth-child(3) .number { background: var(--violet); }
+    .thesis article:nth-child(4) .number { background: var(--amber); }
+    .thesis b { display: block; margin-bottom: 5px; color: #254e5e; }
+    .thesis span { color: var(--muted); font-size: 12px; }
+    .quote {
+      margin-top: 15px;
+      padding: 22px;
+      border-left: 5px solid var(--teal);
+      border-radius: 11px;
+      color: #24515b;
+      background: var(--teal-soft);
+      font: 700 19px/1.42 Georgia, serif;
+    }
+    .vertical-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .vertical { border-top: 4px solid var(--blue); }
+    .vertical:nth-child(4n+2) { border-top-color: var(--teal); }
+    .vertical:nth-child(4n+3) { border-top-color: var(--violet); }
+    .vertical:nth-child(4n) { border-top-color: var(--amber); }
+    .vertical b { display: block; margin-bottom: 7px; color: #244b5a; }
+    .vertical p { margin: 0; color: var(--muted); font-size: 11px; }
+    .vertical small { display: block; margin-top: 10px; color: #2a6b72; font-size: 9px; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; }
+    .profile-note {
+      margin-top: 14px;
+      padding: 18px 20px;
+      border: 1px dashed #c1b184;
+      border-radius: 12px;
+      color: #665021;
+      background: var(--amber-soft);
+    }
+    .stack { display: grid; gap: 8px; }
+    .layer {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 18px;
+      align-items: center;
+      padding: 14px 17px;
+      border: 1px solid #d6e4e8;
+      border-left: 5px solid var(--blue);
+      border-radius: 11px;
+      background: linear-gradient(90deg, #fbfdfd, #f3f8fa);
+    }
+    .layer:nth-child(2) { border-left-color: var(--violet); }
+    .layer:nth-child(3) { border-left-color: var(--teal); }
+    .layer:nth-child(4) { border-left-color: #337b91; }
+    .layer:nth-child(5) { border-left-color: var(--green); }
+    .layer:nth-child(6) { border-left-color: var(--amber); }
+    .layer:nth-child(7) { border-left-color: var(--red); }
+    .layer:nth-child(8) { border-left-color: #536ea6; }
+    .layer b { color: #224b5b; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+    .layer span { color: var(--muted); font-size: 12px; }
+    .spec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .pillar { border-top: 4px solid var(--blue); }
+    .pillar:nth-child(2) { border-top-color: var(--violet); }
+    .pillar:nth-child(3) { border-top-color: var(--teal); }
+    .pillar:nth-child(4) { border-top-color: var(--amber); }
+    .pillar code { display: block; margin-bottom: 8px; color: #28669e; font-weight: 900; }
+    .pillar p { margin: 0; color: var(--muted); font-size: 12px; }
+    .contract-strip { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
+    .contract-strip span, .chips span {
+      padding: 7px 9px;
+      border: 1px solid #c8dce2;
+      border-radius: 8px;
+      color: #446774;
+      background: #f8fbfc;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .admission { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+    .gate {
+      position: relative;
+      min-height: 155px;
+      padding: 15px 12px;
+      border: 1px solid #d7e4e8;
+      border-radius: 12px;
+      background: #fafcfd;
+    }
+    .gate::before {
+      content: attr(data-step);
+      display: grid;
+      place-items: center;
+      width: 27px;
+      height: 27px;
+      margin-bottom: 11px;
+      border-radius: 8px;
+      color: white;
+      background: var(--violet);
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .gate b { display: block; margin-bottom: 5px; color: #433866; font-size: 11px; }
+    .gate span { color: var(--muted); font-size: 10px; line-height: 1.43; }
+    .outcomes-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 13px; }
+    .decision { padding: 12px; border-radius: 10px; text-align: center; font-size: 11px; font-weight: 900; }
+    .decision.pass { color: var(--green); background: var(--green-soft); }
+    .decision.conditional { color: var(--amber); background: var(--amber-soft); }
+    .decision.quarantine, .decision.reject { color: var(--red); background: var(--red-soft); }
+    .journey { display: grid; grid-template-columns: repeat(6, 1fr); gap: 17px; }
+    .journey article {
+      position: relative;
+      min-height: 177px;
+      padding: 17px;
+      border: 1px solid #d6e4e8;
+      border-radius: 13px;
+      background: white;
+    }
+    .journey article:not(:last-child)::after {
+      content: ">";
+      position: absolute;
+      right: -15px;
+      top: 70px;
+      color: var(--teal);
+      font-size: 21px;
+      font-weight: 900;
+    }
+    .journey b { display: block; margin-bottom: 7px; color: #235261; }
+    .journey span { color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .journey code { display: block; margin-top: 10px; color: #287467; font-size: 9px; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .dark {
+      overflow: hidden;
+      border: 1px solid #254a5c;
+      border-radius: 14px;
+      background: var(--navy);
+    }
+    .dark-title { padding: 10px 15px; color: #82ddd7; background: #123547; font-size: 10px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+    pre { overflow-x: auto; margin: 0; padding: 19px; color: #c8dce3; font-size: 11px; line-height: 1.6; }
+    .saga { display: grid; gap: 9px; }
+    .saga article {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 11px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid #d7e4e8;
+      border-radius: 11px;
+      background: #fbfdfd;
+    }
+    .saga i {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      color: white;
+      background: var(--teal);
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 900;
+    }
+    .saga b, .saga small { display: block; }
+    .saga b { color: #315462; font-size: 11px; }
+    .saga small { color: var(--muted); font-size: 9px; }
+    .rag-flow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 11px; margin-bottom: 16px; }
+    .rag-flow div {
+      display: grid;
+      align-content: center;
+      min-height: 85px;
+      padding: 12px;
+      border: 1px solid #bfdbdf;
+      border-radius: 11px;
+      color: #225561;
+      background: linear-gradient(145deg, #f8fdfd, #e9f5f5);
+      text-align: center;
+      font-size: 10px;
+      font-weight: 850;
+    }
+    .policy-table, .metric-table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px 13px; border-bottom: 1px solid #dce7ea; text-align: left; vertical-align: top; }
+    th { color: #214e60; background: #edf5f7; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+    td { color: #4d6874; font-size: 11px; }
+    td:first-child { color: #193f50; font-weight: 900; }
+    .security-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px; }
+    .security {
+      padding: 16px;
+      border: 1px solid #dfd5e9;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #fdfcff, #f1edf8);
+    }
+    .security b { display: block; margin-bottom: 5px; color: #52437a; font-size: 11px; }
+    .security span { color: #6b6574; font-size: 10px; }
+    .ops-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 11px; }
+    .ops {
+      padding: 15px;
+      border: 1px solid #d7e4e8;
+      border-radius: 12px;
+      background: #fbfdfd;
+    }
+    .ops b { display: block; margin-bottom: 6px; color: #285261; }
+    .ops span { color: var(--muted); font-size: 10px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 15px; }
+    .alert-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .alert {
+      padding: 13px;
+      border: 1px solid #dfd6d8;
+      border-left: 4px solid var(--red);
+      border-radius: 10px;
+      color: #6e4b52;
+      background: #fffafb;
+      font-size: 10px;
+    }
+    .alert b { display: block; margin-bottom: 4px; color: var(--red); }
+    .clouds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+    .cloud {
+      padding: 19px;
+      border: 1px solid #d6e4e8;
+      border-radius: 13px;
+      background: #fbfdfd;
+    }
+    .cloud b { display: block; margin-bottom: 8px; font: 700 23px Georgia, serif; }
+    .cloud span { display: block; color: var(--muted); font-size: 11px; }
+    .cloud.azure { border-top: 4px solid #3184d4; }
+    .cloud.aws { border-top: 4px solid #d88920; }
+    .cloud.gcp { border-top: 4px solid #27a26f; }
+    .delivery { display: grid; grid-template-columns: repeat(5, 1fr); gap: 11px; margin-top: 17px; }
+    .delivery article {
+      padding: 15px;
+      border: 1px solid #d7e4e8;
+      border-radius: 11px;
+      background: #f9fcfc;
+    }
+    .delivery b { display: block; margin-bottom: 5px; color: #295464; font-size: 11px; }
+    .delivery span { color: var(--muted); font-size: 9px; }
+    .role-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 11px; }
+    .role b { display: block; margin-bottom: 5px; color: #2b5260; }
+    .role span { color: var(--muted); font-size: 10px; }
+    .outcome-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px; }
+    .outcome { border-top: 4px solid var(--teal); }
+    .outcome:nth-child(2) { border-top-color: var(--blue); }
+    .outcome:nth-child(3) { border-top-color: var(--violet); }
+    .outcome:nth-child(4) { border-top-color: var(--amber); }
+    .outcome b { display: block; margin-bottom: 5px; color: #284f5e; }
+    .outcome span { color: var(--muted); font-size: 11px; }
+    .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .status-card.done { border-top: 4px solid var(--green); }
+    .status-card.next { border-top: 4px solid var(--amber); }
+    .status-card h3 { margin-bottom: 12px; }
+    .status-card ul { margin: 0; padding-left: 19px; color: var(--muted); font-size: 11px; }
+    .status-card li + li { margin-top: 7px; }
+    .cta {
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 30px;
+      align-items: center;
+      padding: clamp(35px, 5vw, 60px);
+      border-radius: 24px;
+      color: white;
+      background: linear-gradient(110deg, #0a2938, #114f5c 67%, #3b346f);
+      box-shadow: var(--shadow);
+    }
+    .cta h2 { max-width: 760px; }
+    .cta p { color: #c2d7dd; }
+    .cta-box { padding: 18px; border: 1px solid #477482; border-radius: 14px; background: rgba(7,29,41,.48); }
+    .cta-box b { display: block; margin-bottom: 5px; color: #6ce0d8; }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      width: min(1320px, calc(100% - 32px));
+      margin: 0 auto 30px;
+      color: #70848d;
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 1080px) {
+      .page-shell { grid-template-columns: 1fr; width: min(1320px, calc(100% - 32px)); }
+      .section-nav { position: relative; top: auto; max-height: none; }
+      .section-nav-card > strong, .section-nav-note { display: none; }
+      .section-links { grid-template-columns: repeat(4, 1fr); }
+      .hero, .cta { grid-template-columns: 1fr; }
+      .thesis, .vertical-grid, .spec-grid, .security-grid { grid-template-columns: repeat(2, 1fr); }
+      .admission { grid-template-columns: repeat(4, 1fr); }
+      .journey, .rag-flow { grid-template-columns: repeat(3, 1fr); }
+      .journey article::after { display: none; }
+      .ops-grid, .role-grid, .delivery { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 720px) {
+      .topbar-nav { display: none; }
+      .page-shell { width: min(100% - 18px, 1320px); margin-top: 9px; }
+      .section-nav-card { padding: 10px; border-radius: 14px; }
+      .section-links { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: thin; }
+      .section-links a { flex: 0 0 auto; padding: 7px 10px; white-space: nowrap; }
+      .section-links a::before { display: none; }
+      .hero { min-height: 0; padding: 31px 23px; border-radius: 18px; }
+      h1 { font-size: clamp(32px, 9vw, 40px); overflow-wrap: anywhere; }
+      h2 { font-size: clamp(25px, 7.5vw, 32px); }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .section-card { padding: 25px 18px; border-radius: 17px; }
+      .thesis, .vertical-grid, .spec-grid, .admission, .outcomes-row, .split, .security-grid, .ops-grid, .clouds, .delivery, .role-grid, .outcome-grid, .status-grid, .alert-strip { grid-template-columns: 1fr; }
+      .journey, .rag-flow { grid-template-columns: repeat(2, 1fr); }
+      .layer { grid-template-columns: 1fr; gap: 4px; }
+      table { display: block; overflow-x: auto; }
+      footer { display: block; }
+      footer span { display: block; margin-top: 5px; }
+    }
+    @media print {
+      .topbar { position: static; }
+      .topbar-nav, .section-nav, .reading-progress, .hero-actions { display: none; }
+      body { background: white; font-size: 10px; }
+      .page-shell, main { display: block; width: 100%; }
+      .hero, .section-card, .cta { break-inside: avoid; box-shadow: none; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top">
+      <span class="mark">CW</span>
+      <span><b>ContextWeaver</b><small>Governed AI Operating Platform</small></span>
+    </a>
+    <nav class="topbar-nav" aria-label="Brochure navigation">
+      <a href="#industries">Industries</a>
+      <a href="#platform">Platform</a>
+      <a href="#onboarding">Onboarding</a>
+      <a href="#execution">Execution</a>
+      <a href="#rag">RAG</a>
+      <a href="#security">Security</a>
+      <a href="#operations">Operations</a>
+      <a href="#delivery">Delivery</a>
+    </nav>
+  </header>
+
+  <div class="reading-progress" aria-hidden="true"><i id="readingProgress"></i></div>
+  <div class="page-shell">
+    <aside class="section-nav" aria-label="Page sections">
+      <div class="section-nav-card">
+        <span>Explore this page</span>
+        <strong>Trusted enterprise AI</strong>
+        <nav class="section-links">
+          <a href="#top">Overview</a>
+          <a href="#thesis">Product thesis</a>
+          <a href="#industries">Industries</a>
+          <a href="#platform">Platform layers</a>
+          <a href="#contracts">Specifications</a>
+          <a href="#onboarding">Capability factory</a>
+          <a href="#execution">Execution</a>
+          <a href="#rag">Governed RAG</a>
+          <a href="#security">Security</a>
+          <a href="#operations">Operations</a>
+          <a href="#delivery">Cloud delivery</a>
+          <a href="#roles">Reader roles</a>
+          <a href="#outcomes">Outcomes</a>
+          <a href="#readiness">Readiness</a>
+        </nav>
+        <p class="section-nav-note">Use this index to scan the story, then open the deeper technical references only where needed.</p>
+      </div>
+    </aside>
+
+    <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">One platform. Any industry. Every AI capability governed.</span>
+        <h1>The operating platform for <em>trusted enterprise AI</em></h1>
+        <p class="lede">ContextWeaver brings Services, Workflows, Agents, MCP tools, models, RAG, memory, policy, durable transactions, evidence, and operations into one spec-driven control plane that can be adapted to any business or regulated industry.</p>
+        <p class="tagline">Build what is needed. Admit only what is trusted. Execute only what is authorized.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#industries">Explore industry applications</a>
+          <a class="button" href="spec-driven-ai-platform-whitepaper.html">Read the architecture whitepaper</a>
+          <a class="button" href="governed-rag-ingestion.html">Explore governed RAG</a>
+          <a class="button" href="../documents/durable-microservice-resilience.html">Explore durable recovery</a>
+          <a class="button" href="../documents/credential-non-possession.html">Explore credential isolation</a>
+          <a class="button" href="../documents/dynamic-agent-mcp-lifecycle.html">Explore dynamic capability onboarding</a>
+          <a class="button primary" href="../documents/azure-production-platform-and-poc.html">Explore the Azure production blueprint and PoC</a>
+        </div>
+      </div>
+      <aside class="hero-side">
+        <div class="hero-card"><b>Industry-neutral core</b>The same contracts, runtime, governance, observability, security, and delivery system supports healthcare, banking, public sector, telecom, manufacturing, retail, software, and beyond.</div>
+        <div class="hero-card"><b>Vertical policy profiles</b>Each industry overlays its terminology, mandatory controls, data classifications, evidence rules, retention, residency, approvals, and domain capabilities without redesigning the platform.</div>
+        <div class="hero-card"><b>From proof of concept to production</b>Keep the speed of experimentation, then add the identity, policy, asynchronous execution, Sagas, resilience, evaluation, and evidence required to operate safely at scale.</div>
+        <div class="meta">BrainzBytes &bull; Product brochure &bull; Reviewed September 25, 2026</div>
+      </aside>
+      <div class="hero-stats" aria-label="Platform facts">
+        <article><b>32</b><span>deployable repository images</span></article>
+        <article><b>2</b><span>declarative infrastructure exceptions</span></article>
+        <article><b>8</b><span>independently governed platform layers</span></article>
+        <article><b>Any</b><span>industry through vertical policy profiles</span></article>
+      </div>
+    </section>
+
+    <section id="thesis" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">The product thesis</span>
+        <h2>The model is not the platform.</h2>
+        <p>The platform is the system that makes models, tools, data, automation, and human accountability work together safely.</p>
+      </div>
+      <div class="thesis">
+        <article><span class="number">1</span><b>Specify everything</b><span>Every Service, Workflow, Agent, MCP tool, schema, model alias, dashboard, alert, and compensation behavior is versioned and machine-validatable.</span></article>
+        <article><span class="number">2</span><b>Admit dynamically</b><span>Teams can onboard capabilities through the UI, but deployment occurs only after compatibility, supply-chain, security, evaluation, approval, and operational gates pass.</span></article>
+        <article><span class="number">3</span><b>Compose safely</b><span>The registry discovers only compatible and authorized capabilities, and the compiler freezes them into an immutable execution plan.</span></article>
+        <article><span class="number">4</span><b>Operate continuously</b><span>Reliability, quality, groundedness, safety, policy, cost, freshness, citations, and rollback are measured throughout the lifecycle.</span></article>
+      </div>
+      <div class="quote">ContextWeaver keeps the creativity of AI dynamic, while making its authority, data, side effects, evidence, and failure behavior deterministic.</div>
+    </section>
+
+    <section id="industries" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Applicable across verticals</span>
+        <h2>One reusable platform, configured for each industry's obligations.</h2>
+        <p>Industry differences become governed specifications and policy profiles, not separate architecture forks.</p>
+      </div>
+      <div class="vertical-grid">
+        <article class="vertical"><b>Healthcare & Life Sciences</b><p>Clinical support, medical knowledge, patient operations, research, prior authorization, safety review, and governed automation with minimum-necessary access, ePHI controls, consent, provenance, and human oversight.</p><small>HIPAA &bull; PHI &bull; Consent &bull; Clinical evidence</small></article>
+        <article class="vertical"><b>Banking & Capital Markets</b><p>Customer service, fraud operations, lending, risk analysis, compliance review, transaction workflows, and financial research with segregation of duties, model risk controls, immutable evidence, and reversible side effects.</p><small>PCI &bull; SOX &bull; AML/KYC &bull; Model risk</small></article>
+        <article class="vertical"><b>Insurance</b><p>Claims intake, coverage analysis, underwriting support, fraud detection, policy servicing, and case orchestration with authoritative policy sources, explainability, approvals, and complete decision lineage.</p><small>PII &bull; Fairness &bull; Evidence &bull; Retention</small></article>
+        <article class="vertical"><b>Government & Public Sector</b><p>Citizen services, case management, policy research, mission workflows, grants, and regulated operations with residency, records management, accessibility, audit, and strong human authority.</p><small>Residency &bull; Records &bull; Accessibility &bull; Zero trust</small></article>
+        <article class="vertical"><b>Telecommunications</b><p>Network operations, incident response, field service, capacity planning, customer care, and automated remediation with service runbooks, real-time telemetry, controlled tool execution, and Saga rollback.</p><small>SRE &bull; Network policy &bull; Availability &bull; Change control</small></article>
+        <article class="vertical"><b>Manufacturing & Supply Chain</b><p>Quality investigation, maintenance, procurement, production planning, supplier risk, logistics, and digital work instructions tied to authoritative engineering and operational data.</p><small>Safety &bull; OT isolation &bull; Provenance &bull; Quality</small></article>
+        <article class="vertical"><b>Retail & Consumer Services</b><p>Merchandising, inventory, customer support, personalization, commerce operations, and fulfillment with consent-aware user context, payment isolation, cost controls, and brand-safe responses.</p><small>PCI &bull; Privacy &bull; Personalization &bull; Scale</small></article>
+        <article class="vertical"><b>Software, SRE & Enterprise IT</b><p>Incident triage, code review, dependency management, release orchestration, specification governance, pipeline analysis, and infrastructure operations through constrained Agents and MCP services.</p><small>DevSecOps &bull; SFI &bull; SRE &bull; Change evidence</small></article>
+      </div>
+      <div class="profile-note"><b>Vertical profile model:</b> the shared platform remains unchanged. Each industry supplies its domain ontology, authoritative source classes, mandatory policy pack, data labels, approval matrix, evaluation suites, dashboards, alerts, workflow templates, and permitted Agent/MCP capability catalog.</div>
+    </section>
+
+    <section id="platform" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Platform architecture</span>
+        <h2>Eight independently governed layers.</h2>
+      </div>
+      <div class="stack">
+        <div class="layer"><b>Experiences & Workspaces</b><span>User portal, administrator console, developer portal, AI configuration, JupyterLab, VS Code, dashboards, topology, evidence, and approval experiences.</span></div>
+        <div class="layer"><b>Identity & Governance</b><span>OIDC, identity context, entitlements, purpose, policy decisions, approval, configuration, trust, signatures, audit, and separation of duties.</span></div>
+        <div class="layer"><b>Registry & Composition</b><span>Separate Service, Workflow, Agent, MCP, and Schema registries; lifecycle, compatibility, health, region, trust, alias resolution, and release planning.</span></div>
+        <div class="layer"><b>Workflow Runtime</b><span>Intent routing, type checking, immutable plan compilation, durable coordination, inbox/outbox, checkpoints, idempotency, HITL, Saga journal, finalization, and notification.</span></div>
+        <div class="layer"><b>Agents & MCP Capabilities</b><span>Independently deployed reasoning workers and tool services using typed envelopes, constrained identities, sandboxes, asynchronous commands, receipts, and continuous evaluation.</span></div>
+        <div class="layer"><b>RAG, Memory & Models</b><span>Authoritative source catalog, freshness ledger, governed ingestion, atomic indexes, retrieval planning, ContextPacks, citations, policy-bound memory, and model routing.</span></div>
+        <div class="layer"><b>Observability & Evidence</b><span>OpenTelemetry, metrics, logs, traces, evaluations, cost, SLOs, alerts, dashboards, audit export, lineage, and canonical reports without leaking sensitive payloads.</span></div>
+        <div class="layer"><b>Cloud Infrastructure</b><span>Kubernetes, PostgreSQL, RabbitMQ, Valkey, object storage, secrets, service mesh, GitOps, progressive delivery, backups, disaster recovery, and provider adapters.</span></div>
+      </div>
+    </section>
+
+    <section id="contracts" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Executable specifications</span>
+        <h2>A common product language for every capability.</h2>
+        <p>Specifications are not passive documentation. They drive validation, deployment, authorization, observability, evaluation, rollback, and retirement.</p>
+      </div>
+      <div class="spec-grid">
+        <article class="pillar"><code>ServiceSpec</code><p>APIs, dependencies, identity, SLOs, deployment, data boundaries, failure modes, health, dashboards, alerts, and ownership.</p></article>
+        <article class="pillar"><code>WorkflowSpec</code><p>Typed graph, conditions, bounded loops, HITL gates, bindings, budgets, transaction boundaries, fallbacks, canonical output, and compensation.</p></article>
+        <article class="pillar"><code>AgentSpec / Agent Card</code><p>Capabilities, schemas, model policy, trust tier, allowed classifications, scopes, tools, evaluation card, limits, and escalation behavior.</p></article>
+        <article class="pillar"><code>MCPSpec</code><p>Tool input/output/error schemas, side effects, exact scopes, idempotency, rate limits, compensation, endpoint trust, and operational contract.</p></article>
+      </div>
+      <div class="contract-strip">
+        <span>Immutable semantic versions</span><span>JSON Schema 2020-12</span><span>Signed definitions</span><span>Typed artifacts</span>
+        <span>Unknown fields rejected</span><span>Compatibility graph</span><span>Policy hooks</span><span>Telemetry contract</span>
+        <span>Evaluation thresholds</span><span>Compensation declaration</span><span>Owner + support model</span><span>Lifecycle state</span>
+      </div>
+    </section>
+
+    <section id="onboarding" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Dynamic capability factory</span>
+        <h2>Consume new Services, Agents, MCPs, and Workflows through the UI - without bypassing governance.</h2>
+        <p>The platform can parse, validate, scan, test, approve, deploy, discover, and observe newly introduced capabilities.</p>
+      </div>
+      <div class="admission">
+        <article class="gate" data-step="1"><b>Parse + normalize</b><span>Stable identity, semantic version, owner, canonical package, digest, and supported API version.</span></article>
+        <article class="gate" data-step="2"><b>Schema + compatibility</b><span>Strict schemas, typed bindings, error contracts, adapters, and breaking-change classification.</span></article>
+        <article class="gate" data-step="3"><b>Supply chain</b><span>Publisher trust, signature, SBOM, licenses, vulnerabilities, malware, secrets, and immutable digest.</span></article>
+        <article class="gate" data-step="4"><b>Security + policy</b><span>Least privilege, identity, network policy, classifications, purpose, tenant, region, and forbidden actions.</span></article>
+        <article class="gate" data-step="5"><b>Sandbox + evaluation</b><span>Conformance, quality, prompt injection, failure behavior, limits, compensation, and held-out tests.</span></article>
+        <article class="gate" data-step="6"><b>Approve + publish</b><span>Separation of duties, evidence completion, risk approvals, expiring exceptions, and signed registry entry.</span></article>
+        <article class="gate" data-step="7"><b>Deploy + observe</b><span>Restricted namespace, readiness, canary, dashboards, alerts, automatic pause, rollback, and promotion.</span></article>
+      </div>
+      <div class="outcomes-row">
+        <div class="decision pass">PASS - publish, deploy, canary</div>
+        <div class="decision conditional">CONDITIONAL - sandbox or review mode</div>
+        <div class="decision quarantine">QUARANTINE - preserve evidence</div>
+        <div class="decision reject">REJECT - explain failed controls</div>
+      </div>
+    </section>
+
+    <section id="execution" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Intent to governed outcome</span>
+        <h2>Dynamic discovery. Immutable execution. Durable recovery.</h2>
+      </div>
+      <div class="journey">
+        <article><b>1. Understand intent</b><span>Normalize user or event intent with identity, tenant, purpose, classification, risk, deadlines, and budget.</span><code>PromptUnderstanding</code></article>
+        <article><b>2. Select or compose</b><span>Choose an approved workflow or enter constrained composition using only admitted capabilities and control nodes.</span><code>WorkflowDefinition</code></article>
+        <article><b>3. Authorize the graph</b><span>Evaluate every reachable required, optional, fallback, Agent, MCP, model, source, and side-effect boundary.</span><code>AuthorizationManifest</code></article>
+        <article><b>4. Resolve + compile</b><span>Discover exact compatible versions and freeze schemas, aliases, policies, indexes, limits, bindings, and compensation.</span><code>ExecutionPlan</code></article>
+        <article><b>5. Execute durably</b><span>Dispatch idempotent commands through RabbitMQ, validate typed artifacts, checkpoint state, and record signed receipts.</span><code>Run + Saga Journal</code></article>
+        <article><b>6. Finalize evidence</b><span>Validate disclosure, citations, policy, cost, quality, and rollback state into one canonical report rendered for any channel.</span><code>CanonicalReport</code></article>
+      </div>
+      <div class="split" style="margin-top:16px">
+        <div class="dark">
+          <div class="dark-title">Immutable per-run resolution</div>
+          <pre>workflow + plan hash
+identity + tenant + purpose
+policy + authorization snapshot
+service + agent + MCP versions
+input + output + error schemas
+model + embedding + reranker aliases
+source + index generations
+budgets + deadlines + retry limits
+compensation graph + invalidation epochs
+
+No mid-run configuration mutation.
+No bearer tokens in the plan.</pre>
+        </div>
+        <div class="saga">
+          <article><i>1</i><div><b>Stop unsafe forward work</b><small>No new irreversible commands are issued after a compensatable failure.</small></div></article>
+          <article><i>2</i><div><b>Build from receipts</b><small>The Saga sequence is derived from completed, signed task evidence.</small></div></article>
+          <article><i>3</i><div><b>Reverse dependencies</b><small>Resolve pinned compensation capabilities and execute in reverse order.</small></div></article>
+          <article><i>4</i><div><b>Remain idempotent</b><small>Retries and redelivery never duplicate compensation side effects.</small></div></article>
+          <article><i>5</i><div><b>Escalate honestly</b><small>Incomplete reversal creates a manual operation; partial compensation is never reported as success.</small></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="rag" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Governed RAG and context memory</span>
+        <h2>Authoritative knowledge without surrendering data ownership.</h2>
+        <p>Documents remain in storage controlled by the applicable user, group, or organization. ContextWeaver uses delegated references, freshness evidence, and a per-run Effective Retrieval Plan to resolve policy, authority, scope, ranking, and citations.</p>
+      </div>
+      <div class="rag-flow">
+        <div>Owned source storage</div><div>Delegated read-only connector</div><div>Source Catalog + Freshness Ledger</div>
+        <div>Admission + immutable artifact</div><div>Shadow index + atomic publish</div><div>Authorized ContextPack + citations</div>
+      </div>
+      <table class="policy-table">
+        <thead><tr><th>Decision dimension</th><th>How ContextWeaver resolves it</th></tr></thead>
+        <tbody>
+          <tr><td>Authorization</td><td>Explicit deny and missing purpose authorization win before similarity search.</td></tr>
+          <tr><td>Mandatory policy</td><td>Applicable regulatory and organizational obligations cannot be removed by lower scopes.</td></tr>
+          <tr><td>Factual authority</td><td>The designated owner or system of record wins for the facts it governs.</td></tr>
+          <tr><td>Personalization</td><td>User preferences may override defaults only when no mandatory obligation conflicts.</td></tr>
+          <tr><td>Classification, retention, residency</td><td>The most restrictive applicable handling rule wins; legal hold preserves data but does not grant retrieval access.</td></tr>
+          <tr><td>Ranking</td><td>User, group, organization, service, workflow, Agent, and MCP preferences operate only over already-authorized candidates.</td></tr>
+        </tbody>
+      </table>
+      <div class="quote">Known-stale data is never returned. A changed, revoked, deleted, quarantined, or legal-hold source becomes ineligible immediately, even while physical projection cleanup continues.</div>
+      <div class="contract-strip">
+        <span>Event + periodic reconciliation</span><span>Exact source/index revision</span><span>ACL snapshot</span>
+        <span>Prompt-injection scan</span><span>Poisoning detection</span><span>DLP + classification</span>
+        <span>Atomic alias promotion</span><span>Bounded rollback generation</span><span>ContextPack</span>
+        <span>CitationManifest</span><span>Governed memory approval</span><span>Distributed deletion</span>
+      </div>
+    </section>
+
+    <section id="security" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Security and compliance by construction</span>
+        <h2>Agents and tools receive constrained capabilities, not ambient authority.</h2>
+        <p>Compliance profiles vary by vertical, but the enforcement architecture stays consistent.</p>
+      </div>
+      <div class="security-grid">
+        <article class="security"><b>Identity everywhere</b><span>Human and workload identity, tenant, purpose, delegation chain, correlation ID, and policy version accompany every protected operation.</span></article>
+        <article class="security"><b>Hostile-code sandbox</b><span>Non-root, read-only root, no privilege escalation, all capabilities dropped, seccomp, bounded resources, disposable pods, and signed images.</span></article>
+        <article class="security"><b>Stronger runtime isolation</b><span>gVisor or Kata RuntimeClass and dedicated tainted node pools for code-executing, third-party, regulated, or higher-risk Agents.</span></article>
+        <article class="security"><b>Default-deny network</b><span>No general internet, cloud metadata, Kubernetes API, host socket, developer endpoint, or cross-domain MCP access.</span></article>
+        <article class="security"><b>RabbitMQ capability boundary</b><span>Typed asynchronous messages, least-privilege exchanges and queues, TLS, publisher confirms, manual acknowledgements, DLQ, TTL, and rate controls.</span></article>
+        <article class="security"><b>Only one inference boundary</b><span>The Model Gateway enforces approved models, regions, classifications, redaction, token/cost limits, DLP, and provider policy without sharing credentials.</span></article>
+        <article class="security"><b>Separate MCP sandboxes</b><span>Each MCP reaches only its approved plugin or external-system domain; an Agent never directly opens a tool endpoint.</span></article>
+        <article class="security"><b>Outputs remain untrusted data</b><span>Agent-authored content is schema-validated, policy-projected, hashed, and stored as immutable data - never automatically executed by an IDE, shell, build tool, or host.</span></article>
+        <article class="security"><b>Credential non-possession</b><span>Agents receive only narrow workload identity and opaque references. Trusted gateways resolve short-lived credentials just in time and never return them to the Agent.</span></article>
+        <article class="security"><b>Continuous entitlement enforcement</b><span>Whole-graph preflight authorizes the immutable plan before a run begins. Every protected node and MCP tool is reauthorized at use time with a short-lived plan/run/node/tool-bound capability token.</span></article>
+        <article class="security"><b>Cross-pod work recovery</b><span>PostgreSQL state, RabbitMQ redelivery, renewable leases, checkpoints, inbox/outbox, idempotency, and receipts allow another replica to safely resume failed work.</span></article>
+        <article class="security"><b>Operator-owned deployment</b><span>Agents and MCPs deploy only from signed, scanned release bundles through allowlisted Helm packages. Runtime discovery registers schemas, tools, health, metrics, dashboards, alerts, and evidence before promotion.</span></article>
+      </div>
+      <div class="profile-note"><b>Compliance approach:</b> ContextWeaver supplies the technical control plane and evidence model. Healthcare, banking, government, and other regulated deployments add their authoritative legal interpretation, risk acceptance, vendor agreements, retention schedules, control mappings, and human accountability.</div>
+    </section>
+
+    <section id="operations" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">AI operations, governance, and economics</span>
+        <h2>Operate quality and safety with the same rigor as availability.</h2>
+      </div>
+      <div class="ops-grid">
+        <article class="ops"><b>Reliability</b><span>Rate, success, latency, saturation, queue age, retries, dependencies, circuit state, and error-budget burn.</span></article>
+        <article class="ops"><b>Agent quality</b><span>Completion, groundedness, plan revisions, tool accuracy, escalation, loops, evaluation, prohibited actions, and budget exhaustion.</span></article>
+        <article class="ops"><b>MCP execution</b><span>Tool calls, schema rejection, denials, timeout, side effects, idempotency, compensation, undeclared output, and receipt completion.</span></article>
+        <article class="ops"><b>RAG quality</b><span>Recall, precision, reranker lift, citation coverage and validity, freshness, authority conflicts, ACL denials, and stale-index rejection.</span></article>
+        <article class="ops"><b>Governance + cost</b><span>Policy decisions, approval wait, trust failures, exceptions, audit completion, tokens, models, search, compute, cost per outcome, and cache savings.</span></article>
+      </div>
+      <div class="chips">
+        <span>Executive posture dashboard</span><span>Capability operations dashboard</span><span>Governance evidence dashboard</span>
+        <span>Service SLO dashboard</span><span>Agent evaluation dashboard</span><span>MCP side-effect dashboard</span>
+        <span>RAG freshness dashboard</span><span>Workflow + Saga dashboard</span><span>Model cost dashboard</span><span>Release compatibility dashboard</span>
+      </div>
+      <div class="alert-strip">
+        <div class="alert"><b>Unauthorized side effect</b>Disable the capability version, revoke identity, preserve evidence, and page security and the owner.</div>
+        <div class="alert"><b>Cross-tenant retrieval</b>Fail closed, quarantine the result or index generation, and invalidate active plans and caches.</div>
+        <div class="alert"><b>Audit integrity failure</b>Pause affected workflows and prevent finalization without durable evidence.</div>
+        <div class="alert"><b>Quality or compatibility regression</b>Block promotion, route to a prior version, and identify affected pinned callers.</div>
+      </div>
+    </section>
+
+    <section id="delivery" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Cloud-neutral delivery</span>
+        <h2>Portable above Kubernetes. Provider-aware below it.</h2>
+        <p>Platform contracts remain stable while infrastructure adapters map the required outcomes to each cloud.</p>
+      </div>
+      <div class="clouds">
+        <article class="cloud azure"><b>Azure</b><span>AKS, ACR, Azure Database for PostgreSQL, Blob, Entra, Workload Identity, Key Vault, Private Link, and Azure OpenAI adapters.</span></article>
+        <article class="cloud aws"><b>AWS</b><span>EKS, ECR, RDS PostgreSQL, S3, federated IAM roles, KMS, PrivateLink, and Bedrock adapters.</span></article>
+        <article class="cloud gcp"><b>Google Cloud</b><span>GKE, Artifact Registry, Cloud SQL, Cloud Storage, Workload Identity, Cloud KMS, Private Service Connect, and Vertex AI adapters.</span></article>
+      </div>
+      <div class="delivery">
+        <article><b>Infrastructure as code</b><span>Terraform/OpenTofu modules produce a signed, non-secret platform contract.</span></article>
+        <article><b>GitOps desired state</b><span>Argo CD reconciles namespaces, policies, operators, shared services, platform services, and experiences.</span></article>
+        <article><b>One image per runtime repo</b><span>Independent ownership, build, scan, signing, promotion, deployment, and rollback boundaries.</span></article>
+        <article><b>Progressive delivery</b><span>Dark deployment, synthetic, shadow, canary, atomic alias promotion, graceful drain, and bounded rollback.</span></article>
+        <article><b>Durable data evolution</b><span>Expand-migrate-contract changes and previous-reader compatibility protect zero-downtime upgrade and downgrade.</span></article>
+      </div>
+      <div class="profile-note"><b>Release governance:</b> the implemented local Registry endpoint <code>POST /v1/releases/validate</code> orders multi-service dependencies and rejects unsafe bundles, dependency cycles, non-backward-compatible contracts, unavailable rollback artifacts, or downgrade paths that previous readers and indexes cannot support.</div>
+    </section>
+
+    <section id="roles" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Designed for every stakeholder</span>
+        <h2>One operating picture, tailored by role.</h2>
+      </div>
+      <div class="role-grid">
+        <article class="role"><b>Business leaders</b><span>Adoption, governed outcomes, quality, safety posture, cost, risk, and business KPI contribution.</span></article>
+        <article class="role"><b>Product + domain teams</b><span>Reusable workflows, domain Agents, vertical policy packs, approved knowledge, evaluation, and measurable outcomes.</span></article>
+        <article class="role"><b>Developers</b><span>Typed contracts, local tools, UI onboarding, Jupyter and VS Code workspaces, test harnesses, and self-service deployment.</span></article>
+        <article class="role"><b>Platform + SRE</b><span>Topology, SLOs, queues, traces, dashboards, alerts, capacity, release validation, rollback, DR, and day-2 operations.</span></article>
+        <article class="role"><b>Security, risk + compliance</b><span>Policy, approvals, signatures, evidence, provenance, exceptions, access decisions, disclosure, retention, and audit export.</span></article>
+      </div>
+    </section>
+
+    <section id="outcomes" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Product outcomes</span>
+        <h2>Move fast without confusing a successful demo with an operable system.</h2>
+      </div>
+      <div class="outcome-grid">
+        <article class="outcome"><b>Faster capability delivery</b><span>Reusable specifications, UI onboarding, templates, shared registries, and platform services reduce the cost of introducing new AI experiences.</span></article>
+        <article class="outcome"><b>Lower operational risk</b><span>Typed boundaries, whole-graph authorization, asynchronous isolation, durable workflows, Sagas, and fail-closed controls contain failure and side effects.</span></article>
+        <article class="outcome"><b>Better evidence and trust</b><span>Every answer and action can retain its source revisions, citations, contracts, policy decisions, execution receipts, evaluation, and cost.</span></article>
+        <article class="outcome"><b>Long-term adaptability</b><span>Models, clouds, Agents, MCP technologies, vector stores, workflows, and industry obligations can evolve behind stable platform contracts.</span></article>
+      </div>
+    </section>
+
+    <section id="readiness" class="section-card">
+      <div class="section-head">
+        <span class="eyebrow">Current product foundation and direction</span>
+        <h2>Built incrementally, without overstating completeness.</h2>
+      </div>
+      <div class="status-grid">
+        <article class="status-card done">
+          <h3>Implemented locally</h3>
+          <ul>
+            <li>Cloud-neutral repository, image, Helm, GitOps, namespace, and pipeline architecture as the sole target architecture.</li>
+            <li>Registry service with immutable registration, AI provider configuration, logical alias resolution, and multi-service release compatibility validation.</li>
+            <li>Source Catalog and Freshness Ledger with ownership, authority, revision, ACL, lifecycle, PostgreSQL persistence, and immediate stale/revoked/deleted blocking.</li>
+            <li>Version-pinned RAG ingestion, local extraction/chunking, shadow generations, validation gates, atomic publication, rollback, governed lexical/vector retrieval, and citations.</li>
+            <li>Durable Service and Workflow Runs with RabbitMQ dispatch, human approvals, timers, event waits, callbacks, notification, publication, verification, finalization, and correlated observability.</li>
+            <li>Services Studio, Run History, Approval Inbox, Registry-discovered Agents and MCPs, workspaces, local container environment, tests, publications, and editable architecture.</li>
+          </ul>
+        </article>
+        <article class="status-card next">
+          <h3>Product realization roadmap</h3>
+          <ul>
+            <li>Complete production policy, entitlement, audit, artifact, credential-exchange, and capability-token enforcement.</li>
+            <li>Add production storage events, reconciliation, malware/DLP/poisoning scanners, richer extraction, managed embeddings/reranking, distributed deletion, and scale qualification.</li>
+            <li>Deliver dynamic Agent and MCP admission, independent sandboxed runtimes, operator reconciliation, model-gateway enforcement, canarying, and continuous evaluations.</li>
+            <li>Operationalize dashboard and alert specifications, privacy-safe telemetry, release promotion, multi-region recovery, vertical policy packs, and end-to-end compliance evidence.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="start" class="cta">
+      <div>
+        <span class="eyebrow">The ContextWeaver promise</span>
+        <h2>Use AI everywhere - without losing control of identity, data, authority, execution, or evidence.</h2>
+        <p>ContextWeaver turns a collection of evolving AI technologies into a governed product platform that can be reused across teams, clouds, use cases, and industry verticals.</p>
+      </div>
+      <aside class="cta-box">
+        <b>Explore the product architecture</b>
+        <p>Continue with the detailed spec-driven platform whitepaper, the governed RAG publication, the lifecycle view, and the editable Draw.io source.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="spec-driven-ai-platform-whitepaper.html">Architecture whitepaper</a>
+          <a class="button" href="platform-realization-one-page.html">Lifecycle overview</a>
+          <a class="button" href="../diagram-viewer/contextweaver-nextgen-architecture.html">Architecture viewer</a>
+        </div>
+      </aside>
+    </section>
+    </main>
+  </div>
+
+  <footer>
+    <span>ContextWeaver NextGen &bull; BrainzBytes</span>
+    <span>The Governed AI Operating Platform &bull; Reviewed September 25, 2026</span>
+  </footer>
+  <script>
+    (() => {
+      const links = [...document.querySelectorAll('.section-links a')];
+      const sections = links
+        .map(link => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
+      const setActive = id => {
+        links.forEach(link => {
+          const active = link.getAttribute('href') === `#${id}`;
+          link.classList.toggle('active', active);
+          if (active) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      };
+      const observer = new IntersectionObserver(entries => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      }, { rootMargin: '-18% 0px -68% 0px', threshold: [0, .1, .4] });
+      sections.forEach(section => observer.observe(section));
+      const progress = document.getElementById('readingProgress');
+      const updateProgress = () => {
+        const available = document.documentElement.scrollHeight - innerHeight;
+        progress.style.width = `${available > 0 ? Math.min(100, scrollY / available * 100) : 0}%`;
+      };
+      addEventListener('scroll', updateProgress, { passive: true });
+      addEventListener('resize', updateProgress);
+      updateProgress();
+      setActive('top');
+    })();
+  </script>
+</body>
+</html>
