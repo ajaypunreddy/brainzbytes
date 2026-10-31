@@ -5,11 +5,11 @@
   'use strict';
 
   // ── Theme Toggle ──────────────────────────────────────────
-  var THEMES = ['midnight', 'light', 'neon'];
-  var ICONS = { midnight: '🌙', light: '☀️', neon: '⚡' };
-  var saved = localStorage.getItem('bb_theme');
-  var current = THEMES.indexOf(saved) >= 0 ? saved : 'midnight';
+  var THEMES = ['midnight'];
+  var ICONS = { midnight: '●' };
+  var current = 'midnight';
   document.documentElement.setAttribute('data-theme', current);
+  localStorage.setItem('bb_theme', current);
 
   function setTheme(t) {
     current = t;
@@ -32,59 +32,46 @@
   })();
 
   var NAV_SECTIONS = [
-    { label: 'ContextWeaver', href: BASE + 'contextweaver/index.html', icon: '🧠',
+    { label: 'Product', href: BASE + 'index.html#platform',
       children: [
-        { label: 'Platform overview', href: BASE + 'contextweaver/index.html' },
-        { label: 'Why ContextWeaver', href: BASE + 'index.html#why' },
-        { label: 'Governed lifecycle', href: BASE + 'index.html#contextweaver' },
-        { label: 'Product experience', href: BASE + 'index.html#product' },
-        { label: 'Roles and outcomes', href: BASE + 'index.html#roles' }
+        { label: 'How ContextWeaver works', href: BASE + 'index.html#platform' },
+        { label: 'Universal Workspace Lab', href: BASE + 'index.html#workspace' },
+        { label: 'Current product status', href: BASE + 'index.html#status' },
+        { label: 'Detailed platform overview', href: BASE + 'contextweaver/index.html' }
       ]
     },
-    { label: 'Architecture', href: BASE + 'docs/documents/azure-production-platform-and-poc.html', icon: '🏗️',
+    { label: 'Learn', href: BASE + 'docs/index.html',
       children: [
-        { label: 'NextGen platform overview', href: BASE + 'docs/documents/azure-production-platform-and-poc.html' },
+        { label: 'Learning Center', href: BASE + 'docs/index.html' },
+        { label: 'Start by task', href: BASE + 'docs/index.html#start' },
+        { label: 'Learn by role', href: BASE + 'docs/index.html#roles' },
+        { label: 'Technical library', href: BASE + 'docs/index.html#library' }
+      ]
+    },
+    { label: 'Architecture', href: BASE + 'docs/index.html#architecture',
+      children: [
+        { label: 'Architecture explorer', href: BASE + 'docs/diagram-viewer/contextweaver-nextgen-architecture.html' },
+        { label: 'Azure production platform', href: BASE + 'docs/documents/azure-production-platform-and-poc.html' },
         { label: 'Durable execution', href: BASE + 'docs/documents/durable-asynchronous-execution.html' },
-        { label: 'Cloud-neutral delivery', href: BASE + 'docs/documents/cloud-neutral-infrastructure.html' },
-        { label: 'Source and state structure', href: BASE + 'docs/documents/source-code-structure.html' },
-        { label: 'Optional diagram library', href: BASE + 'docs/diagram-viewer/contextweaver-nextgen-architecture.html' }
+        { label: 'Source and state structure', href: BASE + 'docs/documents/source-code-structure.html' }
       ]
     },
-    { label: 'Platform guides', href: BASE + 'docs/index.html', icon: '🎯',
+    { label: 'Trust', href: BASE + 'index.html#trust',
       children: [
-        { label: 'Documentation by role', href: BASE + 'docs/index.html#audiences' },
-        { label: 'Services and Workflows', href: BASE + 'contextweaver/index.html' },
-        { label: 'Dynamic Agents and MCPs', href: BASE + 'docs/documents/dynamic-agent-mcp-lifecycle.html' },
-        { label: 'Governed RAG', href: BASE + 'docs/documents/governed-rag-ingestion.html' },
-        { label: 'Operations and SRE', href: BASE + 'docs/documents/observability-standard.html' }
-      ]
-    },
-    { label: 'Trust', href: BASE + 'docs/documents/continuous-entitlement-enforcement.html', icon: '🔐',
-      children: [
-        { label: 'Trust and deployment', href: BASE + 'index.html#trust' },
+        { label: 'Trust model', href: BASE + 'index.html#trust' },
         { label: 'Continuous authorization', href: BASE + 'docs/documents/continuous-entitlement-enforcement.html' },
-        { label: 'Credential isolation', href: BASE + 'docs/documents/credential-non-possession.html' },
-        { label: 'Agent sandbox security', href: BASE + 'docs/documents/agent-sandbox-security.html' },
+        { label: 'Credential non-possession', href: BASE + 'docs/documents/credential-non-possession.html' },
         { label: 'Implementation readiness', href: BASE + 'docs/documents/implementation-readiness.html' }
       ]
     },
-    { label: 'Resources', href: BASE + 'docs/index.html', icon: '📚',
-      children: [
-        { label: 'Documentation', href: BASE + 'docs/index.html' },
-        { label: 'Technical library', href: BASE + 'docs/index.html#library' },
-        { label: 'Product brochure', href: BASE + 'docs/features/contextweaver-product-brochure.html' },
-        { label: 'NextGen whitepaper', href: BASE + 'docs/documents/spec-driven-ai-platform-whitepaper.html' },
-        { label: 'Diagram library', href: BASE + 'docs/diagram-viewer/contextweaver-nextgen-architecture.html' }
-      ]
-    },
-    { label: 'Launch app ↗', href: 'https://app.brainzbytes.com', icon: '↗' }
+    { label: 'Launch app ↗', href: 'https://app.brainzbytes.com' }
   ];
 
   // Ordered page list for prev/next navigation
   var PAGE_ORDER = [
     { href: 'index.html', title: 'Home' },
     { href: 'contextweaver/index.html', title: 'Product Overview' },
-    { href: 'docs/index.html', title: 'Documentation' }
+    { href: 'docs/index.html', title: 'Learning Center' }
   ];
 
   function getCurrentPageIndex() {
@@ -175,15 +162,7 @@
 
     // Theme toggle in nav
     var themeContainer = nav.querySelector('.bb-nav-theme');
-    THEMES.forEach(function(t) {
-      var btn = document.createElement('button');
-      btn.className = 'theme-btn' + (t === current ? ' active' : '');
-      btn.dataset.theme = t;
-      btn.innerHTML = ICONS[t];
-      btn.title = t.charAt(0).toUpperCase() + t.slice(1) + ' theme';
-      btn.addEventListener('click', function() { setTheme(t); });
-      themeContainer.appendChild(btn);
-    });
+    themeContainer.hidden = true;
 
     // Hamburger toggle for mobile
     nav.querySelector('.bb-nav-hamburger').addEventListener('click', function() {
@@ -218,31 +197,31 @@
     footer.className = 'bb-site-footer';
     footer.innerHTML = '<div class="bb-footer-inner">'
       + '<div class="bb-footer-col">'
-      + '<h4>ContextWeaver</h4>'
-      + '<a href="' + BASE + 'contextweaver/index.html">ContextWeaver</a>'
-      + '<a href="' + BASE + 'index.html#contextweaver">Governed lifecycle</a>'
-      + '<a href="' + BASE + 'index.html#product">Product experience</a>'
-      + '<a href="' + BASE + 'docs/documents/azure-production-platform-and-poc.html">NextGen architecture</a>'
+      + '<h4>Product</h4>'
+      + '<a href="' + BASE + 'index.html#platform">How it works</a>'
+      + '<a href="' + BASE + 'index.html#workspace">Workspace Lab</a>'
+      + '<a href="' + BASE + 'index.html#status">Current status</a>'
+      + '<a href="' + BASE + 'contextweaver/index.html">Platform overview</a>'
       + '</div>'
       + '<div class="bb-footer-col">'
-      + '<h4>Platform guides</h4>'
-      + '<a href="' + BASE + 'index.html#roles">Platform teams</a>'
-      + '<a href="' + BASE + 'docs/documents/dynamic-agent-mcp-lifecycle.html">Agents and MCPs</a>'
-      + '<a href="' + BASE + 'docs/documents/governed-rag-ingestion.html">Governed RAG</a>'
-      + '<a href="' + BASE + 'docs/documents/durable-asynchronous-execution.html">Durable execution</a>'
+      + '<h4>Learn</h4>'
+      + '<a href="' + BASE + 'docs/index.html">Learning Center</a>'
+      + '<a href="' + BASE + 'docs/index.html#start">Start by task</a>'
+      + '<a href="' + BASE + 'docs/index.html#roles">Learn by role</a>'
+      + '<a href="' + BASE + 'docs/index.html#library">Technical library</a>'
       + '</div>'
       + '<div class="bb-footer-col">'
       + '<h4>Trust</h4>'
       + '<a href="' + BASE + 'docs/documents/continuous-entitlement-enforcement.html">Continuous authorization</a>'
-      + '<a href="' + BASE + 'docs/documents/credential-non-possession.html">Credential isolation</a>'
-      + '<a href="' + BASE + 'docs/documents/agent-sandbox-security.html">Agent sandbox</a>'
+      + '<a href="' + BASE + 'docs/documents/credential-non-possession.html">Credential non-possession</a>'
       + '<a href="' + BASE + 'docs/documents/observability-standard.html">Observability standard</a>'
+      + '<a href="' + BASE + 'docs/documents/implementation-readiness.html">Implementation readiness</a>'
       + '</div>'
       + '<div class="bb-footer-col">'
-      + '<h4>Resources</h4>'
-      + '<a href="' + BASE + 'docs/index.html">Documentation</a>'
-      + '<a href="' + BASE + 'docs/index.html#library">Technical library</a>'
-      + '<a href="' + BASE + 'docs/features/contextweaver-product-brochure.html">Product brochure</a>'
+      + '<h4>Architecture</h4>'
+      + '<a href="' + BASE + 'docs/index.html#architecture">Architecture path</a>'
+      + '<a href="' + BASE + 'docs/diagram-viewer/contextweaver-nextgen-architecture.html">Diagram explorer</a>'
+      + '<a href="' + BASE + 'docs/documents/source-code-structure.html">Source structure</a>'
       + '<a href="https://app.brainzbytes.com" target="_blank">Launch App ↗</a>'
       + '</div>'
       + '</div>'
