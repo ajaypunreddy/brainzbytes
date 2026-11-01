@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>ContextWeaver Learning Center | Learn by task, role, and architecture</title>
-  <meta name="description" content="Task-based ContextWeaver guides for the Workspace Lab, Services, Workflows, Agents, MCPs, governance, RAG, durable execution, deployment, and operations.">
+  <meta name="description" content="Learn how ContextWeaver governs enterprise AI with identity-aware policy, security guardrails, human controls, durable execution, evidence, and cross-industry operating patterns.">
   <meta name="theme-color" content="#050b08">
   <meta property="og:title" content="ContextWeaver Learning Center">
   <meta property="og:description" content="Start with what you need to do, then open the technical depth that answers your next question.">
@@ -42,18 +42,18 @@
       <div class="cw-container cw-hero-grid">
         <div>
           <p class="cw-eyebrow">ContextWeaver Learning Center</p>
-          <h1>Learn by <span>what you need to do.</span></h1>
-          <p class="cw-lead">Start with a guided task, follow one governed request, or search the technical library. You do not need to read the entire architecture before you can build, test, govern, or operate a capability.</p>
+          <h1>Learn how to govern AI <span>from design to production.</span></h1>
+          <p class="cw-lead">Start with the business outcome, follow the controls that make it trustworthy, and open technical depth only when you need it. The same governance model applies across industries while each domain keeps its own data, policy, risk, and operating boundaries.</p>
           <div class="cw-actions">
             <a class="cw-button primary" href="#start">Choose a learning path →</a>
             <a class="cw-button" href="../">Return to product overview</a>
           </div>
         </div>
         <div class="cw-code-flow" aria-label="Recommended learning paths">
-          <div class="cw-code-line"><strong>10 min</strong><span><b>Understand the platform:</b> intent, capability graph, policy, runtime, and evidence.</span></div>
-          <div class="cw-code-line"><strong>15 min</strong><span><b>Test one capability:</b> use the Workspace Lab with a Workflow, Agent, or MCP.</span></div>
-          <div class="cw-code-line"><strong>20 min</strong><span><b>Review the trust model:</b> identity, entitlements, credentials, and side effects.</span></div>
-          <div class="cw-code-line"><strong>30 min</strong><span><b>Inspect the architecture:</b> services, state, queues, registries, gateways, and delivery.</span></div>
+          <div class="cw-code-line"><strong>10 min</strong><span><b>Understand the platform:</b> accountability, capability graphs, policy, runtime, and evidence.</span></div>
+          <div class="cw-code-line"><strong>15 min</strong><span><b>Understand guardrails:</b> identity, data, tools, actions, budgets, and side effects.</span></div>
+          <div class="cw-code-line"><strong>20 min</strong><span><b>Review human control:</b> risk tiers, approvals, separation of duties, and escalation.</span></div>
+          <div class="cw-code-line"><strong>30 min</strong><span><b>Inspect operations:</b> durable state, recovery, telemetry, assurance, and evidence.</span></div>
         </div>
       </div>
     </section>
@@ -65,10 +65,10 @@
           <p>Each path is short by design. It begins with the product decision, then links to the detailed contract, implementation, or architecture only where it becomes useful.</p>
         </div>
         <div class="cw-grid four">
-          <article class="cw-card"><span class="meta">Explore</span><h3>Understand ContextWeaver</h3><p>Learn the product promise, artifact model, lifecycle, and the boundary between AI proposals and platform authority.</p><a href="../#platform">Start with the product story →</a></article>
-          <article class="cw-card"><span class="meta">Build</span><h3>Create a governed capability</h3><p>Design MCPs, Agents, Workflows, and Services through one shared Studio lifecycle and typed contracts.</p><a href="documents/studio-operating-model.html">Open the Studio model →</a></article>
-          <article class="cw-card"><span class="meta">Test</span><h3>Exercise assets independently</h3><p>Select a Solution, Service, Workflow, Agent, or MCP and inspect its output, journey, decisions, providers, and transcript.</p><a href="#workspace-lab">Open the Workspace Lab guide →</a></article>
-          <article class="cw-card"><span class="meta">Operate</span><h3>Run and recover safely</h3><p>Understand durable acceptance, queues, workers, approvals, retries, compensation, telemetry, and evidence.</p><a href="documents/durable-asynchronous-execution.html">Open durable execution →</a></article>
+          <article class="cw-card"><span class="meta">Adopt</span><h3>Establish accountable AI</h3><p>Define ownership, purpose, risk tiers, acceptable use, human authority, and promotion criteria before capabilities reach production.</p><a href="../#platform">Start with the platform story →</a></article>
+          <article class="cw-card"><span class="meta">Build</span><h3>Create a governed capability</h3><p>Turn business intent into typed Services, Workflows, Agents, tools, knowledge, approvals, and policy through one lifecycle.</p><a href="documents/studio-operating-model.html">Open the Studio model →</a></article>
+          <article class="cw-card"><span class="meta">Secure</span><h3>Apply guardrails at runtime</h3><p>Bind identity, entitlements, data access, credentials, actions, budgets, and side effects to every protected execution.</p><a href="documents/continuous-entitlement-enforcement.html">Open the authorization model →</a></article>
+          <article class="cw-card"><span class="meta">Operate</span><h3>Run, recover, and prove</h3><p>Use durable state, approvals, retries, compensation, telemetry, and connected evidence to operate AI as a managed system.</p><a href="documents/durable-asynchronous-execution.html">Open durable execution →</a></article>
         </div>
       </div>
     </section>
@@ -99,13 +99,13 @@
     <section class="cw-section alt">
       <div class="cw-container">
         <div class="cw-section-head">
-          <div><p class="cw-eyebrow">New platform capabilities</p><h2 class="cw-title small">The documentation now reflects the current system.</h2></div>
-          <p>These capabilities are linked throughout the relevant architecture, security, deployment, and operations paths.</p>
+          <div><p class="cw-eyebrow">Core platform value</p><h2 class="cw-title small">Governance that remains attached to execution.</h2></div>
+          <p>ContextWeaver turns governance from a document or review checkpoint into enforceable runtime behavior that can be inspected, measured, and improved.</p>
         </div>
         <div class="cw-grid three">
-          <article class="cw-card"><span class="meta">Public Docker MCPs</span><h3>Deploy standard MCP images</h3><p>Adapt stdio or Streamable HTTP servers behind the ContextWeaver gateway, pin images, allowlist tools, and keep vendor containers unchanged.</p><a href="documents/dynamic-agent-mcp-lifecycle.html">Read the lifecycle →</a></article>
-          <article class="cw-card"><span class="meta">Organization connections</span><h3>Configure once for authorized users</h3><p>Managers own shared connection configuration; runtime values are materialized into Secrets and remain hidden from ordinary users and Agents.</p><a href="documents/credential-non-possession.html">Read the credential model →</a></article>
-          <article class="cw-card"><span class="meta">Exact MCP authorization</span><h3>Bind policy to resource and tool</h3><p>Calls map to deterministic actions such as <code>mcp.tool:find</code> and exact tenant-scoped MCP resources. Read-only role scopes never imply side-effecting authority.</p><a href="documents/continuous-entitlement-enforcement.html">Read authorization →</a></article>
+          <article class="cw-card"><span class="meta">Governance controls</span><h3>Define who is accountable</h3><p>Attach ownership, purpose, versions, risk classification, approvals, evaluation criteria, and promotion rules to reusable capabilities.</p><a href="documents/studio-operating-model.html">Read the operating model →</a></article>
+          <article class="cw-card"><span class="meta">Security guardrails</span><h3>Constrain what AI can do</h3><p>Enforce least privilege across identity, data, tools, credentials, environments, budgets, and side effects at both preflight and runtime.</p><a href="documents/continuous-entitlement-enforcement.html">Read authorization →</a></article>
+          <article class="cw-card"><span class="meta">Evidence and assurance</span><h3>Make every run reviewable</h3><p>Connect intent, versions, decisions, approvals, citations, provider exchanges, effects, metrics, logs, and traces into one execution record.</p><a href="documents/observability-standard.html">Read the evidence model →</a></article>
         </div>
       </div>
     </section>
@@ -114,7 +114,7 @@
       <div class="cw-container">
         <div class="cw-section-head">
           <div><p class="cw-eyebrow">Choose your role</p><h2 class="cw-title small">Open only the depth you need.</h2></div>
-          <p>The same platform looks different to a business owner, builder, security reviewer, and operator. These paths keep each reader focused on their decisions.</p>
+          <p>The same platform supports many industries, but each role has a different responsibility. These paths keep business leaders, builders, security teams, risk owners, and operators focused on the decisions they control.</p>
         </div>
         <div class="cw-paths">
           <a class="cw-path" href="../#platform"><b>01</b><strong>Business and product leaders</strong><span>Value, lifecycle, outcomes, adoption, and human authority.</span></a>
