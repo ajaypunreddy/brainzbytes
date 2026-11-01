@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720"><style>
+  .grid-lines path { stroke:#38544a; stroke-width:1; }
+  .diagram-title { fill:#f4f8f2; font:700 24px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .diagram-subtitle { fill:#a8bbb3; font:12px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .node rect { fill:#10231e; stroke:#38544a; stroke-width:2; }
+  .node-mint rect { stroke:#70e6b1; } .node-sky rect { stroke:#52b788; }
+  .node-amber rect { stroke:#ffc76a; } .node-violet rect { stroke:#9bcf9f; }
+  .node-coral rect { stroke:#7fb98d; }
+  .node-title { fill:#f4f8f2; font:700 14px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor:middle; }
+  .node-subtitle { fill:#a8bbb3; font:10px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor:middle; }
+  .edge path { fill:none; stroke:#38544a; stroke-width:2.5; }
+  .edge text { fill:#a8bbb3; font:9px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor:middle; paint-order:stroke; stroke:#07110f; stroke-width:4; }
+  .edge-governance path { stroke:#9bcf9f; stroke-dasharray:8 6; }
+  .edge-success path { stroke:#70e6b1; } .edge-evidence path { stroke:#ffc76a; stroke-dasharray:5 5; }
+  .edge-waiting path { stroke:#ffc76a; stroke-dasharray:10 7; }
+</style>
+    <g role="img" aria-labelledby="diagram-title diagram-desc">
+      <title id="diagram-title">Eight Platform Planes</title>
+      <desc id="diagram-desc">Cerebro, Weave, and Loom coordinate stable governance and execution contracts above replaceable infrastructure.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="context-stroke"/>
+        </marker>
+        <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="1200" height="720" fill="#07110f"/>
+      <g class="grid-lines" opacity=".22">
+        <path d="M 0 0 V 720"/><path d="M 60 0 V 720"/><path d="M 120 0 V 720"/><path d="M 180 0 V 720"/><path d="M 240 0 V 720"/><path d="M 300 0 V 720"/><path d="M 360 0 V 720"/><path d="M 420 0 V 720"/><path d="M 480 0 V 720"/><path d="M 540 0 V 720"/><path d="M 600 0 V 720"/><path d="M 660 0 V 720"/><path d="M 720 0 V 720"/><path d="M 780 0 V 720"/><path d="M 840 0 V 720"/><path d="M 900 0 V 720"/><path d="M 960 0 V 720"/><path d="M 1020 0 V 720"/><path d="M 1080 0 V 720"/><path d="M 1140 0 V 720"/><path d="M 1200 0 V 720"/>
+        <path d="M 0 0 H 1200"/><path d="M 0 60 H 1200"/><path d="M 0 120 H 1200"/><path d="M 0 180 H 1200"/><path d="M 0 240 H 1200"/><path d="M 0 300 H 1200"/><path d="M 0 360 H 1200"/><path d="M 0 420 H 1200"/><path d="M 0 480 H 1200"/><path d="M 0 540 H 1200"/><path d="M 0 600 H 1200"/><path d="M 0 660 H 1200"/><path d="M 0 720 H 1200"/>
+      </g>
+      <text class="diagram-title" x="36" y="46">Eight Platform Planes</text>
+      <text class="diagram-subtitle" x="36" y="72">Cerebro, Weave, and Loom coordinate stable governance and execution contracts above replaceable infrastructure.</text>
+      <g class="edges"><g id="edge-p1" class="edge edge-governance" data-edge-id="p1"><path d="M 312.0 139.5 L 331.0 139.5 L 331.0 139.5 L 350.0 139.5" marker-end="url(#arrow)"/><text x="331.0" y="131.5">identity + action</text></g><g id="edge-p2" class="edge edge-governance" data-edge-id="p2"><path d="M 600.0 139.5 L 619.0 139.5 L 619.0 139.5 L 638.0 139.5" marker-end="url(#arrow)"/><text x="619.0" y="131.5">eligibility</text></g><g id="edge-p3" class="edge edge-data" data-edge-id="p3"><path d="M 888.0 139.5 L 907.0 139.5 L 907.0 139.5 L 926.0 139.5" marker-end="url(#arrow)"/><text x="899.5" y="131.5">resolution</text></g><g id="edge-p4" class="edge edge-data" data-edge-id="p4"><path d="M 926.0 139.5 L 619.0 139.5 L 619.0 329.5 L 312.0 329.5" marker-end="url(#arrow)"/><text x="611.5" y="226.5">typed work</text></g><g id="edge-p5" class="edge edge-data" data-edge-id="p5"><path d="M 312.0 329.5 L 331.0 329.5 L 331.0 329.5 L 350.0 329.5" marker-end="url(#arrow)"/><text x="331.0" y="321.5">authorized context</text></g><g id="edge-p6" class="edge edge-evidence" data-edge-id="p6"><path d="M 600.0 329.5 L 619.0 329.5 L 619.0 329.5 L 638.0 329.5" marker-end="url(#arrow)"/><text x="619.0" y="321.5">lineage</text></g><g id="edge-p7" class="edge edge-evidence" data-edge-id="p7"><path d="M 888.0 329.5 L 907.0 329.5 L 907.0 329.5 L 926.0 329.5" marker-end="url(#arrow)"/><text x="899.5" y="321.5">operate</text></g><g id="edge-p8" class="edge edge-data" data-edge-id="p8"><path d="M 285.0 500.0 L 285.0 343.5 L 187.0 343.5 L 187.0 187.0" marker-end="url(#arrow)"/><text x="236.0" y="338.0">experience</text></g><g id="edge-p9" class="edge edge-governance" data-edge-id="p9"><path d="M 285.0 500.0 L 285.0 343.5 L 475.0 343.5 L 475.0 187.0" marker-end="url(#arrow)"/><text x="380.0" y="338.0">control</text></g><g id="edge-p10" class="edge edge-data" data-edge-id="p10"><path d="M 600.0 500.0 L 600.0 343.5 L 763.0 343.5 L 763.0 187.0" marker-end="url(#arrow)"/><text x="681.5" y="338.0">catalog</text></g><g id="edge-p11" class="edge edge-data" data-edge-id="p11"><path d="M 735.0 552.5 L 830.5 552.5 L 830.5 139.5 L 926.0 139.5" marker-end="url(#arrow)"/><text x="818.0" y="338.0">capabilities</text></g><g id="edge-p12" class="edge edge-data" data-edge-id="p12"><path d="M 465.0 552.5 L 388.5 552.5 L 388.5 329.5 L 312.0 329.5" marker-end="url(#arrow)"/><text x="393.5" y="433.0">composition</text></g><g id="edge-p13" class="edge edge-data" data-edge-id="p13"><path d="M 780.0 552.5 L 546.0 552.5 L 546.0 329.5 L 312.0 329.5" marker-end="url(#arrow)"/><text x="551.0" y="433.0">runtime</text></g><g id="edge-p14" class="edge edge-data" data-edge-id="p14"><path d="M 780.0 552.5 L 690.0 552.5 L 690.0 329.5 L 600.0 329.5" marker-end="url(#arrow)"/><text x="695.0" y="433.0">data</text></g><g id="edge-p15" class="edge edge-data" data-edge-id="p15"><path d="M 915.0 500.0 L 915.0 438.5 L 1036.0 438.5 L 1036.0 377.0" marker-end="url(#arrow)"/><text x="975.5" y="433.0">providers</text></g></g>
+      <g class="nodes">
+    <g id="node-experience" class="node node-violet">
+      <rect x="62" y="92" width="250" height="95" rx="16"/>
+      <text class="node-title" x="187.0" y="123"><tspan x="187.0" dy="0">1 · Experience</tspan></text>
+      <text class="node-subtitle" x="187.0" y="147"><tspan x="187.0" dy="0">Portal · Studio · workspaces ·</tspan><tspan x="187.0" dy="14">operations</tspan></text>
+    </g>
+    <g id="node-governance" class="node node-amber">
+      <rect x="350" y="92" width="250" height="95" rx="16"/>
+      <text class="node-title" x="475.0" y="123"><tspan x="475.0" dy="0">2 · Governance</tspan></text>
+      <text class="node-subtitle" x="475.0" y="147"><tspan x="475.0" dy="0">Identity · policy · approval ·</tspan><tspan x="475.0" dy="14">audit</tspan></text>
+    </g>
+    <g id="node-registry" class="node node-sky">
+      <rect x="638" y="92" width="250" height="95" rx="16"/>
+      <text class="node-title" x="763.0" y="123"><tspan x="763.0" dy="0">3 · Registry</tspan></text>
+      <text class="node-subtitle" x="763.0" y="147"><tspan x="763.0" dy="0">Catalog · schemas · compiler ·</tspan><tspan x="763.0" dy="14">lifecycle</tspan></text>
+    </g>
+    <g id="node-capabilities" class="node node-coral">
+      <rect x="926" y="92" width="220" height="95" rx="16"/>
+      <text class="node-title" x="1036.0" y="123"><tspan x="1036.0" dy="0">4 · Agents + MCP</tspan></text>
+      <text class="node-subtitle" x="1036.0" y="147"><tspan x="1036.0" dy="0">Reasoning · tools · sandbox</tspan><tspan x="1036.0" dy="14">· evaluation</tspan></text>
+    </g>
+    <g id="node-workflow" class="node node-mint">
+      <rect x="62" y="282" width="250" height="95" rx="16"/>
+      <text class="node-title" x="187.0" y="313"><tspan x="187.0" dy="0">5 · Workflow runtime</tspan></text>
+      <text class="node-subtitle" x="187.0" y="337"><tspan x="187.0" dy="0">Coordinator · queues ·</tspan><tspan x="187.0" dy="14">checkpoints · Saga</tspan></text>
+    </g>
+    <g id="node-knowledge" class="node node-sky">
+      <rect x="350" y="282" width="250" height="95" rx="16"/>
+      <text class="node-title" x="475.0" y="313"><tspan x="475.0" dy="0">6 · RAG + memory + models</tspan></text>
+      <text class="node-subtitle" x="475.0" y="337"><tspan x="475.0" dy="0">Sources · retrieval · context ·</tspan><tspan x="475.0" dy="14">aliases</tspan></text>
+    </g>
+    <g id="node-evidence" class="node node-amber">
+      <rect x="638" y="282" width="250" height="95" rx="16"/>
+      <text class="node-title" x="763.0" y="313"><tspan x="763.0" dy="0">7 · Evidence</tspan></text>
+      <text class="node-subtitle" x="763.0" y="337"><tspan x="763.0" dy="0">Metrics · logs · traces ·</tspan><tspan x="763.0" dy="14">evaluations</tspan></text>
+    </g>
+    <g id="node-infrastructure" class="node node-violet">
+      <rect x="926" y="282" width="220" height="95" rx="16"/>
+      <text class="node-title" x="1036.0" y="313"><tspan x="1036.0" dy="0">8 · Infrastructure</tspan></text>
+      <text class="node-subtitle" x="1036.0" y="337"><tspan x="1036.0" dy="0">Kubernetes · data · event</tspan><tspan x="1036.0" dy="14">bus · secrets</tspan></text>
+    </g>
+    <g id="node-cerebro" class="node node-mint">
+      <rect x="150" y="500" width="270" height="105" rx="16"/>
+      <text class="node-title" x="285.0" y="531"><tspan x="285.0" dy="0">Cerebro</tspan></text>
+      <text class="node-subtitle" x="285.0" y="555"><tspan x="285.0" dy="0">Understand · govern · compile ·</tspan><tspan x="285.0" dy="14">orchestrate · prove</tspan></text>
+    </g>
+    <g id="node-weave" class="node node-amber">
+      <rect x="465" y="500" width="270" height="105" rx="16"/>
+      <text class="node-title" x="600.0" y="531"><tspan x="600.0" dy="0">Weave</tspan></text>
+      <text class="node-subtitle" x="600.0" y="555"><tspan x="600.0" dy="0">Services · Workflows · Agents ·</tspan><tspan x="600.0" dy="14">MCPs · packs</tspan></text>
+    </g>
+    <g id="node-loom" class="node node-violet">
+      <rect x="780" y="500" width="270" height="105" rx="16"/>
+      <text class="node-title" x="915.0" y="531"><tspan x="915.0" dy="0">Loom</tspan></text>
+      <text class="node-subtitle" x="915.0" y="555"><tspan x="915.0" dy="0">Portable operational substrate</tspan></text>
+    </g></g>
+    </g></svg>

@@ -1,0 +1,154 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="description" content="Explore curated ContextWeaver technical briefs covering architecture, credential non-possession, authorization, runtime resilience, RAG, observability, cloud neutrality, and readiness.">
+      <meta name="theme-color" content="#07110f">
+      <title>ContextWeaver Technical Library</title>
+      <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+      <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
+    </head>
+    <body data-page="library">
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <div class="nav-shell">
+        <a class="brand" href="index.html" aria-label="ContextWeaver home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-copy"><strong>ContextWeaver</strong><span>by BrainzBytes</span></span>
+        </a>
+        <nav class="primary-nav" data-primary-nav aria-label="Primary navigation"><a href="index.html" data-nav-page="landing">Home</a><a href="overview.html" data-nav-page="overview">Overview</a><a href="platform.html" data-nav-page="platform">Platform</a><a href="studio.html" data-nav-page="studio">Studio</a><a href="runtime.html" data-nav-page="runtime">Runtime</a><a href="governance.html" data-nav-page="governance">Governance</a><a href="solutions.html" data-nav-page="solutions">Solutions</a><a href="architecture.html" data-nav-page="architecture">Architecture</a><a href="learning.html" data-nav-page="learning">Learn</a><a href="library.html" data-nav-page="library">Library</a><a href="company.html" data-nav-page="company">Company</a></nav>
+        <div class="nav-actions">
+          <button class="icon-button" type="button" data-theme-toggle aria-label="Change dark contrast theme">◑</button>
+          <button class="menu-button" type="button" data-menu-toggle aria-label="Open navigation" aria-expanded="false">☰</button>
+        </div>
+      </div>
+    </header>
+
+      <main id="main-content">
+
+<section class="container hero library-hero">
+  <div>
+    <p class="eyebrow">Technical library</p>
+    <h1>Go beyond the product story. <em>Inspect the reasoning.</em></h1>
+    <p class="lede">This curated library distills the architecture, security, runtime, data, and readiness papers developed for ContextWeaver NextGen. Each brief begins with the decision it explains, then exposes the design principles and implementation questions behind it.</p>
+    <div class="hero-actions"><a class="button primary" href="#briefs">Browse the briefs</a><a class="button" href="architecture.html">Return to the architecture</a></div>
+  </div>
+  <div class="library-compass" aria-label="Technical library categories">
+    <a href="#foundation"><span>01</span><b>Foundation</b><small>Platform and delivery design</small></a>
+    <a href="#trust"><span>02</span><b>Trust</b><small>Identity, credentials, sandboxing</small></a>
+    <a href="#runtime-library"><span>03</span><b>Runtime</b><small>Lifecycle, resilience, observability</small></a>
+    <a href="#data-readiness"><span>04</span><b>Data & readiness</b><small>RAG, storage, parity</small></a>
+  </div>
+</section>
+
+<section class="container section compact">
+  <div class="plain-language" data-reveal>
+    <div><p class="section-kicker">How to use this page</p><h2>Read the decision first. Expand only where you need depth.</h2></div>
+    <p>The briefs are not compliance claims or deployment certifications. They document architectural intent, active realization, and qualification questions that must be answered for a specific release and customer environment.</p>
+  </div>
+</section>
+
+<section id="briefs" class="container section library-section">
+  <div id="foundation" class="library-group">
+    <div class="library-group-head"><div><p class="section-kicker">01 · Foundation</p><h2>What kind of platform is ContextWeaver?</h2></div><p>Start here for the product model, portable contracts, delivery system, and specification-first operating model.</p></div>
+    <div class="library-grid">
+      <details class="brief" open>
+        <summary><span>Conceptual design</span><small>Reusable Enterprise Agentic AI Platform</small></summary>
+        <div><p><strong>Decision:</strong> Treat Agents, MCPs, Workflows, Services, policy, data, and evidence as governed platform assets rather than application-local code.</p><ul><li>Separates experience, governance, composition, runtime, data, evidence, and infrastructure planes.</li><li>Uses typed contracts and immutable plans to prevent runtime authority expansion.</li><li>Lets individual and enterprise experiences share the same core semantics.</li></ul></div>
+      </details>
+      <details class="brief">
+        <summary><span>Spec-driven AI platform</span><small>Governance and operations whitepaper</small></summary>
+        <div><p><strong>Decision:</strong> Make specifications executable inputs to admission, generation, testing, deployment, evaluation, and retirement.</p><ul><li>Defines ownership, schemas, side effects, dependencies, SLOs, support, and lifecycle before deployment.</li><li>Turns governance into machine-verifiable gates instead of after-the-fact review.</li><li>Connects business intent to implementation and operational evidence.</li></ul></div>
+      </details>
+      <details class="brief">
+        <summary><span>Cloud-neutral delivery</span><small>Infrastructure and deployment design</small></summary>
+        <div><p><strong>Decision:</strong> Keep control-plane semantics provider-neutral while implementing cloud services through qualified adapters.</p><ul><li>Centers Kubernetes, OCI, Helm, GitOps, OpenTelemetry, and portable schemas.</li><li>Injects provider backends and secrets rather than embedding them into capability definitions.</li><li>Requires qualification per cloud, region, release, and deployment profile.</li></ul></div>
+      </details>
+    </div>
+  </div>
+
+  <div id="trust" class="library-group">
+    <div class="library-group-head"><div><p class="section-kicker">02 · Trust</p><h2>How is authority kept outside the model?</h2></div><p>These briefs cover identity continuity, runtime authorization, credential non-possession, and constrained execution.</p></div>
+    <div class="library-grid">
+      <details class="brief">
+        <summary><span>Credential non-possession</span><small>Delegated authority without secret exposure</small></summary>
+        <div><p><strong>Decision:</strong> Agents request permitted operations; a trusted gateway obtains and uses credentials just in time.</p><ul><li>Provider tokens, cloud keys, and connector secrets never enter Agent context.</li><li>Policy evaluates the exact service, tool, arguments, purpose, data, and side effect.</li><li>Receipts preserve what was requested, authorized, executed, and returned.</li></ul></div>
+      </details>
+      <details class="brief">
+        <summary><span>Continuous entitlement</span><small>Runtime authorization and revocation</small></summary>
+        <div><p><strong>Decision:</strong> Admission-time permission is not enough; protected actions must be reauthorized at use and delivery time.</p><ul><li>Carries user, workload, tenant, role, purpose, delegation, plan, and node identity.</li><li>Rechecks current revocation, policy, environment, data scope, and risk.</li><li>Prevents a long-running Workflow from relying on stale authority.</li></ul></div>
+      </details>
+      <details class="brief">
+        <summary><span>Agent sandbox security</span><small>Constrained reasoning intent</small></summary>
+        <div><p><strong>Decision:</strong> Treat generated and third-party reasoning code as untrusted workload content.</p><ul><li>Use restricted runtime identity, deny-default networking, quotas, and bounded filesystems.</li><li>Expose capabilities through policy-controlled interfaces rather than ambient cluster access.</li><li>Test malformed I/O, prompt injection, duplicate delivery, timeout, and restart behavior.</li></ul></div>
+      </details>
+    </div>
+  </div>
+
+  <div id="runtime-library" class="library-group">
+    <div class="library-group-head"><div><p class="section-kicker">03 · Runtime</p><h2>How does the system deploy, recover, and prove operation?</h2></div><p>Follow the capability from admission through discovery, durable execution, failure recovery, and operational evidence.</p></div>
+    <div class="library-grid">
+      <details class="brief">
+        <summary><span>Dynamic Agent and MCP lifecycle</span><small>Admission, deployment, and discovery</small></summary>
+        <div><p><strong>Decision:</strong> Deployment and discovery are separate lifecycle states.</p><ul><li>Validate specifications and supply chain before the operator creates runtime resources.</li><li>Attest the live descriptor and converge Registry state before making a capability selectable.</li><li>Support canary, pause, quarantine, drain, and retirement as governed transitions.</li></ul></div>
+      </details>
+      <details class="brief">
+        <summary><span>Durable microservice resilience</span><small>Cross-pod work recovery</small></summary>
+        <div><p><strong>Decision:</strong> Workflow progress belongs in durable state, not in the memory of a particular pod.</p><ul><li>Use commands, events, leases, checkpoints, inbox/outbox, and accepted artifact hashes.</li><li>Make retries safe with idempotency keys and provider receipts.</li><li>Represent compensation and non-compensable escalation explicitly.</li></ul></div>
+      </details>
+      <details class="brief">
+        <summary><span>Observability standard</span><small>Agents, MCPs, Workflows, and Services</small></summary>
+        <div><p><strong>Decision:</strong> Observe the business and trust path, not only infrastructure health.</p><ul><li>Correlate intent, plan, node, model, source, policy, approval, tool call, receipt, and result.</li><li>Measure reliability, quality, safety, cost, latency, usage, and business outcome.</li><li>Preserve enough evidence to explain a run without exposing restricted content.</li></ul></div>
+      </details>
+    </div>
+  </div>
+
+  <div id="data-readiness" class="library-group">
+    <div class="library-group-head"><div><p class="section-kicker">04 · Data and readiness</p><h2>How do retrieval and deployment become trustworthy?</h2></div><p>These briefs distinguish a useful demonstration from a version-safe, authorized, recoverable, and qualified production profile.</p></div>
+    <div class="library-grid">
+      <details class="brief">
+        <summary><span>Governed, fresh, version-safe RAG</span><small>Ingestion and atomic generations</small></summary>
+        <div><p><strong>Decision:</strong> Publish complete retrieval generations atomically instead of mutating a live index in place.</p><ul><li>Bind chunks to source versions, classifications, ownership, policy, and provenance.</li><li>Authorize retrieval before search and filter results before context construction.</li><li>Keep aliases movable while a run pins the exact accepted generation.</li></ul></div>
+      </details>
+      <details class="brief">
+        <summary><span>RAG storage and search readiness</span><small>Infrastructure qualification</small></summary>
+        <div><p><strong>Decision:</strong> Evaluate the full ingestion, storage, search, authorization, freshness, and recovery path.</p><ul><li>Test scale, rebuild, replay, deletion, retention, backup, restore, and regional behavior.</li><li>Validate lexical, vector, hybrid, reranking, citation, and access-filter quality.</li><li>Separate provider availability from application-level readiness.</li></ul></div>
+      </details>
+      <details class="brief">
+        <summary><span>Parity and deployment readiness</span><small>Release and profile qualification</small></summary>
+        <div><p><strong>Decision:</strong> Readiness is specific to a release and deployment profile, not a permanent platform label.</p><ul><li>Compare required contracts, adapters, controls, tests, SLOs, and recovery evidence.</li><li>Classify gaps as implemented foundation, active realization, or target architecture.</li><li>Avoid implying regulatory certification from architectural intent alone.</li></ul></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="container section compact">
+  <div class="chapter-next">
+    <div><p class="section-kicker">Put the pieces together</p><h2>Return to the architecture with the deeper decisions in view.</h2><p>The atlas connects these security, runtime, data, and deployment principles into one visual system.</p></div>
+    <a class="button primary" href="architecture.html">Reopen the architecture atlas →</a>
+  </div>
+</section>
+
+      </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed capability platform</span></span></a>
+          <p style="margin-top:16px">Turn specifications, enterprise information, Agents, MCPs, Workflows, models, policy, and infrastructure into governed, deployable Services with evidence attached.</p>
+        </div>
+        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
+        <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>
+        <div><h3>Company</h3><div class="footer-links"><a href="company.html#about">About BrainzBytes</a><a href="company.html#about">Founder</a><a href="company.html#company-paths">Careers · planned</a></div></div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© 2026 BrainzBytes. ContextWeaver product architecture.</span>
+        <span>Architecture refreshed November 1, 2026. Compliance and deployment outcomes remain customer-specific.</span>
+      </div>
+    </footer>
+
+      <script src="assets/js/site.js?v=20261101-13"></script>
+    </body>
+    </html>

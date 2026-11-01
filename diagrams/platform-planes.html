@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Cerebro, Weave, and Loom coordinate stable governance and execution contracts above replaceable infrastructure.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<title>Eight Platform Planes — ContextWeaver</title>
+<style>
+:root{--bg:#07110f;--panel:#10231e;--panel2:#152d26;--text:#f4f8f2;--muted:#a8bbb3;--line:#38544a;--mint:#70e6b1;--amber:#ffc76a;--coral:#7fb98d;--violet:#9bcf9f;--sky:#52b788}
+*{box-sizing:border-box}body{margin:0;color:var(--text);background:var(--bg);font:14px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif}button{font:inherit}
+.shell{display:grid;grid-template-columns:minmax(0,1fr) 300px;min-height:720px}.canvas{position:relative;overflow:auto;border-right:1px solid var(--line)}.architecture{display:block;min-width:840px;width:100%;height:auto}
+
+  .grid-lines path { stroke:#38544a; stroke-width:1; }
+  .diagram-title { fill:#f4f8f2; font:700 24px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .diagram-subtitle { fill:#a8bbb3; font:12px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .node rect { fill:#10231e; stroke:#38544a; stroke-width:2; }
+  .node-mint rect { stroke:#70e6b1; } .node-sky rect { stroke:#52b788; }
+  .node-amber rect { stroke:#ffc76a; } .node-violet rect { stroke:#9bcf9f; }
+  .node-coral rect { stroke:#7fb98d; }
+  .node-title { fill:#f4f8f2; font:700 14px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor:middle; }
+  .node-subtitle { fill:#a8bbb3; font:10px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor:middle; }
+  .edge path { fill:none; stroke:#38544a; stroke-width:2.5; }
+  .edge text { fill:#a8bbb3; font:9px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor:middle; paint-order:stroke; stroke:#07110f; stroke-width:4; }
+  .edge-governance path { stroke:#9bcf9f; stroke-dasharray:8 6; }
+  .edge-success path { stroke:#70e6b1; } .edge-evidence path { stroke:#ffc76a; stroke-dasharray:5 5; }
+  .edge-waiting path { stroke:#ffc76a; stroke-dasharray:10 7; }
+
+.node{cursor:pointer}.node rect,.edge path{transition:.3s}.node:hover rect,.node.selected rect{stroke-width:4}.node.active rect{stroke-width:5;filter:url(#glow)}.node.complete{opacity:.66}
+.edge{opacity:.24}.edge.active{opacity:1}.edge.active path{stroke-width:5;stroke-dasharray:14 9;animation:flow .75s linear infinite;filter:url(#glow)}.edge-governance.active path{stroke:var(--violet)}.edge-success.active path{stroke:var(--mint)}.edge-waiting.active path,.edge-evidence.active path{stroke:var(--amber)}
+@keyframes flow{to{stroke-dashoffset:-23}}
+.panel{display:flex;flex-direction:column;min-width:0;background:linear-gradient(180deg,var(--panel2),var(--bg))}.panel-head{padding:20px;border-bottom:1px solid var(--line)}.eyebrow{margin:0 0 7px;color:var(--mint);font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}h1{margin:0;font:700 25px/1.08 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif}.panel-head p{margin:8px 0 0;color:var(--muted);font-size:11px}
+.detail{min-height:210px;padding:20px;border-bottom:1px solid var(--line)}.detail b{display:block;font:700 19px/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif}.detail em{display:block;margin:7px 0 12px;color:var(--amber);font-size:10px;font-style:normal;font-weight:800}.detail p{margin:0;color:#c8d6d0;font-size:12px}
+.stage{flex:1;padding:20px}.stage-count{color:var(--mint);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.stage h2{margin:8px 0;font:700 21px/1.18 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif}.stage p{margin:0;color:var(--muted);font-size:12px}
+.controls{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:12px;border-top:1px solid var(--line)}.controls button{min-height:39px;border:1px solid var(--line);border-radius:9px;color:var(--text);background:var(--panel);cursor:pointer;font-size:11px;font-weight:800}.controls button:hover{border-color:var(--mint)}.controls .primary{color:#07110f;background:var(--mint)}
+.dots{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 16px}.dot{width:10px;height:10px;padding:0;border:0;border-radius:50%;background:var(--line);cursor:pointer}.dot.active{background:var(--mint);box-shadow:0 0 10px var(--mint)}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.canvas{border-right:0;border-bottom:1px solid var(--line)}.panel{min-height:440px}.architecture{min-width:760px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style></head>
+<body><main class="shell">
+<section class="canvas">
+    <svg class="architecture" viewBox="0 0 1200 720" role="img" aria-labelledby="diagram-title diagram-desc">
+      <title id="diagram-title">Eight Platform Planes</title>
+      <desc id="diagram-desc">Cerebro, Weave, and Loom coordinate stable governance and execution contracts above replaceable infrastructure.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="context-stroke"/>
+        </marker>
+        <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="1200" height="720" fill="#07110f"/>
+      <g class="grid-lines" opacity=".22">
+        <path d="M 0 0 V 720"/><path d="M 60 0 V 720"/><path d="M 120 0 V 720"/><path d="M 180 0 V 720"/><path d="M 240 0 V 720"/><path d="M 300 0 V 720"/><path d="M 360 0 V 720"/><path d="M 420 0 V 720"/><path d="M 480 0 V 720"/><path d="M 540 0 V 720"/><path d="M 600 0 V 720"/><path d="M 660 0 V 720"/><path d="M 720 0 V 720"/><path d="M 780 0 V 720"/><path d="M 840 0 V 720"/><path d="M 900 0 V 720"/><path d="M 960 0 V 720"/><path d="M 1020 0 V 720"/><path d="M 1080 0 V 720"/><path d="M 1140 0 V 720"/><path d="M 1200 0 V 720"/>
+        <path d="M 0 0 H 1200"/><path d="M 0 60 H 1200"/><path d="M 0 120 H 1200"/><path d="M 0 180 H 1200"/><path d="M 0 240 H 1200"/><path d="M 0 300 H 1200"/><path d="M 0 360 H 1200"/><path d="M 0 420 H 1200"/><path d="M 0 480 H 1200"/><path d="M 0 540 H 1200"/><path d="M 0 600 H 1200"/><path d="M 0 660 H 1200"/><path d="M 0 720 H 1200"/>
+      </g>
+      <text class="diagram-title" x="36" y="46">Eight Platform Planes</text>
+      <text class="diagram-subtitle" x="36" y="72">Cerebro, Weave, and Loom coordinate stable governance and execution contracts above replaceable infrastructure.</text>
+      <g class="edges"><g id="edge-p1" class="edge edge-governance" data-edge-id="p1"><path d="M 312.0 139.5 L 331.0 139.5 L 331.0 139.5 L 350.0 139.5" marker-end="url(#arrow)"/><text x="331.0" y="131.5">identity + action</text></g><g id="edge-p2" class="edge edge-governance" data-edge-id="p2"><path d="M 600.0 139.5 L 619.0 139.5 L 619.0 139.5 L 638.0 139.5" marker-end="url(#arrow)"/><text x="619.0" y="131.5">eligibility</text></g><g id="edge-p3" class="edge edge-data" data-edge-id="p3"><path d="M 888.0 139.5 L 907.0 139.5 L 907.0 139.5 L 926.0 139.5" marker-end="url(#arrow)"/><text x="899.5" y="131.5">resolution</text></g><g id="edge-p4" class="edge edge-data" data-edge-id="p4"><path d="M 926.0 139.5 L 619.0 139.5 L 619.0 329.5 L 312.0 329.5" marker-end="url(#arrow)"/><text x="611.5" y="226.5">typed work</text></g><g id="edge-p5" class="edge edge-data" data-edge-id="p5"><path d="M 312.0 329.5 L 331.0 329.5 L 331.0 329.5 L 350.0 329.5" marker-end="url(#arrow)"/><text x="331.0" y="321.5">authorized context</text></g><g id="edge-p6" class="edge edge-evidence" data-edge-id="p6"><path d="M 600.0 329.5 L 619.0 329.5 L 619.0 329.5 L 638.0 329.5" marker-end="url(#arrow)"/><text x="619.0" y="321.5">lineage</text></g><g id="edge-p7" class="edge edge-evidence" data-edge-id="p7"><path d="M 888.0 329.5 L 907.0 329.5 L 907.0 329.5 L 926.0 329.5" marker-end="url(#arrow)"/><text x="899.5" y="321.5">operate</text></g><g id="edge-p8" class="edge edge-data" data-edge-id="p8"><path d="M 285.0 500.0 L 285.0 343.5 L 187.0 343.5 L 187.0 187.0" marker-end="url(#arrow)"/><text x="236.0" y="338.0">experience</text></g><g id="edge-p9" class="edge edge-governance" data-edge-id="p9"><path d="M 285.0 500.0 L 285.0 343.5 L 475.0 343.5 L 475.0 187.0" marker-end="url(#arrow)"/><text x="380.0" y="338.0">control</text></g><g id="edge-p10" class="edge edge-data" data-edge-id="p10"><path d="M 600.0 500.0 L 600.0 343.5 L 763.0 343.5 L 763.0 187.0" marker-end="url(#arrow)"/><text x="681.5" y="338.0">catalog</text></g><g id="edge-p11" class="edge edge-data" data-edge-id="p11"><path d="M 735.0 552.5 L 830.5 552.5 L 830.5 139.5 L 926.0 139.5" marker-end="url(#arrow)"/><text x="818.0" y="338.0">capabilities</text></g><g id="edge-p12" class="edge edge-data" data-edge-id="p12"><path d="M 465.0 552.5 L 388.5 552.5 L 388.5 329.5 L 312.0 329.5" marker-end="url(#arrow)"/><text x="393.5" y="433.0">composition</text></g><g id="edge-p13" class="edge edge-data" data-edge-id="p13"><path d="M 780.0 552.5 L 546.0 552.5 L 546.0 329.5 L 312.0 329.5" marker-end="url(#arrow)"/><text x="551.0" y="433.0">runtime</text></g><g id="edge-p14" class="edge edge-data" data-edge-id="p14"><path d="M 780.0 552.5 L 690.0 552.5 L 690.0 329.5 L 600.0 329.5" marker-end="url(#arrow)"/><text x="695.0" y="433.0">data</text></g><g id="edge-p15" class="edge edge-data" data-edge-id="p15"><path d="M 915.0 500.0 L 915.0 438.5 L 1036.0 438.5 L 1036.0 377.0" marker-end="url(#arrow)"/><text x="975.5" y="433.0">providers</text></g></g>
+      <g class="nodes">
+    <g id="node-experience" class="node node-violet" role="button" tabindex="0" aria-label="1 · Experience" data-node-id="experience">
+      <rect x="62" y="92" width="250" height="95" rx="16"/>
+      <text class="node-title" x="187.0" y="123"><tspan x="187.0" dy="0">1 · Experience</tspan></text>
+      <text class="node-subtitle" x="187.0" y="147"><tspan x="187.0" dy="0">Portal · Studio · workspaces ·</tspan><tspan x="187.0" dy="14">operations</tspan></text>
+    </g>
+    <g id="node-governance" class="node node-amber" role="button" tabindex="0" aria-label="2 · Governance" data-node-id="governance">
+      <rect x="350" y="92" width="250" height="95" rx="16"/>
+      <text class="node-title" x="475.0" y="123"><tspan x="475.0" dy="0">2 · Governance</tspan></text>
+      <text class="node-subtitle" x="475.0" y="147"><tspan x="475.0" dy="0">Identity · policy · approval ·</tspan><tspan x="475.0" dy="14">audit</tspan></text>
+    </g>
+    <g id="node-registry" class="node node-sky" role="button" tabindex="0" aria-label="3 · Registry" data-node-id="registry">
+      <rect x="638" y="92" width="250" height="95" rx="16"/>
+      <text class="node-title" x="763.0" y="123"><tspan x="763.0" dy="0">3 · Registry</tspan></text>
+      <text class="node-subtitle" x="763.0" y="147"><tspan x="763.0" dy="0">Catalog · schemas · compiler ·</tspan><tspan x="763.0" dy="14">lifecycle</tspan></text>
+    </g>
+    <g id="node-capabilities" class="node node-coral" role="button" tabindex="0" aria-label="4 · Agents + MCP" data-node-id="capabilities">
+      <rect x="926" y="92" width="220" height="95" rx="16"/>
+      <text class="node-title" x="1036.0" y="123"><tspan x="1036.0" dy="0">4 · Agents + MCP</tspan></text>
+      <text class="node-subtitle" x="1036.0" y="147"><tspan x="1036.0" dy="0">Reasoning · tools · sandbox</tspan><tspan x="1036.0" dy="14">· evaluation</tspan></text>
+    </g>
+    <g id="node-workflow" class="node node-mint" role="button" tabindex="0" aria-label="5 · Workflow runtime" data-node-id="workflow">
+      <rect x="62" y="282" width="250" height="95" rx="16"/>
+      <text class="node-title" x="187.0" y="313"><tspan x="187.0" dy="0">5 · Workflow runtime</tspan></text>
+      <text class="node-subtitle" x="187.0" y="337"><tspan x="187.0" dy="0">Coordinator · queues ·</tspan><tspan x="187.0" dy="14">checkpoints · Saga</tspan></text>
+    </g>
+    <g id="node-knowledge" class="node node-sky" role="button" tabindex="0" aria-label="6 · RAG + memory + models" data-node-id="knowledge">
+      <rect x="350" y="282" width="250" height="95" rx="16"/>
+      <text class="node-title" x="475.0" y="313"><tspan x="475.0" dy="0">6 · RAG + memory + models</tspan></text>
+      <text class="node-subtitle" x="475.0" y="337"><tspan x="475.0" dy="0">Sources · retrieval · context ·</tspan><tspan x="475.0" dy="14">aliases</tspan></text>
+    </g>
+    <g id="node-evidence" class="node node-amber" role="button" tabindex="0" aria-label="7 · Evidence" data-node-id="evidence">
+      <rect x="638" y="282" width="250" height="95" rx="16"/>
+      <text class="node-title" x="763.0" y="313"><tspan x="763.0" dy="0">7 · Evidence</tspan></text>
+      <text class="node-subtitle" x="763.0" y="337"><tspan x="763.0" dy="0">Metrics · logs · traces ·</tspan><tspan x="763.0" dy="14">evaluations</tspan></text>
+    </g>
+    <g id="node-infrastructure" class="node node-violet" role="button" tabindex="0" aria-label="8 · Infrastructure" data-node-id="infrastructure">
+      <rect x="926" y="282" width="220" height="95" rx="16"/>
+      <text class="node-title" x="1036.0" y="313"><tspan x="1036.0" dy="0">8 · Infrastructure</tspan></text>
+      <text class="node-subtitle" x="1036.0" y="337"><tspan x="1036.0" dy="0">Kubernetes · data · event</tspan><tspan x="1036.0" dy="14">bus · secrets</tspan></text>
+    </g>
+    <g id="node-cerebro" class="node node-mint" role="button" tabindex="0" aria-label="Cerebro" data-node-id="cerebro">
+      <rect x="150" y="500" width="270" height="105" rx="16"/>
+      <text class="node-title" x="285.0" y="531"><tspan x="285.0" dy="0">Cerebro</tspan></text>
+      <text class="node-subtitle" x="285.0" y="555"><tspan x="285.0" dy="0">Understand · govern · compile ·</tspan><tspan x="285.0" dy="14">orchestrate · prove</tspan></text>
+    </g>
+    <g id="node-weave" class="node node-amber" role="button" tabindex="0" aria-label="Weave" data-node-id="weave">
+      <rect x="465" y="500" width="270" height="105" rx="16"/>
+      <text class="node-title" x="600.0" y="531"><tspan x="600.0" dy="0">Weave</tspan></text>
+      <text class="node-subtitle" x="600.0" y="555"><tspan x="600.0" dy="0">Services · Workflows · Agents ·</tspan><tspan x="600.0" dy="14">MCPs · packs</tspan></text>
+    </g>
+    <g id="node-loom" class="node node-violet" role="button" tabindex="0" aria-label="Loom" data-node-id="loom">
+      <rect x="780" y="500" width="270" height="105" rx="16"/>
+      <text class="node-title" x="915.0" y="531"><tspan x="915.0" dy="0">Loom</tspan></text>
+      <text class="node-subtitle" x="915.0" y="555"><tspan x="915.0" dy="0">Portable operational substrate</tspan></text>
+    </g></g>
+    </svg></section>
+<aside class="panel" aria-live="polite">
+  <div class="panel-head"><p class="eyebrow">Interactive architecture</p><h1>Eight Platform Planes</h1><p>Cerebro, Weave, and Loom coordinate stable governance and execution contracts above replaceable infrastructure.</p></div>
+  <div class="detail"><b id="detail-title">Select a component</b><em id="detail-subtitle">Click or use the keyboard</em><p id="detail-copy">Every component remains readable while the animation is paused. Select a node for its responsibility and trust boundary.</p></div>
+  <div class="stage"><span class="stage-count" id="stage-count"></span><h2 id="stage-title"></h2><p id="stage-caption"></p></div>
+  <div class="controls"><button id="prev" type="button" aria-label="Previous stage">Previous</button><button id="play" class="primary" type="button">Pause</button><button id="next" type="button" aria-label="Next stage">Next</button><button id="reset" type="button">Reset</button></div>
+  <div class="dots" id="dots" aria-label="Diagram stages"></div>
+</aside></main>
+<script>
+const nodes={"experience": {"title": "1 · Experience", "subtitle": "Portal · Studio · workspaces · operations", "detail": "Unified surfaces for users, developers, operators, risk owners, and administrators. Browser users receive governed application actions, never cluster-admin credentials."}, "governance": {"title": "2 · Governance", "subtitle": "Identity · policy · approval · audit", "detail": "Every protected action requires verified identity, tenant, purpose, policy version, bounded authority, and correlation."}, "registry": {"title": "3 · Registry", "subtitle": "Catalog · schemas · compiler · lifecycle", "detail": "Resolve exact compatible versions and compile immutable plans. Discovery never bypasses trust, lifecycle, health, region, residency, or entitlement."}, "capabilities": {"title": "4 · Agents + MCP", "subtitle": "Reasoning · tools · sandbox · evaluation", "detail": "Agents reason under bounded identity. MCP calls are schema-validated, policy-mediated, rate-limited, audited, and executed without giving credentials to Agents."}, "workflow": {"title": "5 · Workflow runtime", "subtitle": "Coordinator · queues · checkpoints · Saga", "detail": "Execute durable plans with persistent commands, inbox/outbox, idempotency, retries, approvals, callbacks, checkpoints, and compensation."}, "knowledge": {"title": "6 · RAG + memory + models", "subtitle": "Sources · retrieval · context · aliases", "detail": "Authorized retrieval and governed continuity respect source authority, ACLs, purpose, classification, residency, freshness, retention, and immutable generation pins."}, "evidence": {"title": "7 · Evidence", "subtitle": "Metrics · logs · traces · evaluations", "detail": "Correlate infrastructure, model, retrieval, policy, Workflow, tool, cost, quality, and business signals without placing secrets or private payloads in telemetry."}, "infrastructure": {"title": "8 · Infrastructure", "subtitle": "Kubernetes · data · event bus · secrets", "detail": "Portable provider implementations for compute, persistence, messaging, object storage, search, identity, secrets, networking, telemetry, backup, and recovery."}, "cerebro": {"title": "Cerebro", "subtitle": "Understand · govern · compile · orchestrate · prove", "detail": "The product experience and control plane spanning intent, identity, policy, composition, durable execution, evidence, and operations."}, "weave": {"title": "Weave", "subtitle": "Services · Workflows · Agents · MCPs · packs", "detail": "The reusable governed capability and solution fabric: typed contracts, policies, models, retrieval profiles, data products, and industry packs."}, "loom": {"title": "Loom", "subtitle": "Portable operational substrate", "detail": "The cloud-neutral Kubernetes, OCI, Helm, GitOps, data, messaging, secrets, identity, networking, and observability foundation."}};
+const steps=[{"title": "Experience starts with a governed action", "caption": "Users work through Studio, Services, approvals, run history, research, workspaces, topology, and operations—not direct infrastructure credentials.", "nodes": ["experience", "governance"], "edges": ["p1"]}, {"title": "Governance limits the eligible universe", "caption": "Identity, tenant, purpose, entitlement, risk, region, lifecycle, and policy filter what can even be discovered or composed.", "nodes": ["governance", "registry"], "edges": ["p2"]}, {"title": "Registry and composition pin exact capability identity", "caption": "Schemas, versions, compatibility, trust, health, and lifecycle resolve before Agents or tools can be invoked.", "nodes": ["registry", "capabilities"], "edges": ["p3"]}, {"title": "The runtime coordinates typed durable work", "caption": "Capabilities execute behind constrained identities while Workflows manage dependencies, waits, retries, callbacks, and compensation.", "nodes": ["capabilities", "workflow", "knowledge"], "edges": ["p4", "p5"]}, {"title": "Evidence and infrastructure close the operating loop", "caption": "Every outcome connects to lineage, evaluations, receipts, telemetry, SLOs, provider health, cost, recovery, and audit.", "nodes": ["knowledge", "evidence", "infrastructure"], "edges": ["p6", "p7"]}, {"title": "Cerebro, Weave, and Loom span the planes", "caption": "Cerebro provides the control plane, Weave the reusable governed assets, and Loom the portable operational foundation.", "nodes": ["cerebro", "weave", "loom", "experience", "governance", "registry", "capabilities", "workflow", "knowledge", "infrastructure"], "edges": ["p8", "p9", "p10", "p11", "p12", "p13", "p14", "p15"]}];
+let current=0,playing=!matchMedia("(prefers-reduced-motion: reduce)").matches,timer;
+const $=id=>document.getElementById(id);
+const nodeEls=[...document.querySelectorAll(".node")],edgeEls=[...document.querySelectorAll(".edge")];
+function inspect(id){const d=nodes[id];if(!d)return;nodeEls.forEach(el=>el.classList.toggle("selected",el.dataset.nodeId===id));$("detail-title").textContent=d.title;$("detail-subtitle").textContent=d.subtitle;$("detail-copy").textContent=d.detail;}
+nodeEls.forEach(el=>{el.addEventListener("click",()=>{playing=false;$("play").textContent="Play";stop();inspect(el.dataset.nodeId)});el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();el.click()}})});
+steps.forEach((_,i)=>{const b=document.createElement("button");b.className="dot";b.type="button";b.setAttribute("aria-label",`Show stage ${i+1}`);b.onclick=()=>{current=i;render();restart()};$("dots").appendChild(b)});
+function render(){const s=steps[current];nodeEls.forEach(el=>{el.classList.toggle("active",s.nodes.includes(el.dataset.nodeId));el.classList.remove("selected");});edgeEls.forEach(el=>el.classList.toggle("active",s.edges.includes(el.dataset.edgeId)));$("stage-count").textContent=`Stage ${current+1} of ${steps.length}`;$("stage-title").textContent=s.title;$("stage-caption").textContent=s.caption;[...$("dots").children].forEach((d,i)=>d.classList.toggle("active",i===current));if(s.nodes.length)inspect(s.nodes[s.nodes.length-1]);}
+function advance(delta=1){current=(current+delta+steps.length)%steps.length;render()}function stop(){clearInterval(timer)}function restart(){stop();if(playing)timer=setInterval(()=>advance(),4200)}
+$("prev").onclick=()=>{advance(-1);restart()};$("next").onclick=()=>{advance();restart()};$("reset").onclick=()=>{current=0;render();restart()};$("play").onclick=()=>{playing=!playing;$("play").textContent=playing?"Pause":"Play";restart()};
+document.addEventListener("keydown",e=>{if(e.target.closest(".node"))return;if(e.key==="ArrowRight")$("next").click();if(e.key==="ArrowLeft")$("prev").click();if(e.key===" "){e.preventDefault();$("play").click()}});
+$("play").textContent=playing?"Pause":"Play";render();restart();
+</script></body></html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="One platform image becomes multiple isolated logical Agents through immutable, profile-bound deployments.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<title>Generic Agent Runtime — ContextWeaver</title>
+<style>
+:root{--bg:#07110f;--panel:#10231e;--panel2:#152d26;--text:#f4f8f2;--muted:#a8bbb3;--line:#38544a;--mint:#70e6b1;--amber:#ffc76a;--coral:#7fb98d;--violet:#9bcf9f;--sky:#52b788}
+*{box-sizing:border-box}body{margin:0;color:var(--text);background:var(--bg);font:14px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif}button{font:inherit}
+.shell{display:grid;grid-template-columns:minmax(0,1fr) 300px;min-height:720px}.canvas{position:relative;overflow:auto;border-right:1px solid var(--line)}.architecture{display:block;min-width:840px;width:100%;height:auto}
+
+  .grid-lines path { stroke:#38544a; stroke-width:1; }
+  .diagram-title { fill:#f4f8f2; font:700 24px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .diagram-subtitle { fill:#a8bbb3; font:12px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .node rect { fill:#10231e; stroke:#38544a; stroke-width:2; }
+  .node-mint rect { stroke:#70e6b1; } .node-sky rect { stroke:#52b788; }
+  .node-amber rect { stroke:#ffc76a; } .node-violet rect { stroke:#9bcf9f; }
+  .node-coral rect { stroke:#7fb98d; }
+  .node-title { fill:#f4f8f2; font:700 14px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor:middle; }
+  .node-subtitle { fill:#a8bbb3; font:10px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor:middle; }
+  .edge path { fill:none; stroke:#38544a; stroke-width:2.5; }
+  .edge text { fill:#a8bbb3; font:9px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor:middle; paint-order:stroke; stroke:#07110f; stroke-width:4; }
+  .edge-governance path { stroke:#9bcf9f; stroke-dasharray:8 6; }
+  .edge-success path { stroke:#70e6b1; } .edge-evidence path { stroke:#ffc76a; stroke-dasharray:5 5; }
+  .edge-waiting path { stroke:#ffc76a; stroke-dasharray:10 7; }
+
+.node{cursor:pointer}.node rect,.edge path{transition:.3s}.node:hover rect,.node.selected rect{stroke-width:4}.node.active rect{stroke-width:5;filter:url(#glow)}.node.complete{opacity:.66}
+.edge{opacity:.24}.edge.active{opacity:1}.edge.active path{stroke-width:5;stroke-dasharray:14 9;animation:flow .75s linear infinite;filter:url(#glow)}.edge-governance.active path{stroke:var(--violet)}.edge-success.active path{stroke:var(--mint)}.edge-waiting.active path,.edge-evidence.active path{stroke:var(--amber)}
+@keyframes flow{to{stroke-dashoffset:-23}}
+.panel{display:flex;flex-direction:column;min-width:0;background:linear-gradient(180deg,var(--panel2),var(--bg))}.panel-head{padding:20px;border-bottom:1px solid var(--line)}.eyebrow{margin:0 0 7px;color:var(--mint);font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}h1{margin:0;font:700 25px/1.08 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif}.panel-head p{margin:8px 0 0;color:var(--muted);font-size:11px}
+.detail{min-height:210px;padding:20px;border-bottom:1px solid var(--line)}.detail b{display:block;font:700 19px/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif}.detail em{display:block;margin:7px 0 12px;color:var(--amber);font-size:10px;font-style:normal;font-weight:800}.detail p{margin:0;color:#c8d6d0;font-size:12px}
+.stage{flex:1;padding:20px}.stage-count{color:var(--mint);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.stage h2{margin:8px 0;font:700 21px/1.18 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif}.stage p{margin:0;color:var(--muted);font-size:12px}
+.controls{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:12px;border-top:1px solid var(--line)}.controls button{min-height:39px;border:1px solid var(--line);border-radius:9px;color:var(--text);background:var(--panel);cursor:pointer;font-size:11px;font-weight:800}.controls button:hover{border-color:var(--mint)}.controls .primary{color:#07110f;background:var(--mint)}
+.dots{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 16px}.dot{width:10px;height:10px;padding:0;border:0;border-radius:50%;background:var(--line);cursor:pointer}.dot.active{background:var(--mint);box-shadow:0 0 10px var(--mint)}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.canvas{border-right:0;border-bottom:1px solid var(--line)}.panel{min-height:440px}.architecture{min-width:760px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style></head>
+<body><main class="shell">
+<section class="canvas">
+    <svg class="architecture" viewBox="0 0 1200 720" role="img" aria-labelledby="diagram-title diagram-desc">
+      <title id="diagram-title">Generic Agent Runtime</title>
+      <desc id="diagram-desc">One platform image becomes multiple isolated logical Agents through immutable, profile-bound deployments.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="context-stroke"/>
+        </marker>
+        <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="1200" height="720" fill="#07110f"/>
+      <g class="grid-lines" opacity=".22">
+        <path d="M 0 0 V 720"/><path d="M 60 0 V 720"/><path d="M 120 0 V 720"/><path d="M 180 0 V 720"/><path d="M 240 0 V 720"/><path d="M 300 0 V 720"/><path d="M 360 0 V 720"/><path d="M 420 0 V 720"/><path d="M 480 0 V 720"/><path d="M 540 0 V 720"/><path d="M 600 0 V 720"/><path d="M 660 0 V 720"/><path d="M 720 0 V 720"/><path d="M 780 0 V 720"/><path d="M 840 0 V 720"/><path d="M 900 0 V 720"/><path d="M 960 0 V 720"/><path d="M 1020 0 V 720"/><path d="M 1080 0 V 720"/><path d="M 1140 0 V 720"/><path d="M 1200 0 V 720"/>
+        <path d="M 0 0 H 1200"/><path d="M 0 60 H 1200"/><path d="M 0 120 H 1200"/><path d="M 0 180 H 1200"/><path d="M 0 240 H 1200"/><path d="M 0 300 H 1200"/><path d="M 0 360 H 1200"/><path d="M 0 420 H 1200"/><path d="M 0 480 H 1200"/><path d="M 0 540 H 1200"/><path d="M 0 600 H 1200"/><path d="M 0 660 H 1200"/><path d="M 0 720 H 1200"/>
+      </g>
+      <text class="diagram-title" x="36" y="46">Generic Agent Runtime</text>
+      <text class="diagram-subtitle" x="36" y="72">One platform image becomes multiple isolated logical Agents through immutable, profile-bound deployments.</text>
+      <g class="edges"><g id="edge-g1" class="edge edge-data" data-edge-id="g1"><path d="M 252.0 137.5 L 290.0 137.5 L 290.0 137.5 L 328.0 137.5" marker-end="url(#arrow)"/><text x="290.0" y="129.5">resolve</text></g><g id="edge-g2" class="edge edge-governance" data-edge-id="g2"><path d="M 538.0 137.5 L 576.0 137.5 L 576.0 137.5 L 614.0 137.5" marker-end="url(#arrow)"/><text x="576.0" y="129.5">immutable plan</text></g><g id="edge-g3" class="edge edge-data" data-edge-id="g3"><path d="M 824.0 137.5 L 862.0 137.5 L 862.0 137.5 L 900.0 137.5" marker-end="url(#arrow)"/><text x="862.0" y="129.5">profile-bound command</text></g><g id="edge-g4" class="edge edge-data" data-edge-id="g4"><path d="M 900.0 137.5 L 811.0 137.5 L 811.0 302.5 L 722.0 302.5" marker-end="url(#arrow)"/><text x="802.2" y="212.0">deliver</text></g><g id="edge-g5" class="edge edge-data" data-edge-id="g5"><path d="M 477.0 302.5 L 356.0 302.5 L 356.0 412.5 L 235.0 412.5" marker-end="url(#arrow)"/><text x="371.0" y="349.5">mount Risk profile</text></g><g id="edge-g6" class="edge edge-data" data-edge-id="g6"><path d="M 477.0 302.5 L 356.0 302.5 L 356.0 577.5 L 235.0 577.5" marker-end="url(#arrow)"/><text x="371.0" y="432.0">mount Readiness profile</text></g><g id="edge-g6b" class="edge edge-data" data-edge-id="g6b"><path d="M 599.5 355.0 L 599.5 400.0 L 532.5 400.0 L 532.5 445.0" marker-end="url(#arrow)"/><text x="566.0" y="393.2">mount Synthesis profile</text></g><g id="edge-g7" class="edge edge-data" data-edge-id="g7"><path d="M 235.0 412.5 L 332.5 412.5 L 332.5 500.0 L 430.0 500.0" marker-end="url(#arrow)"/><text x="337.5" y="448.2">typed risk result</text></g><g id="edge-g8" class="edge edge-data" data-edge-id="g8"><path d="M 235.0 577.5 L 332.5 577.5 L 332.5 500.0 L 430.0 500.0" marker-end="url(#arrow)"/><text x="337.5" y="530.8">typed readiness result</text></g><g id="edge-g9" class="edge edge-governance" data-edge-id="g9"><path d="M 635.0 500.0 L 672.5 500.0 L 672.5 500.0 L 710.0 500.0" marker-end="url(#arrow)"/><text x="672.5" y="492.0">recommendation</text></g><g id="edge-g10" class="edge edge-governance" data-edge-id="g10"><path d="M 915.0 500.0 L 952.5 500.0 L 952.5 500.0 L 990.0 500.0" marker-end="url(#arrow)"/><text x="946.2" y="492.0">approved action</text></g><g id="edge-g11" class="edge edge-success" data-edge-id="g11"><path d="M 1080.0 445.0 L 1080.0 317.5 L 719.0 317.5 L 719.0 190.0" marker-end="url(#arrow)"/><text x="899.5" y="310.8">receipt</text></g></g>
+      <g class="nodes">
+    <g id="node-registry" class="node node-mint" role="button" tabindex="0" aria-label="Immutable AgentCards" data-node-id="registry">
+      <rect x="42" y="85" width="210" height="105" rx="16"/>
+      <text class="node-title" x="147.0" y="116"><tspan x="147.0" dy="0">Immutable AgentCards</tspan></text>
+      <text class="node-subtitle" x="147.0" y="140"><tspan x="147.0" dy="0">Profile + schemas + digest</tspan></text>
+    </g>
+    <g id="node-compiler" class="node node-mint" role="button" tabindex="0" aria-label="Workflow Compiler" data-node-id="compiler">
+      <rect x="328" y="85" width="210" height="105" rx="16"/>
+      <text class="node-title" x="433.0" y="116"><tspan x="433.0" dy="0">Workflow Compiler</tspan></text>
+      <text class="node-subtitle" x="433.0" y="140"><tspan x="433.0" dy="0">Resolve + pin exact</tspan><tspan x="433.0" dy="14">profile</tspan></text>
+    </g>
+    <g id="node-coordinator" class="node node-mint" role="button" tabindex="0" aria-label="Run Coordinator" data-node-id="coordinator">
+      <rect x="614" y="85" width="210" height="105" rx="16"/>
+      <text class="node-title" x="719.0" y="116"><tspan x="719.0" dy="0">Run Coordinator</tspan></text>
+      <text class="node-subtitle" x="719.0" y="140"><tspan x="719.0" dy="0">Authorize + dispatch</tspan></text>
+    </g>
+    <g id="node-rabbit" class="node node-mint" role="button" tabindex="0" aria-label="RabbitMQ" data-node-id="rabbit">
+      <rect x="900" y="85" width="210" height="105" rx="16"/>
+      <text class="node-title" x="1005.0" y="116"><tspan x="1005.0" dy="0">RabbitMQ</tspan></text>
+      <text class="node-subtitle" x="1005.0" y="140"><tspan x="1005.0" dy="0">Durable command delivery</tspan></text>
+    </g>
+    <g id="node-image" class="node node-mint" role="button" tabindex="0" aria-label="Generic runtime image" data-node-id="image">
+      <rect x="477" y="250" width="245" height="105" rx="16"/>
+      <text class="node-title" x="599.5" y="281"><tspan x="599.5" dy="0">Generic runtime image</tspan></text>
+      <text class="node-subtitle" x="599.5" y="305"><tspan x="599.5" dy="0">cw-generic-agent-runtime:0.2.0</tspan></text>
+    </g>
+    <g id="node-risk" class="node node-mint" role="button" tabindex="0" aria-label="Risk Agent" data-node-id="risk">
+      <rect x="50" y="360" width="185" height="105" rx="16"/>
+      <text class="node-title" x="142.5" y="391"><tspan x="142.5" dy="0">Risk Agent</tspan></text>
+      <text class="node-subtitle" x="142.5" y="415"><tspan x="142.5" dy="0">Generic image + Risk</tspan><tspan x="142.5" dy="14">profile</tspan></text>
+    </g>
+    <g id="node-readiness" class="node node-mint" role="button" tabindex="0" aria-label="Readiness Agent" data-node-id="readiness">
+      <rect x="50" y="525" width="185" height="105" rx="16"/>
+      <text class="node-title" x="142.5" y="556"><tspan x="142.5" dy="0">Readiness Agent</tspan></text>
+      <text class="node-subtitle" x="142.5" y="580"><tspan x="142.5" dy="0">Generic image +</tspan><tspan x="142.5" dy="14">Readiness profile</tspan></text>
+    </g>
+    <g id="node-synthesis" class="node node-mint" role="button" tabindex="0" aria-label="Synthesis Agent" data-node-id="synthesis">
+      <rect x="430" y="445" width="205" height="110" rx="16"/>
+      <text class="node-title" x="532.5" y="476"><tspan x="532.5" dy="0">Synthesis Agent</tspan></text>
+      <text class="node-subtitle" x="532.5" y="500"><tspan x="532.5" dy="0">Generic image + Synthesis</tspan><tspan x="532.5" dy="14">profile</tspan></text>
+    </g>
+    <g id="node-approval" class="node node-amber" role="button" tabindex="0" aria-label="Human approval" data-node-id="approval">
+      <rect x="710" y="445" width="205" height="110" rx="16"/>
+      <text class="node-title" x="812.5" y="476"><tspan x="812.5" dy="0">Human approval</tspan></text>
+      <text class="node-subtitle" x="812.5" y="500"><tspan x="812.5" dy="0">Expected action hash</tspan></text>
+    </g>
+    <g id="node-publisher" class="node node-mint" role="button" tabindex="0" aria-label="Publisher MCP" data-node-id="publisher">
+      <rect x="990" y="445" width="180" height="110" rx="16"/>
+      <text class="node-title" x="1080.0" y="476"><tspan x="1080.0" dy="0">Publisher MCP</tspan></text>
+      <text class="node-subtitle" x="1080.0" y="500"><tspan x="1080.0" dy="0">Separate approved side</tspan><tspan x="1080.0" dy="14">effect</tspan></text>
+    </g></g>
+    </svg></section>
+<aside class="panel" aria-live="polite">
+  <div class="panel-head"><p class="eyebrow">Interactive architecture</p><h1>Generic Agent Runtime</h1><p>One platform image becomes multiple isolated logical Agents through immutable, profile-bound deployments.</p></div>
+  <div class="detail"><b id="detail-title">Select a component</b><em id="detail-subtitle">Click or use the keyboard</em><p id="detail-copy">Every component remains readable while the animation is paused. Select a node for its responsibility and trust boundary.</p></div>
+  <div class="stage"><span class="stage-count" id="stage-count"></span><h2 id="stage-title"></h2><p id="stage-caption"></p></div>
+  <div class="controls"><button id="prev" type="button" aria-label="Previous stage">Previous</button><button id="play" class="primary" type="button">Pause</button><button id="next" type="button" aria-label="Next stage">Next</button><button id="reset" type="button">Reset</button></div>
+  <div class="dots" id="dots" aria-label="Diagram stages"></div>
+</aside></main>
+<script>
+const nodes={"registry": {"title": "Immutable AgentCards", "subtitle": "Profile + schemas + digest", "detail": "Registry validates the exact logical Agent identity, skill contracts, policy budgets, queues, MCP allowlist, and generic runtime compatibility."}, "compiler": {"title": "Workflow Compiler", "subtitle": "Resolve + pin exact profile", "detail": "The compiled plan pins Agent version, profile digest, skill version, executor type, command queue, and runtime range."}, "coordinator": {"title": "Run Coordinator", "subtitle": "Authorize + dispatch", "detail": "The coordinator emits a grant-bound command with exact Agent and skill identity, purpose, principal, trace, input digest, and permitted actions."}, "rabbit": {"title": "RabbitMQ", "subtitle": "Durable command delivery", "detail": "Manual acknowledgement, redelivery, competing consumers, and dedicated logical Agent queues preserve work across pod loss."}, "image": {"title": "Generic runtime image", "subtitle": "cw-generic-agent-runtime:0.2.0", "detail": "One hardened platform image provides profile verification, durable PostgreSQL claims and leases, policy checks, receipts, metrics, cancellation, and graceful drain."}, "risk": {"title": "Risk Agent", "subtitle": "Generic image + Risk profile", "detail": "Independent namespace, ServiceAccount, NetworkPolicy, queue, HPA, metrics, rollout, and deterministic hello-risk-v1 executor."}, "readiness": {"title": "Readiness Agent", "subtitle": "Generic image + Readiness profile", "detail": "The same image mounts a different immutable profile and runs the deterministic hello-readiness-v1 executor."}, "synthesis": {"title": "Synthesis Agent", "subtitle": "Generic image + Synthesis profile", "detail": "Consumes compatible Risk and Readiness results, requires hello.publish permission before recommending approval, and never performs publication."}, "approval": {"title": "Human approval", "subtitle": "Expected action hash", "detail": "The durable Workflow pauses and requires a human decision before any publication side effect is released."}, "publisher": {"title": "Publisher MCP", "subtitle": "Separate approved side effect", "detail": "The Publisher remains outside every Agent profile and publishes idempotently only after approval."}};
+const steps=[{"title": "Resolve the immutable logical Agent", "caption": "Registry accepts only an AgentCard whose embedded profile, schemas, queue, budgets, and digest agree.", "nodes": ["registry", "compiler"], "edges": ["g1"]}, {"title": "Compile and authorize exact identity", "caption": "Compiler pins the profile and skill; Coordinator grants one purpose-bound execution and dispatches it durably.", "nodes": ["compiler", "coordinator", "rabbit"], "edges": ["g2", "g3"]}, {"title": "Run one hardened image", "caption": "The shared image verifies the command and profile, then each deployment keeps independent identity, networking, queue, scaling, and state.", "nodes": ["rabbit", "image", "risk", "readiness", "synthesis"], "edges": ["g4", "g5", "g6", "g6b"]}, {"title": "Execute Risk and Readiness in parallel", "caption": "Deterministic parity rules run independently and return typed evidence-backed results.", "nodes": ["risk", "readiness", "synthesis"], "edges": ["g7", "g8"]}, {"title": "Synthesize without publishing", "caption": "Synthesis combines compatible inputs and can recommend approval only when hello.publish is permitted.", "nodes": ["synthesis", "approval"], "edges": ["g9"]}, {"title": "Keep side effects behind HITL", "caption": "A human approves the expected action hash before the separate Publisher MCP performs the idempotent side effect.", "nodes": ["approval", "publisher", "coordinator"], "edges": ["g10", "g11"]}];
+let current=0,playing=!matchMedia("(prefers-reduced-motion: reduce)").matches,timer;
+const $=id=>document.getElementById(id);
+const nodeEls=[...document.querySelectorAll(".node")],edgeEls=[...document.querySelectorAll(".edge")];
+function inspect(id){const d=nodes[id];if(!d)return;nodeEls.forEach(el=>el.classList.toggle("selected",el.dataset.nodeId===id));$("detail-title").textContent=d.title;$("detail-subtitle").textContent=d.subtitle;$("detail-copy").textContent=d.detail;}
+nodeEls.forEach(el=>{el.addEventListener("click",()=>{playing=false;$("play").textContent="Play";stop();inspect(el.dataset.nodeId)});el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();el.click()}})});
+steps.forEach((_,i)=>{const b=document.createElement("button");b.className="dot";b.type="button";b.setAttribute("aria-label",`Show stage ${i+1}`);b.onclick=()=>{current=i;render();restart()};$("dots").appendChild(b)});
+function render(){const s=steps[current];nodeEls.forEach(el=>{el.classList.toggle("active",s.nodes.includes(el.dataset.nodeId));el.classList.remove("selected");});edgeEls.forEach(el=>el.classList.toggle("active",s.edges.includes(el.dataset.edgeId)));$("stage-count").textContent=`Stage ${current+1} of ${steps.length}`;$("stage-title").textContent=s.title;$("stage-caption").textContent=s.caption;[...$("dots").children].forEach((d,i)=>d.classList.toggle("active",i===current));if(s.nodes.length)inspect(s.nodes[s.nodes.length-1]);}
+function advance(delta=1){current=(current+delta+steps.length)%steps.length;render()}function stop(){clearInterval(timer)}function restart(){stop();if(playing)timer=setInterval(()=>advance(),4200)}
+$("prev").onclick=()=>{advance(-1);restart()};$("next").onclick=()=>{advance();restart()};$("reset").onclick=()=>{current=0;render();restart()};$("play").onclick=()=>{playing=!playing;$("play").textContent=playing?"Pause":"Play";restart()};
+document.addEventListener("keydown",e=>{if(e.target.closest(".node"))return;if(e.key==="ArrowRight")$("next").click();if(e.key==="ArrowLeft")$("prev").click();if(e.key===" "){e.preventDefault();$("play").click()}});
+$("play").textContent=playing?"Pause":"Play";render();restart();
+</script></body></html>

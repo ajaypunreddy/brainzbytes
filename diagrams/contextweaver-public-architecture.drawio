@@ -1,0 +1,483 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" version="26.0.0">
+  <diagram id="service-factory" name="Universal Service Factory">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="720">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="service-factory-title" value="&lt;b&gt;Universal Service Factory&lt;/b&gt;&lt;br&gt;Any approved source can become a governed, deployable, discoverable, evidence-backed Service." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="35" y="20" width="1100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-inputs" value="&lt;b&gt;Product inputs&lt;/b&gt;&lt;br&gt;Specs · APIs · wiki · data · code" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="36" y="145" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-studio" value="&lt;b&gt;Agent + MCP Studio&lt;/b&gt;&lt;br&gt;GUI · VS Code · CLI · Jupyter" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="260" y="145" width="190" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-contracts" value="&lt;b&gt;Typed contracts&lt;/b&gt;&lt;br&gt;Service · Workflow · Agent · MCP" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="494" y="145" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-admission" value="&lt;b&gt;Admission pipeline&lt;/b&gt;&lt;br&gt;Test · scan · SBOM · sign · approve" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="718" y="145" width="190" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-registry" value="&lt;b&gt;Immutable Registry&lt;/b&gt;&lt;br&gt;Candidate · canary · active" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#7fb98d;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="952" y="145" width="210" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-operator" value="&lt;b&gt;Capability Operator&lt;/b&gt;&lt;br&gt;Kubernetes · Helm · GitOps" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="82" y="355" width="205" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-discovery" value="&lt;b&gt;Runtime discovery&lt;/b&gt;&lt;br&gt;Attest · inspect · qualify" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="337" y="355" width="205" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-compose" value="&lt;b&gt;Cerebro composition&lt;/b&gt;&lt;br&gt;Select · compile · authorize" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="592" y="355" width="205" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-execute" value="&lt;b&gt;Durable execution&lt;/b&gt;&lt;br&gt;Agents · MCPs · RAG · humans" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="847" y="355" width="205" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-outcome" value="&lt;b&gt;Proved outcome&lt;/b&gt;&lt;br&gt;Result · citations · receipts · evidence" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="486" y="548" width="228" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f1" value="ingest" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-inputs" target="service-factory-studio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f2" value="generate + edit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-studio" target="service-factory-contracts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f3" value="validate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-contracts" target="service-factory-admission">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f4" value="admit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-admission" target="service-factory-registry">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f5" value="approved release" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-registry" target="service-factory-operator">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f6" value="live runtime" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-operator" target="service-factory-discovery">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f7" value="promote" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-discovery" target="service-factory-registry">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f8" value="discover" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-registry" target="service-factory-compose">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f9" value="immutable plan" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-compose" target="service-factory-execute">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f10" value="finalize" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-execute" target="service-factory-outcome">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="service-factory-f11" value="health + learning" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#ffc76a;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-outcome" target="service-factory-registry">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="generic-agent-runtime" name="Generic Agent Runtime">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="720">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="generic-agent-runtime-title" value="&lt;b&gt;Generic Agent Runtime&lt;/b&gt;&lt;br&gt;One platform image becomes multiple isolated logical Agents through immutable, profile-bound deployments." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="35" y="20" width="1100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-registry" value="&lt;b&gt;Immutable AgentCards&lt;/b&gt;&lt;br&gt;Profile + schemas + digest" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="42" y="85" width="210" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-compiler" value="&lt;b&gt;Workflow Compiler&lt;/b&gt;&lt;br&gt;Resolve + pin exact profile" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="328" y="85" width="210" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-coordinator" value="&lt;b&gt;Run Coordinator&lt;/b&gt;&lt;br&gt;Authorize + dispatch" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="614" y="85" width="210" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-rabbit" value="&lt;b&gt;RabbitMQ&lt;/b&gt;&lt;br&gt;Durable command delivery" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="900" y="85" width="210" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-image" value="&lt;b&gt;Generic runtime image&lt;/b&gt;&lt;br&gt;cw-generic-agent-runtime:0.2.0" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="477" y="250" width="245" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-risk" value="&lt;b&gt;Risk Agent&lt;/b&gt;&lt;br&gt;Generic image + Risk profile" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="360" width="185" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-readiness" value="&lt;b&gt;Readiness Agent&lt;/b&gt;&lt;br&gt;Generic image + Readiness profile" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="525" width="185" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-synthesis" value="&lt;b&gt;Synthesis Agent&lt;/b&gt;&lt;br&gt;Generic image + Synthesis profile" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="430" y="445" width="205" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-approval" value="&lt;b&gt;Human approval&lt;/b&gt;&lt;br&gt;Expected action hash" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="710" y="445" width="205" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-publisher" value="&lt;b&gt;Publisher MCP&lt;/b&gt;&lt;br&gt;Separate approved side effect" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="990" y="445" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g1" value="resolve" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-registry" target="generic-agent-runtime-compiler">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g2" value="immutable plan" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-compiler" target="generic-agent-runtime-coordinator">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g3" value="profile-bound command" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-coordinator" target="generic-agent-runtime-rabbit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g4" value="deliver" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-rabbit" target="generic-agent-runtime-image">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g5" value="mount Risk profile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-image" target="generic-agent-runtime-risk">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g6" value="mount Readiness profile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-image" target="generic-agent-runtime-readiness">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g6b" value="mount Synthesis profile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-image" target="generic-agent-runtime-synthesis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g7" value="typed risk result" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-risk" target="generic-agent-runtime-synthesis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g8" value="typed readiness result" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-readiness" target="generic-agent-runtime-synthesis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g9" value="recommendation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-synthesis" target="generic-agent-runtime-approval">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g10" value="approved action" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-approval" target="generic-agent-runtime-publisher">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generic-agent-runtime-g11" value="receipt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="generic-agent-runtime-publisher" target="generic-agent-runtime-coordinator">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="platform-planes" name="Eight Platform Planes">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="720">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="platform-planes-title" value="&lt;b&gt;Eight Platform Planes&lt;/b&gt;&lt;br&gt;Cerebro, Weave, and Loom coordinate stable governance and execution contracts above replaceable infrastructure." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="35" y="20" width="1100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-experience" value="&lt;b&gt;1 · Experience&lt;/b&gt;&lt;br&gt;Portal · Studio · workspaces · operations" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="62" y="92" width="250" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-governance" value="&lt;b&gt;2 · Governance&lt;/b&gt;&lt;br&gt;Identity · policy · approval · audit" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="350" y="92" width="250" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-registry" value="&lt;b&gt;3 · Registry&lt;/b&gt;&lt;br&gt;Catalog · schemas · compiler · lifecycle" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="638" y="92" width="250" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-capabilities" value="&lt;b&gt;4 · Agents + MCP&lt;/b&gt;&lt;br&gt;Reasoning · tools · sandbox · evaluation" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#7fb98d;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="926" y="92" width="220" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-workflow" value="&lt;b&gt;5 · Workflow runtime&lt;/b&gt;&lt;br&gt;Coordinator · queues · checkpoints · Saga" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="62" y="282" width="250" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-knowledge" value="&lt;b&gt;6 · RAG + memory + models&lt;/b&gt;&lt;br&gt;Sources · retrieval · context · aliases" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="350" y="282" width="250" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-evidence" value="&lt;b&gt;7 · Evidence&lt;/b&gt;&lt;br&gt;Metrics · logs · traces · evaluations" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="638" y="282" width="250" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-infrastructure" value="&lt;b&gt;8 · Infrastructure&lt;/b&gt;&lt;br&gt;Kubernetes · data · event bus · secrets" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="926" y="282" width="220" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-cerebro" value="&lt;b&gt;Cerebro&lt;/b&gt;&lt;br&gt;Understand · govern · compile · orchestrate · prove" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="150" y="500" width="270" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-weave" value="&lt;b&gt;Weave&lt;/b&gt;&lt;br&gt;Services · Workflows · Agents · MCPs · packs" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="465" y="500" width="270" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-loom" value="&lt;b&gt;Loom&lt;/b&gt;&lt;br&gt;Portable operational substrate" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="780" y="500" width="270" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p1" value="identity + action" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-experience" target="platform-planes-governance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p2" value="eligibility" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-governance" target="platform-planes-registry">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p3" value="resolution" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-registry" target="platform-planes-capabilities">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p4" value="typed work" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-capabilities" target="platform-planes-workflow">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p5" value="authorized context" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-workflow" target="platform-planes-knowledge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p6" value="lineage" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#ffc76a;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-knowledge" target="platform-planes-evidence">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p7" value="operate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#ffc76a;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-evidence" target="platform-planes-infrastructure">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p8" value="experience" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-cerebro" target="platform-planes-experience">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p9" value="control" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-cerebro" target="platform-planes-governance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p10" value="catalog" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-weave" target="platform-planes-registry">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p11" value="capabilities" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-weave" target="platform-planes-capabilities">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p12" value="composition" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-weave" target="platform-planes-workflow">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p13" value="runtime" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-loom" target="platform-planes-workflow">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p14" value="data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-loom" target="platform-planes-knowledge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-planes-p15" value="providers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="platform-planes-loom" target="platform-planes-infrastructure">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="capability-lifecycle" name="Agent and MCP Capability Lifecycle">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="720">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="capability-lifecycle-title" value="&lt;b&gt;Agent and MCP Capability Lifecycle&lt;/b&gt;&lt;br&gt;A capability becomes usable only after specification, conformance, supply-chain evidence, admission, deployment, attestation, qualification, and Registry convergence." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="35" y="20" width="1100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-author" value="&lt;b&gt;Author&lt;/b&gt;&lt;br&gt;GUI · VS Code · CLI · SDK" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="38" y="112" width="170" height="102" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-conformance" value="&lt;b&gt;Conformance&lt;/b&gt;&lt;br&gt;Contracts · malformed I/O · resilience" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="242" y="112" width="175" height="102" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-supply" value="&lt;b&gt;Supply chain&lt;/b&gt;&lt;br&gt;Build · scan · SBOM · provenance" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="451" y="112" width="175" height="102" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-approval" value="&lt;b&gt;Policy + approval&lt;/b&gt;&lt;br&gt;Risk · data · authority · environment" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#7fb98d;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="660" y="112" width="175" height="102" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-registry" value="&lt;b&gt;Release Registry&lt;/b&gt;&lt;br&gt;Candidate release authority" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="869" y="112" width="175" height="102" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-operator" value="&lt;b&gt;Capability Operator&lt;/b&gt;&lt;br&gt;Desired state · Kubernetes · Helm" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="974" y="318" width="188" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-runtime" value="&lt;b&gt;Restricted runtime&lt;/b&gt;&lt;br&gt;Agent or MCP workspace" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="742" y="318" width="188" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-attest" value="&lt;b&gt;Runtime attestation&lt;/b&gt;&lt;br&gt;Descriptor · health · schemas" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="510" y="318" width="188" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-canary" value="&lt;b&gt;Qualification&lt;/b&gt;&lt;br&gt;Synthetic · canary · evaluation" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#7fb98d;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="278" y="318" width="188" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-active" value="&lt;b&gt;Active capability&lt;/b&gt;&lt;br&gt;Discoverable logical alias" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="46" y="318" width="188" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-operate" value="&lt;b&gt;Operate and improve&lt;/b&gt;&lt;br&gt;Observe · evaluate · update · drain" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="394" y="540" width="412" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c1" value="test" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-author" target="capability-lifecycle-conformance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c2" value="prove" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-conformance" target="capability-lifecycle-supply">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c3" value="submit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-supply" target="capability-lifecycle-approval">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c4" value="admit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-approval" target="capability-lifecycle-registry">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c5" value="release" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-registry" target="capability-lifecycle-operator">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c6" value="reconcile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-operator" target="capability-lifecycle-runtime">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c7" value="discover" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-runtime" target="capability-lifecycle-attest">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c8" value="verify" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-attest" target="capability-lifecycle-canary">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c9" value="promote" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-canary" target="capability-lifecycle-active">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c10" value="resolve + observe" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-active" target="capability-lifecycle-operate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="capability-lifecycle-c11" value="new version / lifecycle" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#ffc76a;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="capability-lifecycle-operate" target="capability-lifecycle-registry">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="governed-run" name="Governed Dynamic Service Run">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="720">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="governed-run-title" value="&lt;b&gt;Governed Dynamic Service Run&lt;/b&gt;&lt;br&gt;Identity, policy, data, Agents, MCP tools, approvals, durable state, and evidence remain explicit from prompt to outcome." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="35" y="20" width="1100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-intent" value="&lt;b&gt;User intent&lt;/b&gt;&lt;br&gt;Prompt · upload refs · purpose" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="175" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-understand" value="&lt;b&gt;Understand&lt;/b&gt;&lt;br&gt;Intent · risk · entities · needs" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="255" y="100" width="175" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-compile" value="&lt;b&gt;Compile&lt;/b&gt;&lt;br&gt;Service · graph · bindings · budgets" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="470" y="100" width="175" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-authorize" value="&lt;b&gt;Authorize&lt;/b&gt;&lt;br&gt;Whole graph · use-time policy" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="685" y="100" width="175" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-plan" value="&lt;b&gt;Immutable plan&lt;/b&gt;&lt;br&gt;Pins · hashes · envelopes · expiry" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#7fb98d;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="900" y="100" width="225" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-rag" value="&lt;b&gt;Authorized context&lt;/b&gt;&lt;br&gt;Sources · ACL/RLS · citations" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="65" y="330" width="190" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-agents" value="&lt;b&gt;Parallel Agents&lt;/b&gt;&lt;br&gt;Typed tasks · accepted artifacts" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="330" width="190" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-approval" value="&lt;b&gt;Human authority&lt;/b&gt;&lt;br&gt;Review · decision · correction" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="535" y="330" width="190" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-mcp" value="&lt;b&gt;MCP gateway&lt;/b&gt;&lt;br&gt;Tool · identity · credentials · receipt" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#7fb98d;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="770" y="330" width="190" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-state" value="&lt;b&gt;Durable runtime&lt;/b&gt;&lt;br&gt;Queue · inbox/outbox · checkpoints" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="1005" y="330" width="155" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-finalize" value="&lt;b&gt;Canonical outcome&lt;/b&gt;&lt;br&gt;Validate · disclose · render" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="280" y="555" width="255" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-evidence" value="&lt;b&gt;Run evidence&lt;/b&gt;&lt;br&gt;Lineage · receipts · policy · telemetry" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="665" y="555" width="255" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r1" value="classify" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-intent" target="governed-run-understand">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r2" value="select / compose" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-understand" target="governed-run-compile">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r3" value="manifest" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-compile" target="governed-run-authorize">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r4" value="freeze" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-authorize" target="governed-run-plan">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r5" value="authorized scopes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-plan" target="governed-run-rag">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r6" value="commit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-plan" target="governed-run-state">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r7" value="context + citations" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-rag" target="governed-run-agents">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r8" value="high-impact action" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#ffc76a;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-agents" target="governed-run-approval">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r9" value="approved operation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-approval" target="governed-run-mcp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r10" value="tool intent" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-agents" target="governed-run-mcp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r11" value="receipt + result" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#ffc76a;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-mcp" target="governed-run-state">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r12" value="resume / retry" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-state" target="governed-run-agents">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r13" value="accepted artifacts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-agents" target="governed-run-finalize">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r14" value="run state" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-state" target="governed-run-finalize">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r15" value="release" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-finalize" target="governed-run-evidence">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="governed-run-r16" value="observe + improve" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#ffc76a;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="governed-run-evidence" target="governed-run-state">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="scale-path" name="Individual to Sovereign Enterprise">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="720">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="scale-path-title" value="&lt;b&gt;Individual to Sovereign Enterprise&lt;/b&gt;&lt;br&gt;The same Service, Workflow, Agent, and MCP contracts scale through progressively stronger sharing, isolation, governance, operations, and assurance." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="35" y="20" width="1100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-individual" value="&lt;b&gt;Individual&lt;/b&gt;&lt;br&gt;Private tools and personal workflows" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="42" y="145" width="185" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-team" value="&lt;b&gt;Team&lt;/b&gt;&lt;br&gt;Shared capabilities and knowledge" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="274" y="145" width="185" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-business" value="&lt;b&gt;Small business&lt;/b&gt;&lt;br&gt;Repeatable operating Services" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="506" y="145" width="185" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-enterprise" value="&lt;b&gt;Enterprise&lt;/b&gt;&lt;br&gt;Multi-tenant governed ecosystem" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="738" y="145" width="185" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-sovereign" value="&lt;b&gt;Sovereign / regulated&lt;/b&gt;&lt;br&gt;Dedicated, restricted, or disconnected" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#7fb98d;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="970" y="145" width="185" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-contracts" value="&lt;b&gt;Stable capability contracts&lt;/b&gt;&lt;br&gt;Services · Workflows · Agents · MCPs" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="126" y="388" width="300" height="108" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-profiles" value="&lt;b&gt;Progressive deployment profiles&lt;/b&gt;&lt;br&gt;Shared · dedicated · sovereign · edge" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="450" y="388" width="300" height="108" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-packs" value="&lt;b&gt;Solution and control packs&lt;/b&gt;&lt;br&gt;Industry · jurisdiction · data · policy" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="774" y="388" width="300" height="108" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-outcomes" value="&lt;b&gt;Outcome&lt;/b&gt;&lt;br&gt;One useful Service to a governed ecosystem" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="570" width="480" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-s1" value="share" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-individual" target="scale-path-team">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-s2" value="standardize" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-team" target="scale-path-business">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-s3" value="govern" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-business" target="scale-path-enterprise">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-s4" value="isolate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-enterprise" target="scale-path-sovereign">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-s5" value="same asset model" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-individual" target="scale-path-contracts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-s6" value="profile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-business" target="scale-path-profiles">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-s7" value="controls" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9bcf9f;dashed=1;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-sovereign" target="scale-path-packs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-s8" value="preserve investment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-contracts" target="scale-path-outcomes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-s9" value="scale operations" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-profiles" target="scale-path-outcomes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="scale-path-s10" value="adapt domain" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#70e6b1;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-packs" target="scale-path-outcomes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

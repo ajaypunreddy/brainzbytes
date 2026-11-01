@@ -1,148 +1,197 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="midnight">
-<head>
-  <script src="/gate.js"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrainzBytes ContextWeaver &mdash; NextGen Architecture</title>
-  <meta name="description" content="ContextWeaver NextGen architecture: Entra identity, durable asynchronous execution, governed Agents and MCPs, scalable RAG, continuous authorization, and cloud-neutral Kubernetes delivery.">
-  <link rel="icon" type="image/svg+xml" href="/logo.svg">
-  <link rel="stylesheet" href="theme.css">
-  <script src="theme.js" defer></script>
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",system-ui,sans-serif}
-    a{color:inherit}
-    .wrap{width:min(1180px,calc(100% - 2rem));margin:0 auto}
-    .hero{position:relative;overflow:hidden;padding:8rem 0 4.5rem;text-align:center}
-    .hero::before{content:"";position:absolute;inset:-25% 0 auto;height:700px;background:radial-gradient(circle at 50% 45%,rgba(124,58,237,.2),transparent 55%);pointer-events:none}
-    .eyebrow{display:inline-block;color:var(--accent-cyan);font-size:.75rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem}
-    h1{position:relative;font-size:clamp(2.2rem,4vw,3.2rem);line-height:1;letter-spacing:-.045em;margin:0 auto 1.4rem;max-width:1000px;background:linear-gradient(120deg,var(--accent-purple),var(--accent-cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .hero-copy{position:relative;max-width:820px;margin:0 auto;color:var(--text-muted);font-size:clamp(1rem,2vw,1.22rem);line-height:1.75}
-    .actions{position:relative;display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
-    .button{display:inline-flex;align-items:center;justify-content:center;padding:.8rem 1.1rem;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);text-decoration:none;font-weight:750}
-    .button.primary{color:#fff;background:linear-gradient(135deg,#7c3aed,#2563eb);border-color:transparent}
-    .button:hover{border-color:var(--accent-purple);transform:translateY(-2px)}
-    .status-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem;text-align:left}
-    .status{padding:1rem 1.1rem;border:1px solid var(--border);border-radius:13px;background:rgba(22,27,34,.72)}
-    .status b{display:block;font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem}
-    .status p{margin:0;color:var(--text-muted);font-size:.83rem;line-height:1.55}
-    .implemented b{color:#4ade80}.specified b{color:#fbbf24}.target b{color:#60a5fa}
-    .section{padding:4.5rem 0}.section.alt{background:var(--bg-elevated)}
-    .section-head{max-width:780px;margin-bottom:2rem}
-    .section-head h2{font-size:clamp(1.7rem,3vw,2.35rem);letter-spacing:-.03em;margin:.35rem 0 .65rem}
-    .section-head p{color:var(--text-muted);line-height:1.7;margin:0}
-    .architecture{display:grid;gap:1rem}
-    .lane{position:relative;border:1px solid var(--border);border-radius:17px;padding:1.2rem;background:var(--bg-card);overflow:hidden}
-    .lane::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--lane)}
-    .lane-head{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1rem}
-    .lane-number{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:color-mix(in srgb,var(--lane) 16%,transparent);color:var(--lane);font-weight:900}
-    .lane h3{margin:0 0 .25rem;font-size:1.05rem}.lane-head p{margin:0;color:var(--text-muted);font-size:.84rem;line-height:1.5}
-    .nodes{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
-    .node{padding:.85rem;border:1px solid var(--border);border-radius:11px;background:var(--bg-elevated);font-size:.78rem;line-height:1.45}
-    .node strong{display:block;color:var(--text);font-size:.84rem;margin-bottom:.2rem}.node span{color:var(--text-muted)}
-    .flow{display:grid;grid-template-columns:repeat(7,1fr);gap:.65rem;align-items:stretch}
-    .step{position:relative;padding:1rem .75rem;border:1px solid var(--border);border-radius:13px;background:var(--bg-card);min-height:150px}
-    .step:not(:last-child)::after{content:"";position:absolute;top:50%;right:-.66rem;width:.66rem;border-top:2px solid var(--accent-purple)}
-    .step b{display:block;color:var(--accent-cyan);font-size:.7rem;letter-spacing:.08em;margin-bottom:.55rem}.step h3{font-size:.92rem;margin:0 0 .45rem}.step p{font-size:.76rem;line-height:1.55;color:var(--text-muted);margin:0}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-    .card{display:block;padding:1.25rem;border:1px solid var(--border);border-radius:15px;background:var(--bg-card);text-decoration:none;transition:.2s}
-    .card:hover{border-color:var(--accent-purple);transform:translateY(-3px);box-shadow:var(--card-hover-shadow)}
-    .card .tag{display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-cyan);margin-bottom:.65rem}
-    .card h3{font-size:1rem;margin:0 0 .45rem}.card p{font-size:.82rem;line-height:1.6;color:var(--text-muted);margin:0}
-    .diagram{display:grid;grid-template-columns:1.4fr .6fr;gap:1rem;align-items:stretch}
-    .diagram-preview{display:block;padding:1rem;border:1px solid var(--border);border-radius:17px;background:#f7fbfc;text-decoration:none}
-    .diagram-preview img{display:block;width:100%;height:auto;border-radius:10px}
-    .principles{display:grid;gap:.7rem}
-    .principle{padding:1rem;border:1px solid var(--border);border-radius:13px;background:var(--bg-card)}
-    .principle strong{display:block;font-size:.88rem;margin-bottom:.3rem}.principle span{display:block;color:var(--text-muted);font-size:.78rem;line-height:1.5}
-    .callout{padding:1.2rem 1.35rem;border:1px solid rgba(251,191,36,.35);border-radius:14px;background:rgba(251,191,36,.07);color:var(--text-muted);line-height:1.65}
-    .callout strong{color:#fbbf24}
-    @media(max-width:1000px){.nodes{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(2,1fr)}.step:not(:last-child)::after{display:none}.grid{grid-template-columns:repeat(2,1fr)}.diagram{grid-template-columns:1fr}.status-strip{grid-template-columns:1fr}}
-    @media(max-width:640px){.hero{padding-top:6.5rem}.nodes,.flow,.grid{grid-template-columns:1fr}.section{padding:3.2rem 0}}
-    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
-  </style>
-</head>
-<body>
-  <header class="hero">
-    <div class="wrap">
-      <span class="eyebrow">ContextWeaver NextGen &middot; Architecture target</span>
-      <h1>Durable, governed AI services &mdash; not a synchronous chatbot chain</h1>
-      <p class="hero-copy">ContextWeaver accepts typed work, freezes an authorized execution plan, commits it to PostgreSQL, dispatches commands through RabbitMQ, and lets replaceable workers execute Agents, RAG, models, approvals, and MCP effects safely across pod failures.</p>
-      <div class="actions">
-        <a class="button primary" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html">Open the 18-page architecture viewer</a>
-        <a class="button" href="docs/documents/durable-asynchronous-execution.html">Read the execution specification</a>
-        <a class="button" href="docs/features/contextweaver-product-brochure.html">Explore the product story</a>
+<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="description" content="Explore clickable animated ContextWeaver architecture diagrams and download editable Draw.io, static SVG, and GIF assets.">
+      <meta name="theme-color" content="#07110f">
+      <title>ContextWeaver Interactive Architecture Explorer</title>
+      <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+      <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
+    </head>
+    <body data-page="architecture">
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <div class="nav-shell">
+        <a class="brand" href="index.html" aria-label="ContextWeaver home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-copy"><strong>ContextWeaver</strong><span>by BrainzBytes</span></span>
+        </a>
+        <nav class="primary-nav" data-primary-nav aria-label="Primary navigation"><a href="index.html" data-nav-page="landing">Home</a><a href="overview.html" data-nav-page="overview">Overview</a><a href="platform.html" data-nav-page="platform">Platform</a><a href="studio.html" data-nav-page="studio">Studio</a><a href="runtime.html" data-nav-page="runtime">Runtime</a><a href="governance.html" data-nav-page="governance">Governance</a><a href="solutions.html" data-nav-page="solutions">Solutions</a><a href="architecture.html" data-nav-page="architecture">Architecture</a><a href="learning.html" data-nav-page="learning">Learn</a><a href="library.html" data-nav-page="library">Library</a><a href="company.html" data-nav-page="company">Company</a></nav>
+        <div class="nav-actions">
+          <button class="icon-button" type="button" data-theme-toggle aria-label="Change dark contrast theme">◑</button>
+          <button class="menu-button" type="button" data-menu-toggle aria-label="Open navigation" aria-expanded="false">☰</button>
+        </div>
       </div>
-      <div class="status-strip">
-        <div class="status implemented"><b>Implemented foundation</b><p>Local PostgreSQL, RabbitMQ, object storage, pgvector, registry, authentication foundation, metrics, logs, and branded platform shell.</p></div>
-        <div class="status specified"><b>Normative specification</b><p>Continuous authorization, inbox/outbox, leases, checkpoints, persistent HITL, capability admission, MCP isolation, and recovery behavior.</p></div>
-        <div class="status target"><b>Azure production target</b><p>Entra confidential BFF, private AKS, managed PostgreSQL, RabbitMQ, object storage, OpenBao/Vault, policy services, and governed gateways.</p></div>
-      </div>
+    </header>
+
+      <main id="main-content">
+
+<section id="nextgen-atlas" class="container architecture-atlas-hero">
+  <div class="architecture-atlas-intro">
+    <p class="eyebrow">Master architecture</p>
+    <h1>See the whole ContextWeaver platform. <em>Then inspect every layer.</em></h1>
+    <p class="lede">This is the top-level architecture for Workspaces, Agent, MCP, Service and Workflow Studios, safe dry runs, Cerebro governance, the Weave capability fabric, durable execution, evidence, the Capability Operator, and portable Loom infrastructure.</p>
+    <div class="hero-actions">
+      <a class="button primary" href="#explore">Explore deeper diagrams</a>
+      <a class="button" href="diagrams/contextweaver-nextgen-architecture.drawio">Download master Draw.io</a>
     </div>
-  </header>
+  </div>
+  <div class="diagram-shell architecture-atlas-shell" data-reveal>
+    <div class="diagram-toolbar">
+      <strong>ContextWeaver NextGen Architecture Atlas</strong>
+      <a href="diagrams/contextweaver-nextgen-architecture.html" target="_blank">Open full screen ↗</a>
+      <a href="diagrams/contextweaver-nextgen-architecture.drawio">Editable Draw.io</a>
+      <a href="diagrams/contextweaver-nextgen-architecture.svg">Static SVG</a>
+      <a href="diagrams/contextweaver-nextgen-architecture.png">Static PNG</a>
+      <a href="diagrams/contextweaver-nextgen-architecture.gif">Animated GIF</a>
+    </div>
+    <iframe class="diagram-frame architecture-atlas-frame" data-auto-height="contextweaver-atlas-height" src="diagrams/contextweaver-nextgen-architecture.html?embed=1&amp;v=20261025-10" title="ContextWeaver NextGen Architecture Atlas" loading="eager"></iframe>
+  </div>
+  <p class="diagram-note">Click any component to inspect its responsibility, or use Play, Pause, Previous, Next, Reset, and the stage indicators to walk through the complete governed lifecycle.</p>
+</section>
 
-  <main>
-    <section class="section alt">
-      <div class="wrap">
-        <div class="section-head"><span class="eyebrow">Platform planes</span><h2>One platform, separated by durable and security boundaries</h2><p>The architecture scales each responsibility independently. Browser sessions and Kubernetes pods never own a run.</p></div>
-        <div class="architecture">
-          <article class="lane" style="--lane:#a78bfa"><div class="lane-head"><div class="lane-number">1</div><div><h3>Experience and edge</h3><p>REST APIs and conversational interfaces authenticate users, validate requests, and return a durable run identifier.</p></div></div><div class="nodes"><div class="node"><strong>Web / chat / API</strong><span>Prompt-to-result, uploads, run graph, citations, approvals.</span></div><div class="node"><strong>Entra BFF</strong><span>Authorization code + PKCE, opaque secure browser session.</span></div><div class="node"><strong>Edge API</strong><span>Schema, tenancy, idempotency, quotas, admission.</span></div><div class="node"><strong>Replayable SSE</strong><span>Ordered durable events with Last-Event-ID recovery.</span></div></div></article>
-          <article class="lane" style="--lane:#0dcaf0"><div class="lane-head"><div class="lane-number">2</div><div><h3>Governance and control plane</h3><p>Intent becomes a typed, immutable, fully authorized plan before execution begins.</p></div></div><div class="nodes"><div class="node"><strong>Service and workflow compiler</strong><span>DAG, contracts, bindings, versions, budgets.</span></div><div class="node"><strong>Entitlement + policy</strong><span>Whole-graph preflight and runtime per-action checks.</span></div><div class="node"><strong>Capability registry</strong><span>Services, Workflows, Agents, MCPs, schemas, health.</span></div><div class="node"><strong>Capability Operator</strong><span>Scanned, signed Helm releases and automatic discovery.</span></div></div></article>
-          <article class="lane" style="--lane:#4ade80"><div class="lane-head"><div class="lane-number">3</div><div><h3>Durable asynchronous backbone</h3><p>PostgreSQL owns truth. RabbitMQ transports commands and events. Workers acknowledge only after durable commit.</p></div></div><div class="nodes"><div class="node"><strong>PostgreSQL</strong><span>Runs, tasks, leases, timers, HITL, inbox/outbox, checkpoints, Saga, receipts.</span></div><div class="node"><strong>RabbitMQ quorum queues</strong><span>Persistent commands/events, confirms, retries, DLQ, redelivery.</span></div><div class="node"><strong>Coordinator + scheduler</strong><span>Ready sets, fan-out/fan-in, joins, cancellation, compensation.</span></div><div class="node"><strong>Artifact storage</strong><span>Immutable inputs, outputs, evidence, citations, large payloads.</span></div></div></article>
-          <article class="lane" style="--lane:#fbbf24"><div class="lane-head"><div class="lane-number">4</div><div><h3>Replaceable execution workers</h3><p>Workers lease one task, reauthorize it, checkpoint progress, and can be replaced by another pod.</p></div></div><div class="nodes"><div class="node"><strong>Agent workers</strong><span>RabbitMQ + Model Gateway only; no direct MCP, data, or internet route.</span></div><div class="node"><strong>MCP Gateway workers</strong><span>Policy enforcement, JIT token, provider idempotency, receipts.</span></div><div class="node"><strong>RAG workers</strong><span>Extraction, chunking, embedding, validation, publication, retrieval.</span></div><div class="node"><strong>HITL service</strong><span>Persist wait state, release worker, resume from an approval event.</span></div></div></article>
-          <article class="lane" style="--lane:#60a5fa"><div class="lane-head"><div class="lane-number">5</div><div><h3>Data, models, operations, and evidence</h3><p>Pluggable providers remain behind trusted gateways and production-grade telemetry.</p></div></div><div class="nodes"><div class="node"><strong>Model Gateway</strong><span>Approved models, redaction, policy, cost, residency, fallback.</span></div><div class="node"><strong>Governed RAG</strong><span>PostgreSQL FTS + pgvector first; distributed search when measured.</span></div><div class="node"><strong>Observability</strong><span>Prometheus, Grafana, Loki, OTLP traces, SLOs, audit correlation.</span></div><div class="node"><strong>Security services</strong><span>OpenBao/Vault, workload identity, policy decisions, immutable audit.</span></div></div></article>
-        </div>
-      </div>
-    </section>
+<section class="container section compact architecture-explorer-intro">
+  <div class="section-head">
+    <div><p class="section-kicker">Detailed architecture explorers</p><h2>Zoom from the master atlas into one concern at a time.</h2></div>
+    <p>The diagrams below share the same semantic model and focus separately on platform planes, capability creation, lifecycle promotion, governed runtime, and scale.</p>
+  </div>
+  <div class="card amber"><div class="meta">Diagram semantics</div><h3>Motion communicates meaning.</h3><ul><li>Solid pulse: active request or data</li><li>Dashed pulse: identity, policy, or authorization</li><li>Green: validated output or success</li><li>Amber: approval, waiting, retry, or compensation</li><li>Red: denial or failed validation</li><li>Parallel pulses: concurrent Agent work</li></ul></div>
+</section>
 
-    <section class="section">
-      <div class="wrap">
-        <div class="section-head"><span class="eyebrow">Prompt to result</span><h2>The synchronous request ends after durable admission</h2><p>Everything after acceptance is resumable, observable, and independent of the browser or accepting API pod.</p></div>
-        <div class="flow">
-          <article class="step"><b>01 REQUEST</b><h3>Authenticate and validate</h3><p>Resolve tenant, principal, purpose, schema, and idempotency.</p></article>
-          <article class="step"><b>02 PLAN</b><h3>Compile and authorize</h3><p>Freeze the typed DAG, versions, capabilities, policy, and budgets.</p></article>
-          <article class="step"><b>03 COMMIT</b><h3>Create durable run</h3><p>Atomically persist run, plan, first tasks, and pending outbox.</p></article>
-          <article class="step"><b>04 ACCEPT</b><h3>Return HTTP 202</h3><p>Return runId, statusUrl, and eventsUrl after the commit succeeds.</p></article>
-          <article class="step"><b>05 DISPATCH</b><h3>Publish commands</h3><p>Confirmed outbox publishers send persistent RabbitMQ messages.</p></article>
-          <article class="step"><b>06 EXECUTE</b><h3>Lease and checkpoint</h3><p>Workers reauthorize, execute, commit outcomes, then acknowledge.</p></article>
-          <article class="step"><b>07 PROJECT</b><h3>Stream durable events</h3><p>Clients reconnect and replay progress, HITL, evidence, and results.</p></article>
-        </div>
+<section id="explore" class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Interactive diagrams</p><h2>Clickable, controllable, and readable without animation.</h2></div><p>Every player supports Play, Pause, Next, Previous, Reset, stage selection, component inspection, keyboard focus, reduced motion, and a textual explanation.</p></div>
+  <div style="display:grid;gap:50px">
+    <section id="service-factory">
+    <div class="diagram-shell" data-reveal>
+      <div class="diagram-toolbar">
+        <strong>Universal Service Factory</strong>
+        <a href="diagrams/service-factory.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        <a href="diagrams/service-factory.svg">Static SVG</a>
+        <a href="diagrams/service-factory.gif">Animated GIF</a>
       </div>
+      <iframe class="diagram-frame" src="diagrams/service-factory.html" title="Universal Service Factory" loading="lazy"></iframe>
+    </div>
+    <p class="diagram-note">The same path supports an imported API, manually authored Agent, generated MCP server, or complete cross-industry solution pack.</p>
     </section>
+    <section id="platform-planes">
+    <div class="diagram-shell" data-reveal>
+      <div class="diagram-toolbar">
+        <strong>Eight Platform Planes</strong>
+        <a href="diagrams/platform-planes.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        <a href="diagrams/platform-planes.svg">Static SVG</a>
+        <a href="diagrams/platform-planes.gif">Animated GIF</a>
+      </div>
+      <iframe class="diagram-frame" src="diagrams/platform-planes.html" title="Eight Platform Planes" loading="lazy"></iframe>
+    </div>
+    <p class="diagram-note">Click a plane to inspect its responsibilities, trust boundary, and relationship to the portable infrastructure layer.</p>
+    </section>
+    <section id="capability-lifecycle">
+    <div class="diagram-shell" data-reveal>
+      <div class="diagram-toolbar">
+        <strong>Agent and MCP Capability Lifecycle</strong>
+        <a href="diagrams/capability-lifecycle.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        <a href="diagrams/capability-lifecycle.svg">Static SVG</a>
+        <a href="diagrams/capability-lifecycle.gif">Animated GIF</a>
+      </div>
+      <iframe class="diagram-frame" src="diagrams/capability-lifecycle.html" title="Agent and MCP Capability Lifecycle" loading="lazy"></iframe>
+    </div>
+    <p class="diagram-note">Deployment is not discovery: a capability becomes usable only after runtime attestation, Registry convergence, and qualification.</p>
+    </section>
+    <section id="governed-run">
+    <div class="diagram-shell" data-reveal>
+      <div class="diagram-toolbar">
+        <strong>Governed Dynamic Service Run</strong>
+        <a href="diagrams/governed-run.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        <a href="diagrams/governed-run.svg">Static SVG</a>
+        <a href="diagrams/governed-run.gif">Animated GIF</a>
+      </div>
+      <iframe class="diagram-frame" src="diagrams/governed-run.html" title="Governed Dynamic Service Run" loading="lazy"></iframe>
+    </div>
+    <p class="diagram-note">The player shows identity and policy paths, parallel Agent work, MCP side effects, human approval, durable state, and final evidence.</p>
+    </section>
+    <section id="scale-path">
+    <div class="diagram-shell" data-reveal>
+      <div class="diagram-toolbar">
+        <strong>Individual to Sovereign Enterprise</strong>
+        <a href="diagrams/scale-path.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        <a href="diagrams/scale-path.svg">Static SVG</a>
+        <a href="diagrams/scale-path.gif">Animated GIF</a>
+      </div>
+      <iframe class="diagram-frame" src="diagrams/scale-path.html" title="Individual to Sovereign Enterprise" loading="lazy"></iframe>
+    </div>
+    <p class="diagram-note">Stable capability contracts remain portable while governance, tenancy, isolation, deployment, and assurance become progressively stronger.</p>
+    </section>
+  </div>
+</section>
 
-    <section class="section alt">
-      <div class="wrap">
-        <div class="section-head"><span class="eyebrow">Visual reference</span><h2>See the complete asynchronous execution model</h2><p>The editable Draw.io source contains 13 architecture views, including production Azure topology, dynamic capability onboarding, authorization, recovery, RAG, and the Hello World approval PoC.</p></div>
-        <div class="diagram">
-          <a class="diagram-preview" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html"><img src="docs/diagram-viewer/contextweaver-nextgen-architecture/12-durable-async-execution.svg" alt="Durable asynchronous ContextWeaver execution architecture"></a>
-          <div class="principles">
-            <div class="principle"><strong>No pod owns the run</strong><span>Expired leases or unacknowledged messages allow another healthy worker to continue.</span></div>
-            <div class="principle"><strong>Agents never possess credentials</strong><span>Trusted gateways obtain short-lived delegated authority only after runtime policy.</span></div>
-            <div class="principle"><strong>At-least-once transport, effectively-once behavior</strong><span>Inbox deduplication, idempotent transitions, receipts, and reconciliation protect business effects.</span></div>
-            <div class="principle"><strong>HITL is durable state</strong><span>An approval pauses the run without holding a thread, process, queue consumer, or pod.</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
+<section id="cloud-posture" class="container section">
+  <div class="section-head">
+    <div><p class="section-kicker">Cloud and deployment posture</p><h2>Portable contracts. Honest qualification status.</h2></div>
+    <p>ContextWeaver separates the cloud-neutral control-plane design from the qualification of a specific provider profile. “Target adapter” means the contract is designed; it does not claim production parity.</p>
+  </div>
+  <div class="posture-table-wrap" data-reveal>
+    <table class="posture-table">
+      <thead><tr><th>Capability</th><th>Azure</th><th>AWS</th><th>Google Cloud</th><th>Private / sovereign</th></tr></thead>
+      <tbody>
+        <tr><th>Kubernetes runtime</th><td>AKS</td><td>EKS target</td><td>GKE target</td><td>Conformant Kubernetes</td></tr>
+        <tr><th>Workload identity</th><td>Active adapter</td><td>Target adapter</td><td>Target adapter</td><td>Profile-specific</td></tr>
+        <tr><th>Secrets</th><td>Key Vault adapter</td><td>Secrets Manager target</td><td>Secret Manager target</td><td>Native / OpenBao target</td></tr>
+        <tr><th>Object and durable state</th><td>Active realization</td><td>Target adapters</td><td>Target adapters</td><td>PostgreSQL + S3-compatible profile</td></tr>
+        <tr><th>Search and retrieval</th><td>Active realization</td><td>OpenSearch target</td><td>Search/vector target</td><td>OpenSearch / Qdrant target</td></tr>
+        <tr><th>Model providers</th><td>Azure OpenAI adapter</td><td>Bedrock target</td><td>Vertex AI target</td><td>OpenAI-compatible local target</td></tr>
+        <tr><th>Observability</th><td colspan="4">OpenTelemetry, Prometheus, Grafana, logs, traces, metrics, and provider-specific export adapters</td></tr>
+        <tr class="posture-status"><th>Current posture</th><td><span class="status-badge active">Active realization</span></td><td><span class="status-badge target">Target profile</span></td><td><span class="status-badge target">Target profile</span></td><td><span class="status-badge mixed">Profile-dependent</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-    <section class="section">
-      <div class="wrap">
-        <div class="section-head"><span class="eyebrow">Architecture library</span><h2>Drill into each governed capability</h2><p>These pages are generated from the curated NextGen specifications rather than the retired synchronous implementation diagrams.</p></div>
-        <div class="grid">
-          <a class="card" href="docs/documents/azure-production-platform-and-poc.html"><span class="tag">Production target</span><h3>Azure platform and end-to-end PoC</h3><p>Entra ID, private AKS, control and execution planes, dynamic Helm capabilities, RAG, HITL, and recovery.</p></a>
-          <a class="card" href="docs/documents/durable-asynchronous-execution.html"><span class="tag">Execution</span><h3>Durable asynchronous runtime</h3><p>Commands, events, inbox/outbox, leases, checkpoints, retries, compensation, and replayable SSE.</p></a>
-          <a class="card" href="docs/documents/continuous-entitlement-enforcement.html"><span class="tag">Authorization</span><h3>Continuous entitlement enforcement</h3><p>Request-time whole-graph authorization plus runtime enforcement before every protected action.</p></a>
-          <a class="card" href="docs/documents/dynamic-agent-mcp-lifecycle.html"><span class="tag">Control plane</span><h3>Dynamic Agent and MCP lifecycle</h3><p>Specification, scanning, signing, approval, Helm reconciliation, discovery, metrics, dashboards, and rollback.</p></a>
-          <a class="card" href="docs/documents/governed-rag-ingestion.html"><span class="tag">Knowledge</span><h3>Governed asynchronous RAG</h3><p>Source reconciliation, durable stages, shadow generations, atomic publication, authorization-first retrieval.</p></a>
-          <a class="card" href="docs/documents/agent-sandbox-security.html"><span class="tag">Isolation</span><h3>Agent sandbox security</h3><p>Only RabbitMQ and Model Gateway egress; no direct MCP, database, storage, Kubernetes, metadata, or internet route.</p></a>
-          <a class="card" href="architecture-azure.html"><span class="tag">Cloud profile</span><h3>Azure production mapping</h3><p>Map the cloud-neutral planes to Entra, AKS, PostgreSQL, RabbitMQ, storage, Key Vault/OpenBao, and private networking.</p></a>
-          <a class="card" href="architecture-aws.html"><span class="tag">Cloud profile</span><h3>AWS portability mapping</h3><p>Equivalent Kubernetes, identity, relational, broker, object, secrets, model, and observability bindings.</p></a>
-          <a class="card" href="architecture-gcp.html"><span class="tag">Cloud profile</span><h3>Google Cloud portability mapping</h3><p>Equivalent GKE, identity, PostgreSQL, broker, object, secrets, model, and operations bindings.</p></a>
+<section class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Current deployment baseline</p><h2>Identity, workspace data, and delivery are being qualified as one operational profile.</h2></div><p>The local and Azure realization now includes repaired Keycloak entry, governed MongoDB workspace access, and reusable immutable CI/CD with SBOM, provenance, rollout-safe updates, and rollback.</p></div>
+  <div class="grid three"><article class="card amber" data-fact-id="reusable-cicd" data-reveal><div class="meta">Active realization</div><h3>Reusable immutable delivery</h3><p>Shared CI/CD builds immutable images with SBOM and provenance, then performs rollout-safe deployment updates and rollback.</p></article><article class="card amber" data-fact-id="identity-and-workspaces" data-reveal><div class="meta">Active realization</div><h3>Repaired identity and governed workspaces</h3><p>The public Keycloak login path is restored, and governed MongoDB workspace access uses controlled identity and secret-reference boundaries.</p></article><article class="card amber" data-fact-id="external-delegated-clients" data-reveal><div class="meta">Active realization</div><h3>External Copilot and Claude access</h3><p>MCP-capable clients use delegated user identity, identity-filtered discovery, purpose and policy context, and platform-owned upstream credentials through the capability gateway.</p></article></div>
+</section>
+
+<section id="downloads" class="container section">
+  <div class="section-head"><div><p class="section-kicker">Portable assets</p><h2>Use the architecture in reviews, proposals, presentations, and implementation planning.</h2></div><p>The editable source contains one Draw.io page per diagram. Static SVG works for print and documentation; GIF works when an interactive player is unavailable.</p></div>
+  <div class="grid four">
+    <article class="card mint"><div class="meta">Editable</div><h3>Draw.io source</h3><p>Four pages with semantic colors, orthogonal connectors, grouped boundaries, and stable component names.</p><a class="card-link" href="diagrams/contextweaver-public-architecture.drawio">Download .drawio →</a></article>
+    <article class="card sky"><div class="meta">Interactive</div><h3>HTML + SVG players</h3><p>Deterministic stages, component details, manual controls, accessible captions, and reduced-motion behavior.</p><a class="card-link" href="diagrams/service-factory.html">Open a player →</a></article>
+    <article class="card violet"><div class="meta">Documentation</div><h3>Static SVG</h3><p>Responsive vector fallback with all components and labels visible when animation or scripting is unavailable.</p><a class="card-link" href="diagrams/governed-run.svg">Open SVG →</a></article>
+    <article class="card amber"><div class="meta">Presentation</div><h3>Animated GIF</h3><p>Meaningful stages at one second per frame, optimized for readability rather than decorative speed.</p><a class="card-link" href="diagrams/capability-lifecycle.gif">Open GIF →</a></article>
+  </div>
+</section>
+
+<section class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Product truth</p><h2>Architecture is a contract and direction—not a claim that every box is production-qualified today.</h2></div><p>The website intentionally distinguishes implemented foundations, active realization, and target architecture. Readiness must be demonstrated for the exact release, deployment profile, risk tier, cloud, region, and customer control environment.</p></div>
+</section>
+
+<section class="container section compact">
+  <div class="chapter-next">
+    <div><p class="section-kicker">Final chapter</p><h2>Move from visual architecture into the technical reasoning behind it.</h2><p>Explore the curated briefs on security, identity, runtime resilience, RAG, observability, cloud neutrality, and deployment readiness.</p></div>
+    <a class="button primary" href="library.html">Open the technical library →</a>
+  </div>
+</section>
+
+      </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed capability platform</span></span></a>
+          <p style="margin-top:16px">Turn specifications, enterprise information, Agents, MCPs, Workflows, models, policy, and infrastructure into governed, deployable Services with evidence attached.</p>
         </div>
-        <div class="callout" style="margin-top:1.5rem"><strong>Architecture status matters.</strong> This site distinguishes implemented foundations, normative specifications, proof-of-concept scope, and production targets. A documented capability is not automatically a currently deployed capability.</div>
+        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
+        <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>
+        <div><h3>Company</h3><div class="footer-links"><a href="company.html#about">About BrainzBytes</a><a href="company.html#about">Founder</a><a href="company.html#company-paths">Careers · planned</a></div></div>
       </div>
-    </section>
-  </main>
-</body>
-</html>
+      <div class="container footer-bottom">
+        <span>© 2026 BrainzBytes. ContextWeaver product architecture.</span>
+        <span>Architecture refreshed November 1, 2026. Compliance and deployment outcomes remain customer-specific.</span>
+      </div>
+    </footer>
+
+      <script src="assets/js/site.js?v=20261101-13"></script>
+    </body>
+    </html>

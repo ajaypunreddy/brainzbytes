@@ -1,0 +1,182 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="description" content="See how ContextWeaver turns intent into an authorized immutable plan, durable Agent and MCP execution, and an evidence-backed result.">
+      <meta name="theme-color" content="#07110f">
+      <title>ContextWeaver Runtime — Governed dynamic Service execution</title>
+      <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+      <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
+    </head>
+    <body data-page="runtime">
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <div class="nav-shell">
+        <a class="brand" href="index.html" aria-label="ContextWeaver home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-copy"><strong>ContextWeaver</strong><span>by BrainzBytes</span></span>
+        </a>
+        <nav class="primary-nav" data-primary-nav aria-label="Primary navigation"><a href="index.html" data-nav-page="landing">Home</a><a href="overview.html" data-nav-page="overview">Overview</a><a href="platform.html" data-nav-page="platform">Platform</a><a href="studio.html" data-nav-page="studio">Studio</a><a href="runtime.html" data-nav-page="runtime">Runtime</a><a href="governance.html" data-nav-page="governance">Governance</a><a href="solutions.html" data-nav-page="solutions">Solutions</a><a href="architecture.html" data-nav-page="architecture">Architecture</a><a href="learning.html" data-nav-page="learning">Learn</a><a href="library.html" data-nav-page="library">Library</a><a href="company.html" data-nav-page="company">Company</a></nav>
+        <div class="nav-actions">
+          <button class="icon-button" type="button" data-theme-toggle aria-label="Change dark contrast theme">◑</button>
+          <button class="menu-button" type="button" data-menu-toggle aria-label="Open navigation" aria-expanded="false">☰</button>
+        </div>
+      </div>
+    </header>
+
+      <main id="main-content">
+
+<section class="container hero" style="min-height:650px">
+  <div>
+    <p class="eyebrow">Governed dynamic execution</p>
+    <h1>Dynamic enough to adapt. <em>Bounded enough to trust.</em></h1>
+    <p class="lede">ContextWeaver can select an approved Service or compose a constrained plan from admitted capabilities. The model may help propose the graph; identity, schemas, policy, compatibility, approvals, and the compiler determine whether it can run.</p>
+    <div class="hero-actions"><a class="button primary" href="#flow">Walk through a run</a><a class="button" href="governance.html">Review the safeguards</a></div>
+  </div>
+  <div class="quote">Dependencies control when work may run. Schemas, explicit bindings, and field policy control what data each step receives.</div>
+</section>
+
+<section id="flow" class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Prompt to proved outcome</p><h2>A run is a state machine, not a stream of hopeful messages.</h2></div><p>Click components and step through the active path. The diagram distinguishes identity and policy, authorized data, Agent reasoning, MCP side effects, approval, durable execution, and evidence.</p></div>
+
+    <div class="diagram-shell" data-reveal>
+      <div class="diagram-toolbar">
+        <strong>Governed Dynamic Service Run</strong>
+        <a href="diagrams/governed-run.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        <a href="diagrams/governed-run.svg">Static SVG</a>
+        <a href="diagrams/governed-run.gif">Animated GIF</a>
+      </div>
+      <iframe class="diagram-frame" src="diagrams/governed-run.html" title="Governed Dynamic Service Run" loading="lazy"></iframe>
+    </div>
+    <p class="diagram-note">The player shows identity and policy paths, parallel Agent work, MCP side effects, human approval, durable state, and final evidence.</p>
+
+</section>
+
+<section id="generic-agent-runtime" class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Profile-bound Agents</p><h2>One hardened image. Many isolated logical Agents.</h2></div><p>Role, schemas, executor, MCP access, budgets, queues, and runtime compatibility are injected through immutable profiles. Each logical Agent retains independent identity, networking, scaling, rollout, and rollback.</p></div>
+
+    <div class="diagram-shell" data-reveal>
+      <div class="diagram-toolbar">
+        <strong>Generic Agent Runtime</strong>
+        <a href="diagrams/generic-agent-runtime.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        <a href="diagrams/generic-agent-runtime.svg">Static SVG</a>
+        <a href="diagrams/generic-agent-runtime.gif">Animated GIF</a>
+      </div>
+      <iframe class="diagram-frame" src="diagrams/generic-agent-runtime.html" title="Generic Agent Runtime" loading="lazy"></iframe>
+    </div>
+    <p class="diagram-note">Risk, Readiness, and Synthesis use one platform image with separate immutable profiles, queues, identities, scaling, and rollback.</p>
+
+</section>
+
+<section class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Current runtime realization</p><h2>Composition, delegation, retrieval, and approval now share one evidence model.</h2></div><p>Plans are exact-version and digest pinned. Agents receive only authorized MCP bindings, retrieval returns citations and receipts, and policy-required dynamic plans cannot execute before approval of the exact immutable plan.</p></div>
+  <div class="grid three"><article class="card amber" data-fact-id="multi-agent-composition" data-reveal><div class="meta">Active realization</div><h3>Version-pinned multi-Agent composition</h3><p>Solution Composer persists immutable dependency plans with exact capability versions and digests, qualification evidence, cache reuse, and stale-plan invalidation.</p></article><article class="card amber" data-fact-id="agent-tool-delegation" data-reveal><div class="meta">Active realization</div><h3>Least-privilege Agent tool delegation</h3><p>Agents declare MCP requirements; Workflows authorize exact bindings without turning MCPs into hidden Workflow steps or giving Agents provider credentials.</p></article><article class="card amber" data-fact-id="profile-bound-agents" data-reveal><div class="meta">Active realization</div><h3>Immutable profile-bound Agents</h3><p>One hardened Generic Agent image supports isolated logical Agents with immutable profiles, separate identities, queues, scaling, network policy, rollout, and rollback.</p></article><article class="card amber" data-fact-id="rag-ingestion-safety" data-reveal><div class="meta">Active realization</div><h3>Production-shaped RAG ingestion</h3><p>Durable PostgreSQL jobs, shadow generations, RabbitMQ delivery, pgvector, Tika, ClamAV, Presidio, ACL and lineage checks, and fail-closed external adapters now shape ingestion.</p></article><article class="card amber" data-fact-id="retrieval-evidence" data-reveal><div class="meta">Active realization</div><h3>Content-minimized retrieval evidence</h3><p>Retrieval returns ContextPack, CitationManifest, and receipts while retaining content-minimized evidence for 30 days by default.</p></article><article class="card amber" data-fact-id="durable-service-runs" data-reveal><div class="meta">Active realization</div><h3>Durable admitted Service Runs</h3><p>Run Coordinator admits intent before persistence, records evidence, supports constrained dynamic composition, and blocks execution behind an exact-plan approval when required.</p></article></div>
+</section>
+
+<section id="scenarios" class="container section scenario-section">
+  <div class="section-head">
+    <div><p class="section-kicker">See it run</p><h2>Three outcomes. One governed execution pattern.</h2></div>
+    <p>These illustrative journeys make the architecture concrete. Exact connectors and side effects depend on the admitted capabilities in a customer deployment.</p>
+  </div>
+  <div class="scenario-tabs" role="tablist" aria-label="Illustrative ContextWeaver scenarios">
+    <button class="scenario-tab active" id="scenario-tab-incident" role="tab" aria-selected="true" aria-controls="scenario-incident" data-scenario="scenario-incident">Production incident</button>
+    <button class="scenario-tab" id="scenario-tab-sales" role="tab" aria-selected="false" aria-controls="scenario-sales" data-scenario="scenario-sales">Customer renewal</button>
+    <button class="scenario-tab" id="scenario-tab-travel" role="tab" aria-selected="false" aria-controls="scenario-travel" data-scenario="scenario-travel">Travel coordination</button>
+  </div>
+  <div class="scenario-stage">
+    <article class="scenario-panel active" id="scenario-incident" role="tabpanel" aria-labelledby="scenario-tab-incident">
+      <div class="scenario-heading"><div><span class="status-badge illustrative">Illustrative</span><h3>Investigate a production regression</h3></div><p>An SRE asks for an evidence-backed assessment without giving an Agent unrestricted production authority.</p></div>
+      <ol class="scenario-flow">
+        <li><b>Intent</b><span>“Explain the error spike after the latest release and prepare the safest next action.”</span></li>
+        <li><b>Admit</b><span>Resolve the incident, telemetry, repository, release, and runbook capabilities allowed for this operator.</span></li>
+        <li><b>Dry run</b><span>Show proposed queries, data scopes, parallel investigations, budgets, and any action that would need approval.</span></li>
+        <li><b>Authorize</b><span>Policy permits read-only investigation and draft preparation; rollback or incident acknowledgment remains human-controlled.</span></li>
+        <li><b>Execute</b><span>Agents inspect logs, traces, recent changes, and known patterns in parallel while durable state preserves progress.</span></li>
+        <li><b>Prove</b><span>Return the diagnosis, confidence, citations, tool receipts, policy decisions, and a separately reviewable remediation plan.</span></li>
+      </ol>
+    </article>
+    <article class="scenario-panel" id="scenario-sales" role="tabpanel" aria-labelledby="scenario-tab-sales" hidden>
+      <div class="scenario-heading"><div><span class="status-badge illustrative">Illustrative</span><h3>Prepare a customer renewal brief</h3></div><p>An account team needs a current, source-backed view without mixing customer data or sending unreviewed communication.</p></div>
+      <ol class="scenario-flow">
+        <li><b>Intent</b><span>“Prepare the renewal brief, identify open commitments, and draft the customer follow-up.”</span></li>
+        <li><b>Admit</b><span>Resolve approved CRM, support, contract, product, and document sources for the user, account, and purpose.</span></li>
+        <li><b>Dry run</b><span>Preview the fields to retrieve, the comparison logic, and the proposed communication before protected work begins.</span></li>
+        <li><b>Authorize</b><span>Policy filters account data, excludes unrelated customers, and requires an account owner to approve external communication.</span></li>
+        <li><b>Execute</b><span>Workers assemble history, commitments, risks, usage evidence, and recommended actions into a typed brief.</span></li>
+        <li><b>Prove</b><span>Deliver citations, freshness, missing-data warnings, approval state, and a draft that cannot be sent autonomously.</span></li>
+      </ol>
+    </article>
+    <article class="scenario-panel" id="scenario-travel" role="tabpanel" aria-labelledby="scenario-tab-travel" hidden>
+      <div class="scenario-heading"><div><span class="status-badge target">Profile-dependent</span><h3>Coordinate a policy-compliant trip</h3></div><p>A traveler wants an itinerary assembled across providers while retaining explicit approval for booking and payment.</p></div>
+      <ol class="scenario-flow">
+        <li><b>Intent</b><span>“Plan the trip within company policy, compare practical options, and prepare it for approval.”</span></li>
+        <li><b>Admit</b><span>Resolve travel policy, calendar, approved search providers, expense limits, identity, and regional constraints.</span></li>
+        <li><b>Dry run</b><span>Present candidate providers, data shared with each one, estimated cost, timing, and proposed booking actions.</span></li>
+        <li><b>Authorize</b><span>Policy removes disallowed options and requires the traveler or delegated approver before any external commitment.</span></li>
+        <li><b>Execute</b><span>Search tasks run in parallel; a Workflow joins the results, applies preferences, and pauses durably for approval.</span></li>
+        <li><b>Prove</b><span>Return the itinerary, comparison evidence, approval record, and provider receipts when configured connectors perform a booking.</span></li>
+      </ol>
+    </article>
+  </div>
+</section>
+
+<section class="container section compact">
+  <div class="plain-language" data-reveal>
+    <div><p class="section-kicker">Plain-language model</p><h2>A relay race with signed handoffs.</h2></div>
+    <p>A Workflow is not one Agent improvising from start to finish. Each specialist receives only the baton it needs, passes a typed result to the next stage, and records the handoff. Checkpoints let the race pause for approval or resume with another worker after failure.</p>
+  </div>
+</section>
+
+<section class="container section">
+  <div class="section-head"><div><p class="section-kicker">Run lifecycle</p><h2>The simple view of a rigorous execution model.</h2></div><p>The full design contains more granular authorization, retrieval, binding, checkpoint, disclosure, and audit states; users see a comprehensible progression.</p></div>
+  <div class="steps">
+    <article class="step"><div><h3>Receive and scrutinize intent</h3><p>Resolve identity, tenant, roles, relationships, device, purpose, risk, classification, entities, ambiguity, and candidate outcomes.</p></div></article>
+    <article class="step"><div><h3>Select or constrained-compose</h3><p>Choose an approved Service, ask a clarifying question, or propose a graph from only admitted capabilities and control nodes.</p></div></article>
+    <article class="step"><div><h3>Compile and authorize the complete graph</h3><p>Validate schemas, field bindings, dependencies, fallback sets, budgets, RAG scopes, model envelopes, tool risk, and approvals.</p></div></article>
+    <article class="step"><div><h3>Freeze the immutable plan</h3><p>Pin exact Service, Workflow, Agent, MCP, model, policy, schema, source, index, and configuration versions.</p></div></article>
+    <article class="step"><div><h3>Commit the durable run</h3><p>Persist state, the plan, first tasks or approval request, and transactional outbox before returning acceptance.</p></div></article>
+    <article class="step"><div><h3>Execute typed work</h3><p>Dispatch through persistent commands; run ready Agents in parallel; use bounded context; checkpoint accepted artifacts.</p></div></article>
+    <article class="step"><div><h3>Invoke tools under delegated authority</h3><p>The MCP gateway validates the exact call, performs just-in-time token exchange, keeps credentials outside the Agent, and records receipts.</p></div></article>
+    <article class="step"><div><h3>Finalize, disclose, and prove</h3><p>Validate one canonical result, apply disclosure policy and approval, render approved formats, persist evidence, and reauthorize delivery.</p></div></article>
+  </div>
+</section>
+
+<section class="container section">
+  <div class="section-head"><div><p class="section-kicker">Resilience by design</p><h2>Long-running work can wait, retry, resume, and compensate.</h2></div><p>Durability is a product contract rather than a best-effort property hidden inside an Agent loop.</p></div>
+  <div class="grid three">
+    <article class="card mint"><div class="meta">Durable waits</div><h3>Release compute while waiting</h3><p>Human approval, timer, callback, or external event state is persisted. The run resumes from authoritative state rather than holding an open process.</p></article>
+    <article class="card amber"><div class="meta">At-least-once safety</div><h3>Replay without repeating side effects</h3><p>Inbox/outbox, leases, idempotency keys, accepted artifact hashes, and provider receipts let another worker safely continue after failure.</p></article>
+    <article class="card coral"><div class="meta">Saga compensation</div><h3>Handle partial business failure</h3><p>Each side effect declares whether and how it can be compensated. Failed plans reverse approved actions or escalate explicit non-compensable state.</p></article>
+  </div>
+</section>
+
+<section class="container section compact">
+  <div class="chapter-next">
+    <div><p class="section-kicker">Next chapter</p><h2>Understand the authority, credential, policy, and evidence boundaries.</h2><p>The scenarios become trustworthy only when the runtime cannot expand its own permissions.</p></div>
+    <a class="button primary" href="governance.html">Open the trust model →</a>
+  </div>
+</section>
+
+      </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed capability platform</span></span></a>
+          <p style="margin-top:16px">Turn specifications, enterprise information, Agents, MCPs, Workflows, models, policy, and infrastructure into governed, deployable Services with evidence attached.</p>
+        </div>
+        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
+        <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>
+        <div><h3>Company</h3><div class="footer-links"><a href="company.html#about">About BrainzBytes</a><a href="company.html#about">Founder</a><a href="company.html#company-paths">Careers · planned</a></div></div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© 2026 BrainzBytes. ContextWeaver product architecture.</span>
+        <span>Architecture refreshed November 1, 2026. Compliance and deployment outcomes remain customer-specific.</span>
+      </div>
+    </footer>
+
+      <script src="assets/js/site.js?v=20261101-13"></script>
+    </body>
+    </html>

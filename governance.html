@@ -1,0 +1,127 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="description" content="Review ContextWeaver identity, credential non-possession, policy, approval, admission, lifecycle, evidence, and safety controls.">
+      <meta name="theme-color" content="#07110f">
+      <title>ContextWeaver Governance, Security, and Evidence</title>
+      <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+      <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
+    </head>
+    <body data-page="governance">
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <div class="nav-shell">
+        <a class="brand" href="index.html" aria-label="ContextWeaver home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-copy"><strong>ContextWeaver</strong><span>by BrainzBytes</span></span>
+        </a>
+        <nav class="primary-nav" data-primary-nav aria-label="Primary navigation"><a href="index.html" data-nav-page="landing">Home</a><a href="overview.html" data-nav-page="overview">Overview</a><a href="platform.html" data-nav-page="platform">Platform</a><a href="studio.html" data-nav-page="studio">Studio</a><a href="runtime.html" data-nav-page="runtime">Runtime</a><a href="governance.html" data-nav-page="governance">Governance</a><a href="solutions.html" data-nav-page="solutions">Solutions</a><a href="architecture.html" data-nav-page="architecture">Architecture</a><a href="learning.html" data-nav-page="learning">Learn</a><a href="library.html" data-nav-page="library">Library</a><a href="company.html" data-nav-page="company">Company</a></nav>
+        <div class="nav-actions">
+          <button class="icon-button" type="button" data-theme-toggle aria-label="Change dark contrast theme">◑</button>
+          <button class="menu-button" type="button" data-menu-toggle aria-label="Open navigation" aria-expanded="false">☰</button>
+        </div>
+      </div>
+    </header>
+
+      <main id="main-content">
+
+<section class="container hero" style="min-height:650px">
+  <div>
+    <p class="eyebrow">Governance built into execution</p>
+    <h1>Authority is explicit. <em>Evidence is automatic.</em></h1>
+    <p class="lede">Every protected human and workload action carries verified identity, tenant, purpose, policy version, correlation, and bounded authority. No prompt, model, Agent, tool, or generated package can expand its own privileges.</p>
+  </div>
+  <div class="grid" style="align-self:center">
+    <article class="card violet"><div class="meta">Identity</div><h3>Who is acting?</h3><p>User, workload, tenant, role, group, relationship, device, session, delegation, and current revocation state.</p></article>
+    <article class="card amber"><div class="meta">Policy</div><h3>What is permitted?</h3><p>Purpose, environment, region, data class, model, source, capability, operation, arguments, risk, and disclosure.</p></article>
+    <article class="card mint"><div class="meta">Evidence</div><h3>What actually happened?</h3><p>Decision IDs, plan and artifact hashes, release digests, approvals, citations, receipts, evaluations, metrics, logs, and traces.</p></article>
+  </div>
+</section>
+
+<section class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Current control realization</p><h2>Authority is bound to identity, resource, purpose, and side effect.</h2></div><p>Interactive roles do not imply side-effect authority. External clients receive identity-filtered discovery, provider credentials remain platform-owned, and each permitted action is bound to exact policy and entitlement evidence.</p></div>
+  <div class="grid three"><article class="card amber" data-fact-id="policy-entitlements" data-reveal><div class="meta">Active realization</div><h3>Resource-bound policy and entitlements</h3><p>Tool decisions bind the exact resource, purpose, input digest, side-effect class, approval, policy rules, and entitlement IDs; side effects require an explicit scope.</p></article><article class="card amber" data-fact-id="external-delegated-clients" data-reveal><div class="meta">Active realization</div><h3>External Copilot and Claude access</h3><p>MCP-capable clients use delegated user identity, identity-filtered discovery, purpose and policy context, and platform-owned upstream credentials through the capability gateway.</p></article><article class="card amber" data-fact-id="agent-tool-delegation" data-reveal><div class="meta">Active realization</div><h3>Least-privilege Agent tool delegation</h3><p>Agents declare MCP requirements; Workflows authorize exact bindings without turning MCPs into hidden Workflow steps or giving Agents provider credentials.</p></article></div>
+</section>
+
+<section class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Control model</p><h2>Five layers around every consequential tool call.</h2></div><p>Identity is resolved before the call, authority is checked at use time, credentials remain in the trusted gateway, and the result is minimized before returning to the Agent.</p></div>
+  <div class="grid four">
+    <article class="card sky"><div class="meta">01</div><h3>Authenticate</h3><p>OIDC, MFA, workload identity, current tenant and subject context.</p></article>
+    <article class="card violet"><div class="meta">02</div><h3>Inject identity</h3><p>Bounded user, role, group, purpose, plan, node, delegation, and correlation context.</p></article>
+    <article class="card amber"><div class="meta">03</div><h3>Broker credentials</h3><p>Just-in-time scoped exchange. Agents never receive provider tokens, cloud keys, connector secrets, or database credentials.</p></article>
+    <article class="card coral"><div class="meta">04</div><h3>Evaluate policy</h3><p>Exact service, tool, operation, arguments, data, read/write risk, region, side effect, approval, and budget.</p></article>
+    <article class="card mint"><div class="meta">05</div><h3>Validate and audit</h3><p>Schema-check inputs and outputs; minimize fields; attach provenance; record receipt, decision, latency, and result class.</p></article>
+  </div>
+</section>
+
+<section class="container section">
+  <div class="section-head"><div><p class="section-kicker">Non-negotiable safeguards</p><h2>Human authority remains human.</h2></div><p>These controls apply to platform engines and illustrate how ContextWeaver policy can encode customer-specific hard blocks.</p></div>
+  <div class="grid three">
+    <article class="card coral"><div class="meta">Hard block</div><h3>No autonomous high-severity acknowledgment</h3><p>Severity 0, 1, and 2 incidents cannot be automatically acknowledged by an Agent.</p></article>
+    <article class="card coral"><div class="meta">Hard block</div><h3>No autonomous merge or production rollback</h3><p>Code merge and production rollback retain explicit independent human authority.</p></article>
+    <article class="card coral"><div class="meta">Hard block</div><h3>No unreviewed sensitive communication or security change</h3><p>Customer communications and authentication or cryptography changes require qualified review.</p></article>
+    <article class="card amber"><div class="meta">Separation of duty</div><h3>No self-approval</h3><p>The submitting or executing identity cannot approve its own restricted production action.</p></article>
+    <article class="card amber"><div class="meta">Promotion</div><h3>Review before Enforce</h3><p>Engines begin in advisory Review mode. Promotion requires passing metrics, at least two clean evaluation weeks, and human approval.</p></article>
+    <article class="card amber"><div class="meta">Auto-pause</div><h3>Stop after repeated evaluation failure</h3><p>Two consecutive evaluation failures automatically pause enforcement until review and recovery.</p></article>
+  </div>
+</section>
+
+<section class="container section">
+  <div class="section-head"><div><p class="section-kicker">Lifecycle governance</p><h2>Admission happens before deployment—and continues afterward.</h2></div><p>Capabilities are not trusted forever because one build passed. Runtime identity, canary health, evaluation, drift, support, and lifecycle remain part of eligibility.</p></div>
+  <div class="steps">
+    <article class="step"><div><h3>Validate the specification</h3><p>Strict identities, owners, versions, schemas, side effects, idempotency, compensation, dependencies, credential and resilience profiles.</p></div></article>
+    <article class="step"><div><h3>Inspect the supply chain</h3><p>Trusted publisher, signatures, immutable digests, SBOM, dependencies, images, malware, secrets, licenses, provenance, and reproducibility.</p></div></article>
+    <article class="step"><div><h3>Prove isolation and safety</h3><p>Restricted runtime, deny-default network, bounded identity, resource quota, malformed I/O, adversarial, duplicate, retry, restart, timeout, and recovery tests.</p></div></article>
+    <article class="step"><div><h3>Approve by risk</h3><p>Data class, external authority, side effects, environment, tenant scope, residency, and human-authority requirements determine the decision path.</p></div></article>
+    <article class="step"><div><h3>Qualify the live runtime</h3><p>Compare the live descriptor to the signed release; use synthetic and canary traffic; continuously evaluate health, quality, safety, SLO, and drift.</p></div></article>
+    <article class="step"><div><h3>Drain and retire safely</h3><p>Block new resolution, preserve pinned work, revoke routes and authority, retain evidence, and remove resources according to retention policy.</p></div></article>
+  </div>
+</section>
+
+<section class="container section compact">
+  <div class="plain-language" data-reveal>
+    <div><p class="section-kicker">Plain-language model</p><h2>A guarded service counter—not a key handoff.</h2></div>
+    <p>When an Agent needs an external system, the trusted gateway checks the exact request, uses a narrowly scoped credential on its behalf, and returns only the permitted result. The Agent never walks away holding the provider credential.</p>
+  </div>
+</section>
+
+<section class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Architecture maturity</p><h2>Clear status instead of inflated claims.</h2></div><p>The product story distinguishes proven foundations, active implementation, and complete target architecture. Regulatory certification is never implied automatically.</p></div>
+  <div class="status-grid">
+    <article class="status implemented"><b>Implemented foundations</b><p>Persistent Registry and contracts, configuration discovery, platform UI foundations, governed identity patterns, durable execution slices, and current application capabilities.</p></article>
+    <article class="status progress"><b>Active realization</b><p>Complete Agent/MCP admission, signed bundles, operator-owned deployment, isolated runtime profiles, full canary automation, drift correction, and lifecycle convergence.</p></article>
+    <article class="status target"><b>Target architecture</b><p>Universal cross-industry packs, broad provider parity, complete disconnected profiles, exhaustive assurance automation, and production qualification by deployment profile.</p></article>
+  </div>
+</section>
+
+<section class="container section compact">
+  <div class="chapter-next">
+    <div><p class="section-kicker">Next chapter</p><h2>See how the same contracts scale across people, teams, industries, and isolation profiles.</h2><p>Governance grows with the operating model without changing the core capability language.</p></div>
+    <a class="button primary" href="solutions.html">Explore adoption paths →</a>
+  </div>
+</section>
+
+      </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed capability platform</span></span></a>
+          <p style="margin-top:16px">Turn specifications, enterprise information, Agents, MCPs, Workflows, models, policy, and infrastructure into governed, deployable Services with evidence attached.</p>
+        </div>
+        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
+        <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>
+        <div><h3>Company</h3><div class="footer-links"><a href="company.html#about">About BrainzBytes</a><a href="company.html#about">Founder</a><a href="company.html#company-paths">Careers · planned</a></div></div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© 2026 BrainzBytes. ContextWeaver product architecture.</span>
+        <span>Architecture refreshed November 1, 2026. Compliance and deployment outcomes remain customer-specific.</span>
+      </div>
+    </footer>
+
+      <script src="assets/js/site.js?v=20261101-13"></script>
+    </body>
+    </html>

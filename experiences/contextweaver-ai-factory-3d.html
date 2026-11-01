@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ContextWeaver - 3D Universal AI Capability Factory</title>
+  <style>
+    :root {
+      --paper: #f4f0e6;
+      --ink: #16221c;
+      --muted: #68756e;
+      --black: #101713;
+      --black-2: #18231e;
+      --black-3: #243029;
+      --lime: #c9ed61;
+      --green: #3bd092;
+      --amber: #f2bc60;
+      --violet: #aa91f6;
+      --coral: #ef7f6d;
+      --blue: #61bce8;
+      --line: #d3cdbf;
+      --shadow: rgba(25, 39, 31, .18);
+    }
+    * { box-sizing: border-box; }
+    html { color-scheme: light; }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 52% 4%, #fffef8 0, #f7f3ea 28%, transparent 55%),
+        linear-gradient(#ffffff55 1px, transparent 1px),
+        linear-gradient(90deg, #ffffff55 1px, transparent 1px),
+        var(--paper);
+      background-size: auto, 28px 28px, 28px 28px, auto;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+    }
+    button { font: inherit; }
+    .page { width: min(1680px, calc(100% - 28px)); margin: 20px auto 40px; }
+    .top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 24px;
+      margin: 0 8px 17px;
+    }
+    .top > div, .storybar > div { min-width: 0; }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 9px;
+      color: #537266;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 34px; height: 2px; background: #638879; }
+    h1 {
+      max-width: 1100px;
+      margin: 0;
+      font-size: clamp(33px, 4.8vw, 72px);
+      line-height: .95;
+      letter-spacing: -.058em;
+      overflow-wrap: anywhere;
+    }
+    .intro {
+      max-width: 900px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.2vw, 18px);
+      line-height: 1.5;
+    }
+    .view-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 15px;
+      border: 1px solid #c9c2b4;
+      border-radius: 14px;
+      background: #fffdf7c9;
+      color: #3b5449;
+      font-size: 11px;
+      font-weight: 800;
+      box-shadow: 0 12px 35px #25362d0d;
+    }
+    .cube-icon {
+      position: relative;
+      width: 22px;
+      height: 22px;
+      transform: rotateX(55deg) rotateZ(45deg);
+      transform-style: preserve-3d;
+    }
+    .cube-icon::before, .cube-icon::after, .cube-icon {
+      border: 2px solid #507565;
+    }
+    .cube-icon::before, .cube-icon::after { content: ""; position: absolute; width: 100%; height: 100%; }
+    .cube-icon::before { transform: rotateX(90deg); transform-origin: top; }
+    .cube-icon::after { transform: rotateY(90deg); transform-origin: left; }
+
+    .experience {
+      overflow: hidden;
+      border: 1px solid #c8c1b3;
+      border-radius: 25px;
+      background: #eee9dd;
+      box-shadow: 0 30px 90px #24352b1e;
+    }
+    .storybar {
+      position: relative;
+      z-index: 30;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      min-height: 93px;
+      gap: 20px;
+      padding: 14px 19px;
+      border-bottom: 1px solid var(--line);
+      background: #fffdf8f2;
+      backdrop-filter: blur(20px);
+    }
+    .stage-index { color: #4f7665; font-size: 10px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+    .stage-title { display: block; margin-top: 4px; font-size: clamp(19px, 2vw, 29px); line-height: 1.08; letter-spacing: -.03em; }
+    .stage-caption { display: block; max-width: 900px; margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+    .controls { display: flex; gap: 7px; }
+    .controls button {
+      height: 38px;
+      min-width: 40px;
+      padding: 0 12px;
+      border: 1px solid #cec7ba;
+      border-radius: 10px;
+      color: #2e443a;
+      background: #f5f1e8;
+      cursor: pointer;
+    }
+    .controls button:hover { background: #e9e3d7; }
+    .controls .primary { border-color: var(--lime); background: var(--lime); color: #19251f; font-weight: 900; }
+
+    .viewport {
+      position: relative;
+      height: min(760px, 48vw);
+      min-height: 610px;
+      overflow: hidden;
+      perspective: 1650px;
+      perspective-origin: 50% 42%;
+      background:
+        radial-gradient(ellipse at 50% 86%, #17271d26 0, transparent 48%),
+        linear-gradient(180deg, #f0ece2 0%, #e7e2d6 100%);
+    }
+    .horizon {
+      position: absolute;
+      inset: 0;
+      opacity: .62;
+      pointer-events: none;
+      background:
+        linear-gradient(#ffffff75 1px, transparent 1px),
+        linear-gradient(90deg, #ffffff75 1px, transparent 1px);
+      background-size: 55px 55px;
+      transform: perspective(700px) rotateX(66deg) scale(1.5) translateY(31%);
+      transform-origin: center bottom;
+      mask-image: linear-gradient(to bottom, transparent 2%, #000 36%, #000 100%);
+    }
+    .ambient {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(45px);
+      opacity: .27;
+      pointer-events: none;
+    }
+    .ambient.a { width: 420px; height: 230px; left: 28%; top: 27%; background: #83bd64; }
+    .ambient.b { width: 340px; height: 240px; right: 12%; top: 20%; background: #8a73d9; }
+    .ambient.c { width: 300px; height: 190px; left: 8%; bottom: 8%; background: #61bce8; opacity: .13; }
+    .inspectable {
+      cursor: pointer;
+      pointer-events: auto;
+    }
+    .inspectable:hover {
+      outline: 2px solid #b9ef4a;
+      outline-offset: 3px;
+    }
+
+    .world {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1460px;
+      height: 690px;
+      transform-style: preserve-3d;
+      transform: translate(-50%, -49%) rotateX(var(--rx, 4deg)) rotateY(var(--ry, -4deg)) scale(var(--zoom, .95));
+      transition: transform 1.2s cubic-bezier(.2,.8,.2,1);
+    }
+    .world.stage-0 { --rx: 3deg; --ry: -7deg; --zoom: .96; }
+    .world.stage-1 { --rx: 4deg; --ry: -5deg; --zoom: .97; }
+    .world.stage-2 { --rx: 3deg; --ry: -2deg; --zoom: .98; }
+    .world.stage-3 { --rx: 7deg; --ry: 0deg; --zoom: 1.04; }
+    .world.stage-4 { --rx: 9deg; --ry: 2deg; --zoom: 1.02; }
+    .world.stage-5 { --rx: 5deg; --ry: 4deg; --zoom: 1.01; }
+    .world.stage-6 { --rx: 3deg; --ry: 7deg; --zoom: .97; }
+    .world.stage-7 { --rx: 5deg; --ry: 5deg; --zoom: .99; }
+    .world.stage-8 { --rx: 3deg; --ry: 7deg; --zoom: .96; }
+    .world.stage-9 { --rx: 2deg; --ry: 0deg; --zoom: .91; }
+
+    .zone-label {
+      position: absolute;
+      z-index: 2;
+      color: #5a6962;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      transform: translateZ(55px);
+    }
+    .zone-left { left: 36px; top: 15px; }
+    .zone-center { left: 587px; top: 2px; }
+    .zone-right { right: 34px; top: 15px; }
+
+    .satellite {
+      position: absolute;
+      width: 270px;
+      padding: 17px;
+      border: 1px solid #c9c1b2;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #fffefa, #f4efe4);
+      box-shadow: 0 24px 35px var(--shadow), inset 0 1px #fff;
+      transform-style: preserve-3d;
+      transition: opacity .5s ease, filter .5s ease, transform .8s cubic-bezier(.2,.8,.2,1);
+      cursor: pointer;
+    }
+    .satellite::before {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: -10px;
+      height: 16px;
+      border-radius: 0 0 14px 14px;
+      background: #d3cdbf;
+      transform: translateZ(-12px) rotateX(-75deg);
+      transform-origin: top;
+      opacity: .75;
+    }
+    .satellite .tag { display: block; color: #5a7569; font-size: 9px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+    .satellite h3 { margin: 7px 0 5px; font-size: 17px; letter-spacing: -.025em; }
+    .satellite p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .satellite .tokens { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 11px; }
+    .token { padding: 5px 8px; border: 1px solid #d4cdbf; border-radius: 999px; color: #40564c; background: #faf7ee; font-size: 9px; font-weight: 750; }
+    .satellite.dim, .factory-wrap.dim, .scale-ribbon.dim { opacity: .17; filter: grayscale(.85); }
+    .satellite.active {
+      z-index: 9;
+      border-color: var(--accent, var(--green));
+      box-shadow: 0 28px 48px #263b302c, 0 0 0 4px color-mix(in srgb, var(--accent, var(--green)) 18%, transparent);
+    }
+    .intent { left: 28px; top: 68px; --accent: var(--green); transform: translateZ(80px) rotateY(5deg); }
+    .knowledge { left: 0; top: 264px; --accent: var(--blue); transform: translateZ(18px) rotateY(6deg); }
+    .systems { left: 46px; top: 477px; --accent: var(--violet); transform: translateZ(70px) rotateY(5deg); }
+    .solution { right: 24px; top: 68px; --accent: var(--lime); transform: translateZ(90px) rotateY(-6deg); background: linear-gradient(145deg, #f5ffe4, #d9f58f); }
+    .deployment { right: 0; top: 284px; --accent: var(--green); transform: translateZ(22px) rotateY(-6deg); }
+    .operations { right: 40px; top: 487px; --accent: var(--amber); transform: translateZ(70px) rotateY(-5deg); }
+    .satellite.active.intent, .satellite.active.knowledge, .satellite.active.systems { transform: translateZ(135px) rotateY(2deg) translateX(7px) translateY(-5px); }
+    .satellite.active.solution, .satellite.active.deployment, .satellite.active.operations { transform: translateZ(135px) rotateY(-2deg) translateX(-7px) translateY(-5px); }
+
+    .factory-wrap {
+      position: absolute;
+      left: 424px;
+      top: 62px;
+      width: 610px;
+      height: 550px;
+      transform-style: preserve-3d;
+      transform: translateZ(35px);
+      transition: opacity .5s ease, filter .5s ease, transform .9s cubic-bezier(.2,.8,.2,1);
+    }
+    .factory-wrap.active { transform: translateZ(95px) translateY(-5px); }
+    .factory {
+      position: absolute;
+      inset: 42px 28px 28px 30px;
+      padding: 35px 34px 28px;
+      border: 1px solid #36453e;
+      border-radius: 25px;
+      color: #f7faf5;
+      background: linear-gradient(145deg, #101713, #1c2721);
+      box-shadow: 0 38px 65px #1522194f, inset 0 1px #3d4c45;
+      transform-style: preserve-3d;
+    }
+    .factory::before {
+      content: "";
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      top: -29px;
+      height: 30px;
+      border: 1px solid #46584e;
+      border-bottom: 0;
+      background: linear-gradient(180deg, #34443b, #222f28);
+      clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
+      transform: rotateX(63deg);
+      transform-origin: bottom;
+    }
+    .factory::after {
+      content: "";
+      position: absolute;
+      top: 20px;
+      right: -25px;
+      bottom: 20px;
+      width: 26px;
+      border: 1px solid #28372f;
+      border-left: 0;
+      background: linear-gradient(90deg, #24332b, #101713);
+      clip-path: polygon(0 0, 100% 5%, 100% 95%, 0 100%);
+      transform: rotateY(52deg);
+      transform-origin: left;
+    }
+    .factory-kicker { color: var(--lime); font-size: 9px; font-weight: 900; letter-spacing: .17em; }
+    .factory h2 { margin: 7px 0 3px; font-size: 29px; letter-spacing: -.04em; }
+    .factory-lead { margin: 0; color: #9eaea6; font-size: 11px; }
+    .modules {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-top: 23px;
+      transform-style: preserve-3d;
+    }
+    .module {
+      position: relative;
+      min-height: 52px;
+      padding: 9px 10px;
+      border: 1px solid #3b4b43;
+      border-radius: 11px;
+      background: linear-gradient(145deg, #253129, #1a241f);
+      transform: translateZ(14px);
+      transition: transform .65s cubic-bezier(.2,.8,.2,1), border-color .35s, background .35s, box-shadow .35s;
+      cursor: pointer;
+    }
+    .module::after {
+      content: "";
+      position: absolute;
+      inset: auto 8px -5px;
+      height: 6px;
+      border-radius: 0 0 7px 7px;
+      background: #0b100d;
+      opacity: .8;
+      transform: translateZ(-5px) rotateX(-70deg);
+      transform-origin: top;
+    }
+    .module strong { display: block; font-size: 11px; }
+    .module span { display: block; margin-top: 5px; color: #85958d; font-size: 8px; }
+    .modules.active .module {
+      border-color: #85aa50;
+      background: linear-gradient(145deg, #2a3a30, #1c2922);
+      box-shadow: 0 9px 18px #0005;
+    }
+    .modules.active .module:nth-child(1) { transform: translateZ(58px) translateY(-4px); }
+    .modules.active .module:nth-child(2) { transform: translateZ(44px) translateY(-2px); }
+    .modules.active .module:nth-child(3) { transform: translateZ(68px) translateY(-6px); }
+    .modules.active .module:nth-child(4) { transform: translateZ(48px) translateY(-2px); }
+    .modules.active .module:nth-child(5) { transform: translateZ(72px) translateY(-7px); }
+    .modules.active .module:nth-child(6) { transform: translateZ(42px); }
+    .modules.active .module:nth-child(7) { transform: translateZ(59px) translateY(-4px); }
+    .modules.active .module:nth-child(8) { transform: translateZ(46px); }
+    .modules.active .module:nth-child(9) { transform: translateZ(64px) translateY(-5px); }
+
+    .control-layer, .validation-layer, .release-gate {
+      position: relative;
+      margin-top: 9px;
+      padding: 8px 12px;
+      border-radius: 11px;
+      transform: translateZ(17px);
+      transition: transform .7s ease, box-shadow .35s, border-color .35s;
+      cursor: pointer;
+    }
+    .control-layer { border: 1px solid #776b48; background: #292920; }
+    .validation-layer { border: 1px solid #3c735b; background: #1d3128; }
+    .release-gate { border: 1px solid #665a8f; background: #29253a; }
+    .control-layer strong, .validation-layer strong, .release-gate strong { display: block; font-size: 9px; font-weight: 900; letter-spacing: .13em; }
+    .control-layer strong { color: var(--amber); }
+    .validation-layer strong { color: var(--lime); }
+    .release-gate strong { color: var(--violet); }
+    .control-layer span, .validation-layer span, .release-gate span { display: block; margin-top: 5px; color: #e4e9e5; font-size: 8px; }
+    .control-layer.active { border-color: var(--amber); transform: translateZ(82px) translateY(-6px); box-shadow: 0 15px 28px #0007, 0 0 22px #f2bc6029; }
+    .validation-layer.active { border-color: var(--lime); transform: translateZ(72px) translateY(-5px); box-shadow: 0 15px 28px #0007, 0 0 22px #c9ed6129; }
+    .release-gate.active { border-color: var(--violet); transform: translateZ(78px) translateY(-6px); box-shadow: 0 15px 28px #0007, 0 0 22px #aa91f62e; }
+
+    .orbit {
+      position: absolute;
+      left: -22px;
+      top: -12px;
+      width: 655px;
+      height: 570px;
+      border: 2px dashed #9e82517d;
+      border-radius: 50%;
+      transform: translateZ(2px) rotateX(67deg) rotateZ(-7deg);
+      opacity: .45;
+      transition: border-color .35s, opacity .35s, box-shadow .35s;
+      pointer-events: none;
+    }
+    .orbit::before, .orbit::after {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border: 3px solid #f7e7bd;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 22px #f2bc60;
+    }
+    .orbit::before { left: 74px; top: 65px; }
+    .orbit::after { right: 78px; bottom: 65px; }
+    .orbit.active { opacity: 1; border-color: var(--amber); box-shadow: 0 0 35px #f2bc601e; animation: orbit 8s linear infinite; }
+    @keyframes orbit { to { transform: translateZ(2px) rotateX(67deg) rotateZ(353deg); } }
+
+    .beam {
+      position: absolute;
+      z-index: 0;
+      height: 4px;
+      border-radius: 999px;
+      opacity: .16;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent, var(--beam, var(--green)) 18%, var(--beam, var(--green)) 82%, transparent);
+      box-shadow: 0 0 12px color-mix(in srgb, var(--beam, var(--green)) 48%, transparent);
+      transform-origin: left;
+      transition: opacity .4s, height .4s, filter .4s;
+      overflow: visible;
+    }
+    .beam::before, .beam::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 9px;
+      height: 9px;
+      border: 2px solid #f8fff9;
+      border-radius: 50%;
+      background: var(--beam, var(--green));
+      box-shadow: 0 0 14px var(--beam, var(--green));
+      opacity: 0;
+    }
+    .beam::before { animation: packet 2.3s linear infinite; }
+    .beam::after { animation: packet 2.3s 1.15s linear infinite; }
+    .beam.active { z-index: 8; height: 5px; opacity: 1; }
+    .beam.active::before, .beam.active::after { opacity: 1; }
+    @keyframes packet {
+      0% { left: 0; transform: translate(-50%,-50%) scale(.55); opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { left: 100%; transform: translate(-50%,-50%) scale(1.15); opacity: 0; }
+    }
+    .beam.intent-factory { left: 285px; top: 159px; width: 190px; transform: rotate(12deg); --beam: var(--green); }
+    .beam.knowledge-factory { left: 270px; top: 354px; width: 180px; transform: rotate(-2deg); --beam: var(--blue); }
+    .beam.systems-factory { left: 295px; top: 552px; width: 190px; transform: rotate(-14deg); --beam: var(--violet); }
+    .beam.factory-solution { left: 1005px; top: 188px; width: 205px; transform: rotate(-12deg); --beam: var(--lime); }
+    .beam.factory-deploy { left: 1008px; top: 378px; width: 196px; transform: rotate(2deg); --beam: var(--green); }
+    .beam.ops-feedback { left: 1000px; top: 550px; width: 210px; transform: rotate(14deg); --beam: var(--amber); }
+    .beam.reverse::before, .beam.reverse::after { animation-direction: reverse; }
+
+    .scale-ribbon {
+      position: absolute;
+      left: 335px;
+      right: 335px;
+      bottom: 3px;
+      height: 58px;
+      border: 1px solid #c6beae;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fffdf9, #eee8dc);
+      box-shadow: 0 16px 25px #2133291f;
+      transform: translateZ(16px) rotateX(4deg);
+      transition: opacity .5s, filter .5s, transform .7s;
+    }
+    .scale-ribbon.active { transform: translateZ(100px) translateY(-7px); border-color: #6fbf88; }
+    .scale-track { position: absolute; left: 42px; right: 42px; top: 23px; height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--lime), var(--green), var(--violet)); }
+    .scale-points { position: absolute; inset: 0 28px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .scale-point { width: 108px; text-align: center; color: #40564c; font-size: 8px; font-weight: 850; }
+    .scale-point i { display: block; width: 12px; height: 12px; margin: 18px auto 3px; border: 3px solid #fff; border-radius: 50%; background: currentColor; box-shadow: 0 2px 5px #23372d40; }
+    .scale-point:nth-child(1) { color: #98ba37; }.scale-point:nth-child(2) { color: #65bf65; }.scale-point:nth-child(3) { color: #3bb786; }.scale-point:nth-child(4) { color: #3a9f9c; }.scale-point:nth-child(5) { color: #806fd9; }
+
+    .inspector {
+      position: absolute;
+      z-index: 25;
+      top: 16px;
+      right: 18px;
+      width: min(390px, calc(100% - 36px));
+      padding: 12px 14px;
+      border: 1px solid #c9c2b5;
+      border-radius: 13px;
+      background: #fffdf6e8;
+      box-shadow: 0 14px 35px #1d2e251d;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: opacity .25s, transform .25s;
+    }
+    .inspector.show { opacity: 1; transform: translateY(0); }
+    .inspector strong { display: block; font-size: 12px; }
+    .inspector span { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+
+    .progress {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 5px;
+      padding: 13px 18px 16px;
+      border-top: 1px solid var(--line);
+      background: #fffdf8;
+    }
+    .progress button { height: 6px; padding: 0; border: 0; border-radius: 999px; background: #dbd4c7; cursor: pointer; }
+    .progress button.done { background: #81948b; }
+    .progress button.current { background: var(--green); box-shadow: 0 0 0 3px #3bd09226; }
+
+    .messages {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .messages article { padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: #fffaf1; }
+    .messages strong { display: block; font-size: 12px; }
+    .messages span { display: block; margin-top: 6px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+
+    @media (max-width: 1050px) {
+      .viewport { height: 700px; }
+      .world { transform: translate(-50%, -49%) rotateX(var(--rx)) rotateY(var(--ry)) scale(.72); }
+      .top { grid-template-columns: 1fr; }
+      .view-badge { justify-self: start; }
+      .messages { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .page { width: calc(100% - 12px); margin-top: 10px; }
+      .storybar { grid-template-columns: 1fr; }
+      h1 { font-size: 29px; line-height: 1.02; letter-spacing: -.045em; }
+      .intro { font-size: 13px; }
+      .stage-title { font-size: 20px; overflow-wrap: anywhere; }
+      .stage-caption { max-width: 100%; font-size: 11px; }
+      .viewport { min-height: 610px; }
+      .world { transform: translate(-50%, -47%) rotateX(2deg) rotateY(0) scale(.34); }
+      .controls { flex-wrap: wrap; }
+      .messages { grid-template-columns: 1fr; }
+      .view-badge { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="top">
+      <div>
+        <p class="eyebrow">A visual product story</p>
+        <h1>The universal AI capability factory</h1>
+        <p class="intro">A 3D journey from collaborative Workspaces through Agent, MCP, Service and Workflow Studios, safe dry runs, approved promotion and evidence-driven production operations.</p>
+      </div>
+      <div class="view-badge"><i class="cube-icon"></i><span>Interactive 3D architecture<br>Click any component to inspect it</span></div>
+    </header>
+
+    <section class="experience">
+      <header class="storybar">
+        <div>
+          <span class="stage-index" id="stageIndex">Stage 1 of 8</span>
+          <strong class="stage-title" id="stageTitle">Begin with a business outcome</strong>
+          <span class="stage-caption" id="stageCaption">Describe the service in plain language. ContextWeaver turns intent into a governed implementation plan.</span>
+        </div>
+        <nav class="controls" aria-label="3D animation controls">
+          <button id="previous" aria-label="Previous stage">&#8592;</button>
+          <button id="play" class="primary" aria-label="Pause animation">Pause</button>
+          <button id="next" aria-label="Next stage">&#8594;</button>
+          <button id="reset" aria-label="Reset animation">Reset</button>
+        </nav>
+      </header>
+
+      <div class="viewport">
+        <div class="horizon"></div>
+        <div class="ambient a"></div><div class="ambient b"></div><div class="ambient c"></div>
+        <div class="world stage-0" id="world">
+          <span class="zone-label zone-left">Intent and enterprise systems</span>
+          <span class="zone-label zone-center">ContextWeaver control plane</span>
+          <span class="zone-label zone-right">Production outcomes</span>
+
+          <article id="intent" class="satellite intent inspectable active" data-title="ContextWeaver Workspace" data-detail="A collaborative workspace combines plain-language design, code, notebooks, documentation, enterprise data and AI assistance in one governed environment.">
+            <span class="tag">01 / Collaborative Workspace</span>
+            <h3>Shape the business outcome</h3>
+            <p>"Build a secure claims assistant that cites policy evidence and pauses for approval."</p>
+            <div class="tokens"><span class="token">AI assistance</span><span class="token">Code</span><span class="token">Notebooks</span><span class="token">Docs + data</span></div>
+          </article>
+
+          <article id="knowledge" class="satellite knowledge inspectable dim" data-title="Enterprise knowledge" data-detail="RAG connects permission-aware documents, databases, data lakes and APIs so responses stay grounded and cite their sources.">
+            <span class="tag">02 / Grounded knowledge</span>
+            <h3>Connect trusted data</h3>
+            <p>Keep source permissions, lineage, citations and tenant boundaries intact.</p>
+            <div class="tokens"><span class="token">Documents</span><span class="token">Databases</span><span class="token">Data lakes</span><span class="token">Web + APIs</span></div>
+          </article>
+
+          <article id="systems" class="satellite systems inspectable dim" data-title="Tools, adapters and services" data-detail="Configurable MCP servers and adapters connect Microsoft 365, GitHub, Azure DevOps, SAP, CRM, cloud services, legacy systems and custom APIs.">
+            <span class="tag">03 / Open integration</span>
+            <h3>Attach any tool or service</h3>
+            <p>Provider-specific complexity is hidden behind reusable, governed interfaces.</p>
+            <div class="tokens"><span class="token">MCP</span><span class="token">APIs</span><span class="token">SaaS</span><span class="token">Legacy</span><span class="token">Custom</span></div>
+          </article>
+
+          <div id="factoryWrap" class="factory-wrap dim">
+            <div id="orbit" class="orbit"></div>
+            <section class="factory inspectable" data-title="ContextWeaver AI Capability Factory" data-detail="The control plane composes reusable capabilities, applies policy, validates behavior, packages the service and continuously improves it.">
+              <span class="factory-kicker">WORKSPACES + STUDIOS + GOVERNED CONTROL PLANE</span>
+              <h2>ContextWeaver Studios</h2>
+              <p class="factory-lead">Design. Rehearse. Approve. Promote. Operate.</p>
+
+              <div id="modules" class="modules">
+                <div class="module inspectable" data-title="Agent Studio" data-detail="Design agents with goals, instructions, models, memory, tools, specialist delegation and evaluation criteria."><strong>Agent Studio</strong><span>Goals + models + memory</span></div>
+                <div class="module inspectable" data-title="MCP Studio" data-detail="Build and inspect MCP tools, resources, prompts, connectors and external service contracts."><strong>MCP Studio</strong><span>Tools + resources + prompts</span></div>
+                <div class="module inspectable" data-title="Service Studio" data-detail="Compose reusable APIs, user experiences, data contracts, deployment settings and service boundaries."><strong>Service Studio</strong><span>APIs + experiences</span></div>
+                <div class="module inspectable" data-title="Workflow Studio" data-detail="Visually orchestrate sequential and parallel work, approvals, retries, compensation, scheduling and events."><strong>Workflow Studio</strong><span>Flows + approvals + retry</span></div>
+                <div class="module inspectable" data-title="RAG and knowledge" data-detail="Ground responses in approved enterprise knowledge while preserving permissions, citations and lineage."><strong>RAG + Knowledge</strong><span>Grounding + citations</span></div>
+                <div class="module inspectable" data-title="Capability library" data-detail="Reuse agents, MCP tools, services, workflows, skills and templates rather than rebuilding them."><strong>Capability Library</strong><span>Discover + reuse</span></div>
+                <div class="module inspectable" data-title="Models and memory" data-detail="Choose models by quality, cost, region and policy while maintaining durable tenant-aware state."><strong>Models + Memory</strong><span>Routing + context</span></div>
+                <div class="module inspectable" data-title="Adapters" data-detail="Contain cloud-specific and provider-specific integration behind configurable adapters."><strong>Adapters</strong><span>Cloud + enterprise systems</span></div>
+                <div class="module inspectable" data-title="Observability" data-detail="Capture traces, metrics, logs, evaluations, cost, lineage and business outcomes from design through production."><strong>Observability</strong><span>Evidence everywhere</span></div>
+              </div>
+
+              <div id="controlLayer" class="control-layer inspectable" data-title="Trust and control" data-detail="Identity, authorization, secrets, guardrails, policy, security, privacy, human approval, compliance, audit evidence and cost limits surround every action.">
+                <strong>TRUST AND CONTROL</strong>
+                <span>Identity | Guardrails | Policy | Security | Privacy | Approval | Compliance | Audit | Cost</span>
+              </div>
+              <div id="validationLayer" class="validation-layer inspectable" data-title="Safe Dry Run Lab" data-detail="Rehearse the exact design with mocked side effects, sample data, step-by-step traces, citations, policy decisions, approval pauses, cost, latency, quality, safety, failure, retry and rollback simulation.">
+                <strong>SAFE DRY RUN LAB - NO REAL SIDE EFFECTS</strong>
+                <span>Mock systems | Trace | Citations | Policy | Approval | Cost | Quality | Retry | Rollback</span>
+              </div>
+              <div id="releaseGate" class="release-gate inspectable" data-title="Approved version promotion" data-detail="The exact validated configuration, evidence, test results and human approvals are sealed into a versioned release before production promotion.">
+                <strong>APPROVED VERSION PROMOTION</strong>
+                <span>Fix + rerun | Compare evidence | Human approval | Seal version | Promote exact artifact</span>
+              </div>
+            </section>
+          </div>
+
+          <article id="solution" class="satellite solution inspectable dim" data-title="Generated production service" data-detail="The result is a secure, grounded, approval-aware AI service assembled from reusable capabilities with very little custom code.">
+            <span class="tag">08 / Validated version</span>
+            <h3>Approved production artifact</h3>
+            <p>The exact dry-run-tested configuration carries evidence and approvals.</p>
+            <div class="tokens"><span class="token">Versioned</span><span class="token">Evidence attached</span><span class="token">Approved</span></div>
+          </article>
+
+          <article id="deployment" class="satellite deployment inspectable dim" data-title="Deploy and experience anywhere" data-detail="Package once, optimize for Azure, AWS, Google Cloud, private cloud or edge, and expose the service through web, mobile, Teams, APIs or embedded experiences.">
+            <span class="tag">09 / Deploy anywhere</span>
+            <h3>Cloud-neutral, cloud-optimized</h3>
+            <p>Azure, AWS, Google Cloud, private cloud and edge.</p>
+            <div class="tokens"><span class="token">Web</span><span class="token">Mobile</span><span class="token">Teams</span><span class="token">API</span><span class="token">Embedded</span></div>
+          </article>
+
+          <article id="operations" class="satellite operations inspectable dim" data-title="Continuous operations" data-detail="Observe logs, metrics, traces, safety, quality, compliance, cost and user feedback. Feed evidence back into controlled improvement.">
+            <span class="tag">09 / Operate with evidence</span>
+            <h3>Observe and improve</h3>
+            <p>Explain every request, action, decision, approval and outcome.</p>
+            <div class="tokens"><span class="token">Logs</span><span class="token">Metrics</span><span class="token">Traces</span><span class="token">Evals</span><span class="token">Audit</span></div>
+          </article>
+
+          <div id="scaleRibbon" class="scale-ribbon dim">
+            <div class="scale-track"></div>
+            <div class="scale-points">
+              <span class="scale-point"><i></i>Individual</span>
+              <span class="scale-point"><i></i>Team</span>
+              <span class="scale-point"><i></i>Small business</span>
+              <span class="scale-point"><i></i>Enterprise</span>
+              <span class="scale-point"><i></i>Regulated global</span>
+            </div>
+          </div>
+
+          <i id="beamIntent" class="beam intent-factory active"></i>
+          <i id="beamKnowledge" class="beam knowledge-factory"></i>
+          <i id="beamSystems" class="beam systems-factory"></i>
+          <i id="beamSolution" class="beam factory-solution"></i>
+          <i id="beamDeploy" class="beam factory-deploy"></i>
+          <i id="beamOps" class="beam ops-feedback reverse"></i>
+        </div>
+        <aside id="inspector" class="inspector"><strong id="inspectTitle"></strong><span id="inspectDetail"></span></aside>
+      </div>
+      <nav class="progress" id="progress" aria-label="Animation stages"></nav>
+    </section>
+
+    <section class="messages">
+      <article><strong>Composable</strong><span>Agents, RAG, tools, models, memory, adapters and workflows are reusable modules, not one-off projects.</span></article>
+      <article><strong>Governed</strong><span>Trust controls wrap the whole platform rather than being added after an application is built.</span></article>
+      <article><strong>Open</strong><span>MCP, APIs and configurable adapters connect current systems while isolating provider-specific code.</span></article>
+      <article><strong>Universal</strong><span>The same foundation serves one person, a small business or a regulated enterprise in any industry.</span></article>
+    </section>
+  </main>
+
+  <script>
+    const stages = [
+      {
+        title: "Start inside a collaborative Workspace",
+        caption: "Describe the outcome, inspect data, write code, use notebooks and documentation, and collaborate with AI assistance in one governed environment.",
+        active: ["intent"], beams: ["beamIntent"]
+      },
+      {
+        title: "Choose the right ContextWeaver Studio",
+        caption: "Agent Studio, MCP Studio, Service Studio and Workflow Studio expose purpose-built visual workbenches over the same reusable control plane.",
+        active: ["factoryWrap", "modules"], beams: ["beamIntent"]
+      },
+      {
+        title: "Ground and connect the design",
+        caption: "Permission-aware RAG, MCP, APIs and adapters connect enterprise knowledge, SaaS, cloud services, legacy platforms and custom systems.",
+        active: ["knowledge", "systems", "factoryWrap"], beams: ["beamKnowledge", "beamSystems"]
+      },
+      {
+        title: "Compose reusable capabilities with very little code",
+        caption: "Drag existing agents, tools, services, workflows, models, memory, knowledge and templates into a complete application.",
+        active: ["factoryWrap", "modules"], beams: ["beamIntent", "beamKnowledge", "beamSystems"]
+      },
+      {
+        title: "Wrap the complete design with trust controls",
+        caption: "Identity, policy, guardrails, secrets, privacy, approvals, compliance, audit evidence and cost controls are enforced by default.",
+        active: ["factoryWrap", "controlLayer", "orbit"], beams: ["beamIntent", "beamKnowledge", "beamSystems"]
+      },
+      {
+        title: "Rehearse safely before real execution",
+        caption: "Dry runs use sample data and mocked side effects, so emails, payments and production changes are simulated rather than executed.",
+        active: ["factoryWrap", "validationLayer"], beams: ["beamIntent", "beamKnowledge", "beamSystems"]
+      },
+      {
+        title: "Inspect the complete execution evidence",
+        caption: "Review every step, tool input and output, citation, policy decision, approval pause, quality score, cost, latency, retry and rollback.",
+        active: ["factoryWrap", "validationLayer", "controlLayer"], beams: ["beamKnowledge", "beamSystems"]
+      },
+      {
+        title: "Fix, compare and rerun until the design passes",
+        caption: "Replace a model, update a policy, correct a workflow or change a tool, then compare the new evidence with the previous dry run.",
+        active: ["intent", "factoryWrap", "modules", "validationLayer"], beams: ["beamIntent", "beamKnowledge"]
+      },
+      {
+        title: "Promote the exact validated version",
+        caption: "Seal the tested configuration, evidence, evaluations and human approvals into a versioned artifact, then deploy and operate it anywhere.",
+        active: ["factoryWrap", "releaseGate", "solution", "deployment", "operations"], beams: ["beamSolution", "beamDeploy", "beamOps"]
+      },
+      {
+        title: "Reuse Workspaces and Studios across every scale",
+        caption: "The same governed lifecycle grows from one creator to a regulated global enterprise and adapts to any service or industry.",
+        active: ["intent", "knowledge", "systems", "factoryWrap", "modules", "controlLayer", "validationLayer", "releaseGate", "orbit", "solution", "deployment", "operations", "scaleRibbon"],
+        beams: ["beamIntent", "beamKnowledge", "beamSystems", "beamSolution", "beamDeploy", "beamOps"]
+      }
+    ];
+
+    const visualIds = ["intent", "knowledge", "systems", "factoryWrap", "solution", "deployment", "operations", "scaleRibbon"];
+    const subIds = ["modules", "controlLayer", "validationLayer", "releaseGate", "orbit"];
+    const beamIds = ["beamIntent", "beamKnowledge", "beamSystems", "beamSolution", "beamDeploy", "beamOps"];
+    const world = document.getElementById("world");
+    const progress = document.getElementById("progress");
+    const playButton = document.getElementById("play");
+    const requestedStage = Number(new URLSearchParams(window.location.search).get("stage"));
+    const autoplay = new URLSearchParams(window.location.search).get("autoplay") !== "0";
+    let stage = Number.isInteger(requestedStage) && requestedStage >= 0 && requestedStage < stages.length ? requestedStage : 0;
+    let playing = true;
+    let timer;
+
+    stages.forEach((item, index) => {
+      const button = document.createElement("button");
+      button.setAttribute("aria-label", `Go to stage ${index + 1}: ${item.title}`);
+      button.addEventListener("click", () => { stage = index; render(); pause(); });
+      progress.appendChild(button);
+    });
+
+    function render() {
+      const item = stages[stage];
+      document.getElementById("stageIndex").textContent = `Stage ${stage + 1} of ${stages.length}`;
+      document.getElementById("stageTitle").textContent = item.title;
+      document.getElementById("stageCaption").textContent = item.caption;
+      world.className = `world stage-${stage}`;
+
+      visualIds.forEach(id => {
+        const element = document.getElementById(id);
+        const active = item.active.includes(id);
+        element.classList.toggle("active", active);
+        element.classList.toggle("dim", !active && stage < 7);
+      });
+      subIds.forEach(id => document.getElementById(id).classList.toggle("active", item.active.includes(id)));
+      beamIds.forEach(id => document.getElementById(id).classList.toggle("active", item.beams.includes(id)));
+      [...progress.children].forEach((button, index) => {
+        button.classList.toggle("current", index === stage);
+        button.classList.toggle("done", index < stage);
+      });
+    }
+
+    function advance() { stage = (stage + 1) % stages.length; render(); }
+    function start() {
+      playing = true;
+      playButton.textContent = "Pause";
+      playButton.setAttribute("aria-label", "Pause animation");
+      clearInterval(timer);
+      timer = setInterval(advance, 4400);
+    }
+    function pause() {
+      playing = false;
+      playButton.textContent = "Play";
+      playButton.setAttribute("aria-label", "Play animation");
+      clearInterval(timer);
+    }
+
+    document.getElementById("previous").addEventListener("click", () => { stage = (stage - 1 + stages.length) % stages.length; render(); pause(); });
+    document.getElementById("next").addEventListener("click", () => { advance(); pause(); });
+    document.getElementById("reset").addEventListener("click", () => { stage = 0; render(); start(); });
+    playButton.addEventListener("click", () => playing ? pause() : start());
+
+    const inspector = document.getElementById("inspector");
+    const viewport = document.querySelector(".viewport");
+    function inspect(source) {
+      document.getElementById("inspectTitle").textContent = source.dataset.title || "ContextWeaver capability";
+      document.getElementById("inspectDetail").textContent = source.dataset.detail || "A reusable part of the governed AI capability factory.";
+      inspector.classList.add("show");
+      pause();
+    }
+    viewport.addEventListener("click", event => {
+      const source = event.target.closest(".inspectable");
+      if (source && viewport.contains(source)) inspect(source);
+      else inspector.classList.remove("show");
+    });
+    document.querySelectorAll(".inspectable").forEach(element => {
+      element.tabIndex = 0;
+      element.setAttribute("role", "button");
+      element.setAttribute("aria-label", `Inspect ${element.dataset.title || "ContextWeaver capability"}`);
+      element.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          inspect(element);
+        }
+      });
+    });
+
+    render();
+    if (!autoplay || window.matchMedia("(prefers-reduced-motion: reduce)").matches) pause();
+    else start();
+  </script>
+</body>
+</html>
