@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight">
+<head>
+<script src="/gate.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ContextWeaver — AI Tax Filing &amp; Financial Services</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family:'Inter',-apple-system,sans-serif; background:var(--bg); color:var(--text); padding:0 0 3rem 0; margin:0; }
+    .card { background:var(--bg-card); border-color:var(--border); }
+    a { color:var(--accent); }
+    code { background:var(--code-bg); padding:2px 6px; border-radius:4px; font-size:0.85em; }
+    .block { border-radius:12px; padding:1rem 1.25rem; margin-bottom:0.75rem; }
+    .block-hub { background:rgba(168,139,250,0.12); border:2px solid rgba(168,139,250,0.4); }
+    .block-mcp { background:rgba(13,202,240,0.08); border:2px solid rgba(13,202,240,0.3); }
+    .block-plugin { background:rgba(25,135,84,0.08); border:2px solid rgba(25,135,84,0.3); }
+    .block-connector { background:rgba(255,193,7,0.08); border:2px solid rgba(255,193,7,0.3); }
+    .block-rag { background:rgba(13,110,253,0.08); border:2px solid rgba(13,110,253,0.3); }
+    .block-vault { background:rgba(220,53,69,0.08); border:2px solid rgba(220,53,69,0.3); }
+    .arrow { text-align:center; font-size:1.5rem; color:var(--text-muted); line-height:1; margin:0.25rem 0; }
+    .voice-bubble { background:rgba(13,202,240,0.08); border:1px solid rgba(13,202,240,0.3); border-radius:12px; padding:0.75rem 1rem; display:inline-block; }
+    .agent-bubble { background:rgba(25,135,84,0.08); border:1px solid rgba(25,135,84,0.3); border-radius:12px; padding:0.75rem 1rem; }
+    .user-row { background:rgba(255,193,7,0.05); border-left:3px solid; padding:0.75rem 1rem; border-radius:0 8px 8px 0; margin-bottom:0.5rem; }
+    .user-alice { border-color:#198754; }
+    .user-bob { border-color:#0d6efd; }
+    .user-carol { border-color:#ffc107; }
+    .user-dave { border-color:#dc3545; }
+    .diff-table td, .diff-table th { font-size:0.8rem; vertical-align:middle; }
+  </style>
+
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js" defer></script>
+</head>
+<body>
+<div class="container-fluid" style="max-width:960px">
+
+    <!-- Hero -->
+    <div class="text-center py-4">
+      <div style="font-size:3rem">&#x1F4B0; &#x1F4C4; &#x1F3E0;</div>
+      <h1 style="color:var(--accent-purple);font-weight:700;font-size:1.8rem">&ldquo;File My Taxes, Maximize Deductions, Handle My Rentals&rdquo;</h1>
+      <p class="lead text-muted mb-1">One sentence. Six connectors. Every form filled, every deduction found, every dollar accounted for.</p>
+      <p class="small text-muted">See exactly how ContextWeaver replaces TurboTax &mdash; from pulling your W-2 to e-filing with the IRS.</p>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 0: EXPLAIN IT SIMPLY -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="mb-4" style="color:var(--accent-purple)"><i class="bi bi-lightbulb"></i> First, Let&rsquo;s Understand What&rsquo;s Happening</h3>
+
+        <div class="block" style="background:rgba(168,139,250,0.06);border:1px solid rgba(168,139,250,0.2)">
+          <h5>&#x1F4AC; You type one sentence:</h5>
+          <div class="voice-bubble d-block text-center" style="font-size:1.1rem">
+            &ldquo;File my taxes. Pull my W-2s, 1099s, rental income, and investment gains. Maximize deductions. File federal and state.&rdquo;
+          </div>
+          <p class="mt-3 mb-0">That&rsquo;s it. You don&rsquo;t log into ADP. You don&rsquo;t download PDFs from your brokerage. You don&rsquo;t manually enter numbers into TurboTax. You don&rsquo;t Google &ldquo;can I deduct my home office?&rdquo; <strong>You just say what you want.</strong></p>
+        </div>
+
+        <div class="block" style="background:rgba(25,135,84,0.06);border:1px solid rgba(25,135,84,0.2)">
+          <h5>&#x1F916; The AI does 8 things automatically:</h5>
+          <div class="row g-3">
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F4BC;</div>
+              <div class="fw-bold">1. Pulls your W-2</div>
+              <div class="text-muted small">From your employer&rsquo;s payroll system (ADP, Gusto, Workday)</div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F3E6;</div>
+              <div class="fw-bold">2. Pulls bank interest</div>
+              <div class="text-muted small">1099-INT from your savings &amp; checking accounts via Plaid</div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F4C8;</div>
+              <div class="fw-bold">3. Pulls stock gains/losses</div>
+              <div class="text-muted small">1099-B, 1099-DIV from Schwab, Fidelity, Robinhood</div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F3E0;</div>
+              <div class="fw-bold">4. Pulls rental income</div>
+              <div class="text-muted small">Rent collected, mortgage interest, repairs, depreciation</div>
+            </div>
+          </div>
+          <div class="row g-3 mt-1">
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F4D6;</div>
+              <div class="fw-bold">5. Reads IRS rules</div>
+              <div class="text-muted small">Form instructions, brackets, deduction thresholds from RAG</div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F9EE;</div>
+              <div class="fw-bold">6. Calculates deductions</div>
+              <div class="text-muted small">Standard vs. itemized, credits, HSA, student loans</div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F4DD;</div>
+              <div class="fw-bold">7. Fills all forms</div>
+              <div class="text-muted small">1040, Schedule A/B/C/D/E, state return &mdash; every line</div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F4E8;</div>
+              <div class="fw-bold">8. E-files everything</div>
+              <div class="text-muted small">Federal via IRS MeF + state API, email confirmation</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(13,110,253,0.06);border:1px solid rgba(13,110,253,0.2)">
+          <h5>&#x1F4DA; Where do the tax rules come from? (The RAG Filing Cabinet)</h5>
+          <p>The IRS publishes <strong>every form, every instruction, every publication</strong> &mdash; all publicly available. ContextWeaver indexes them into RAG so the AI can read the rules before filling each field.</p>
+          <div class="row g-2 mb-3">
+            <div class="col-md-4">
+              <div class="p-3 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:2rem">&#x1F4C4;</div>
+                <div class="fw-bold">Step 1: Index</div>
+                <div class="small text-muted">IRS Form 1040 instructions, Publication 17, state tax codes &mdash; all chunked, vectorized, and stored in searchable AI indexes</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-3 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:2rem">&#x1F50D;</div>
+                <div class="fw-bold">Step 2: Search</div>
+                <div class="small text-muted">Before filling Schedule D, AI asks: &ldquo;What are the rules for capital gains?&rdquo; &mdash; finds the exact IRS instructions</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-3 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:2rem">&#x2705;</div>
+                <div class="fw-bold">Step 3: Apply</div>
+                <div class="small text-muted">Reads: &ldquo;Long-term gains taxed at 15% if income &lt; $492,300&rdquo; &mdash; applies correct rate to each transaction</div>
+              </div>
+            </div>
+          </div>
+          <p class="mb-0"><strong>Think of it like a smart filing cabinet.</strong> The entire U.S. tax code is filed away. Before the AI fills any line on any form, it opens the cabinet, reads the relevant IRS instructions, and follows them. Change the tax law? Update the index. The AI&rsquo;s behavior changes instantly. No code deployments.</p>
+        </div>
+
+        <div class="block" style="background:rgba(255,193,7,0.06);border:1px solid rgba(255,193,7,0.2)">
+          <h5>&#x1F4CB; Three layers of context &mdash; because taxes are personal</h5>
+          <p>Every tax return is different because everyone&rsquo;s situation is different. ContextWeaver understands three tiers:</p>
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(13,110,253,0.12);border:1px solid rgba(13,110,253,0.3)">
+                <div style="font-size:1.5rem">&#x1F3E2;</div>
+                <div class="fw-bold">Company Policies</div>
+                <div class="small text-muted">&ldquo;401k match: 6% up to $4,500&rdquo;<br>&ldquo;HSA employer contribution: $1,200&rdquo;<br>&ldquo;ESPP discount: 15%&rdquo;</div>
+                <div class="small mt-1"><em>From your employer&rsquo;s benefits RAG</em></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(255,193,7,0.12);border:1px solid rgba(255,193,7,0.3)">
+                <div style="font-size:1.5rem">&#x1F464;</div>
+                <div class="fw-bold">Personal Situation</div>
+                <div class="small text-muted">&ldquo;2 dependents under 17&rdquo;<br>&ldquo;Mortgage interest: $12,400&rdquo;<br>&ldquo;Student loan payments active&rdquo;</div>
+                <div class="small mt-1"><em>From your connected accounts</em></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(25,135,84,0.12);border:1px solid rgba(25,135,84,0.3)">
+                <div style="font-size:1.5rem">&#x1F3DB;&#xFE0F;</div>
+                <div class="fw-bold">IRS Rules</div>
+                <div class="small text-muted">&ldquo;Standard deduction: $14,600&rdquo;<br>&ldquo;Child tax credit: $2,000/child&rdquo;<br>&ldquo;SALT cap: $10,000&rdquo;</div>
+                <div class="small mt-1"><em>From indexed IRS publications</em></div>
+              </div>
+            </div>
+          </div>
+          <p class="mb-0">The AI merges all three layers for <em>your</em> unique return. Your employer&rsquo;s benefits + your personal life + current tax law = a return that&rsquo;s optimized for <strong>you</strong>.</p>
+        </div>
+
+        <div class="block" style="background:rgba(220,53,69,0.06);border:1px solid rgba(220,53,69,0.2)">
+          <h5>&#x1F4A1; Why this replaces TurboTax</h5>
+          <p>TurboTax is a <strong>middleman</strong>. It sits between your data and the IRS. You manually enter numbers that already exist in digital systems. Then it charges you $120+/year for the privilege.</p>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <div class="p-3 rounded" style="background:rgba(220,53,69,0.08)">
+                <div class="fw-bold text-danger mb-2"><i class="bi bi-x-circle"></i> TurboTax / H&amp;R Block</div>
+                <ul class="small mb-0" style="padding-left:1.2rem">
+                  <li>You download W-2 PDF from ADP &rarr; type numbers into TurboTax</li>
+                  <li>You download 1099-B from Schwab &rarr; type each trade manually</li>
+                  <li>You dig up rental receipts &rarr; enter expenses one by one</li>
+                  <li>You answer 200 interview questions &rarr; half don&rsquo;t apply to you</li>
+                  <li>Cost: $120&ndash;$220/person/year + state filing fee</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="p-3 rounded" style="background:rgba(25,135,84,0.08)">
+                <div class="fw-bold text-success mb-2"><i class="bi bi-check-circle"></i> ContextWeaver</div>
+                <ul class="small mb-0" style="padding-left:1.2rem">
+                  <li>Pulls W-2 directly from ADP API &rarr; no manual entry</li>
+                  <li>Pulls 1099-B from Schwab via Plaid &rarr; every trade, automatically</li>
+                  <li>Pulls rental data from property management API &rarr; all expenses included</li>
+                  <li>Reads IRS rules from RAG &rarr; fills only the relevant forms</li>
+                  <li>Cost: $0 extra &mdash; it&rsquo;s a connector on the platform you already use</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <p class="small mb-0"><strong>ContextWeaver connects your data sources directly.</strong> No middleman. No re-keying numbers. No $120/person/year. The same data flows from ADP &rarr; through the AI &rarr; onto IRS forms &rarr; e-filed. One sentence. Zero screens.</p>
+        </div>
+
+        <div class="block" style="background:rgba(13,202,240,0.06);border:1px solid rgba(13,202,240,0.2)">
+          <h5>&#x1F3AF; Putting it all together</h5>
+          <p class="mb-2">When you say <em>&ldquo;File my taxes&rdquo;</em>, here&rsquo;s what happens in about 30 seconds:</p>
+          <ol style="font-size:0.9rem">
+            <li><strong>The AI reads IRS rules from RAG</strong> &mdash; finds current brackets, deduction rules, credit thresholds</li>
+            <li><strong>Pulls your W-2</strong> &mdash; wages, withholdings, 401k contributions directly from payroll</li>
+            <li><strong>Pulls bank interest</strong> &mdash; 1099-INT from all your accounts via Plaid</li>
+            <li><strong>Pulls investment data</strong> &mdash; every stock trade, every dividend, calculates net gains</li>
+            <li><strong>Pulls rental property data</strong> &mdash; income, expenses, depreciation, net profit/loss</li>
+            <li><strong>Optimizes deductions</strong> &mdash; compares standard vs. itemized, applies credits, finds every dollar</li>
+            <li><strong>Fills every IRS form</strong> &mdash; 1040, schedules, state return, all populated</li>
+            <li><strong>E-files &amp; confirms</strong> &mdash; submits to IRS + state, emails you the confirmation</li>
+          </ol>
+          <p class="text-info fw-bold mb-0">One sentence in. Taxes filed, deductions maximized, refund on the way. No screens. No forms. No $120 fee.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 1: COMPLETE ARCHITECTURE DIAGRAM -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-info mb-4"><i class="bi bi-diagram-3"></i> The Complete Architecture (Technical View)</h3>
+        <p class="text-muted small mb-3">Every box below is a real component running in ContextWeaver. Follow the arrows to see how a single sentence becomes a filed tax return.</p>
+
+        <!-- AI Hub -->
+        <div class="block block-hub text-center">
+          <div class="fw-bold" style="font-size:1.1rem"><span style="font-size:1.3rem">&#x1F9E0;</span> AI Hub (User Interface)</div>
+          <div class="text-muted small">User types: <em>&ldquo;File my taxes. Pull my W-2s, 1099s, rental income, and investment gains. Maximize deductions. File federal and state.&rdquo;</em></div>
+          <div class="text-muted small mt-1">Authenticated as <code>alice@acme.com</code> &bull; Filing status: <code>Married Filing Jointly</code> &bull; Dependents: <code>2</code></div>
+        </div>
+        <div class="arrow">&darr;</div>
+
+        <!-- Agent -->
+        <div class="block block-hub">
+          <div class="fw-bold"><span style="font-size:1.1rem">&#x1F916;</span> Agent (LLM Orchestrator)</div>
+          <div class="text-muted small">Sees <strong>42 tools</strong> from all plugins. LLM decides which tools to call and in what order.</div>
+          <div class="mt-2 small">
+            <span class="badge bg-secondary">1. Search IRS rules (RAG)</span>
+            <span class="badge bg-secondary">2. Pull W-2 (Payroll)</span>
+            <span class="badge bg-secondary">3. Pull 1099-INT (Banking)</span>
+            <span class="badge bg-secondary">4. Pull 1099-B/DIV (Brokerage)</span>
+            <span class="badge bg-secondary">5. Pull rental data (Real Estate)</span>
+            <span class="badge bg-secondary">6. Calculate &amp; optimize</span>
+            <span class="badge bg-secondary">7. Fill forms (IRS)</span>
+            <span class="badge bg-secondary">8. E-file &amp; email</span>
+          </div>
+        </div>
+        <div class="arrow">&darr;</div>
+
+        <!-- MCP Server -->
+        <div class="block block-mcp">
+          <div class="fw-bold"><span style="font-size:1.1rem">&#x1F50C;</span> MCP Server (Tool Execution Engine)</div>
+          <div class="text-muted small">Single FastMCP instance hosting all plugin tools. Receives tool calls from Agent via Streamable HTTP.</div>
+          <div class="text-muted small mt-1">Extracts <code>_user_email=alice@acme.com</code> from every request &rarr; per-user credential resolution</div>
+        </div>
+        <div class="arrow">&darr;</div>
+
+        <!-- 6 Plugins in 2 rows -->
+        <div class="row g-3 mb-1">
+          <div class="col-md-4">
+            <div class="block block-plugin h-100">
+              <div class="fw-bold text-success"><i class="bi bi-briefcase"></i> Payroll Plugin</div>
+              <div class="text-muted small">ADP, Gusto, Workday</div>
+              <div class="mt-2" style="font-size:0.75rem">
+                <div><i class="bi bi-wrench"></i> payroll-get-w2 &#x2B05; <em>used here</em></div>
+                <div><i class="bi bi-wrench"></i> payroll-get-paystubs</div>
+                <div><i class="bi bi-wrench"></i> payroll-get-benefits</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-plugin h-100">
+              <div class="fw-bold text-success"><i class="bi bi-bank"></i> Banking Plugin</div>
+              <div class="text-muted small">Plaid &rarr; all bank accounts</div>
+              <div class="mt-2" style="font-size:0.75rem">
+                <div><i class="bi bi-wrench"></i> banking-get-1099-int &#x2B05; <em>used here</em></div>
+                <div><i class="bi bi-wrench"></i> banking-get-balances</div>
+                <div><i class="bi bi-wrench"></i> banking-get-transactions</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-plugin h-100">
+              <div class="fw-bold text-success"><i class="bi bi-graph-up-arrow"></i> Brokerage Plugin</div>
+              <div class="text-muted small">Schwab, Fidelity, Robinhood via Plaid</div>
+              <div class="mt-2" style="font-size:0.75rem">
+                <div><i class="bi bi-wrench"></i> brokerage-get-1099b &#x2B05; <em>used here</em></div>
+                <div><i class="bi bi-wrench"></i> brokerage-get-1099div &#x2B05; <em>used here</em></div>
+                <div><i class="bi bi-wrench"></i> brokerage-get-cost-basis</div>
+                <div><i class="bi bi-wrench"></i> brokerage-get-gains-losses</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <div class="block block-plugin h-100">
+              <div class="fw-bold text-success"><i class="bi bi-house-door"></i> Real Estate Plugin</div>
+              <div class="text-muted small">Property management APIs</div>
+              <div class="mt-2" style="font-size:0.75rem">
+                <div><i class="bi bi-wrench"></i> realestate-get-rental-income &#x2B05;</div>
+                <div><i class="bi bi-wrench"></i> realestate-get-expenses &#x2B05;</div>
+                <div><i class="bi bi-wrench"></i> realestate-get-depreciation &#x2B05;</div>
+                <div><i class="bi bi-wrench"></i> realestate-get-1099misc</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-plugin h-100">
+              <div class="fw-bold text-success"><i class="bi bi-file-earmark-text"></i> IRS Forms Plugin</div>
+              <div class="text-muted small">Form filling + calculation + e-file</div>
+              <div class="mt-2" style="font-size:0.75rem">
+                <div><i class="bi bi-wrench"></i> irs-fill-form &#x2B05; <em>used here</em></div>
+                <div><i class="bi bi-wrench"></i> irs-calculate-tax</div>
+                <div><i class="bi bi-wrench"></i> irs-efile-federal &#x2B05; <em>used here</em></div>
+                <div><i class="bi bi-wrench"></i> irs-efile-state &#x2B05; <em>used here</em></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-plugin h-100">
+              <div class="fw-bold text-success"><i class="bi bi-envelope"></i> Email Plugin</div>
+              <div class="text-muted small">Confirmations &amp; CPA sharing</div>
+              <div class="mt-2" style="font-size:0.75rem">
+                <div><i class="bi bi-wrench"></i> email-send &#x2B05; <em>used here</em></div>
+                <div><i class="bi bi-wrench"></i> email-attach-pdf</div>
+                <div class="text-muted">+ 11 more tools</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="arrow">&darr;</div>
+
+        <!-- Connectors -->
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <div class="block block-connector h-100">
+              <div class="fw-bold text-warning"><i class="bi bi-plug"></i> cw-payroll</div>
+              <div><span class="badge bg-danger" style="font-size:0.55rem"><i class="bi bi-lock-fill"></i> per-user</span></div>
+              <div class="text-muted small mt-1">Employer payroll API key (ADP, Gusto, Workday)</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-connector h-100">
+              <div class="fw-bold text-warning"><i class="bi bi-plug"></i> cw-plaid-banking</div>
+              <div><span class="badge bg-danger" style="font-size:0.55rem"><i class="bi bi-lock-fill"></i> per-user</span></div>
+              <div class="text-muted small mt-1">User&rsquo;s Plaid access tokens for bank accounts</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-connector h-100">
+              <div class="fw-bold text-warning"><i class="bi bi-plug"></i> cw-brokerage</div>
+              <div><span class="badge bg-danger" style="font-size:0.55rem"><i class="bi bi-lock-fill"></i> per-user</span></div>
+              <div class="text-muted small mt-1">Plaid tokens for Schwab, Fidelity, Robinhood</div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <div class="block block-connector h-100">
+              <div class="fw-bold text-warning"><i class="bi bi-plug"></i> cw-real-estate</div>
+              <div><span class="badge bg-danger" style="font-size:0.55rem"><i class="bi bi-lock-fill"></i> per-user</span></div>
+              <div class="text-muted small mt-1">Property management API credentials</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-connector h-100">
+              <div class="fw-bold text-warning"><i class="bi bi-plug"></i> cw-irs-efile</div>
+              <div><span class="badge bg-danger" style="font-size:0.55rem"><i class="bi bi-lock-fill"></i> shared</span></div>
+              <div class="text-muted small mt-1">IRS EFIN credentials + MeF e-file gateway</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-connector h-100">
+              <div class="fw-bold text-warning"><i class="bi bi-plug"></i> cw-email</div>
+              <div><span class="badge bg-danger" style="font-size:0.55rem"><i class="bi bi-lock-fill"></i> per-user</span></div>
+              <div class="text-muted small mt-1">Each user&rsquo;s own Gmail/Outlook credentials</div>
+            </div>
+          </div>
+        </div>
+        <div class="arrow">&darr;</div>
+
+        <!-- Vault + RAG -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="block block-vault h-100">
+              <div class="fw-bold text-danger"><i class="bi bi-shield-lock"></i> Vault (Credentials)</div>
+              <div class="small mt-1">
+                <div>&#x1F464; <code>cw-pvt-alice-cw-payroll-api-key</code> &rarr; Alice&rsquo;s ADP key</div>
+                <div>&#x1F464; <code>cw-pvt-alice-cw-plaid-access-token</code> &rarr; Alice&rsquo;s Plaid token</div>
+                <div>&#x1F464; <code>cw-pvt-alice-cw-brokerage-token</code> &rarr; Schwab via Plaid</div>
+                <div>&#x1F3E2; <code>cw-org-cw-irs-efile-efin</code> &rarr; IRS EFIN credentials</div>
+                <div>&#x1F464; <code>cw-pvt-alice-cw-email-app-password</code> &rarr; Alice&rsquo;s Gmail</div>
+              </div>
+              <div class="text-muted small mt-2"><strong>Cascade:</strong> User &rarr; Group &rarr; Org (first found wins)</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="block block-rag h-100">
+              <div class="fw-bold text-primary"><i class="bi bi-database"></i> RAG Indexes (Tax Knowledge)</div>
+              <div class="small mt-1">
+                <div>&#x1F3DB;&#xFE0F; <code>irs-form-1040-instructions</code> &rarr; Line-by-line guidance</div>
+                <div>&#x1F3DB;&#xFE0F; <code>irs-publication-17</code> &rarr; Your Federal Income Tax guide</div>
+                <div>&#x1F3DB;&#xFE0F; <code>irs-schedules-a-b-c-d-e</code> &rarr; Schedule instructions</div>
+                <div>&#x1F3E2; <code>employer-benefits-policy</code> &rarr; 401k match, HSA, ESPP rules</div>
+                <div>&#x1F4CD; <code>state-tax-rules-{state}</code> &rarr; State-specific rules</div>
+              </div>
+              <div class="text-muted small mt-2"><strong>Merge:</strong> IRS rules (hard law) + employer policies + personal situation = optimized return</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 2: STEP-BY-STEP CALL FLOW -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-info mb-4"><i class="bi bi-list-ol"></i> Step-by-Step Call Flow (8 Steps)</h3>
+
+        <div class="block" style="background:rgba(168,139,250,0.06);border:1px solid rgba(168,139,250,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-info rounded-pill">Step 1</span>
+            <strong>Agent searches RAG for IRS rules</strong>
+          </div>
+          <div class="small">
+            <div class="text-muted mb-1">Before doing anything, the agent reads the tax code: <em>&ldquo;What are the current rules for deductions, credits, and filing?&rdquo;</em></div>
+            <code>search_all(query="1040 instructions tax brackets deduction rules credits filing 2024")</code>
+            <div class="mt-2">
+              <div class="text-success">&#x2705; [IRS_1040] &ldquo;Standard deduction MFJ: $29,200. Itemize if deductions exceed this.&rdquo;</div>
+              <div class="text-success">&#x2705; [IRS_PUB17] &ldquo;Tax brackets: 10%, 12%, 22%, 24%, 32%, 35%, 37%&rdquo;</div>
+              <div class="text-warning">&#x2705; [IRS_SCHED_D] &ldquo;Long-term capital gains: 0%, 15%, or 20% based on income&rdquo;</div>
+              <div class="text-info">&#x2705; [EMPLOYER] &ldquo;Acme Corp: 401k match 6%, HSA employer contribution $1,200, ESPP 15% discount&rdquo;</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(25,135,84,0.06);border:1px solid rgba(25,135,84,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-success rounded-pill">Step 2</span>
+            <strong>Pull W-2 from ADP via Payroll connector</strong>
+          </div>
+          <div class="small">
+            <code>payroll-get-w2(employer="acme-corp", tax_year=2024, _user_email="alice@acme.com")</code>
+            <div class="mt-2 text-muted">
+              &#x2192; Connector resolves: Alice&rsquo;s vault for ADP API key<br>
+              &#x2192; Returns W-2 data:
+            </div>
+            <div class="mt-1">
+              <div class="text-success">&#x1F4B5; Wages: <strong>$95,000</strong></div>
+              <div class="text-success">&#x1F3E6; Federal tax withheld: <strong>$14,250</strong></div>
+              <div class="text-success">&#x1F4CA; 401k contributions: <strong>$12,000</strong> (pre-tax, reduces taxable income)</div>
+              <div class="text-success">&#x1F3E5; HSA contributions: <strong>$3,850</strong> (employee) + $1,200 (employer)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(255,193,7,0.06);border:1px solid rgba(255,193,7,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-warning text-dark rounded-pill">Step 3</span>
+            <strong>Pull 1099-INT from Plaid Banking</strong>
+          </div>
+          <div class="small">
+            <code>banking-get-1099-int(tax_year=2024, _user_email="alice@acme.com")</code>
+            <div class="mt-2 text-muted">
+              &#x2192; Connector resolves: Alice&rsquo;s Plaid access token from vault<br>
+              &#x2192; Queries all linked bank accounts:
+            </div>
+            <div class="mt-1">
+              <div class="text-success">&#x1F3E6; Chase Savings: <strong>$847</strong> interest earned</div>
+              <div class="text-success">&#x1F3E6; Chase Checking: <strong>$234</strong> interest earned</div>
+              <div class="text-muted">&#x2192; Total interest income: <strong>$1,081</strong> &rarr; Goes on Schedule B</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(13,110,253,0.06);border:1px solid rgba(13,110,253,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-primary rounded-pill">Step 4</span>
+            <strong>Pull brokerage data &mdash; 1099-B &amp; 1099-DIV</strong>
+          </div>
+          <div class="small">
+            <code>brokerage-get-1099b(tax_year=2024, _user_email="alice@acme.com")</code><br>
+            <code>brokerage-get-1099div(tax_year=2024, _user_email="alice@acme.com")</code>
+            <div class="mt-2 text-muted">
+              &#x2192; Connector resolves: Alice&rsquo;s Schwab credentials via Plaid<br>
+              &#x2192; Returns all trades and dividends:
+            </div>
+            <div class="mt-1">
+              <div class="text-success">&#x1F4C8; Sold AAPL: proceeds $32,400 &minus; cost basis $20,000 = <strong>$12,400 long-term gain</strong></div>
+              <div class="text-danger">&#x1F4C9; Sold TSLA: proceeds $8,800 &minus; cost basis $12,000 = <strong>$3,200 short-term loss</strong></div>
+              <div class="text-info">&#x1F4B0; Qualified dividends: <strong>$1,890</strong> (taxed at capital gains rate)</div>
+              <div class="mt-1 text-muted">&#x1F9EE; Tax-loss harvesting: $12,400 gain &minus; $3,200 loss = <strong>net $9,200 capital gain</strong> &rarr; Schedule D</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(220,53,69,0.06);border:1px solid rgba(220,53,69,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-danger rounded-pill">Step 5</span>
+            <strong>Pull rental property data</strong>
+          </div>
+          <div class="small">
+            <code>realestate-get-rental-income(tax_year=2024, _user_email="alice@acme.com")</code><br>
+            <code>realestate-get-expenses(tax_year=2024, _user_email="alice@acme.com")</code>
+            <div class="mt-2 text-muted">
+              &#x2192; Connector resolves: Alice&rsquo;s property management API credentials<br>
+              &#x2192; Returns rental property P&amp;L:
+            </div>
+            <div class="mt-1">
+              <table class="table table-sm table-borderless mb-0" style="font-size:0.8rem;color:var(--text);max-width:400px">
+                <tr><td>&#x1F3E0; Rental income (12 months)</td><td class="text-end text-success fw-bold">$24,000</td></tr>
+                <tr><td>&nbsp;&nbsp;&#x2212; Mortgage interest</td><td class="text-end text-danger">($8,400)</td></tr>
+                <tr><td>&nbsp;&nbsp;&#x2212; Property tax</td><td class="text-end text-danger">($3,600)</td></tr>
+                <tr><td>&nbsp;&nbsp;&#x2212; Repairs &amp; maintenance</td><td class="text-end text-danger">($2,100)</td></tr>
+                <tr><td>&nbsp;&nbsp;&#x2212; Depreciation (27.5-yr)</td><td class="text-end text-danger">($5,454)</td></tr>
+                <tr style="border-top:1px solid rgba(255,255,255,0.15)"><td class="fw-bold">&#x1F4CA; Net rental income</td><td class="text-end fw-bold text-success">$4,446</td></tr>
+              </table>
+              <div class="mt-1 text-muted">&#x2192; Goes on Schedule E</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(25,135,84,0.06);border:1px solid rgba(25,135,84,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-success rounded-pill">Step 6</span>
+            <strong>Calculate &amp; optimize &mdash; find every deduction</strong>
+          </div>
+          <div class="small">
+            <div class="text-muted mb-2">Agent runs the IRS calculation engine with all data collected, comparing strategies:</div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-2 rounded" style="background:rgba(255,255,255,0.03)">
+                  <div class="fw-bold small text-warning mb-1">&#x1F4CB; Standard vs. Itemized</div>
+                  <table class="table table-sm table-borderless mb-0" style="font-size:0.75rem;color:var(--text)">
+                    <tr><td>Standard deduction (MFJ)</td><td class="text-end">$29,200</td></tr>
+                    <tr style="border-top:1px solid rgba(255,255,255,0.1)"><td class="fw-bold">Itemized deductions:</td><td></td></tr>
+                    <tr><td>&nbsp;&nbsp;Mortgage interest (primary)</td><td class="text-end">$12,400</td></tr>
+                    <tr><td>&nbsp;&nbsp;State &amp; local taxes (SALT)</td><td class="text-end">$10,000 <span class="text-muted">(capped)</span></td></tr>
+                    <tr><td>&nbsp;&nbsp;Charitable donations</td><td class="text-end">$3,200</td></tr>
+                    <tr><td>&nbsp;&nbsp;Medical (above 7.5% AGI)</td><td class="text-end">$2,500</td></tr>
+                    <tr style="border-top:1px solid rgba(255,255,255,0.15)"><td class="fw-bold">Itemized total</td><td class="text-end fw-bold text-success">$28,100</td></tr>
+                  </table>
+                  <div class="mt-1 text-danger small fw-bold">&#x2192; Standard deduction wins ($29,200 &gt; $28,100) &rarr; take standard</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-2 rounded" style="background:rgba(255,255,255,0.03)">
+                  <div class="fw-bold small text-info mb-1">&#x1F4B0; Credits &amp; Above-the-Line Deductions</div>
+                  <table class="table table-sm table-borderless mb-0" style="font-size:0.75rem;color:var(--text)">
+                    <tr><td>&#x1F476; Child tax credit (2 kids)</td><td class="text-end text-success">$4,000</td></tr>
+                    <tr><td>&#x1F3E5; HSA deduction</td><td class="text-end text-success">$3,850</td></tr>
+                    <tr><td>&#x1F393; Student loan interest</td><td class="text-end text-success">$1,250</td></tr>
+                    <tr style="border-top:1px solid rgba(255,255,255,0.15)"><td colspan="2" class="pt-2">
+                      <div class="text-muted">Taxable income after all deductions: <strong>$72,127</strong></div>
+                      <div class="text-muted">Federal tax owed: <strong>$11,847</strong></div>
+                      <div class="text-muted">Already withheld: <strong>$14,250</strong></div>
+                      <div class="mt-1 fw-bold text-success" style="font-size:0.9rem">&#x1F389; Refund: $2,403</div>
+                    </td></tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(13,202,240,0.06);border:1px solid rgba(13,202,240,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-info rounded-pill">Step 7</span>
+            <strong>Generate filled IRS forms</strong>
+          </div>
+          <div class="small">
+            <code>irs-fill-form(forms=["1040","Schedule-B","Schedule-D","Schedule-E","8949"], data={...}, _user_email="alice@acme.com")</code>
+            <div class="mt-2">
+              <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-secondary">&#x1F4C4; Form 1040</span>
+                <span class="badge bg-secondary">&#x1F4C4; Schedule B (Interest &amp; Dividends)</span>
+                <span class="badge bg-secondary">&#x1F4C4; Schedule D (Capital Gains)</span>
+                <span class="badge bg-secondary">&#x1F4C4; Form 8949 (Stock Transactions)</span>
+                <span class="badge bg-secondary">&#x1F4C4; Schedule E (Rental Income)</span>
+                <span class="badge bg-secondary">&#x1F4C4; State Return (MA Form 1)</span>
+              </div>
+              <div class="text-muted mt-2">&#x2192; Every line filled using data from Steps 2&ndash;6, validated against IRS rules from Step 1</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(168,139,250,0.06);border:1px solid rgba(168,139,250,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-warning text-dark rounded-pill">Step 8</span>
+            <strong>E-file via IRS MeF + state API &amp; confirm</strong>
+          </div>
+          <div class="small">
+            <code>irs-efile-federal(return_data={...}, _user_email="alice@acme.com")</code><br>
+            <code>irs-efile-state(state="MA", return_data={...}, _user_email="alice@acme.com")</code><br>
+            <code>email-send(to="alice@acme.com", subject="&#x2705; Your 2024 Tax Return Has Been Filed")</code>
+            <div class="mt-2 text-muted">
+              &#x2192; Federal filed via IRS Modernized e-File (MeF) system &rarr; Accepted &#x2705;<br>
+              &#x2192; State filed via MA DOR e-file API &rarr; Accepted &#x2705;<br>
+              &#x2192; Confirmation email sent with PDF copies &rarr; Delivered &#x2705;<br>
+              &#x2192; Return copies stored in vault for records
+            </div>
+          </div>
+        </div>
+
+        <!-- Final agent response -->
+        <div class="agent-bubble d-block mt-3">
+          <div class="fw-bold text-success mb-1">&#x1F916; Agent Response:</div>
+          <div style="font-size:0.9rem">
+            Done! Your 2024 tax return has been filed. Here&rsquo;s the summary:<br><br>
+            &#x1F4BC; <strong>Wages:</strong> $95,000 (W-2 from Acme Corp via ADP)<br>
+            &#x1F3E6; <strong>Interest income:</strong> $1,081 (Chase Savings + Checking)<br>
+            &#x1F4C8; <strong>Investment gains:</strong> $9,200 net (AAPL gain &minus; TSLA loss + $1,890 dividends)<br>
+            &#x1F3E0; <strong>Rental income:</strong> $4,446 net (after expenses &amp; depreciation)<br>
+            &#x1F9EE; <strong>Deduction:</strong> Standard ($29,200) &mdash; beat itemized by $1,100<br>
+            &#x1F4B0; <strong>Credits:</strong> $4,000 child tax credit + $3,850 HSA + $1,250 student loan<br><br>
+            &#x2705; <strong>Federal refund: $2,403</strong> (filed via IRS MeF, confirmation #2024-FED-847291)<br>
+            &#x2705; <strong>MA state refund: $387</strong> (filed via MA DOR, confirmation #MA-2024-193847)<br>
+            &#x1F4E7; Confirmation + PDF copies sent to alice@acme.com<br><br>
+            <span class="text-muted">Forms filed: 1040, Schedule B, Schedule D, Form 8949, Schedule E, MA Form 1</span>
+          </div>
+        </div>
+
+        <div class="mt-3 p-2 rounded" style="background:rgba(255,255,255,0.03);font-size:0.8rem">
+          <strong>Total calls: ~35</strong> &bull;
+          RAG search: 4 &bull; Payroll API: 2 &bull; Plaid Banking: 3 &bull; Brokerage: 4 &bull; Real Estate: 3 &bull; IRS calculation: 2 &bull; Form generation: 6 &bull; E-file: 2 &bull; Email: 1 &bull; Vault lookups: ~8 &bull;
+          <strong>Time: ~30 seconds</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 3: SAME REQUEST, DIFFERENT PEOPLE -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-info mb-4"><i class="bi bi-people"></i> Same Request, Different People &mdash; Different Returns</h3>
+        <p class="text-muted small">Four people say &ldquo;File my taxes.&rdquo; ContextWeaver pulls different data, applies different rules, and generates different returns for each.</p>
+
+        <div class="voice-bubble d-block text-center mb-3" style="font-size:1rem">
+          <i class="bi bi-mic-fill text-info"></i> &ldquo;File my taxes. Maximize deductions. File federal and state.&rdquo;
+        </div>
+
+        <!-- Alice -->
+        <div class="user-row user-alice">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-success">&#x1F464; Alice</span>
+            <span class="text-muted small">Software Engineer &bull; Single &bull; Renter &bull; No investments</span>
+          </div>
+          <div class="small">
+            <strong>Data pulled:</strong> W-2 only ($85,000 wages). No 1099s, no rental, no stocks.<br>
+            <strong>Deduction:</strong> Standard deduction ($14,600) &mdash; no itemization needed<br>
+            <strong>Forms:</strong> Just Form 1040 + state return (2 forms total)<br>
+            <strong>Result:</strong> <span class="text-success">&#x2705; Federal refund: <strong>$1,200</strong></span> &mdash; simple return, filed in 8 seconds
+          </div>
+        </div>
+
+        <!-- Bob -->
+        <div class="user-row user-bob">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-primary">&#x1F464; Bob</span>
+            <span class="text-muted small">Sales Manager &bull; Married &bull; Homeowner + Rental Property</span>
+          </div>
+          <div class="small">
+            <strong>Data pulled:</strong> W-2 ($120,000) + rental income ($24,000) + mortgage interest ($18,200) + property taxes ($7,400)<br>
+            <strong>Deduction:</strong> Itemized ($31,600 &gt; $29,200 standard) &mdash; mortgage interest + SALT cap + charitable<br>
+            <strong>Forms:</strong> 1040 + Schedule A + Schedule E + state return (4 forms)<br>
+            <strong>Result:</strong> <span class="text-warning">&#x26A0;&#xFE0F; Owes: <strong>$890</strong></span> &mdash; rental income pushed him over. Agent suggests increasing Q4 withholding.
+          </div>
+        </div>
+
+        <!-- Carol -->
+        <div class="user-row user-carol">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-warning text-dark">&#x1F464; Carol</span>
+            <span class="text-muted small">Day Trader &bull; Single &bull; 200+ stock trades + crypto</span>
+          </div>
+          <div class="small">
+            <strong>Data pulled:</strong> W-2 ($75,000) + 200+ stock transactions + 47 crypto trades + dividends ($3,400)<br>
+            <strong>Optimization:</strong> Tax-loss harvesting identified &mdash; harvested losses offset $18,400 in gains, saving <strong>$4,200 in taxes</strong><br>
+            <strong>Forms:</strong> 1040 + Schedule B + Schedule D + Form 8949 (12 pages of trades) + state return<br>
+            <strong>Result:</strong> <span class="text-success">&#x2705; Federal refund: <strong>$3,100</strong></span> &mdash; without tax-loss harvesting, would have owed $1,100
+          </div>
+        </div>
+
+        <!-- Dave -->
+        <div class="user-row user-dave">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-danger">&#x1F464; Dave</span>
+            <span class="text-muted small">Gig Worker &bull; 1099 Contractor &bull; No W-2 &bull; Home office</span>
+          </div>
+          <div class="small">
+            <strong>Data pulled:</strong> No W-2. Multiple 1099-NEC ($92,000 total from 4 clients). Business expenses via banking.<br>
+            <strong>Business deductions:</strong> Home office ($3,600), vehicle mileage ($4,200), equipment ($2,800), software ($1,400), internet ($720)<br>
+            <strong>Self-employment:</strong> SE tax calculated ($11,680). Quarterly estimated payments already made ($9,200). Half of SE tax deducted above-the-line.<br>
+            <strong>Forms:</strong> 1040 + Schedule C + Schedule SE + Form 8829 (Home Office) + state return<br>
+            <strong>Result:</strong> <span class="text-warning">&#x26A0;&#xFE0F; Owes: <strong>$2,400</strong></span> &mdash; Agent suggests increasing quarterly estimates and recommends Solo 401k for next year.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 4: WHAT CONTEXTWEAVER REPLACES -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-info mb-4"><i class="bi bi-lightning"></i> What ContextWeaver Replaces</h3>
+        <p class="text-muted small mb-3">Side-by-side comparison: how each approach handles tax filing.</p>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered diff-table">
+            <thead>
+              <tr>
+                <th style="width:20%">Capability</th>
+                <th style="width:20%">TurboTax</th>
+                <th style="width:20%">H&amp;R Block</th>
+                <th style="width:20%">CPA / Accountant</th>
+                <th style="width:20%"><span style="color:var(--accent-purple)">ContextWeaver</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Cost per return</strong></td>
+                <td>$89&ndash;$219 + $49/state</td>
+                <td>$55&ndash;$195 + $49/state</td>
+                <td>$200&ndash;$800+ (hourly)</td>
+                <td>&#x2705; <strong>$0</strong> &mdash; connector on your platform</td>
+              </tr>
+              <tr>
+                <td><strong>Data entry method</strong></td>
+                <td>&#x274C; Manual typing or photo scan</td>
+                <td>&#x274C; Manual typing or import</td>
+                <td>&#x274C; You mail/email docs to CPA</td>
+                <td>&#x2705; Auto-pull from source systems (API)</td>
+              </tr>
+              <tr>
+                <td><strong>Deduction optimization</strong></td>
+                <td>&#x26A0;&#xFE0F; Guided interview (200+ questions)</td>
+                <td>&#x26A0;&#xFE0F; Guided interview</td>
+                <td>&#x2705; Expert judgment</td>
+                <td>&#x2705; AI reads IRS rules from RAG + calculates every scenario</td>
+              </tr>
+              <tr>
+                <td><strong>Multi-source auto-pull</strong></td>
+                <td>&#x26A0;&#xFE0F; Limited imports (some W-2s)</td>
+                <td>&#x26A0;&#xFE0F; Limited imports</td>
+                <td>&#x274C; You provide everything</td>
+                <td>&#x2705; W-2 + 1099s + brokerage + rental &mdash; all automated</td>
+              </tr>
+              <tr>
+                <td><strong>Rental property handling</strong></td>
+                <td>&#x26A0;&#xFE0F; Manual expense entry</td>
+                <td>&#x26A0;&#xFE0F; Manual expense entry</td>
+                <td>&#x2705; CPA handles</td>
+                <td>&#x2705; Pulls from property mgmt API + auto-depreciation</td>
+              </tr>
+              <tr>
+                <td><strong>Investment / stock trades</strong></td>
+                <td>&#x26A0;&#xFE0F; CSV import (sometimes breaks)</td>
+                <td>&#x26A0;&#xFE0F; CSV import</td>
+                <td>&#x2705; CPA handles</td>
+                <td>&#x2705; Direct API pull + tax-loss harvesting optimization</td>
+              </tr>
+              <tr>
+                <td><strong>Employer policy awareness</strong></td>
+                <td>&#x274C; No idea about your company benefits</td>
+                <td>&#x274C; No idea</td>
+                <td>&#x26A0;&#xFE0F; Only if you tell them</td>
+                <td>&#x2705; RAG indexes employer 401k, HSA, ESPP policies</td>
+              </tr>
+              <tr>
+                <td><strong>Filing method</strong></td>
+                <td>&#x2705; E-file included</td>
+                <td>&#x2705; E-file included</td>
+                <td>&#x2705; E-file or mail</td>
+                <td>&#x2705; E-file via IRS MeF + state APIs</td>
+              </tr>
+              <tr>
+                <td><strong>CPA review option</strong></td>
+                <td>&#x26A0;&#xFE0F; $100+ add-on</td>
+                <td>&#x26A0;&#xFE0F; $50+ add-on</td>
+                <td>&#x2705; Built-in (that&rsquo;s what they do)</td>
+                <td>&#x2705; Email plugin shares return with your CPA for review</td>
+              </tr>
+              <tr>
+                <td><strong>Data security</strong></td>
+                <td>&#x26A0;&#xFE0F; Stores your SSN + all data</td>
+                <td>&#x26A0;&#xFE0F; Stores your SSN + all data</td>
+                <td>&#x26A0;&#xFE0F; Varies by firm</td>
+                <td>&#x2705; Data stays in source systems. Vault-backed credentials. AI never sees secrets.</td>
+              </tr>
+              <tr>
+                <td><strong>Time to complete</strong></td>
+                <td>2&ndash;5 hours (complex return)</td>
+                <td>2&ndash;5 hours</td>
+                <td>1&ndash;3 weeks (back and forth)</td>
+                <td>&#x2705; <strong>30 seconds</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 5: THE LEGO SYSTEM -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="mb-4" style="color:var(--accent-purple)"><i class="bi bi-bricks"></i> The Bigger Picture: A Lego System for Financial Services</h3>
+
+        <div class="block" style="background:rgba(168,139,250,0.08);border:1px solid rgba(168,139,250,0.3)">
+          <h5>&#x1F9F1; Every connector is a building block. Snap them together to build anything.</h5>
+          <p>The tax filing example above used 6 connectors (Payroll + Banking + Brokerage + Real Estate + IRS + Email). But ContextWeaver isn&rsquo;t a tax app &mdash; it&rsquo;s a <strong>platform for building any financial service</strong> by combining connectors like Lego blocks:</p>
+          <div class="row g-2 mt-3">
+            <div class="col-md-3">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1)">
+                <div style="font-size:1.5rem">&#x1F4B0;</div>
+                <div class="fw-bold small text-info">Tax Filing</div>
+                <div style="font-size:0.7rem" class="text-muted">Payroll + Banking + Brokerage<br>+ Real Estate + IRS + Email<br><em>= This page</em></div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1)">
+                <div style="font-size:1.5rem">&#x1F4CA;</div>
+                <div class="fw-bold small text-info">Financial Planning</div>
+                <div style="font-size:0.7rem" class="text-muted">Banking + Brokerage + Insurance<br>+ Advisor API<br><em>= AI wealth advisor</em></div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1)">
+                <div style="font-size:1.5rem">&#x1F3E0;</div>
+                <div class="fw-bold small text-info">Rental Management</div>
+                <div style="font-size:0.7rem" class="text-muted">Real Estate + Banking<br>+ Email + Calendar<br><em>= AI landlord assistant</em></div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1)">
+                <div style="font-size:1.5rem">&#x1F9FE;</div>
+                <div class="fw-bold small text-info">Expense Reports</div>
+                <div style="font-size:0.7rem" class="text-muted">Receipt Scanner + Banking<br>+ Accounting + Email<br><em>= AI expense manager</em></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(25,135,84,0.06);border:1px solid rgba(25,135,84,0.2)">
+          <h5>&#x1F50C; Same connectors, different combinations &mdash; unlimited financial services</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,0.03)">
+                <div class="fw-bold small mb-1">&#x1F9F1; Connectors Used in Tax Filing</div>
+                <div style="font-size:0.75rem" class="text-muted">
+                  <span class="badge bg-secondary">cw-payroll</span>
+                  <span class="badge bg-secondary">cw-plaid-banking</span>
+                  <span class="badge bg-secondary">cw-brokerage</span>
+                  <span class="badge bg-secondary">cw-real-estate</span>
+                  <span class="badge bg-secondary">cw-irs-efile</span>
+                  <span class="badge bg-secondary">cw-email</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,0.03)">
+                <div class="fw-bold small mb-1">&#x1F504; Re-use in Other Services</div>
+                <div style="font-size:0.75rem" class="text-muted">
+                  <code>cw-plaid-banking</code> also powers: budgeting, bill pay, fraud alerts<br>
+                  <code>cw-brokerage</code> also powers: portfolio rebalancing, smart trading<br>
+                  <code>cw-real-estate</code> also powers: tenant screening, maintenance requests<br>
+                  <code>cw-payroll</code> also powers: HR onboarding, benefits enrollment
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-3 p-3 rounded" style="background:rgba(168,139,250,0.1);border:1px solid rgba(168,139,250,0.3)">
+          <p class="fw-bold mb-1" style="color:var(--accent-purple);font-size:1.1rem">&#x1F9F1; Build once. Combine infinitely. &mdash; One platform, every financial service.</p>
+          <p class="text-muted small mb-0">Tax filing is just one combination of connectors. The same building blocks power financial planning, rental management, expense reports, and anything else you can imagine. <strong>Add a connector &mdash; unlock a new service.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 6: SECURITY -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="mb-4" style="color:var(--accent-purple)"><i class="bi bi-shield-check"></i> &ldquo;But My Financial Data Is Sensitive!&rdquo; &mdash; Security Deep Dive</h3>
+        <p class="text-muted small mb-4">Tax returns contain the most sensitive data there is &mdash; SSNs, income, bank accounts, investment positions. Here&rsquo;s how ContextWeaver protects it all.</p>
+
+        <div class="block" style="background:rgba(220,53,69,0.06);border:1px solid rgba(220,53,69,0.2)">
+          <h5>&#x1F512; The AI never sees your secrets</h5>
+          <p><strong>The LLM orchestrates actions but never touches raw credentials or sensitive identifiers.</strong></p>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <div class="p-3 rounded" style="background:rgba(220,53,69,0.08)">
+                <div class="fw-bold text-danger mb-2"><i class="bi bi-x-circle"></i> What the AI NEVER sees</div>
+                <ul class="small mb-0" style="padding-left:1.2rem">
+                  <li>Your Social Security Number (SSN)</li>
+                  <li>Bank account numbers or routing numbers</li>
+                  <li>Brokerage account credentials</li>
+                  <li>Plaid access tokens or API keys</li>
+                  <li>IRS EFIN credentials or e-file passwords</li>
+                  <li>Any vault secret values</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="p-3 rounded" style="background:rgba(25,135,84,0.08)">
+                <div class="fw-bold text-success mb-2"><i class="bi bi-check-circle"></i> What actually happens</div>
+                <ul class="small mb-0" style="padding-left:1.2rem">
+                  <li>LLM says: <em>&ldquo;call payroll-get-w2&rdquo;</em></li>
+                  <li>Engine resolves ADP key from vault at runtime</li>
+                  <li>Engine calls ADP API directly &mdash; key in memory for milliseconds</li>
+                  <li>LLM sees only: <em>&ldquo;Wages: $95,000, Withheld: $14,250&rdquo;</em></li>
+                  <li>SSN is injected into IRS forms by the engine, never passed to LLM</li>
+                  <li>E-file credentials are used by the engine, never exposed</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <p class="small mb-0">Think of it this way: the AI is like a <strong>tax preparer who can read your pay stubs but never learns your Social Security Number</strong>. The engine handles the sensitive parts. The AI handles the intelligence.</p>
+        </div>
+
+        <div class="block" style="background:rgba(255,193,7,0.06);border:1px solid rgba(255,193,7,0.2)">
+          <h5>&#x1F3E6; Data stays in source systems &mdash; not in ContextWeaver</h5>
+          <p><strong>Unlike TurboTax, ContextWeaver doesn&rsquo;t create a copy of your financial life.</strong></p>
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:1.5rem">&#x1F4BC;</div>
+                <div class="fw-bold small">W-2 Data</div>
+                <div class="text-muted" style="font-size:0.7rem">Stays in ADP/Gusto. Pulled via API at filing time. Not stored.</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:1.5rem">&#x1F4C8;</div>
+                <div class="fw-bold small">Brokerage Data</div>
+                <div class="text-muted" style="font-size:0.7rem">Stays in Schwab/Fidelity. Pulled via Plaid at filing time. Not stored.</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:1.5rem">&#x1F3E0;</div>
+                <div class="fw-bold small">Rental Data</div>
+                <div class="text-muted" style="font-size:0.7rem">Stays in property mgmt system. Pulled via API at filing time. Not stored.</div>
+              </div>
+            </div>
+          </div>
+          <p class="small mb-0"><strong>Key principle:</strong> ContextWeaver is a <em>conductor</em>, not a <em>warehouse</em>. It orchestrates data flow between your existing systems and the IRS. Your data stays where it already is &mdash; in the systems designed to protect it. After filing, only the IRS confirmation number is retained.</p>
+        </div>
+
+        <div class="block" style="background:rgba(13,110,253,0.06);border:1px solid rgba(13,110,253,0.2)">
+          <h5>&#x1F5C4;&#xFE0F; Vault-backed credential isolation</h5>
+          <p><strong>Every user&rsquo;s financial credentials are isolated in their own vault partition.</strong></p>
+          <table class="table table-sm table-bordered mb-3" style="font-size:0.8rem;color:var(--text)">
+            <thead><tr><th>Credential</th><th>Storage</th><th>Encryption</th><th>Access</th></tr></thead>
+            <tbody>
+              <tr><td>Plaid access tokens</td><td>Azure Key Vault (user partition)</td><td>AES-256 + HSM</td><td>Only your requests</td></tr>
+              <tr><td>Payroll API keys</td><td>Azure Key Vault (user partition)</td><td>AES-256 + HSM</td><td>Only your requests</td></tr>
+              <tr><td>Brokerage tokens</td><td>Azure Key Vault (user partition)</td><td>AES-256 + HSM</td><td>Only your requests</td></tr>
+              <tr><td>IRS EFIN credentials</td><td>Azure Key Vault (org partition)</td><td>AES-256 + HSM</td><td>Shared &mdash; org-level e-file authority</td></tr>
+              <tr><td>SSN (for e-filing)</td><td>Azure Key Vault (user partition)</td><td>AES-256 + HSM</td><td>Only injected into forms by engine</td></tr>
+            </tbody>
+          </table>
+          <p class="small mb-0">Alice&rsquo;s Plaid token can never be used by Bob. Bob&rsquo;s brokerage credentials can never be seen by Carol. Every credential is <strong>per-user, encrypted, and ephemeral</strong> &mdash; resolved at runtime, used once, discarded.</p>
+        </div>
+
+        <!-- Visual summary -->
+        <div class="mt-3 p-3 rounded text-center" style="background:rgba(168,139,250,0.08);border:1px solid rgba(168,139,250,0.2)">
+          <h5 class="mb-3">&#x1F512; Financial Data Security in One Picture</h5>
+          <div class="d-flex justify-content-center gap-2 flex-wrap mb-3" style="font-size:0.8rem">
+            <div class="p-2 rounded" style="background:rgba(168,139,250,0.15);min-width:130px">
+              <div class="fw-bold">&#x1F9E0; AI (LLM)</div>
+              <div class="text-muted small">Sees: dollar amounts<br>Never sees: SSN, keys, tokens</div>
+            </div>
+            <div class="p-2 rounded" style="background:rgba(13,202,240,0.15);min-width:130px">
+              <div class="fw-bold">&#x1F50C; Engine</div>
+              <div class="text-muted small">Resolves credentials<br>Injects SSN into forms</div>
+            </div>
+            <div class="p-2 rounded" style="background:rgba(220,53,69,0.15);min-width:130px">
+              <div class="fw-bold">&#x1F5C4;&#xFE0F; Vault</div>
+              <div class="text-muted small">Encrypted per-user<br>Azure KV / HSM-backed</div>
+            </div>
+            <div class="p-2 rounded" style="background:rgba(255,193,7,0.15);min-width:130px">
+              <div class="fw-bold">&#x1F3DB;&#xFE0F; IRS MeF</div>
+              <div class="text-muted small">Federal e-file gateway<br>End-to-end encrypted</div>
+            </div>
+          </div>
+          <p class="mb-0 small"><strong>Your financial data never lives in ContextWeaver.</strong> It flows from source systems &rarr; through the engine &rarr; to the IRS. The AI orchestrates but never holds sensitive data.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 7: THE BOTTOM LINE -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body text-center py-4">
+        <h3 style="color:var(--accent-purple)" class="mb-3">The Bottom Line</h3>
+        <p class="lead" style="font-size:1.1rem">
+          <strong>One sentence.</strong> Six connectors. Every W-2 pulled. Every 1099 imported. Every deduction found.<br>
+          The AI read IRS rules, pulled your data from 4 systems, optimized your deductions,<br>
+          filled 6 forms, e-filed federal &amp; state, and emailed your confirmation.<br>
+          <em>No screens. No interview. No $120 fee. No re-keying numbers.</em>
+        </p>
+        <p style="font-size:0.95rem" class="text-muted mt-3">
+          And this is just one combination of connectors. The same building blocks power<br>
+          financial planning, rental management, expense reports, and any other service.<br>
+          <strong style="color:var(--accent-purple)">ContextWeaver replaces TurboTax, H&amp;R Block, and manual data entry<br>
+          with one sentence and 30 seconds of AI-powered automation.</strong>
+        </p>
+        <div class="mt-3">
+          <a href="index.html" class="btn btn-outline-info btn-sm me-2"><i class="bi bi-house"></i> Home</a>
+          <a href="contextweaver/index.html" class="btn btn-outline-info btn-sm me-2"><i class="bi bi-cpu"></i> ContextWeaver</a>
+          <a href="scenario-travel-planner.html" class="btn btn-outline-info btn-sm me-2"><i class="bi bi-airplane"></i> Travel Planner</a>
+          <a href="scenario-devops.html" class="btn btn-outline-info btn-sm me-2"><i class="bi bi-gear"></i> DevOps</a>
+          <a href="scenario-trading.html" class="btn btn-outline-info btn-sm"><i class="bi bi-graph-up"></i> Smart Trading</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center text-muted small pb-4">&copy; 2026 ContextWeaver &mdash; Enterprise RAG &amp; Agentic AI Platform</div>
+
+  </div>
+</body>
+</html>

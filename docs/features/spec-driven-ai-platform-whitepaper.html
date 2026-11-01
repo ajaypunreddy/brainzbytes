@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A BrainzBytes whitepaper describing a spec-driven AI services, governance, operations, registry, workflow, hierarchical RAG, and governed memory platform.">
+  <meta name="author" content="BrainzBytes">
+  <meta name="theme-color" content="#07131d">
+  <title>ContextWeaver — A Spec-Driven AI Services, Governance &amp; Operations Platform</title>
+  <style>
+    :root {
+      --ink: #102331;
+      --muted: #5d7180;
+      --paper: #f5f8fa;
+      --surface: #ffffff;
+      --line: #d8e3e9;
+      --navy: #07131d;
+      --navy-2: #0d2432;
+      --cyan: #15b8b0;
+      --blue: #397dda;
+      --violet: #745bc7;
+      --amber: #d9992d;
+      --red: #c75263;
+      --green: #218a70;
+      --shadow: 0 20px 55px rgba(19, 47, 65, .12);
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 6%, rgba(21,184,176,.09), transparent 26rem),
+        radial-gradient(circle at 95% 22%, rgba(116,91,199,.08), transparent 30rem),
+        var(--paper);
+      font: 16px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; }
+    button, select { font: inherit; }
+    code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    .skip-link { position: fixed; left: 12px; top: -60px; z-index: 100; padding: 10px 14px; border-radius: 8px; color: white; background: var(--navy); }
+    .skip-link:focus { top: 12px; }
+    .masthead {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      padding: 10px clamp(18px, 4vw, 64px);
+      border-bottom: 1px solid rgba(216,227,233,.18);
+      color: white;
+      background: rgba(7,19,29,.93);
+      backdrop-filter: blur(18px);
+    }
+    .brand { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+    .brand-marks { display: flex; gap: 7px; }
+    .brand svg { width: 37px; height: 37px; }
+    .brand-copy strong, .brand-copy small { display: block; }
+    .brand-copy strong { font-size: 15px; letter-spacing: .02em; }
+    .brand-copy small { color: #8ea9ba; font-size: 9px; text-transform: uppercase; letter-spacing: .14em; }
+    .masthead nav { display: flex; align-items: center; gap: 4px; }
+    .masthead nav a, .print-button {
+      padding: 8px 10px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      color: #a9becb;
+      background: none;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .masthead nav a:hover, .masthead nav a.active, .print-button:hover { color: white; border-color: #315468; background: #102735; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 690px;
+      padding: clamp(70px, 8vw, 130px) clamp(24px, 8vw, 130px) 80px;
+      color: white;
+      background:
+        linear-gradient(90deg, rgba(7,19,29,.98), rgba(9,31,44,.92) 58%, rgba(16,35,52,.85)),
+        var(--navy);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(102,163,255,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(102,163,255,.055) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: linear-gradient(to right, black, transparent 82%);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -12vw;
+      top: -18vw;
+      width: 60vw;
+      height: 60vw;
+      border: 1px solid rgba(21,184,176,.25);
+      border-radius: 50%;
+      box-shadow: 0 0 0 80px rgba(116,91,199,.035), 0 0 0 160px rgba(57,125,218,.025);
+    }
+    .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(320px, .7fr); gap: 7vw; align-items: center; max-width: 1500px; margin: auto; }
+    .kicker { margin: 0; color: #68ddd6; font-size: 12px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; }
+    h1 { max-width: 1000px; margin: 16px 0 24px; font-size: clamp(32px, 3.4vw, 48px); line-height: 1.06; letter-spacing: -.035em; }
+    h1 em { color: #75e6df; font-style: normal; }
+    .hero-lede { max-width: 850px; color: #b7cbd6; font-size: clamp(18px, 1.6vw, 24px); line-height: 1.6; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+    .hero-meta span { padding: 8px 11px; border: 1px solid #315267; border-radius: 999px; color: #b9ced9; background: #0b2230; font-size: 12px; }
+    .thesis-card {
+      position: relative;
+      z-index: 2;
+      padding: 28px;
+      border: 1px solid #35576b;
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(18,46,61,.92), rgba(25,31,55,.9));
+      box-shadow: 0 35px 90px rgba(0,0,0,.32);
+    }
+    .thesis-card::before { content: ""; position: absolute; top: -1px; left: 18%; right: 18%; height: 2px; background: linear-gradient(90deg, transparent, #75e6df, #b39cff, transparent); }
+    .thesis-card h2 { margin: 7px 0 14px; font-size: 30px; }
+    .thesis-card ol { margin: 20px 0 0; padding: 0; list-style: none; counter-reset: thesis; }
+    .thesis-card li { position: relative; margin: 0; padding: 14px 0 14px 43px; border-top: 1px solid #294658; color: #b9cbd5; }
+    .thesis-card li::before { counter-increment: thesis; content: counter(thesis); position: absolute; left: 0; top: 13px; display: grid; place-items: center; width: 27px; height: 27px; border-radius: 8px; color: #07131d; background: linear-gradient(135deg, #64ded7, #7ca9ff); font-weight: 900; }
+    .wrap { max-width: 1400px; margin: auto; padding: 0 clamp(20px, 5vw, 76px); }
+    .section { padding: clamp(70px, 8vw, 120px) 0; scroll-margin-top: 72px; }
+    .section + .section { border-top: 1px solid var(--line); }
+    .section-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .65fr); gap: 5vw; align-items: end; margin-bottom: 34px; }
+    .section-heading h2 { max-width: 900px; margin: 8px 0 0; font-size: clamp(28px, 3vw, 40px); line-height: 1.1; letter-spacing: -.03em; }
+    .section-heading > p { margin: 0; color: var(--muted); font-size: 18px; }
+    .eyebrow { margin: 0; color: var(--cyan); font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+    .abstract {
+      display: grid;
+      grid-template-columns: .55fr 1.45fr;
+      gap: 5vw;
+      padding: 42px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .abstract h2 { margin: 0; font-size: 34px; }
+    .abstract p { margin: 0 0 16px; color: #425c6b; font-size: 18px; }
+    .principles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+    .principles article, .card {
+      position: relative;
+      overflow: hidden;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+    }
+    .principles article::before, .card::before { content: ""; position: absolute; left: 14%; right: 14%; top: -1px; height: 2px; background: linear-gradient(90deg, transparent, var(--cyan), transparent); }
+    .principles article:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--violet), transparent); }
+    .principles article:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--amber), transparent); }
+    .principles article:nth-child(4)::before { background: linear-gradient(90deg, transparent, var(--blue), transparent); }
+    .principles b { display: block; margin-bottom: 8px; font-size: 15px; }
+    .principles p { margin: 0; color: var(--muted); font-size: 14px; }
+    .architecture-board {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 20px;
+      padding: 20px;
+      border: 1px solid #294a5d;
+      border-radius: 24px;
+      color: white;
+      background: linear-gradient(145deg, #081822, #101d31);
+      box-shadow: 0 30px 80px rgba(10,31,44,.22);
+    }
+    .layer-stack { display: grid; gap: 9px; }
+    .layer {
+      position: relative;
+      display: grid;
+      grid-template-columns: 190px minmax(0,1fr);
+      gap: 16px;
+      align-items: center;
+      min-height: 78px;
+      padding: 12px 16px;
+      border: 1px solid #27485b;
+      border-radius: 13px;
+      background: #0d2431;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .layer:not(:last-child)::after {
+      content: "↓";
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      bottom: -15px;
+      color: var(--cyan);
+      font-size: 14px;
+      text-shadow: 0 0 12px rgba(28,196,178,.75);
+      animation: flow-arrow 2s ease-in-out infinite;
+    }
+    .layer:hover, .layer.active { transform: translateX(4px); border-color: #5a8ba2; background: #123044; }
+    .layer.active { box-shadow: inset 4px 0 var(--cyan), 0 14px 30px rgba(0,0,0,.2); }
+    .layer strong { font-size: 14px; }
+    .layer small { display: block; color: #88a6b7; }
+    .layer-items { display: flex; flex-wrap: wrap; gap: 7px; }
+    .layer-items span { padding: 6px 8px; border: 1px solid #36586b; border-radius: 7px; color: #b8ced9; background: #0a1b26; font-size: 11px; }
+    .architecture-detail {
+      padding: 24px;
+      border: 1px solid #395b6e;
+      border-radius: 16px;
+      background: linear-gradient(150deg, #102b39, #172238);
+    }
+    .architecture-detail h3 { margin: 7px 0 14px; font-size: 28px; }
+    .architecture-detail p { color: #afc4cf; }
+    .architecture-detail ul { padding-left: 18px; color: #c4d5dd; }
+    .architecture-detail code { display: block; margin-top: 20px; padding: 12px; border-radius: 9px; color: #8ee7dd; background: #07151e; font-size: 11px; }
+    .tablist { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .tablist button {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      color: var(--muted);
+      background: var(--surface);
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .tablist button.active { color: white; border-color: #2f6e83; background: linear-gradient(135deg, #0e5961, #315ca2); }
+    .contract-view { display: grid; grid-template-columns: .85fr 1.15fr; gap: 20px; }
+    .contract-copy, .code-card { padding: 26px; border: 1px solid var(--line); border-radius: 17px; background: var(--surface); box-shadow: var(--shadow); }
+    .contract-copy h3 { margin: 0 0 10px; font-size: 30px; }
+    .contract-copy p { color: var(--muted); }
+    .contract-list { display: grid; gap: 8px; margin-top: 20px; }
+    .contract-list div { display: grid; grid-template-columns: 125px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+    .contract-list b { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+    .contract-list span { color: var(--muted); font-size: 14px; }
+    .code-card { position: relative; overflow: hidden; padding: 0; background: #07131d; }
+    .code-head { display: flex; align-items: center; justify-content: space-between; padding: 11px 15px; color: #a8bec9; background: #102532; font-size: 12px; }
+    .code-head button { border: 0; border-radius: 6px; padding: 5px 8px; color: #cbe0e8; background: #1b3b4d; cursor: pointer; }
+    pre { overflow: auto; max-height: 610px; margin: 0; padding: 22px; color: #d7e7ed; font-size: 12px; line-height: 1.65; tab-size: 2; }
+    .token-key { color: #7cd9ef; }
+    .token-string { color: #bddf9f; }
+    .token-value { color: #efc07e; }
+    .gate-board { position: relative; display: grid; grid-template-columns: repeat(7, minmax(130px, 1fr)); gap: 10px; overflow-x: auto; padding: 20px 0 28px; }
+    .gate {
+      position: relative;
+      min-height: 165px;
+      padding: 18px 15px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--surface);
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .gate:not(:last-child)::after { content: "→"; position: absolute; right: -12px; top: 67px; z-index: 3; color: #7392a3; font-weight: 900; }
+    .gate:hover, .gate.active { transform: translateY(-4px); border-color: #4d8397; box-shadow: var(--shadow); }
+    .gate.active { box-shadow: inset 0 3px var(--cyan), var(--shadow); }
+    .gate b { display: grid; place-items: center; width: 30px; height: 30px; margin-bottom: 16px; border-radius: 9px; color: white; background: linear-gradient(135deg, var(--cyan), var(--blue)); }
+    .gate strong { display: block; font-size: 14px; }
+    .gate small { display: block; margin-top: 7px; color: var(--muted); }
+    .gate-detail { display: grid; grid-template-columns: .65fr 1.35fr; gap: 24px; padding: 25px; border: 1px solid #335669; border-radius: 17px; color: white; background: linear-gradient(135deg, #0c2532, #171f36); }
+    .gate-detail h3 { margin: 5px 0; font-size: 28px; }
+    .gate-detail p, .gate-detail li { color: #b4c8d2; }
+    .gate-detail ul { columns: 2; margin: 0; padding-left: 20px; }
+    .decision-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 20px; }
+    .decision-row article { padding: 16px; border: 1px solid var(--line); border-radius: 13px; background: white; }
+    .decision-row strong { display: block; margin-bottom: 5px; }
+    .decision-row p { margin: 0; color: var(--muted); font-size: 13px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(130px,1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+    .flow article { position: relative; padding: 20px 15px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); text-align: center; animation: flow-card 15.6s ease-in-out infinite; }
+    .flow article:nth-child(2){animation-delay:2.6s}.flow article:nth-child(3){animation-delay:5.2s}.flow article:nth-child(4){animation-delay:7.8s}.flow article:nth-child(5){animation-delay:10.4s}.flow article:nth-child(6){animation-delay:13s}
+    .flow article:not(:last-child)::after { content: "→"; position: absolute; right: -12px; top: 43%; color: var(--cyan); font-weight: 900; z-index: 2; text-shadow:0 0 12px rgba(28,196,178,.7); animation: flow-arrow 2s ease-in-out infinite; }
+    .flow b { display: block; color: var(--blue); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .flow strong { display: block; margin: 8px 0; }
+    .flow p { margin: 0; color: var(--muted); font-size: 12px; }
+    @keyframes flow-arrow { 0%,100%{opacity:.35;transform:translateX(0)} 50%{opacity:1;transform:translateX(4px)} }
+    @keyframes flow-card { 0%,13%,100%{border-color:var(--line);box-shadow:none;transform:translateY(0)} 4%,9%{border-color:var(--cyan);box-shadow:0 12px 28px rgba(28,196,178,.18);transform:translateY(-4px)} }
+    .transaction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 22px; }
+    .transaction-card { padding: 24px; border: 1px solid var(--line); border-radius: 16px; background: white; }
+    .transaction-card h3 { margin: 0; font-size: 25px; }
+    .transaction-card ol { padding-left: 20px; color: var(--muted); }
+    .transaction-card li { margin: 8px 0; }
+    .rag-lab { display: grid; grid-template-columns: 310px minmax(0,1fr); gap: 20px; }
+    .rag-controls, .rag-canvas { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: white; box-shadow: var(--shadow); }
+    .rag-controls label { display: grid; gap: 8px; margin-bottom: 18px; color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; }
+    .rag-controls select { padding: 11px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: #f9fbfc; }
+    .rag-rule { padding: 14px; border-left: 3px solid var(--cyan); border-radius: 0 10px 10px 0; color: #416071; background: #edf8f7; font-size: 13px; }
+    .rag-stack { display: grid; gap: 10px; }
+    .rag-scope {
+      display: grid;
+      grid-template-columns: 95px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      transition: .25s ease;
+    }
+    .rag-scope.active { transform: translateX(5px); border-color: #3c8090; box-shadow: inset 4px 0 var(--cyan), 0 10px 26px rgba(27,73,91,.1); }
+    .rag-scope.excluded { opacity: .42; }
+    .rag-scope b { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
+    .rag-scope strong { display: block; }
+    .rag-scope small { color: var(--muted); }
+    .rag-scope em { padding: 5px 8px; border-radius: 999px; color: #29665b; background: #dcf5ee; font-style: normal; font-size: 11px; }
+    .rag-explanation { margin-top: 18px; padding: 18px; border-radius: 13px; color: white; background: linear-gradient(120deg, #0d5b60, #3d538f); }
+    .rag-explanation strong { display: block; margin-bottom: 5px; }
+    .rag-explanation p { margin: 0; color: #d9edf0; }
+    .matrix-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: white; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 14px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: #496474; background: #eef4f6; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+    td { color: #405a69; font-size: 13px; }
+    td strong { color: var(--ink); }
+    tr:last-child td { border-bottom: 0; }
+    .severity { display: inline-flex; min-width: 66px; justify-content: center; padding: 4px 7px; border-radius: 999px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+    .sev-critical { color: #8b2433; background: #f9dce1; }
+    .sev-warning { color: #7f5818; background: #f9edcf; }
+    .sev-info { color: #275b82; background: #dcebf7; }
+    .dashboard-schema { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 20px; }
+    .dashboard-schema article { padding: 20px; border: 1px solid var(--line); border-radius: 15px; background: white; }
+    .dashboard-schema h3 { margin: 0 0 8px; font-size: 21px; }
+    .dashboard-schema p { color: var(--muted); font-size: 13px; }
+    .dashboard-schema code { color: var(--blue); font-size: 11px; }
+    .roadmap { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; counter-reset: phase; }
+    .roadmap article { position: relative; padding: 25px; border: 1px solid var(--line); border-radius: 16px; background: white; }
+    .roadmap article::before { counter-increment: phase; content: "0" counter(phase); display: block; margin-bottom: 35px; color: var(--cyan); font-size: 13px; font-weight: 900; letter-spacing: .12em; }
+    .roadmap article:not(:last-child)::after { content: ""; position: absolute; left: calc(100% + 1px); top: 38px; width: 14px; height: 2px; background: #9eb2bd; }
+    .roadmap h3 { font-size: 23px; margin: 0; }
+    .roadmap p { color: var(--muted); font-size: 13px; }
+    .closing {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(45px, 7vw, 90px);
+      border-radius: 26px;
+      color: white;
+      background: linear-gradient(130deg, #0b2835, #20223e);
+      box-shadow: 0 35px 80px rgba(15,42,57,.25);
+    }
+    .closing::after { content: ""; position: absolute; right: -90px; top: -100px; width: 320px; height: 320px; border: 1px solid #77e5dd55; border-radius: 50%; box-shadow: 0 0 0 55px #745bc711,0 0 0 110px #397dda0c; }
+    .closing h2 { position: relative; z-index: 2; max-width: 980px; margin: 10px 0; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.08; }
+    .closing p { position: relative; z-index: 2; max-width: 850px; color: #b9cdd7; font-size: 18px; }
+    footer { display: flex; justify-content: space-between; gap: 20px; padding: 34px clamp(20px,5vw,76px); color: #91a7b4; background: var(--navy); font-size: 12px; }
+    @media (max-width: 1000px) {
+      .masthead nav a { display: none; }
+      .hero-grid, .section-heading, .abstract, .architecture-board, .contract-view, .gate-detail, .rag-lab { grid-template-columns: 1fr; }
+      .principles, .decision-row, .dashboard-schema, .roadmap { grid-template-columns: repeat(2,1fr); }
+      .gate-board { grid-template-columns: repeat(7, 190px); }
+      .flow { grid-template-columns: repeat(3,1fr); }
+      .flow article:nth-child(3)::after { display: none; }
+      .architecture-detail { min-height: 260px; }
+    }
+    @media (max-width: 640px) {
+      .masthead { min-height: 62px; }
+      .brand-copy small, .brand-marks svg:first-child { display: none; }
+      .hero { min-height: auto; }
+      .hero-grid { gap: 45px; }
+      .hero::after { display: none; }
+      .abstract { padding: 24px; }
+      .principles, .decision-row, .dashboard-schema, .roadmap, .transaction-grid, .flow { grid-template-columns: 1fr; }
+      .flow article::after, .roadmap article::after { display: none !important; }
+      .layer { grid-template-columns: 1fr; }
+      .rag-scope { grid-template-columns: 75px 1fr; }
+      .rag-scope em { grid-column: 2; justify-self: start; }
+      .section { padding: 62px 0; }
+      footer { flex-direction: column; }
+    }
+    @media print {
+      body { background: white; font-size: 10pt; }
+      .masthead, .print-button, .tablist, .rag-controls { display: none !important; }
+      .hero { min-height: auto; padding: 50px; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .hero-grid, .section-heading, .abstract, .architecture-board, .contract-view, .gate-detail, .rag-lab { grid-template-columns: 1fr; }
+      .section { padding: 34px 0; break-inside: avoid; }
+      .architecture-board, .closing, .code-card { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .gate-board { grid-template-columns: repeat(4,1fr); }
+      .gate { min-height: 115px; }
+      .gate::after { display: none; }
+      pre { max-height: none; white-space: pre-wrap; }
+      .wrap { max-width: none; padding: 0 30px; }
+      a { text-decoration: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .layer::after, .flow article, .flow article::after { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="masthead">
+    <a class="brand" href="#top" aria-label="BrainzBytes ContextWeaver whitepaper">
+      <span class="brand-marks">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M20 9c-5 0-9 4-9 9 0 2 .6 3.8 1.8 5.3A9 9 0 0 0 18 39h2V9Zm8 0c5 0 9 4 9 9 0 2-.6 3.8-1.8 5.3A9 9 0 0 1 30 39h-2V9Z" fill="#745bc733" stroke="#b9a8ff" stroke-width="1.8"/>
+          <circle cx="17" cy="17" r="2" fill="#ffc978"/><circle cx="31" cy="17" r="2" fill="#ffc978"/><circle cx="17" cy="31" r="2" fill="#ffc978"/><circle cx="31" cy="31" r="2" fill="#ffc978"/>
+          <path d="M17 17h7m7 0h-7m-7 14h7m7 0h-7M24 12v24" fill="none" stroke="#65d9e9" stroke-width="1.5"/>
+        </svg>
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="2" y="2" width="44" height="44" rx="12" fill="#143244"/>
+          <path d="M12 15c4-5 10-7 16-4 3 1 5 3 8 7M12 33c4 5 10 7 16 4 3-1 5-3 8-7" fill="none" stroke="#74e7df" stroke-width="2.3"/>
+          <path d="M36 15c-4-5-10-7-16-4-3 1-5 3-8 7M36 33c-4 5-10 7-16 4-3-1-5-3-8-7" fill="none" stroke="#83adff" stroke-width="2.3"/>
+          <circle cx="12" cy="24" r="3" fill="#ffc978"/><circle cx="36" cy="24" r="3" fill="#ffc978"/><circle cx="24" cy="24" r="3" fill="#ffc978"/>
+        </svg>
+      </span>
+      <span class="brand-copy"><strong>BrainzBytes · ContextWeaver</strong><small>Architecture whitepaper · September 2026</small></span>
+    </a>
+    <nav aria-label="Whitepaper sections">
+      <a href="#architecture">Architecture</a>
+      <a href="#contracts">Contracts</a>
+      <a href="#admission">Admission</a>
+      <a href="#registry">Registry</a>
+      <a href="#rag">RAG</a>
+      <a href="#operations">Operations</a>
+      <button class="print-button" onclick="window.print()">Print / PDF</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-grid">
+        <div>
+          <p class="kicker">BrainzBytes reference architecture</p>
+          <h1>A spec-driven platform for <em>AI services, governance &amp; operations.</em></h1>
+          <p class="hero-lede">How an enterprise can safely define, admit, discover, compose, operate, and continuously govern Services, Workflows, Agents, MCP servers, models, hierarchical retrieval, and policy-bound memory across any infrastructure.</p>
+          <div class="hero-meta">
+            <span>Cloud neutral</span><span>Contract first</span><span>Zero trust</span>
+            <span>Dynamic composition</span><span>Transactional execution</span><span>Evidence by design</span>
+          </div>
+        </div>
+        <aside class="thesis-card">
+          <p class="kicker">The four-part thesis</p>
+          <h2>Make AI capability composable without making it uncontrolled.</h2>
+          <ol>
+            <li>Define executable specifications for every service, workflow, Agent, and MCP capability.</li>
+            <li>Admit dynamic capabilities only after validation, scanning, policy, evaluation, and approval gates pass.</li>
+            <li>Use a live registry to resolve capabilities into durable workflows with idempotency and compensation.</li>
+            <li>Federate RAG and governed memory across user, group, organization, and capability scopes under prompt-aware policy.</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <article class="abstract">
+          <div><p class="eyebrow">Abstract</p><h2>Govern intent, not just infrastructure.</h2></div>
+          <div>
+            <p>Traditional platform engineering governs images, networks, identities, and deployment manifests. AI systems add a second, more fluid control problem: prompts choose tools at runtime; Agents delegate; MCP servers introduce new actions; retrieval changes the evidence supplied to a model; and generated workflows cross system boundaries.</p>
+            <p>This paper proposes a common control plane in which every capability is represented by a signed, versioned, machine-validatable specification. The specification becomes the shared language for admission, discovery, authorization, composition, execution, observability, evaluation, and rollback. Cloud-specific infrastructure is hidden behind adapters; policy and contracts remain portable.</p>
+          </div>
+        </article>
+        <div class="principles">
+          <article><b>Specifications are executable</b><p>Schema, identity, policy, telemetry, failure, and compensation declarations are enforced rather than documented aspirationally.</p></article>
+          <article><b>Discovery is constrained</b><p>The registry returns only compatible, authorized, healthy, non-deprecated capabilities for the current purpose.</p></article>
+          <article><b>AI is observable</b><p>Quality, safety, cost, evidence, and policy outcomes are measured alongside conventional reliability signals.</p></article>
+          <article><b>Retrieval is authorization</b><p>RAG scope is calculated from identity, purpose, workflow, source authority, and prompt—not from similarity alone.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="architecture">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="eyebrow">01 · Platform architecture</p><h2>A common control plane above every cloud.</h2></div>
+          <p>The same contracts, policy gates, registry, workflow semantics, and observability model operate on AKS, EKS, GKE, private Kubernetes, or a local container runtime. Only infrastructure and managed-service adapters change.</p>
+        </div>
+        <div class="architecture-board">
+          <div class="layer-stack" id="layerStack"></div>
+          <aside class="architecture-detail" id="architectureDetail" aria-live="polite"></aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contracts">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="eyebrow">02 · Contract system</p><h2>One specification envelope, specialized by capability.</h2></div>
+          <p>Every artifact shares identity, ownership, version, schemas, policy, telemetry, lifecycle, dependencies, and supply-chain evidence. Specialized sections describe tool invocation, reasoning, orchestration, and compensation.</p>
+        </div>
+        <div class="tablist" role="tablist" aria-label="Contract examples" id="contractTabs"></div>
+        <div class="contract-view">
+          <article class="contract-copy" id="contractCopy"></article>
+          <article class="code-card">
+            <div class="code-head"><span id="codeTitle">contract.yaml</span><button id="copyContract">Copy</button></div>
+            <pre><code id="contractCode"></code></pre>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="admission">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="eyebrow">03 · Dynamic admission</p><h2>Consume dynamically. Admit deliberately.</h2></div>
+          <p>A user may introduce an MCP, Agent, service, or workflow through the UI, but “dynamic” never means bypassing engineering controls. The platform builds an evidence package and deploys only after every mandatory gate passes.</p>
+        </div>
+        <div class="gate-board" id="gateBoard"></div>
+        <div class="gate-detail" id="gateDetail" aria-live="polite"></div>
+        <div class="decision-row">
+          <article><strong>Pass</strong><p>Sign, publish, deploy to a restricted namespace, and begin canary observation.</p></article>
+          <article><strong>Conditional</strong><p>Allow only in sandbox or review mode with explicit restrictions and expiration.</p></article>
+          <article><strong>Quarantine</strong><p>Retain evidence, block execution, and route findings to the owner.</p></article>
+          <article><strong>Reject</strong><p>No registry publication or runtime identity is issued; every failed control is explainable.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="registry">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="eyebrow">04 · Discovery and transactions</p><h2>The registry turns capabilities into safe runtime plans.</h2></div>
+          <p>Discovery is not a global list. It is a policy-filtered resolution process that pins exact versions and contracts into an immutable execution plan before work begins.</p>
+        </div>
+        <div class="flow">
+          <article><b>1 · Intent</b><strong>User or event</strong><p>Identity, tenant, purpose, prompt, budget, and requested outcome.</p></article>
+          <article><b>2 · Compile</b><strong>Workflow compiler</strong><p>Derives required capabilities, data scopes, schemas, and transaction boundaries.</p></article>
+          <article><b>3 · Discover</b><strong>Service registry</strong><p>Filters by capability, policy, compatibility, health, region, and lifecycle.</p></article>
+          <article><b>4 · Freeze</b><strong>Execution plan</strong><p>Pins versions, digests, schemas, aliases, policy, indexes, and compensations.</p></article>
+          <article><b>5 · Execute</b><strong>Durable coordinator</strong><p>Runs idempotent tasks with inbox/outbox, checkpoints, retries, and receipts.</p></article>
+          <article><b>6 · Finalize</b><strong>Evidence package</strong><p>Outcome, citations, audit chain, costs, quality signals, and rollback state.</p></article>
+        </div>
+        <div class="transaction-grid">
+          <article class="transaction-card">
+            <p class="eyebrow">Forward path</p><h3>Durable orchestration</h3>
+            <ol>
+              <li>Allocate a run and freeze a registry snapshot.</li>
+              <li>Write each command and outbox event in the same PostgreSQL transaction.</li>
+              <li>Consumers deduplicate through an inbox key and return a signed receipt.</li>
+              <li>Checkpoint after every externally visible state transition.</li>
+              <li>Complete only when required evidence and policy obligations are satisfied.</li>
+            </ol>
+          </article>
+          <article class="transaction-card">
+            <p class="eyebrow">Failure path</p><h3>Saga compensation</h3>
+            <ol>
+              <li>Classify the failure as retryable, compensatable, terminal, or approval-required.</li>
+              <li>Stop issuing new irreversible actions.</li>
+              <li>Execute compensations in reverse dependency order using pinned contracts.</li>
+              <li>Record incomplete compensation as an explicit manual-operations item.</li>
+              <li>Never present a partially compensated run as successful.</li>
+            </ol>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="rag">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="eyebrow">05 · Hierarchical RAG and governed memory</p><h2>Retrieve and remember—without confusing continuity with authority.</h2></div>
+          <p>User, group, organization, service, workflow, Agent, and MCP knowledge can participate in one retrieval plan. Governed working, session, semantic, and approved long-term memory may add continuity, but authorization removes ineligible context before ranking or recall.</p>
+        </div>
+        <div class="rag-lab">
+          <aside class="rag-controls">
+            <label>Prompt scenario
+              <select id="ragScenario">
+                <option value="personal">Personal productivity question</option>
+                <option value="team">Team implementation question</option>
+                <option value="regulated">Regulated workflow decision</option>
+                <option value="incident">Production incident response</option>
+              </select>
+            </label>
+            <label>Selected capability
+              <select id="ragCapability">
+                <option value="workflow">Workflow</option>
+                <option value="agent">Agent</option>
+                <option value="mcp">MCP tool</option>
+                <option value="service">Service</option>
+              </select>
+            </label>
+            <div class="rag-rule"><b>Invariant:</b> a higher-preference scope never overrides an authorization denial, required authoritative source, legal hold, residency rule, or safety constraint.</div>
+          </aside>
+          <div class="rag-canvas">
+            <div class="rag-stack" id="ragStack"></div>
+            <div class="rag-explanation" id="ragExplanation" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="principles">
+          <article><b>Authoritative storage</b><p>User, group, and organization documents remain in owner-controlled storage; connectors use delegated read-only references.</p></article>
+          <article><b>Freshness ledger</b><p>Source revision, ACL snapshot, hash, lifecycle, and active index generation determine whether retrieval is permitted.</p></article>
+          <article><b>Atomic publication</b><p>Build and validate a shadow generation, then move a logical alias; partial or known-stale generations remain invisible.</p></article>
+          <article><b>Version overlap</b><p>Old and new service versions coexist while pinned jobs finish, canaries pass, aliases promote, and rollback remains readable.</p></article>
+        </div>
+        <div class="principles">
+          <article><b>Working memory</b><p>Bounded scratch state owned by one durable workflow execution and expired by policy.</p></article>
+          <article><b>Session memory</b><p>Conversation continuity in PostgreSQL with tenant, subject, purpose, and retention boundaries.</p></article>
+          <article><b>Semantic memory</b><p>Approved facts and relationships referenced through governed vector or search infrastructure.</p></article>
+          <article><b>Long-term memory</b><p>Durable organizational knowledge admitted through source governance and explicit approval.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="operations">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="eyebrow">06 · Metrics, dashboards and alerts</p><h2>Operate AI quality and safety as first-class SRE signals.</h2></div>
+          <p>Infrastructure health is necessary but insufficient. Each capability emits a standard envelope covering reliability, policy, model behavior, retrieval quality, cost, and business outcome.</p>
+        </div>
+        <div class="matrix-wrap">
+          <table>
+            <thead><tr><th>Signal family</th><th>Required metrics / KPIs</th><th>Dimensions</th><th>Primary question</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Reliability</strong></td><td>request rate, success rate, error taxonomy, p50/p95/p99 latency, saturation, queue age, retries, circuit state</td><td>capability, version, tenant, environment, region, dependency</td><td>Is the service available and within its SLO?</td></tr>
+              <tr><td><strong>MCP execution</strong></td><td>tool calls, schema rejection, authorization denial, timeout, side-effect count, idempotency hit, compensation result</td><td>server, tool, input schema, caller Agent/workflow, risk class</td><td>Are tools safe, compatible, and behaving as declared?</td></tr>
+              <tr><td><strong>Agent quality</strong></td><td>task completion, groundedness, plan revisions, tool-selection accuracy, human escalation, loop depth, evaluation score</td><td>Agent, model alias, prompt version, workflow, evaluation suite</td><td>Does autonomous reasoning produce an acceptable outcome?</td></tr>
+              <tr><td><strong>RAG quality</strong></td><td>eligible candidates, ACL denials, recall@k, precision@k, reranker lift, citation coverage, freshness, authority conflicts</td><td>scope, source, index version, embedding model, query class</td><td>Was the answer based on authorized and sufficient evidence?</td></tr>
+              <tr><td><strong>Governance</strong></td><td>policy decisions, denied actions, approval wait, untrusted artifacts, expired exceptions, audit completeness</td><td>policy version, identity, tenant, resource, action, purpose</td><td>Did every protected action satisfy current policy?</td></tr>
+              <tr><td><strong>Economics</strong></td><td>input/output tokens, embedding volume, search queries, compute time, cost per run, budget burn, cache savings</td><td>tenant, workflow, model alias, provider, capability, cost center</td><td>Is value delivered within approved budgets?</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="dashboard-schema">
+          <article><h3>Executive posture</h3><p>Availability, governed runs, quality trend, safety events, monthly cost, adoption, and top business outcomes.</p><code>dashboard.kind = platform-executive</code></article>
+          <article><h3>Capability operations</h3><p>Golden signals, dependency map, schema errors, tool usage, model routing, RAG health, and recent deploy annotations.</p><code>dashboard.kind = capability-operations</code></article>
+          <article><h3>Governance evidence</h3><p>Admission status, policy decisions, approvals, exceptions, evaluation breaches, provenance completeness, and audit export.</p><code>dashboard.kind = governance-evidence</code></article>
+        </div>
+        <div class="matrix-wrap" style="margin-top:20px">
+          <table>
+            <thead><tr><th>Severity</th><th>Alert</th><th>Example condition</th><th>Automated response</th></tr></thead>
+            <tbody>
+              <tr><td><span class="severity sev-critical">Critical</span></td><td><strong>Unauthorized side effect</strong></td><td>Protected tool executes without a matching allow decision or identity receipt.</td><td>Disable capability version, revoke runtime identity, preserve evidence, page security and owner.</td></tr>
+              <tr><td><span class="severity sev-critical">Critical</span></td><td><strong>Cross-tenant retrieval</strong></td><td>Candidate tenant or ACL does not equal the frozen retrieval plan.</td><td>Fail closed, quarantine result/index generation, invalidate caches and active plans.</td></tr>
+              <tr><td><span class="severity sev-warning">Warning</span></td><td><strong>Quality regression</strong></td><td>Held-out evaluation falls below the capability threshold for two readings.</td><td>Pause promotion, route traffic to prior version, open evaluation incident.</td></tr>
+              <tr><td><span class="severity sev-warning">Warning</span></td><td><strong>Schema incompatibility</strong></td><td>Runtime rejects more than 1% of calls or registry detects a breaking contract.</td><td>Block new compositions and identify callers pinned to the incompatible version.</td></tr>
+              <tr><td><span class="severity sev-warning">Warning</span></td><td><strong>Budget burn</strong></td><td>Projected daily model cost exceeds budget by 20% or token anomaly is detected.</td><td>Apply lower-cost route, tighten quotas, notify owner and cost center.</td></tr>
+              <tr><td><span class="severity sev-info">Info</span></td><td><strong>RAG freshness drift</strong></td><td>Required source revision differs from the active index generation or exceeds its freshness objective.</td><td>Schedule reconciliation; block exact-freshness queries and retain the prior generation only for authorized rollback.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="eyebrow">07 · Delivery model</p><h2>Build the control plane before scaling autonomy.</h2></div>
+          <p>The sequence deliberately establishes contracts, identity, policy, evidence, and rollback before introducing broad dynamic execution.</p>
+        </div>
+        <div class="roadmap">
+          <article><h3>Specify</h3><p>Canonical schemas, compatibility rules, identity envelope, policy hooks, telemetry contract, evaluation card, and compensation declaration.</p></article>
+          <article><h3>Admit</h3><p>UI onboarding, source provenance, signature, malware/SBOM/secret scans, sandbox evaluation, policy decision, and staged promotion.</p></article>
+          <article><h3>Compose</h3><p>Registry discovery, alias resolution, workflow compilation, schema-safe bindings, immutable plans, durable execution, and Saga rollback.</p></article>
+          <article><h3>Optimize</h3><p>Hierarchical RAG, model routing, quality/cost controls, continuous evaluation, SLOs, multi-region resilience, and governed self-service.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <article class="closing">
+          <p class="kicker">Conclusion</p>
+          <h2>The platform is not the model. It is the system that makes models, tools, data, and automation trustworthy together.</h2>
+          <p>A spec-driven control plane lets organizations introduce AI capability at software speed while retaining the controls expected of critical services: explicit contracts, identity, policy, compatibility, observability, evidence, transactionality, and reversible change.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 BrainzBytes · ContextWeaver reference architecture</span>
+    <span>Publication edition · September 18, 2026 · Cloud-neutral by design</span>
+  </footer>
+
+  <script>
+    const layers = [
+      {name:"Experience & Administration", items:["User portal","Admin console","AI configuration","JupyterLab","VS Code"], text:"A unified surface for users, builders, operators, risk owners, and administrators. It exposes governed actions—not infrastructure credentials.", boundary:"Identity-aware browser sessions; no direct cluster or cloud-admin access."},
+      {name:"Governance Control Plane", items:["Identity context","Entitlements","Policy decision","Admission","Audit"], text:"Normalizes human and workload identity, evaluates purpose-aware policy, records decisions, and controls publication and execution.", boundary:"Every protected action requires an identity, purpose, policy version, and correlation ID."},
+      {name:"Registry & Composition", items:["Service registry","Schema catalog","Alias resolver","Workflow compiler","Compatibility"], text:"Discovers exact compatible versions and compiles an immutable execution plan from dynamically available capabilities.", boundary:"No runtime discovery result bypasses policy, lifecycle, health, region, or schema constraints."},
+      {name:"Agents & MCP", items:["Agent runtime","MCP gateway","Tool broker","Sandbox","Evaluation"], text:"Hosts reasoning and tool execution behind constrained identities, declared schemas, resource limits, and continuously evaluated behavior.", boundary:"Agents never receive unrestricted credentials; MCP calls are identity-bound and policy-mediated."},
+      {name:"Workflow Runtime", items:["Coordinator","Task workers","Inbox/outbox","Checkpoints","Saga journal"], text:"Executes durable plans with idempotency, retries, approvals, receipts, and compensating actions for partial failure.", boundary:"Queues carry commands and events; PostgreSQL remains authoritative for durable state."},
+      {name:"RAG, Memory & Model Plane", items:["Source catalog","Freshness ledger","Versioned ingestion","Atomic indexes","Context memory","Model gateway"], text:"Builds authorized context from owner-controlled storage, blocks known-stale projections, preserves policy-bound continuity, and routes prompts through versioned logical aliases.", boundary:"Similarity or memory recall never overrides ACL, purpose, freshness, retention, residency, source authority, classification, compatibility, approval, or required evidence."},
+      {name:"Observability & Evidence", items:["Metrics","Logs","Traces","Evaluations","Cost","Audit export"], text:"Correlates infrastructure, model, retrieval, policy, workflow, and business signals into operational and governance evidence.", boundary:"Telemetry excludes secrets and unapproved private content while retaining provenance handles."},
+      {name:"Cloud Infrastructure", items:["AKS / EKS / GKE","PostgreSQL","Event bus","Object store","Secret manager"], text:"Provides compute, durable stores, networking, keys, identity, search/vector infrastructure, and recovery through replaceable adapters.", boundary:"Cloud services implement the platform contract; they do not redefine workflow or policy semantics."}
+    ];
+    const contracts = {
+      mcp: {
+        label:"MCP Server", title:"MCP tools as governed side effects",
+        description:"An MCP contract defines transport, tools, strict input/output/error schemas, identity propagation, side-effect class, idempotency, authorization, rate limits, telemetry, and compensation.",
+        rows:[["Primary unit","Tool"],["Required schemas","input, output, error"],["Risk declarations","read, write, financial, destructive, privileged"],["Runtime proof","tool receipt + policy decision"],["Rollback","compensation tool or explicit none"]],
+        code:`apiVersion: specs.contextweaver.io/v1
+kind: MCPSpec
+metadata:
+  name: payments
+  version: 2.3.0
+  owner: finance-platform
+spec:
+  transport: streamable-http
+  image: registry/payments@sha256:...
+  identity:
+    required: true
+    acceptedWorkloadAudiences: [contextweaver]
+  tools:
+    - name: create_refund
+      risk: financial
+      idempotency:
+        required: true
+        keyField: requestId
+      inputSchema:
+        type: object
+        additionalProperties: false
+        required: [requestId, paymentId, amount]
+        properties:
+          requestId: {type: string, format: uuid}
+          paymentId: {type: string}
+          amount: {type: number, minimum: 0.01}
+      outputSchema:
+        type: object
+        required: [refundId, status, receipt]
+      compensation:
+        tool: cancel_refund
+      telemetry:
+        metrics: [calls, failures, latency, policy_denials]
+        audit: required`
+      },
+      agent: {
+        label:"Agent", title:"Agents as bounded decision services",
+        description:"An Agent contract constrains goals, inputs, outputs, models, tools, delegation, memory, iteration, budgets, evaluation thresholds, escalation, and prohibited behavior.",
+        rows:[["Primary unit","Goal-bound run"],["Required schemas","task, result, evidence, escalation"],["Dependencies","model aliases, tools, RAG scopes"],["Quality proof","evaluation card + run evidence"],["Failure behavior","bounded retry, escalate, or fail closed"]],
+        code:`apiVersion: specs.contextweaver.io/v1
+kind: AgentSpec
+metadata:
+  name: incident-triage
+  version: 1.4.0
+  owner: sre-platform
+spec:
+  goal: Produce an evidence-backed incident triage draft
+  modelAlias: fast-reasoning
+  inputSchema:
+    type: object
+    required: [incidentId, severity]
+  outputSchema:
+    type: object
+    required: [summary, hypotheses, evidence, nextActions]
+  tools:
+    allow:
+      - mcp-sre.query_logs@^3
+      - mcp-sre.read_runbook@^2
+    denyRisk: [destructive, financial]
+  rag:
+    requiredScopes: [workflow, service, organization]
+    allowPersonalBoost: false
+  autonomy:
+    maxSteps: 12
+    maxToolCalls: 20
+    approvalBefore: [incident_ack, mitigation]
+  evaluation:
+    suite: incident-triage.v5
+    minimumScore: 0.86`
+      },
+      workflow: {
+        label:"Workflow", title:"Workflows as immutable transaction plans",
+        description:"A workflow declares typed steps, bindings, conditions, deadlines, retries, approvals, transaction boundaries, compensation order, evidence requirements, and finalization rules.",
+        rows:[["Primary unit","Compiled execution plan"],["Bindings","schema paths + safe transforms"],["Durability","checkpoint + inbox/outbox"],["Transaction model","Saga with compensations"],["Completion","outcome + evidence + audit"]],
+        code:`apiVersion: specs.contextweaver.io/v1
+kind: WorkflowSpec
+metadata:
+  name: governed-research
+  version: 1.2.0
+spec:
+  inputSchema: {$ref: schemas/research-request.v2}
+  steps:
+    - id: retrieve
+      capability: service:rag-retrieval@^2
+      input:
+        query: $.input.question
+        plan: $.context.retrievalPlan
+      retry: {maxAttempts: 3, backoff: exponential}
+    - id: synthesize
+      capability: agent:research-synthesizer@^4
+      dependsOn: [retrieve]
+      input:
+        evidence: $.steps.retrieve.output.items
+    - id: publish
+      capability: service:report-publisher@^1
+      dependsOn: [synthesize]
+      compensation:
+        capability: service:report-publisher.delete@^1
+  completion:
+    require: [citations_verified, audit_committed]`
+      },
+      service: {
+        label:"Service", title:"Services as stable typed capabilities",
+        description:"A service contract describes versioned APIs, ownership, schemas, SLOs, dependencies, data classification, identity, policy points, telemetry, and lifecycle compatibility.",
+        rows:[["Primary unit","Versioned endpoint"],["Compatibility","semantic + schema diff"],["SLO","availability, latency, correctness"],["Dependencies","pinned or constrained"],["Lifecycle","active, draining, disabled"]],
+        code:`apiVersion: specs.contextweaver.io/v1
+kind: ServiceSpec
+metadata:
+  name: artifact-gateway
+  version: 2.1.0
+  owner: data-platform
+spec:
+  endpoint: http://artifact-gateway:8080
+  schemas:
+    input: {$ref: schemas/artifact-create.v2}
+    output: {$ref: schemas/artifact-record.v2}
+    error: {$ref: schemas/platform-error.v1}
+  data:
+    classifications: [internal, confidential]
+    residencyAware: true
+  policy:
+    actions: [artifact.create, artifact.read]
+  slo:
+    availability: 99.9
+    latencyP95Ms: 750
+  telemetry:
+    dashboard: capability-operations.v2
+    alerts: [error-budget-burn, latency-p95]`
+      }
+    };
+    const gates = [
+      {name:"Parse & normalize", short:"Contract", detail:"Parse the uploaded manifest/package, canonicalize identifiers, reject unknown fields, and compute an immutable digest.", checks:["Supported API version","Stable DNS-style identity","Semantic version","Canonical package digest","Declared owner and support contact"]},
+      {name:"Schema & compatibility", short:"Schemas", detail:"Validate strict input, output, and error schemas and compare them with active consumers and prior versions.", checks:["JSON Schema 2020-12","No permissive unknown inputs","Breaking-change classification","Bindings and transforms type-check","Error and compensation compatibility"]},
+      {name:"Supply chain", short:"Scan", detail:"Prove artifact provenance and inspect source, dependencies, image, package, and generated code before execution.", checks:["Signature and trusted publisher","SBOM and license policy","Malware and vulnerability scan","Secret and credential scan","Immutable image digest"]},
+      {name:"Security & policy", short:"Policy", detail:"Evaluate identity, requested permissions, network access, data classes, tool risks, tenancy, and regional constraints.", checks:["Least-privilege workload identity","Default-deny network policy","Tool/action allowlist","Data classification compatibility","No forbidden autonomous action"]},
+      {name:"Sandbox & evaluation", short:"Evaluate", detail:"Run held-out functional, safety, prompt-injection, resource, and failure tests in an isolated environment.", checks:["Contract conformance","Evaluation threshold","Prompt-injection resistance","CPU/memory/time bounds","Failure and compensation drills"]},
+      {name:"Approval & publication", short:"Approve", detail:"Require the appropriate publisher, security, data, or business approval based on the capability risk class.", checks:["Separation of duties","Exception expiry","Evidence package complete","Owner accepts SLO","Registry publication signed"]},
+      {name:"Deploy & observe", short:"Canary", detail:"Deploy into a restricted namespace, issue runtime identity, register health, and promote only after canary signals remain healthy.", checks:["Namespace policy applied","Readiness and startup gates","Canary traffic","Dashboard and alerts present","Automatic pause/rollback armed"]}
+    ];
+    const ragScopes = [
+      {id:"user", label:"User", title:"Personal knowledge", note:"Private notes, preferences, drafts, and user-owned sources."},
+      {id:"group", label:"Group", title:"Team and role knowledge", note:"Shared team sources, practices, decisions, and controlled collaboration."},
+      {id:"organization", label:"Organization", title:"Authoritative enterprise knowledge", note:"Published policy, standards, catalogs, and approved reference material."},
+      {id:"service", label:"Service", title:"Service-local context", note:"Runbooks, API behavior, telemetry semantics, and implementation constraints."},
+      {id:"workflow", label:"Workflow", title:"Workflow evidence policy", note:"Required sources, purpose, quotas, authority floor, and citation rules."},
+      {id:"agent", label:"Agent", title:"Agent operating knowledge", note:"Instructions, examples, evaluation guidance, and tool-use constraints."},
+      {id:"mcp", label:"MCP", title:"Tool-specific knowledge", note:"Tool semantics, risk, parameter guidance, and operational runbooks."}
+    ];
+    const ragScenarios = {
+      personal:{active:["user","group","organization","service"], order:["user","group","service","organization"], text:"Personal scope receives the largest discretionary boost, followed by relevant group and service knowledge. Organization sources remain available and override preference when they are marked authoritative."},
+      team:{active:["group","organization","service","workflow","agent"], order:["group","service","workflow","organization","agent"], text:"The selected group and service receive priority. Workflow requirements and organization authority remain mandatory; private user material is excluded unless explicitly requested and shareable."},
+      regulated:{active:["organization","service","workflow","agent","mcp"], order:["workflow","organization","service","agent","mcp"], text:"The workflow's frozen retrieval policy and authoritative organization sources lead. Personal preference cannot displace compliance, safety, residency, or approved evidence requirements."},
+      incident:{active:["group","organization","service","workflow","agent","mcp"], order:["service","workflow","group","organization","mcp","agent"], text:"Current service runbooks and incident workflow context lead, followed by the on-call group. Organization policy constrains action; MCP and Agent knowledge explain tool and reasoning behavior."}
+    };
+
+    let selectedLayer=0;
+    let layerTimer;
+    function renderLayers(selected=0, userSelected=false) {
+      selectedLayer=selected;
+      const stack=document.getElementById("layerStack");
+      stack.innerHTML=layers.map((layer,index)=>`<button class="layer ${index===selected?"active":""}" data-index="${index}"><span><strong>${layer.name}</strong><small>Layer ${index+1}</small></span><span class="layer-items">${layer.items.map(item=>`<span>${item}</span>`).join("")}</span></button>`).join("");
+      const layer=layers[selected];
+      document.getElementById("architectureDetail").innerHTML=`<p class="eyebrow">Selected boundary</p><h3>${layer.name}</h3><p>${layer.text}</p><ul>${layer.items.map(item=>`<li>${item}</li>`).join("")}</ul><code>${layer.boundary}</code>`;
+      stack.querySelectorAll(".layer").forEach(button=>button.addEventListener("click",()=>renderLayers(Number(button.dataset.index),true)));
+      if(userSelected) startLayerAnimation();
+    }
+    function startLayerAnimation() {
+      clearInterval(layerTimer);
+      if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      layerTimer=setInterval(()=>renderLayers((selectedLayer+1)%layers.length),3200);
+    }
+    function renderContract(key="mcp") {
+      const contract=contracts[key];
+      document.querySelectorAll("#contractTabs button").forEach(button=>button.classList.toggle("active",button.dataset.contract===key));
+      document.getElementById("contractCopy").innerHTML=`<p class="eyebrow">${contract.label} specification</p><h3>${contract.title}</h3><p>${contract.description}</p><div class="contract-list">${contract.rows.map(row=>`<div><b>${row[0]}</b><span>${row[1]}</span></div>`).join("")}</div>`;
+      document.getElementById("codeTitle").textContent=`${key}.spec.yaml`;
+      document.getElementById("contractCode").textContent=contract.code;
+    }
+    function renderGate(index=0) {
+      const gate=gates[index];
+      document.querySelectorAll(".gate").forEach((item,i)=>item.classList.toggle("active",i===index));
+      document.getElementById("gateDetail").innerHTML=`<div><p class="eyebrow">Gate ${index+1} of ${gates.length}</p><h3>${gate.name}</h3><p>${gate.detail}</p></div><ul>${gate.checks.map(check=>`<li>${check}</li>`).join("")}</ul>`;
+    }
+    function renderRag() {
+      const scenario=document.getElementById("ragScenario").value;
+      const capability=document.getElementById("ragCapability").value;
+      const config=ragScenarios[scenario];
+      document.getElementById("ragStack").innerHTML=ragScopes.map(scope=>{
+        const active=config.active.includes(scope.id);
+        const rank=config.order.indexOf(scope.id);
+        return `<article class="rag-scope ${active?"active":"excluded"}"><b>${scope.label}</b><div><strong>${scope.title}</strong><small>${scope.note}</small></div><em>${active?`priority ${rank+1}`:"not eligible"}</em></article>`;
+      }).join("");
+      document.getElementById("ragExplanation").innerHTML=`<strong>Effective ${capability} retrieval plan</strong><p>${config.text} Every candidate is still filtered by tenant, subject, purpose, classification, ACL, source lifecycle, residency, and pinned index/model versions.</p>`;
+    }
+    renderLayers();
+    startLayerAnimation();
+    const tabs=document.getElementById("contractTabs");
+    tabs.innerHTML=Object.entries(contracts).map(([key,value],index)=>`<button role="tab" data-contract="${key}" class="${index===0?"active":""}">${value.label}</button>`).join("");
+    tabs.querySelectorAll("button").forEach(button=>button.addEventListener("click",()=>renderContract(button.dataset.contract)));
+    renderContract();
+    const gateBoard=document.getElementById("gateBoard");
+    gateBoard.innerHTML=gates.map((gate,index)=>`<button class="gate ${index===0?"active":""}" data-index="${index}"><b>${index+1}</b><strong>${gate.short}</strong><small>${gate.name}</small></button>`).join("");
+    gateBoard.querySelectorAll(".gate").forEach(button=>button.addEventListener("click",()=>renderGate(Number(button.dataset.index))));
+    renderGate();
+    document.getElementById("ragScenario").addEventListener("change",renderRag);
+    document.getElementById("ragCapability").addEventListener("change",renderRag);
+    renderRag();
+    document.getElementById("copyContract").addEventListener("click",async event=>{
+      try { await navigator.clipboard.writeText(document.getElementById("contractCode").textContent); event.currentTarget.textContent="Copied"; setTimeout(()=>event.currentTarget.textContent="Copy",1200); }
+      catch { event.currentTarget.textContent="Select text"; }
+    });
+    const navLinks=[...document.querySelectorAll(".masthead nav a")];
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting) navLinks.forEach(link=>link.classList.toggle("active",link.hash==="#"+entry.target.id));
+      });
+    },{rootMargin:"-25% 0px -65% 0px"});
+    document.querySelectorAll("main section[id]").forEach(section=>observer.observe(section));
+  </script>
+</body>
+</html>

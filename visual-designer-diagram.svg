@@ -1,0 +1,280 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" style="background:#0a0e14;font-family:'Segoe UI',system-ui,sans-serif">
+  <!-- Grid dots -->
+  <defs>
+    <linearGradient id="canvas" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="55%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#151126"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-25%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#000814" flood-opacity="0.42"/>
+    </filter>
+    <style>
+      g > rect:first-of-type { filter:url(#softShadow); }
+      text { letter-spacing:.08px; }
+    </style>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="1" fill="rgba(255,255,255,0.05)"/>
+    </pattern>
+    <marker id="arr-cyan" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="7" orient="auto" fill="#0dcaf0">
+      <path d="M0,0 L10,3 L0,6 Z"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="7" orient="auto" fill="#4da6ff">
+      <path d="M0,0 L10,3 L0,6 Z"/>
+    </marker>
+    <marker id="arr-gray" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="7" orient="auto" fill="#6c757d">
+      <path d="M0,0 L10,3 L0,6 Z"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="780" fill="url(#canvas)"/>
+  <rect width="1100" height="780" fill="url(#grid)"/>
+
+  <!-- ═══════ ENGINE NODE ═══════ -->
+  <g transform="translate(420,30)">
+    <rect width="260" height="115" rx="12" fill="rgba(13,202,240,0.08)" stroke="#0dcaf0" stroke-width="2.5"/>
+    <rect width="256" height="3" x="2" y="2" rx="8" fill="rgba(13,202,240,0.3)"/>
+    <text x="16" y="30" fill="#0dcaf0" font-size="15" font-weight="700">🔌 mcp1</text>
+    <text x="16" y="52" fill="rgba(255,255,255,0.5)" font-size="12">ns: mcp1</text>
+    <circle cx="240" cy="44" r="6" fill="#198754"/>
+    <!-- Engine toggles -->
+    <rect x="16" y="60" width="24" height="16" rx="4" fill="rgba(13,202,240,0.25)" stroke="#0dcaf0" stroke-width="1"/>
+    <text x="21" y="72" fill="#e6edf3" font-size="10">🔐</text>
+    <rect x="46" y="60" width="24" height="16" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+    <text x="51" y="72" fill="rgba(255,255,255,0.2)" font-size="10">⏸</text>
+    <rect x="76" y="60" width="24" height="16" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+    <text x="81" y="72" fill="rgba(255,255,255,0.2)" font-size="10">📝</text>
+    <!-- Buttons -->
+    <rect x="12" y="88" width="70" height="20" rx="5" fill="rgba(13,202,240,0.12)" stroke="rgba(13,202,240,0.35)" stroke-width="1"/>
+    <text x="20" y="102" fill="#0dcaf0" font-size="10">+ Plugin</text>
+    <rect x="88" y="88" width="78" height="20" rx="5" fill="rgba(108,117,125,0.12)" stroke="rgba(108,117,125,0.35)" stroke-width="1"/>
+    <text x="95" y="102" fill="#6c757d" font-size="10">📚 Sources</text>
+    <rect x="172" y="88" width="70" height="20" rx="5" fill="rgba(25,135,84,0.2)" stroke="#198754" stroke-width="1.5"/>
+    <text x="180" y="102" fill="#2dce89" font-size="10" font-weight="600">🔄 Ingest</text>
+  </g>
+
+  <!-- ═══════ ENGINE SOURCE CARD ═══════ -->
+  <g transform="translate(720,40)">
+    <rect width="190" height="55" rx="8" fill="rgba(108,117,125,0.06)" stroke="#6c757d" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="12" y="20" fill="#6c757d" font-size="11" font-weight="600">🔌 Engine KB (2)</text>
+    <text x="12" y="38" fill="rgba(255,255,255,0.45)" font-size="9">→ mcp1-index</text>
+    <text x="12" y="52" fill="rgba(255,255,255,0.35)" font-size="8">✅ 📝 Company handbook…</text>
+  </g>
+  <!-- Engine → Engine Source line -->
+  <path d="M680,75 C700,75 710,67 718,67" stroke="#6c757d" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#arr-gray)"/>
+
+  <!-- ═══════ CONNECTION LINES: Engine → Plugins ═══════ -->
+  <path d="M550,145 V180 H200 V220" stroke="#0dcaf0" stroke-width="2" stroke-dasharray="8,4" stroke-linecap="round" stroke-linejoin="round" fill="none" marker-end="url(#arr-cyan)" opacity="0.8"/>
+  <path d="M550,145 V220 H500" stroke="#0dcaf0" stroke-width="2" stroke-dasharray="8,4" stroke-linecap="round" stroke-linejoin="round" fill="none" marker-end="url(#arr-cyan)" opacity="0.8"/>
+  <path d="M550,145 V180 H800 V220" stroke="#0dcaf0" stroke-width="2" stroke-dasharray="8,4" stroke-linecap="round" stroke-linejoin="round" fill="none" marker-end="url(#arr-cyan)" opacity="0.8"/>
+
+  <!-- ═══════ PLUGIN 1: Email Assistant (Active) ═══════ -->
+  <g transform="translate(90,225)">
+    <rect width="230" height="140" rx="10" fill="rgba(25,135,84,0.08)" stroke="#198754" stroke-width="2.5"/>
+    <rect width="226" height="2" x="2" y="2" rx="6" fill="rgba(25,135,84,0.3)"/>
+    <text x="14" y="24" fill="#198754" font-size="13" font-weight="700">📦 Email Assistant</text>
+    <!-- Auth toggles -->
+    <rect x="162" y="7" width="20" height="15" rx="3" fill="rgba(25,135,84,0.25)" stroke="#198754" stroke-width="1"/>
+    <text x="166" y="18" fill="#e6edf3" font-size="9">🔐</text>
+    <rect x="185" y="7" width="20" height="15" rx="3" fill="rgba(25,135,84,0.25)" stroke="#198754" stroke-width="1"/>
+    <text x="189" y="18" fill="#e6edf3" font-size="9">🔒</text>
+    <rect x="208" y="7" width="20" height="15" rx="3" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+    <text x="212" y="18" fill="rgba(255,255,255,0.25)" font-size="9">💰</text>
+    <!-- Tool count -->
+    <rect x="12" y="30" width="206" height="15" rx="3" fill="rgba(255,255,255,0.03)"/>
+    <text x="16" y="41" fill="rgba(255,255,255,0.55)" font-size="9">13 tools  7 prompts  1 res  3 src</text>
+    <!-- Buttons -->
+    <rect x="12" y="50" width="26" height="18" rx="4" fill="rgba(25,135,84,0.15)" stroke="#198754" stroke-width="1"/>
+    <text x="17" y="63" fill="#198754" font-size="11">⏻</text>
+    <rect x="44" y="50" width="26" height="18" rx="4" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+    <text x="49" y="63" fill="#198754" font-size="11">🔄</text>
+    <rect x="76" y="50" width="26" height="18" rx="4" fill="rgba(13,202,240,0.1)" stroke="rgba(13,202,240,0.4)" stroke-width="1"/>
+    <text x="82" y="63" fill="#0dcaf0" font-size="11">📦</text>
+    <rect x="108" y="50" width="26" height="18" rx="4" fill="rgba(167,139,250,0.1)" stroke="rgba(167,139,250,0.4)" stroke-width="1"/>
+    <text x="114" y="63" fill="#a78bfa" font-size="11">⚙</text>
+    <rect x="140" y="50" width="26" height="18" rx="4" fill="rgba(220,53,69,0.1)" stroke="rgba(220,53,69,0.4)" stroke-width="1"/>
+    <text x="146" y="63" fill="#dc3545" font-size="11">🗑</text>
+    <!-- Status dot -->
+    <circle cx="215" cy="55" r="5" fill="#198754"/>
+    <!-- Embedded Connector -->
+    <rect x="10" y="76" width="210" height="56" rx="7" fill="rgba(255,193,7,0.06)" stroke="#ffc107" stroke-width="1" stroke-dasharray="4,2"/>
+    <text x="18" y="93" fill="#ffc107" font-size="11" font-weight="600">🔗 cw-email</text>
+    <text x="18" y="108" fill="rgba(255,255,255,0.35)" font-size="9">🔒 shared</text>
+    <rect x="18" y="112" width="24" height="15" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(77,166,255,0.3)" stroke-width="1"/>
+    <text x="23" y="123" fill="#4da6ff" font-size="9">📚</text>
+    <rect x="48" y="112" width="24" height="15" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(255,193,7,0.3)" stroke-width="1"/>
+    <text x="54" y="123" fill="#ffc107" font-size="9">⚙</text>
+  </g>
+
+  <!-- ═══════ PLUGIN 2: GitHub Assistant (Active) ═══════ -->
+  <g transform="translate(390,225)">
+    <rect width="230" height="140" rx="10" fill="rgba(25,135,84,0.08)" stroke="#198754" stroke-width="2.5"/>
+    <rect width="226" height="2" x="2" y="2" rx="6" fill="rgba(25,135,84,0.3)"/>
+    <text x="14" y="24" fill="#198754" font-size="13" font-weight="700">📦 GitHub Assistant</text>
+    <rect x="162" y="7" width="20" height="15" rx="3" fill="rgba(25,135,84,0.25)" stroke="#198754" stroke-width="1"/>
+    <text x="166" y="18" fill="#e6edf3" font-size="9">🔐</text>
+    <rect x="185" y="7" width="20" height="15" rx="3" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+    <text x="189" y="18" fill="rgba(255,255,255,0.25)" font-size="9">🔒</text>
+    <rect x="208" y="7" width="20" height="15" rx="3" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+    <text x="212" y="18" fill="rgba(255,255,255,0.25)" font-size="9">💰</text>
+    <rect x="12" y="30" width="206" height="15" rx="3" fill="rgba(255,255,255,0.03)"/>
+    <text x="16" y="41" fill="rgba(255,255,255,0.55)" font-size="9">6 tools  6 prompts  2 res  0 src</text>
+    <rect x="12" y="50" width="26" height="18" rx="4" fill="rgba(25,135,84,0.15)" stroke="#198754" stroke-width="1"/>
+    <text x="17" y="63" fill="#198754" font-size="11">⏻</text>
+    <rect x="44" y="50" width="26" height="18" rx="4" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+    <text x="49" y="63" fill="#198754" font-size="11">🔄</text>
+    <rect x="76" y="50" width="26" height="18" rx="4" fill="rgba(13,202,240,0.1)" stroke="rgba(13,202,240,0.4)" stroke-width="1"/>
+    <text x="82" y="63" fill="#0dcaf0" font-size="11">📦</text>
+    <rect x="108" y="50" width="26" height="18" rx="4" fill="rgba(167,139,250,0.1)" stroke="rgba(167,139,250,0.4)" stroke-width="1"/>
+    <text x="114" y="63" fill="#a78bfa" font-size="11">⚙</text>
+    <rect x="140" y="50" width="26" height="18" rx="4" fill="rgba(220,53,69,0.1)" stroke="rgba(220,53,69,0.4)" stroke-width="1"/>
+    <text x="146" y="63" fill="#dc3545" font-size="11">🗑</text>
+    <circle cx="215" cy="55" r="5" fill="#198754"/>
+    <!-- Connector -->
+    <rect x="10" y="76" width="210" height="56" rx="7" fill="rgba(255,193,7,0.06)" stroke="#ffc107" stroke-width="1" stroke-dasharray="4,2"/>
+    <text x="18" y="93" fill="#ffc107" font-size="11" font-weight="600">🔗 cw-github</text>
+    <text x="18" y="108" fill="rgba(255,255,255,0.35)" font-size="9">🔒 per-user</text>
+    <rect x="18" y="112" width="24" height="15" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(77,166,255,0.3)" stroke-width="1"/>
+    <text x="23" y="123" fill="#4da6ff" font-size="9">📚</text>
+    <rect x="48" y="112" width="24" height="15" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(255,193,7,0.3)" stroke-width="1"/>
+    <text x="54" y="123" fill="#ffc107" font-size="9">⚙</text>
+  </g>
+
+  <!-- ═══════ PLUGIN 3: Payments (Disabled) ═══════ -->
+  <g transform="translate(690,225)">
+    <rect width="230" height="140" rx="10" fill="rgba(108,117,125,0.06)" stroke="#6c757d" stroke-width="2"/>
+    <rect width="226" height="2" x="2" y="2" rx="6" fill="rgba(108,117,125,0.2)"/>
+    <text x="14" y="24" fill="#6c757d" font-size="13" font-weight="700">📦 Payments (Stripe)</text>
+    <rect x="172" y="7" width="20" height="15" rx="3" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+    <text x="176" y="18" fill="rgba(255,255,255,0.2)" font-size="9">🔐</text>
+    <rect x="195" y="7" width="20" height="15" rx="3" fill="rgba(25,135,84,0.25)" stroke="#198754" stroke-width="1"/>
+    <text x="199" y="18" fill="#e6edf3" font-size="9">🔒</text>
+    <rect x="12" y="30" width="206" height="15" rx="3" fill="rgba(255,255,255,0.03)"/>
+    <text x="16" y="41" fill="rgba(255,255,255,0.4)" font-size="9">10 tools  7 prompts  1 res  1 src</text>
+    <rect x="12" y="50" width="26" height="18" rx="4" fill="rgba(108,117,125,0.15)" stroke="#6c757d" stroke-width="1"/>
+    <text x="17" y="63" fill="#6c757d" font-size="11">⏻</text>
+    <rect x="44" y="50" width="26" height="18" rx="4" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+    <text x="49" y="63" fill="#198754" font-size="11">🔄</text>
+    <rect x="76" y="50" width="26" height="18" rx="4" fill="rgba(13,202,240,0.1)" stroke="rgba(13,202,240,0.4)" stroke-width="1"/>
+    <text x="82" y="63" fill="#0dcaf0" font-size="11">📦</text>
+    <rect x="108" y="50" width="26" height="18" rx="4" fill="rgba(167,139,250,0.1)" stroke="rgba(167,139,250,0.4)" stroke-width="1"/>
+    <text x="114" y="63" fill="#a78bfa" font-size="11">⚙</text>
+    <circle cx="215" cy="55" r="5" fill="#6c757d"/>
+    <!-- Connector -->
+    <rect x="10" y="76" width="210" height="56" rx="7" fill="rgba(255,193,7,0.06)" stroke="#ffc107" stroke-width="1" stroke-dasharray="4,2"/>
+    <text x="18" y="93" fill="#ffc107" font-size="11" font-weight="600">🔗 cw-payments</text>
+    <text x="18" y="108" fill="rgba(255,255,255,0.35)" font-size="9">🔒 shared</text>
+    <rect x="18" y="112" width="24" height="15" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(77,166,255,0.3)" stroke-width="1"/>
+    <text x="23" y="123" fill="#4da6ff" font-size="9">📚</text>
+    <rect x="48" y="112" width="24" height="15" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(255,193,7,0.3)" stroke-width="1"/>
+    <text x="54" y="123" fill="#ffc107" font-size="9">⚙</text>
+  </g>
+
+  <!-- ═══════ SOURCE CARD for Email ═══════ -->
+  <g transform="translate(60,420)">
+    <rect width="220" height="130" rx="10" fill="rgba(77,166,255,0.04)" stroke="#4da6ff" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="12" y="20" fill="#4da6ff" font-size="11" font-weight="700">📚 3 sources · 3 scopes</text>
+    <text x="14" y="40" fill="#4da6ff" font-size="9.5" font-weight="600">🏢 Org (1) → cw-email-index</text>
+    <text x="22" y="55" fill="rgba(255,255,255,0.5)" font-size="8.5">✅ 📝 Max 100 emails/day…</text>
+    <text x="14" y="74" fill="#a855f7" font-size="9.5" font-weight="600">👥 Group (1) → cw-email-group-index</text>
+    <text x="22" y="89" fill="rgba(255,255,255,0.5)" font-size="8.5">✅ 📝 SEC disclaimer required…</text>
+    <text x="14" y="108" fill="#f97316" font-size="9.5" font-weight="600">👤 Personal (1) → cw-email-prefs-a8f2</text>
+    <text x="22" y="123" fill="rgba(255,255,255,0.5)" font-size="8.5">✅ 📝 My signature: Best regards…</text>
+  </g>
+  <!-- Plugin → Source line -->
+  <path d="M205,365 C205,388 170,400 170,415" stroke="#4da6ff" stroke-width="1.5" stroke-dasharray="3,3" fill="none" marker-end="url(#arr-blue)" opacity="0.6"/>
+
+  <!-- ═══════ SOURCE CARD for Payments ═══════ -->
+  <g transform="translate(720,420)">
+    <rect width="210" height="68" rx="10" fill="rgba(77,166,255,0.04)" stroke="#4da6ff" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="12" y="20" fill="#4da6ff" font-size="11" font-weight="700">📚 1 source · 1 scope</text>
+    <text x="14" y="40" fill="#4da6ff" font-size="9.5" font-weight="600">🏢 Org (1) → cw-payments-index</text>
+    <text x="22" y="55" fill="rgba(255,255,255,0.5)" font-size="8.5">⏳ 📝 Spending limit $500/txn…</text>
+  </g>
+  <!-- Plugin → Source line -->
+  <path d="M805,365 C805,388 825,400 825,415" stroke="#4da6ff" stroke-width="1.5" stroke-dasharray="3,3" fill="none" marker-end="url(#arr-blue)" opacity="0.6"/>
+
+  <!-- ═══════ ANNOTATION CALLOUTS ═══════ -->
+  <!-- Callout 1: Engine toggles -->
+  <line x1="505" y1="92" x2="505" y2="580" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="2,4"/>
+  
+  <g transform="translate(15,580)">
+    <rect width="200" height="68" rx="10" fill="rgba(13,202,240,0.08)" stroke="rgba(13,202,240,0.3)" stroke-width="1"/>
+    <text x="12" y="20" fill="#0dcaf0" font-size="11" font-weight="700">🔐 Engine Security</text>
+    <text x="12" y="36" fill="rgba(255,255,255,0.6)" font-size="9">Auth Required · Maintenance</text>
+    <text x="12" y="50" fill="rgba(255,255,255,0.6)" font-size="9">Mode · Audit Log</text>
+    <text x="12" y="64" fill="rgba(255,255,255,0.4)" font-size="8">Toggle on/off directly on canvas</text>
+  </g>
+
+  <!-- Callout 2: Plugin security -->
+  <g transform="translate(230,580)">
+    <rect width="200" height="68" rx="10" fill="rgba(25,135,84,0.08)" stroke="rgba(25,135,84,0.3)" stroke-width="1"/>
+    <text x="12" y="20" fill="#198754" font-size="11" font-weight="700">🛡️ Plugin Security</text>
+    <text x="12" y="36" fill="rgba(255,255,255,0.6)" font-size="9">🔐 Auth · 🔒 Read-Only</text>
+    <text x="12" y="50" fill="rgba(255,255,255,0.6)" font-size="9">💰 Approval · Min Role</text>
+    <text x="12" y="64" fill="rgba(255,255,255,0.4)" font-size="8">Per-plugin, click to toggle</text>
+  </g>
+
+  <!-- Callout 3: Connector vault -->
+  <g transform="translate(445,580)">
+    <rect width="200" height="68" rx="10" fill="rgba(255,193,7,0.08)" stroke="rgba(255,193,7,0.3)" stroke-width="1"/>
+    <text x="12" y="20" fill="#ffc107" font-size="11" font-weight="700">🔗 Connector Vault</text>
+    <text x="12" y="36" fill="rgba(255,255,255,0.6)" font-size="9">Per-user credentials</text>
+    <text x="12" y="50" fill="rgba(255,255,255,0.6)" font-size="9">Cascade: user → group → org</text>
+    <text x="12" y="64" fill="rgba(255,255,255,0.4)" font-size="8">Vault-connected, ⚙ to configure</text>
+  </g>
+
+  <!-- Callout 4: Sources & Indexes -->
+  <g transform="translate(660,580)">
+    <rect width="210" height="68" rx="10" fill="rgba(77,166,255,0.08)" stroke="rgba(77,166,255,0.3)" stroke-width="1"/>
+    <text x="12" y="20" fill="#4da6ff" font-size="11" font-weight="700">📚 Sources → Indexes</text>
+    <text x="12" y="36" fill="rgba(255,255,255,0.6)" font-size="9">Grouped by scope: Org · Group</text>
+    <text x="12" y="50" fill="rgba(255,255,255,0.6)" font-size="9">· Personal · Plugin · Engine</text>
+    <text x="12" y="64" fill="rgba(255,255,255,0.4)" font-size="8">🔄 Ingest → Azure AI Search</text>
+  </g>
+
+  <!-- Callout 5: Ingest + RAG -->
+  <g transform="translate(885,580)">
+    <rect width="200" height="68" rx="10" fill="rgba(25,135,84,0.08)" stroke="rgba(25,135,84,0.3)" stroke-width="1"/>
+    <text x="12" y="20" fill="#2dce89" font-size="11" font-weight="700">🔄 Ingest Pipeline</text>
+    <text x="12" y="36" fill="rgba(255,255,255,0.6)" font-size="9">Text/URL/Wiki → Chunk →</text>
+    <text x="12" y="50" fill="rgba(255,255,255,0.6)" font-size="9">Embed → AI Search Index</text>
+    <text x="12" y="64" fill="rgba(255,255,255,0.4)" font-size="8">Hierarchical RAG at query time</text>
+  </g>
+
+  <!-- ═══════ PALETTE BAR ═══════ -->
+  <g transform="translate(0,670)">
+    <rect width="1100" height="48" fill="rgba(22,27,34,0.95)"/>
+    <line x1="0" y1="0" x2="1100" y2="0" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <rect x="15" y="10" width="100" height="28" rx="6" fill="transparent" stroke="#0dcaf0" stroke-width="1"/>
+    <text x="27" y="29" fill="#0dcaf0" font-size="10">⊕ New Design</text>
+    <rect x="125" y="10" width="95" height="28" rx="6" fill="transparent" stroke="#ffc107" stroke-width="1"/>
+    <text x="135" y="29" fill="#ffc107" font-size="10">☁ Import Live</text>
+    <rect x="240" y="15" width="1" height="18" fill="rgba(255,255,255,0.15)"/>
+    <rect x="255" y="10" width="30" height="28" rx="6" fill="transparent" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text x="265" y="29" fill="rgba(255,255,255,0.5)" font-size="12">−</text>
+    <text x="298" y="30" fill="rgba(255,255,255,0.6)" font-size="10">85%</text>
+    <rect x="325" y="10" width="30" height="28" rx="6" fill="transparent" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text x="335" y="29" fill="rgba(255,255,255,0.5)" font-size="12">+</text>
+    <rect x="365" y="10" width="30" height="28" rx="6" fill="transparent" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text x="373" y="29" fill="rgba(255,255,255,0.5)" font-size="11">⛶</text>
+    <rect x="415" y="15" width="1" height="18" fill="rgba(255,255,255,0.15)"/>
+    <rect x="430" y="10" width="70" height="28" rx="6" fill="transparent" stroke="#ffc107" stroke-width="1"/>
+    <text x="442" y="29" fill="#ffc107" font-size="10">💾 Save</text>
+    <rect x="510" y="10" width="70" height="28" rx="6" fill="transparent" stroke="#4da6ff" stroke-width="1"/>
+    <text x="522" y="29" fill="#4da6ff" font-size="10">📂 Load</text>
+    <rect x="600" y="15" width="1" height="18" fill="rgba(255,255,255,0.15)"/>
+    <rect x="615" y="10" width="95" height="28" rx="6" fill="#198754"/>
+    <text x="627" y="29" fill="#fff" font-size="10" font-weight="600">🚀 Deploy All</text>
+    <rect x="725" y="15" width="1" height="18" fill="rgba(255,255,255,0.15)"/>
+    <rect x="740" y="10" width="100" height="28" rx="6" fill="transparent" stroke="#ffc107" stroke-width="1"/>
+    <text x="750" y="29" fill="#ffc107" font-size="10">📊 Connectors</text>
+    <rect x="855" y="15" width="1" height="18" fill="rgba(255,255,255,0.15)"/>
+    <rect x="870" y="10" width="105" height="28" rx="6" fill="transparent" stroke="#198754" stroke-width="1"/>
+    <text x="880" y="29" fill="#198754" font-size="10">✅ Test Ingest</text>
+  </g>
+
+  <!-- ═══════ TITLE BADGE ═══════ -->
+  <g transform="translate(15,740)">
+    <text fill="rgba(255,255,255,0.25)" font-size="11">ContextWeaver Visual Designer — Design · Configure · Ingest · Deploy</text>
+  </g>
+</svg>

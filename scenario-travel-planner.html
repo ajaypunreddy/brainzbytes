@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight">
+<head>
+<script src="/gate.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ContextWeaver — Buy a Ticket: End-to-End with Policy Enforcement</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family:'Inter',-apple-system,sans-serif; background:var(--bg); color:var(--text); padding:0 0 3rem 0; margin:0; }
+    .card { background:var(--bg-card); border-color:var(--border); }
+    a { color:var(--accent); }
+    code { background:var(--code-bg); padding:2px 6px; border-radius:4px; font-size:0.85em; }
+    .block { border-radius:12px; padding:1rem 1.25rem; margin-bottom:0.75rem; }
+    .block-hub { background:rgba(168,139,250,0.12); border:2px solid rgba(168,139,250,0.4); }
+    .block-mcp { background:rgba(13,202,240,0.08); border:2px solid rgba(13,202,240,0.3); }
+    .block-plugin { background:rgba(25,135,84,0.08); border:2px solid rgba(25,135,84,0.3); }
+    .block-connector { background:rgba(255,193,7,0.08); border:2px solid rgba(255,193,7,0.3); }
+    .block-rag { background:rgba(13,110,253,0.08); border:2px solid rgba(13,110,253,0.3); }
+    .block-vault { background:rgba(220,53,69,0.08); border:2px solid rgba(220,53,69,0.3); }
+    .arrow { text-align:center; font-size:1.5rem; color:var(--text-muted); line-height:1; margin:0.25rem 0; }
+    .voice-bubble { background:rgba(13,202,240,0.08); border:1px solid rgba(13,202,240,0.3); border-radius:12px; padding:0.75rem 1rem; display:inline-block; }
+    .agent-bubble { background:rgba(25,135,84,0.08); border:1px solid rgba(25,135,84,0.3); border-radius:12px; padding:0.75rem 1rem; }
+    .user-row { background:rgba(255,193,7,0.05); border-left:3px solid; padding:0.75rem 1rem; border-radius:0 8px 8px 0; margin-bottom:0.5rem; }
+    .user-alice { border-color:#198754; }
+    .user-bob { border-color:#0d6efd; }
+    .user-carol { border-color:#ffc107; }
+    .diff-table td, .diff-table th { font-size:0.8rem; vertical-align:middle; }
+  </style>
+
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js" defer></script>
+</head>
+<body>
+<div class="container-fluid" style="max-width:960px">
+
+    <!-- Hero -->
+    <div class="text-center py-4">
+      <div style="font-size:3rem">&#x2708;&#xFE0F; &#x1F4B3; &#x1F4E7;</div>
+      <h1 style="color:var(--accent-purple);font-weight:700;font-size:1.8rem">"Buy a Ticket BOS &rarr; NYC, Charge My Amex"</h1>
+      <p class="lead text-muted mb-1">One sentence. Three connectors. Policy enforcement at every level.</p>
+      <p class="small text-muted">See exactly how ContextWeaver processes this request &mdash; from AI Hub to Stripe charge to email confirmation.</p>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 0: EXPLAIN IT LIKE I'M FIVE -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="mb-4" style="color:var(--accent-purple)"><i class="bi bi-lightbulb"></i> First, Let's Understand What's Happening</h3>
+
+        <div class="block" style="background:rgba(168,139,250,0.06);border:1px solid rgba(168,139,250,0.2)">
+          <h5>&#x1F4AC; You type one sentence:</h5>
+          <div class="voice-bubble d-block text-center" style="font-size:1.1rem">
+            "Book a flight from Boston to New York and charge my Amex"
+          </div>
+          <p class="mt-3 mb-0">That's it. You don't click through screens. You don't open a travel website. You don't open your credit card app. You don't write an email. <strong>You just say what you want.</strong></p>
+        </div>
+
+        <div class="block" style="background:rgba(25,135,84,0.06);border:1px solid rgba(25,135,84,0.2)">
+          <h5>&#x1F916; The AI does 4 things automatically:</h5>
+          <div class="row g-3">
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F4CB;</div>
+              <div class="fw-bold">1. Checks the rules</div>
+              <div class="text-muted small">"Am I allowed to buy this?"</div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x2708;&#xFE0F;</div>
+              <div class="fw-bold">2. Searches flights</div>
+              <div class="text-muted small">Finds options within your budget</div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F4B3;</div>
+              <div class="fw-bold">3. Charges your card</div>
+              <div class="text-muted small">Pays with your Amex via Stripe</div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div style="font-size:2rem">&#x1F4E7;</div>
+              <div class="fw-bold">4. Emails confirmation</div>
+              <div class="text-muted small">Sends receipt + calendar invite</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(255,193,7,0.06);border:1px solid rgba(255,193,7,0.2)">
+          <h5>&#x1F4CB; But wait &mdash; who sets "the rules"?</h5>
+          <p>In any company, different people have different spending limits. Your company probably has rules like:</p>
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(13,110,253,0.12);border:1px solid rgba(13,110,253,0.3)">
+                <div style="font-size:1.5rem">&#x1F3E2;</div>
+                <div class="fw-bold">Company Rules</div>
+                <div class="small text-muted">"Max $5,000/month on travel"<br>"Economy class only"</div>
+                <div class="small mt-1"><em>Applies to <strong>everyone</strong></em></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(255,193,7,0.12);border:1px solid rgba(255,193,7,0.3)">
+                <div style="font-size:1.5rem">&#x1F465;</div>
+                <div class="fw-bold">Team Rules</div>
+                <div class="small text-muted">"Engineering: max $500/flight"<br>"Sales: max $2,000/flight"</div>
+                <div class="small mt-1"><em>Applies to <strong>your team</strong></em></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(25,135,84,0.12);border:1px solid rgba(25,135,84,0.3)">
+                <div style="font-size:1.5rem">&#x1F464;</div>
+                <div class="fw-bold">Your Preferences</div>
+                <div class="small text-muted">"I prefer Delta airlines"<br>"I like aisle seats"</div>
+                <div class="small mt-1"><em>Applies to <strong>only you</strong></em></div>
+              </div>
+            </div>
+          </div>
+          <p class="mb-0">A manager uploads these rules from any data source &mdash; documents, web pages, wikis, databases, or even pasted text. Each source is <strong>chunked, vectorized, and indexed</strong> for semantic search. <strong>No coding required.</strong> The AI searches these indexes before every action and enforces them automatically.</p>
+        </div>
+
+        <div class="block" style="background:rgba(13,110,253,0.06);border:1px solid rgba(13,110,253,0.2)">
+          <h5>&#x1F4DA; What is "RAG"? (The simplest explanation)</h5>
+          <p>RAG stands for <strong>Retrieval-Augmented Generation</strong>. Sounds fancy. Here's what it really means:</p>
+          <div class="row g-2 mb-3">
+            <div class="col-md-4">
+              <div class="p-3 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:2rem">&#x1F4C4;</div>
+                <div class="fw-bold">Step 1: Store</div>
+                <div class="small text-muted">Manager uploads "travel-policy.pdf"<br>System reads and remembers it</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-3 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:2rem">&#x1F50D;</div>
+                <div class="fw-bold">Step 2: Search</div>
+                <div class="small text-muted">Before any purchase, AI asks:<br>"Any rules about flights?"</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-3 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:2rem">&#x1F6D1;</div>
+                <div class="fw-bold">Step 3: Enforce</div>
+                <div class="small text-muted">Finds: "Max $500 for engineers"<br>Blocks anything over $500</div>
+              </div>
+            </div>
+          </div>
+          <p class="mb-2"><strong>Think of it like a smart filing cabinet.</strong> Your company's rules are filed away. Before the AI does anything, it opens the cabinet, reads the relevant rules, and follows them.</p>
+          <p class="mb-0">The magic: <strong>the rules come from any data source</strong> &mdash; documents, web pages, wikis, databases, blob storage. Each source is chunked, embedded into vectors, and stored in searchable AI indexes. Change the source, and the AI's behavior changes instantly. No developers needed. No code deployments.</p>
+        </div>
+
+        <div class="block" style="background:rgba(220,53,69,0.06);border:1px solid rgba(220,53,69,0.2)">
+          <h5>&#x1F512; What about passwords and API keys?</h5>
+          <p>The AI needs to log into Stripe to charge your card, and into Gmail to send your email. But different people have different accounts. How does it know which one to use?</p>
+          <div class="text-center mb-3">
+            <div class="d-inline-flex gap-1 align-items-center flex-wrap" style="font-size:0.85rem">
+              <div class="p-2 rounded" style="background:rgba(25,135,84,0.15);border:1px solid rgba(25,135,84,0.3)">
+                <div class="fw-bold">&#x1F464; Your keys</div>
+                <div class="text-muted small">Personal Gmail, etc.</div>
+              </div>
+              <div class="text-muted fw-bold px-1">&rarr; not found? &rarr;</div>
+              <div class="p-2 rounded" style="background:rgba(255,193,7,0.15);border:1px solid rgba(255,193,7,0.3)">
+                <div class="fw-bold">&#x1F465; Team keys</div>
+                <div class="text-muted small">Sales Stripe acct, etc.</div>
+              </div>
+              <div class="text-muted fw-bold px-1">&rarr; not found? &rarr;</div>
+              <div class="p-2 rounded" style="background:rgba(13,110,253,0.15);border:1px solid rgba(13,110,253,0.3)">
+                <div class="fw-bold">&#x1F3E2; Company keys</div>
+                <div class="text-muted small">Default Stripe, etc.</div>
+              </div>
+            </div>
+          </div>
+          <p class="mb-0">It checks your personal vault first. If you haven't set up your own key, it checks your team's. If your team hasn't set one up either, it uses the company default. <strong>Like a waterfall &mdash; it flows down until it finds what it needs.</strong></p>
+        </div>
+
+        <div class="block" style="background:rgba(13,202,240,0.06);border:1px solid rgba(13,202,240,0.2)">
+          <h5>&#x1F3AF; Putting it all together</h5>
+          <p class="mb-2">When you say <em>"Book a flight and charge my Amex"</em>, here's what happens in about 5 seconds:</p>
+          <ol style="font-size:0.9rem">
+            <li><strong>The AI reads your company's rules</strong> &mdash; finds your budget limit ($500), required class (economy), your preferences (Delta, aisle seat)</li>
+            <li><strong>Searches flights that fit those rules</strong> &mdash; only shows you economy flights under $500 on Delta</li>
+            <li><strong>Grabs the right Stripe key</strong> &mdash; your personal? your team's? company default? (waterfall)</li>
+            <li><strong>Finds your Amex card</strong> &mdash; looks up your saved cards in Stripe, picks the Amex</li>
+            <li><strong>Charges it</strong> &mdash; $189 to your Amex for Delta BOS&rarr;JFK</li>
+            <li><strong>Sends you an email</strong> &mdash; confirmation + adds it to your Google Calendar</li>
+          </ol>
+          <p class="text-info fw-bold mb-0">One sentence in. Flight booked, card charged, email sent, calendar updated. Rules followed. No screens. No forms.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 1: THE BIG PICTURE -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-info mb-4"><i class="bi bi-diagram-3"></i> The Complete Architecture (Technical View)</h3>
+        <p class="text-muted small mb-3">Every box below is a real component running in ContextWeaver. Follow the arrows to see how a single sentence becomes a booked flight.</p>
+
+        <!-- AI Hub -->
+        <div class="block block-hub text-center">
+          <div class="fw-bold" style="font-size:1.1rem"><span style="font-size:1.3rem">&#x1F9E0;</span> AI Hub (User Interface)</div>
+          <div class="text-muted small">User types: <em>"Book a flight BOS to NYC and charge my Amex"</em></div>
+          <div class="text-muted small mt-1">Authenticated as <code>alice@acme.com</code> &bull; Group: <code>Engineering</code> &bull; Role: <code>developer</code></div>
+        </div>
+        <div class="arrow">&darr;</div>
+
+        <!-- Agent -->
+        <div class="block block-hub">
+          <div class="fw-bold"><span style="font-size:1.1rem">&#x1F916;</span> Agent (LLM Orchestrator)</div>
+          <div class="text-muted small">Sees <strong>33 tools</strong> from all plugins. LLM decides which tools to call and in what order.</div>
+          <div class="mt-2 small">
+            <span class="badge bg-secondary">1. Search policies (RAG)</span>
+            <span class="badge bg-secondary">2. Search flights (Travel)</span>
+            <span class="badge bg-secondary">3. Charge card (Payments)</span>
+            <span class="badge bg-secondary">4. Send email (Email)</span>
+          </div>
+        </div>
+        <div class="arrow">&darr;</div>
+
+        <!-- MCP Server -->
+        <div class="block block-mcp">
+          <div class="fw-bold"><span style="font-size:1.1rem">&#x1F50C;</span> MCP Server (Tool Execution Engine)</div>
+          <div class="text-muted small">Single FastMCP instance hosting all plugin tools. Receives tool calls from Agent via Streamable HTTP.</div>
+          <div class="text-muted small mt-1">Extracts <code>_user_email=alice@acme.com</code> from every request &rarr; per-user credential resolution</div>
+        </div>
+        <div class="arrow">&darr;</div>
+
+        <!-- 3 Plugins side by side -->
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <div class="block block-plugin h-100">
+              <div class="fw-bold text-success"><i class="bi bi-airplane"></i> Travel Plugin</div>
+              <div class="text-muted small">4 tools</div>
+              <div class="mt-2" style="font-size:0.75rem">
+                <div><i class="bi bi-wrench"></i> travel-proxy-discover</div>
+                <div><i class="bi bi-wrench"></i> travel-proxy-call</div>
+                <div><i class="bi bi-wrench"></i> travel-proxy-list</div>
+                <div><i class="bi bi-wrench"></i> travel-proxy-status</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-plugin h-100">
+              <div class="fw-bold text-success"><i class="bi bi-credit-card"></i> Payments Plugin</div>
+              <div class="text-muted small">10 tools</div>
+              <div class="mt-2" style="font-size:0.75rem">
+                <div><i class="bi bi-wrench"></i> payments-charge &#x2B05; <em>used here</em></div>
+                <div><i class="bi bi-wrench"></i> payments-list-cards</div>
+                <div><i class="bi bi-wrench"></i> payments-add-card</div>
+                <div class="text-muted">+ 7 more tools</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-plugin h-100">
+              <div class="fw-bold text-success"><i class="bi bi-envelope"></i> Email Plugin</div>
+              <div class="text-muted small">13 tools</div>
+              <div class="mt-2" style="font-size:0.75rem">
+                <div><i class="bi bi-wrench"></i> email-send &#x2B05; <em>used here</em></div>
+                <div><i class="bi bi-wrench"></i> email-calendar-create</div>
+                <div class="text-muted">+ 11 more tools</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="arrow">&darr;</div>
+
+        <!-- Connectors -->
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <div class="block block-connector h-100">
+              <div class="fw-bold text-warning"><i class="bi bi-plug"></i> cw-travel-proxy</div>
+              <div><span class="badge bg-danger" style="font-size:0.55rem"><i class="bi bi-lock-fill"></i> shared</span></div>
+              <div class="text-muted small mt-1">Upstream MCP server URL + auth token</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-connector h-100">
+              <div class="fw-bold text-warning"><i class="bi bi-plug"></i> cw-payments</div>
+              <div><span class="badge bg-danger" style="font-size:0.55rem"><i class="bi bi-lock-fill"></i> shared</span></div>
+              <div class="text-muted small mt-1">Stripe API key (org default, group/user override)</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block block-connector h-100">
+              <div class="fw-bold text-warning"><i class="bi bi-plug"></i> cw-email</div>
+              <div><span class="badge bg-danger" style="font-size:0.55rem"><i class="bi bi-lock-fill"></i> per-user</span></div>
+              <div class="text-muted small mt-1">Each user&rsquo;s own Gmail/Outlook credentials</div>
+            </div>
+          </div>
+        </div>
+        <div class="arrow">&darr;</div>
+
+        <!-- Vault + RAG -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="block block-vault h-100">
+              <div class="fw-bold text-danger"><i class="bi bi-shield-lock"></i> Vault (Credentials)</div>
+              <div class="small mt-1">
+                <div>&#x1F3E2; <code>cw-org-cw-payments-secret-key</code> &rarr; Org Stripe key</div>
+                <div>&#x1F465; <code>cw-grp-engineering-cw-payments-secret-key</code> &rarr; Eng Stripe key</div>
+                <div>&#x1F464; <code>cw-pvt-alice-cw-email-app-password</code> &rarr; Alice&rsquo;s Gmail</div>
+              </div>
+              <div class="text-muted small mt-2"><strong>Cascade:</strong> User &rarr; Group &rarr; Org (first found wins)</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="block block-rag h-100">
+              <div class="fw-bold text-primary"><i class="bi bi-database"></i> RAG Indexes (Policies)</div>
+              <div class="small mt-1">
+                <div>&#x1F3E2; <code>cw-payments-policy-org</code> &rarr; "Max $5000/month"</div>
+                <div>&#x1F465; <code>cw-payments-policy-engineering</code> &rarr; "Max $500/purchase"</div>
+                <div>&#x1F464; <code>prefs-alice</code> &rarr; "Prefer Amex, aisle seat"</div>
+              </div>
+              <div class="text-muted small mt-2"><strong>Merge:</strong> All tiers apply. Org/Group = hard limits. User = preferences.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 2: STEP-BY-STEP CALL FLOW -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-info mb-4"><i class="bi bi-list-ol"></i> Step-by-Step Call Flow</h3>
+
+        <div class="block" style="background:rgba(168,139,250,0.06);border:1px solid rgba(168,139,250,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-info rounded-pill">Step 1</span>
+            <strong>Agent searches for policies (RAG)</strong>
+          </div>
+          <div class="small">
+            <div class="text-muted mb-1">Before doing anything, the agent checks: <em>"Are there rules about purchasing?"</em></div>
+            <code>search_all(query="travel purchase policy flight booking")</code>
+            <div class="mt-2">
+              <div class="text-success">&#x2705; [ORG_POLICY] "Company travel policy: Max $5,000/month, economy class only"</div>
+              <div class="text-warning">&#x2705; [GROUP_POLICY] "Engineering: Max $500/flight, pre-approval for international"</div>
+              <div class="text-info">&#x2705; [USER_PREFERENCE] "Alice prefers Amex card, aisle seat, Delta airlines"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(25,135,84,0.06);border:1px solid rgba(25,135,84,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-success rounded-pill">Step 2</span>
+            <strong>Agent searches flights (Travel Plugin)</strong>
+          </div>
+          <div class="small">
+            <div class="text-muted mb-1">Searches with policy constraints applied: economy, under $500, prefer Delta</div>
+            <code>travel-proxy-call(tool="search_flights", args={from:"BOS", to:"NYC", class:"economy"})</code>
+            <div class="mt-2 text-muted">
+              &#x2192; Connector resolves: Alice&rsquo;s vault &rarr; Engineering vault &rarr; Org vault for travel API key<br>
+              &#x2192; Returns 3 Delta flights under $500
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(255,193,7,0.06);border:1px solid rgba(255,193,7,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-warning text-dark rounded-pill">Step 3</span>
+            <strong>Agent validates against policy</strong>
+          </div>
+          <div class="small">
+            <div>Flight: Delta DL 2847, BOS&rarr;JFK, $189 economy</div>
+            <div class="mt-1">
+              <div class="text-success">&#x2705; $189 &lt; $500 group limit</div>
+              <div class="text-success">&#x2705; Economy class (org policy)</div>
+              <div class="text-success">&#x2705; Domestic (no pre-approval needed)</div>
+              <div class="text-success">&#x2705; Delta (user preference)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(220,53,69,0.06);border:1px solid rgba(220,53,69,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-danger rounded-pill">Step 4</span>
+            <strong>Agent charges Amex (Payments Plugin)</strong>
+          </div>
+          <div class="small">
+            <code>payments-charge(amount=189, card="amex", description="Delta DL2847 BOS-JFK")</code>
+            <div class="mt-2 text-muted">
+              &#x2192; Connector resolves Stripe key: Alice&rsquo;s vault (none) &rarr; Engineering vault (none) &rarr; <strong>Org vault</strong> &#x2705;<br>
+              &#x2192; Finds Alice&rsquo;s Stripe Customer ID from private vault<br>
+              &#x2192; Looks up saved cards, finds AMEX ****1005<br>
+              &#x2192; Charges $189 to Amex via Stripe API
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(13,110,253,0.06);border:1px solid rgba(13,110,253,0.2)">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-primary rounded-pill">Step 5</span>
+            <strong>Agent sends confirmation (Email Plugin)</strong>
+          </div>
+          <div class="small">
+            <code>email-send(to="alice@acme.com", subject="Flight Booked: BOS→JFK", body="...")</code><br>
+            <code>email-calendar-create(title="Flight BOS→JFK", date="2026-05-01 08:00")</code>
+            <div class="mt-2 text-muted">
+              &#x2192; Connector resolves: <strong>Alice&rsquo;s private vault</strong> (per-user lock) &#x2705;<br>
+              &#x2192; Uses Alice&rsquo;s Gmail OAuth token to send &amp; create calendar event
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 3: SAME REQUEST, DIFFERENT USERS -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-info mb-4"><i class="bi bi-people"></i> Same Request, Different Users &mdash; Different Outcomes</h3>
+        <p class="text-muted small">Three people say the same thing. ContextWeaver enforces different policies for each.</p>
+
+        <div class="voice-bubble d-block text-center mb-3" style="font-size:1rem">
+          <i class="bi bi-mic-fill text-info"></i> "Book a flight BOS to NYC and charge my Visa"
+        </div>
+
+        <!-- Alice -->
+        <div class="user-row user-alice">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-success">&#x1F464; Alice</span>
+            <span class="text-muted small">Engineering &bull; Developer &bull; Budget: $500/flight</span>
+          </div>
+          <div class="small">
+            <strong>Policy found:</strong> Engineering max $500/flight<br>
+            <strong>Flight:</strong> JetBlue B6-517, $149 economy &#x2705; Under limit<br>
+            <strong>Stripe key:</strong> Org default (no personal/group override)<br>
+            <strong>Card:</strong> Visa ****4242 (Alice&rsquo;s saved card)<br>
+            <strong>Result:</strong> <span class="text-success">&#x2705; Booked &amp; charged $149</span>
+          </div>
+        </div>
+
+        <!-- Bob -->
+        <div class="user-row user-bob">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-primary">&#x1F464; Bob</span>
+            <span class="text-muted small">Sales &bull; Account Exec &bull; Budget: $2,000/flight</span>
+          </div>
+          <div class="small">
+            <strong>Policy found:</strong> Sales max $2,000/flight, business class OK<br>
+            <strong>Flight:</strong> Delta DL-2847, $489 business &#x2705; Under limit, business allowed<br>
+            <strong>Stripe key:</strong> <em>Sales group</em> Stripe account (group override)<br>
+            <strong>Card:</strong> Visa ****8888 (Bob&rsquo;s saved card)<br>
+            <strong>Result:</strong> <span class="text-success">&#x2705; Booked &amp; charged $489 to Sales Stripe</span>
+          </div>
+        </div>
+
+        <!-- Carol -->
+        <div class="user-row user-carol">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-warning text-dark">&#x1F464; Carol</span>
+            <span class="text-muted small">Engineering &bull; Intern &bull; Budget: $200/flight</span>
+          </div>
+          <div class="small">
+            <strong>Policy found:</strong> Engineering max $500/flight + Intern policy: max $200<br>
+            <strong>Flight:</strong> Spirit NK-407, $89 economy &#x2705;<br>
+            <strong>But also found:</strong> JetBlue B6-517, $149 &#x2705; Under $200<br>
+            <strong>Card:</strong> No Visa on file &#x26A0;&#xFE0F;<br>
+            <strong>Result:</strong> <span class="text-warning">&#x26A0;&#xFE0F; "No Visa card found. Add one via Stripe Checkout: [link]"</span>
+          </div>
+        </div>
+
+        <!-- Blocked example -->
+        <div class="user-row" style="border-color:#dc3545; background:rgba(220,53,69,0.05)">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-danger">&#x1F464; Dave</span>
+            <span class="text-muted small">Engineering &bull; Developer &bull; Tries: "Book first class $1,200"</span>
+          </div>
+          <div class="small">
+            <strong>Policy found:</strong> Engineering max $500 + Org: economy only<br>
+            <strong>Result:</strong> <span class="text-danger">&#x274C; BLOCKED &mdash; "$1,200 exceeds your group limit of $500. First class violates org economy-only policy. Request manager approval."</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 4: CREDENTIAL CASCADE -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-info mb-4"><i class="bi bi-shield-check"></i> How Credentials Cascade</h3>
+        <div class="text-center mb-3">
+          <div class="d-inline-flex gap-2 align-items-center" style="font-size:0.9rem">
+            <div class="p-2 rounded text-center" style="background:rgba(25,135,84,0.15);min-width:120px;border:1px solid rgba(25,135,84,0.3)">
+              <div class="fw-bold">&#x1F464; User Vault</div>
+              <div class="text-muted small">Personal override</div>
+            </div>
+            <div class="text-muted fw-bold">&rarr;</div>
+            <div class="p-2 rounded text-center" style="background:rgba(255,193,7,0.15);min-width:120px;border:1px solid rgba(255,193,7,0.3)">
+              <div class="fw-bold">&#x1F465; Group Vault</div>
+              <div class="text-muted small">Team override</div>
+            </div>
+            <div class="text-muted fw-bold">&rarr;</div>
+            <div class="p-2 rounded text-center" style="background:rgba(13,110,253,0.15);min-width:120px;border:1px solid rgba(13,110,253,0.3)">
+              <div class="fw-bold">&#x1F3E2; Org Vault</div>
+              <div class="text-muted small">Company default</div>
+            </div>
+          </div>
+        </div>
+        <table class="table table-sm table-bordered diff-table">
+          <thead><tr><th>Connector</th><th>Alice (Eng)</th><th>Bob (Sales)</th><th>Carol (Eng/Intern)</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><i class="bi bi-plug text-warning"></i> Stripe Key</td>
+              <td>&#x1F3E2; Org key (no override)</td>
+              <td>&#x1F465; Sales group key</td>
+              <td>&#x1F3E2; Org key (no override)</td>
+            </tr>
+            <tr>
+              <td><i class="bi bi-plug text-warning"></i> Travel API</td>
+              <td>&#x1F3E2; Org key</td>
+              <td>&#x1F3E2; Org key</td>
+              <td>&#x1F3E2; Org key</td>
+            </tr>
+            <tr>
+              <td><i class="bi bi-plug text-warning"></i> Email/Gmail</td>
+              <td>&#x1F464; Alice&rsquo;s Gmail</td>
+              <td>&#x1F464; Bob&rsquo;s Outlook</td>
+              <td>&#x1F464; Carol&rsquo;s Gmail</td>
+            </tr>
+            <tr>
+              <td><i class="bi bi-database text-primary"></i> Policy (RAG)</td>
+              <td>Org + Eng rules + prefs</td>
+              <td>Org + Sales rules + prefs</td>
+              <td>Org + Eng + Intern rules</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 5: DEEP DIVE CALL FLOW -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-info mb-4"><i class="bi bi-terminal"></i> Deep Dive: Every Network Call (For the Curious)</h3>
+        <p class="text-muted small mb-3">Here is <em>exactly</em> what happens on the wire when Alice types "Book a flight BOS to NYC and charge my Amex". Every HTTP call, every vault lookup, every database query &mdash; in order.</p>
+
+        <!-- Phase 1: Authentication -->
+        <h5 class="mt-4 mb-3" style="color:var(--accent-purple)">&#x1F510; Phase 1: Authentication (before anything happens)</h5>
+        <div class="block" style="background:rgba(168,139,250,0.04);border:1px solid rgba(168,139,250,0.15);font-size:0.8rem">
+          <table class="table table-sm table-borderless mb-0" style="color:var(--text)">
+            <tr>
+              <td style="width:30px"><span class="badge bg-secondary">1</span></td>
+              <td><strong>Browser &rarr; Keycloak</strong></td>
+              <td><code>POST /realms/contextweaver/protocol/openid-connect/token</code></td>
+              <td class="text-muted">Alice logs in via SSO (OIDC). Gets JWT access token.</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-secondary">2</span></td>
+              <td><strong>Browser &rarr; Cerebro App</strong></td>
+              <td><code>GET /api/user/identity</code> + <code>Authorization: Bearer eyJ...</code></td>
+              <td class="text-muted">App validates JWT, extracts: email=<code>alice@acme.com</code>, groups=<code>[engineering]</code>, roles=<code>[developer]</code></td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-secondary">3</span></td>
+              <td><strong>Cerebro App &rarr; MCP Engine</strong></td>
+              <td><code>POST /api/set-user</code> + <code>{"email":"alice@acme.com","groups":["engineering"]}</code></td>
+              <td class="text-muted">Syncs user identity to the MCP engine so tool calls know who is calling</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Phase 2: Discovery -->
+        <h5 class="mt-4 mb-3" style="color:var(--accent-purple)">&#x1F50C; Phase 2: Tool Discovery</h5>
+        <div class="block" style="background:rgba(13,202,240,0.04);border:1px solid rgba(13,202,240,0.15);font-size:0.8rem">
+          <table class="table table-sm table-borderless mb-0" style="color:var(--text)">
+            <tr>
+              <td style="width:30px"><span class="badge bg-info">4</span></td>
+              <td><strong>Agent &rarr; MCP Engine</strong></td>
+              <td><code>POST /mcp</code> (Streamable HTTP) + <code>X-User-Email: alice@acme.com</code><br>
+                <code>{"method":"tools/list"}</code></td>
+              <td class="text-muted">Discovers all 33 tools from 4 plugins. Returns tool names, descriptions, parameter schemas.</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-info">5</span></td>
+              <td><strong>Agent &rarr; MCP Engine</strong></td>
+              <td><code>{"method":"resources/list"}</code></td>
+              <td class="text-muted">Discovers available knowledge indexes for RAG search</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-info">6</span></td>
+              <td><strong>Agent &rarr; Engine Dashboard</strong></td>
+              <td><code>GET /api/plugins</code></td>
+              <td class="text-muted">Fetches <code>system_prompt</code> from each plugin manifest &mdash; policy enforcement instructions injected into LLM context</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Phase 3: LLM + Policy Check -->
+        <h5 class="mt-4 mb-3" style="color:var(--accent-purple)">&#x1F9E0; Phase 3: LLM Decides + Policy Check (RAG)</h5>
+        <div class="block" style="background:rgba(25,135,84,0.04);border:1px solid rgba(25,135,84,0.15);font-size:0.8rem">
+          <table class="table table-sm table-borderless mb-0" style="color:var(--text)">
+            <tr>
+              <td style="width:30px"><span class="badge bg-success">7</span></td>
+              <td><strong>Agent &rarr; Azure OpenAI</strong></td>
+              <td><code>POST /openai/deployments/gpt-4o/chat/completions</code><br>
+                System prompt includes: 33 tool definitions + policy enforcement rules + available indexes</td>
+              <td class="text-muted">LLM reads the prompt, decides: "I should check policies first, then search flights"</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-success">8</span></td>
+              <td><strong>LLM returns tool call</strong></td>
+              <td><code>{"tool":"search_all","args":{"query":"travel flight purchase policy"}}</code></td>
+              <td class="text-muted">LLM tells Agent to search knowledge indexes for policies</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-success">9</span></td>
+              <td><strong>Agent &rarr; MCP Engine</strong></td>
+              <td><code>POST /mcp</code> + <code>{"method":"tools/call","params":{"name":"search_all","arguments":{"query":"travel flight purchase policy","_user_email":"alice@acme.com"}}}</code></td>
+              <td class="text-muted">Agent injects <code>_user_email</code> into every tool call for per-user resolution</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-success">10</span></td>
+              <td><strong>MCP Engine &rarr; Azure AI Search</strong></td>
+              <td><code>POST /indexes/cw-payments-policy-org/docs/search</code><br>
+                <code>POST /indexes/cw-payments-policy-engineering/docs/search</code><br>
+                <code>POST /indexes/prefs-a1b2c3d4e5f6/docs/search</code></td>
+              <td class="text-muted">Vector search across 3 scoped indexes. Results tagged: <code>[ORG_POLICY]</code>, <code>[GROUP_POLICY]</code>, <code>[USER_PREFERENCE]</code></td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-success">11</span></td>
+              <td><strong>Results returned to LLM</strong></td>
+              <td>ORG: "Max $5000/mo, economy only" &bull; GROUP: "Engineering max $500/flight" &bull; USER: "Prefer Delta, Amex, aisle"</td>
+              <td class="text-muted">LLM now knows: must be economy, under $500, prefer Delta</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Phase 4: Flight Search -->
+        <h5 class="mt-4 mb-3" style="color:var(--accent-purple)">&#x2708;&#xFE0F; Phase 4: Flight Search</h5>
+        <div class="block" style="background:rgba(255,193,7,0.04);border:1px solid rgba(255,193,7,0.15);font-size:0.8rem">
+          <table class="table table-sm table-borderless mb-0" style="color:var(--text)">
+            <tr>
+              <td style="width:30px"><span class="badge bg-warning text-dark">12</span></td>
+              <td><strong>Agent &rarr; MCP Engine</strong></td>
+              <td><code>tools/call: travel-proxy-call(tool="search_flights", args={from:"BOS",to:"NYC",class:"economy"})</code></td>
+              <td class="text-muted">LLM constrained search to economy (org policy)</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-warning text-dark">13</span></td>
+              <td><strong>MCP Engine &rarr; Vault</strong></td>
+              <td><code>vault.read("cw-pvt-{alice-hash}-cw-travel-proxy-upstream-url")</code> &rarr; miss<br>
+                <code>vault.read("cw-grp-engineering-cw-travel-proxy-upstream-url")</code> &rarr; miss<br>
+                <code>vault.read("cw-org-cw-travel-proxy-upstream-url")</code> &rarr; <strong>hit!</strong></td>
+              <td class="text-muted">Credential cascade: tries user, then group, then org. Finds org-level travel API config.</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-warning text-dark">14</span></td>
+              <td><strong>MCP Engine &rarr; Travel API</strong></td>
+              <td><code>POST https://travel-api.example.com/mcp</code> + Bearer token from vault</td>
+              <td class="text-muted">Calls upstream travel MCP server with resolved credentials</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Phase 5: Payment -->
+        <h5 class="mt-4 mb-3" style="color:var(--accent-purple)">&#x1F4B3; Phase 5: Payment (Stripe)</h5>
+        <div class="block" style="background:rgba(220,53,69,0.04);border:1px solid rgba(220,53,69,0.15);font-size:0.8rem">
+          <table class="table table-sm table-borderless mb-0" style="color:var(--text)">
+            <tr>
+              <td style="width:30px"><span class="badge bg-danger">15</span></td>
+              <td><strong>Agent &rarr; MCP Engine</strong></td>
+              <td><code>tools/call: payments-charge(amount=189, card="amex", description="Delta DL2847 BOS-JFK")</code></td>
+              <td class="text-muted">LLM validated: $189 &lt; $500 group limit &#x2705;</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-danger">16</span></td>
+              <td><strong>MCP Engine &rarr; Vault</strong></td>
+              <td><code>vault.read("cw-pvt-{alice}-cw-payments-secret-key")</code> &rarr; miss<br>
+                <code>vault.read("cw-grp-engineering-cw-payments-secret-key")</code> &rarr; miss<br>
+                <code>vault.read("cw-org-cw-payments-secret-key")</code> &rarr; <strong>hit!</strong> <code>sk_test_...</code></td>
+              <td class="text-muted">Resolves Stripe API key via cascade</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-danger">17</span></td>
+              <td><strong>MCP Engine &rarr; Vault (private)</strong></td>
+              <td><code>vault.read("cw-pvt-{alice}-cw-payments-stripe-customer-id")</code> &rarr; <code>cus_abc123</code></td>
+              <td class="text-muted">Gets Alice&rsquo;s personal Stripe Customer ID (created on first charge)</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-danger">18</span></td>
+              <td><strong>MCP Engine &rarr; Stripe API</strong></td>
+              <td><code>GET https://api.stripe.com/v1/payment_methods?customer=cus_abc123&type=card</code></td>
+              <td class="text-muted">Lists Alice&rsquo;s saved cards, finds AMEX ****1005</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-danger">19</span></td>
+              <td><strong>MCP Engine &rarr; Stripe API</strong></td>
+              <td><code>POST https://api.stripe.com/v1/payment_intents</code><br>
+                <code>amount=18900, currency=usd, customer=cus_abc123, payment_method=pm_xxx, confirm=true</code></td>
+              <td class="text-muted">Creates and confirms the payment. $189 charged to Amex.</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Phase 6: Email + Calendar -->
+        <h5 class="mt-4 mb-3" style="color:var(--accent-purple)">&#x1F4E7; Phase 6: Email &amp; Calendar</h5>
+        <div class="block" style="background:rgba(13,110,253,0.04);border:1px solid rgba(13,110,253,0.15);font-size:0.8rem">
+          <table class="table table-sm table-borderless mb-0" style="color:var(--text)">
+            <tr>
+              <td style="width:30px"><span class="badge bg-primary">20</span></td>
+              <td><strong>MCP Engine &rarr; Vault</strong></td>
+              <td><code>vault.read("cw-pvt-{alice}-cw-email-access-token")</code> &rarr; <strong>hit!</strong> (Google OAuth)</td>
+              <td class="text-muted">Email connector is <code>locked: "user"</code> &mdash; only checks private vault, no cascade</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-primary">21</span></td>
+              <td><strong>MCP Engine &rarr; Google OAuth</strong></td>
+              <td><code>POST https://oauth2.googleapis.com/token</code> (refresh_token &rarr; new access_token)</td>
+              <td class="text-muted">Access tokens expire hourly. Refresh before use.</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-primary">22</span></td>
+              <td><strong>MCP Engine &rarr; Gmail SMTP</strong></td>
+              <td><code>SMTP smtp.gmail.com:587</code> + XOAUTH2 auth<br>
+                To: alice@acme.com &bull; Subject: "Flight Booked: BOS&rarr;JFK"</td>
+              <td class="text-muted">Sends confirmation email from Alice&rsquo;s own Gmail account</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-primary">23</span></td>
+              <td><strong>MCP Engine &rarr; Google Calendar API</strong></td>
+              <td><code>POST https://www.googleapis.com/calendar/v3/calendars/primary/events</code><br>
+                <code>{"summary":"Flight BOS→JFK","start":"2026-05-01T08:00:00"}</code></td>
+              <td class="text-muted">Creates calendar event on Alice&rsquo;s Google Calendar</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Phase 7: Response -->
+        <h5 class="mt-4 mb-3" style="color:var(--accent-purple)">&#x2705; Phase 7: Final Response</h5>
+        <div class="block" style="background:rgba(25,135,84,0.04);border:1px solid rgba(25,135,84,0.15);font-size:0.8rem">
+          <table class="table table-sm table-borderless mb-0" style="color:var(--text)">
+            <tr>
+              <td style="width:30px"><span class="badge bg-success">24</span></td>
+              <td><strong>Agent &rarr; Azure OpenAI</strong></td>
+              <td>LLM sees all 4 tool results, generates natural language summary</td>
+              <td class="text-muted">Final LLM call to compose the response</td>
+            </tr>
+            <tr>
+              <td><span class="badge bg-success">25</span></td>
+              <td><strong>Agent &rarr; Browser (SSE)</strong></td>
+              <td>Streams response token-by-token to the chat UI</td>
+              <td class="text-muted">User sees the answer appear in real-time</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="agent-bubble d-block mt-3">
+          <div class="fw-bold text-success mb-1">&#x1F916; Agent Response:</div>
+          <div style="font-size:0.9rem">
+            Done! Here&rsquo;s your booking summary:<br><br>
+            &#x2708;&#xFE0F; <strong>Delta DL-2847</strong> &mdash; BOS &rarr; JFK, May 1, 2026 at 8:00 AM<br>
+            &#x1F4B3; <strong>$189.00</strong> charged to your Amex ****1005 (Payment: pi_3xyz...)<br>
+            &#x1F4E7; Confirmation sent to alice@acme.com<br>
+            &#x1F4C5; Added to your Google Calendar<br><br>
+            <span class="text-muted">Policies applied: Engineering flight limit ($500 max), economy class (org policy), Delta preference (your settings).</span>
+          </div>
+        </div>
+
+        <!-- Call count summary -->
+        <div class="mt-3 p-2 rounded" style="background:rgba(255,255,255,0.03);font-size:0.8rem">
+          <strong>Total calls: 25</strong> &bull;
+          Auth: 3 &bull; Discovery: 3 &bull; LLM: 3 &bull; RAG search: 3 &bull; Vault lookups: ~12 &bull; External APIs: 5 (Travel + Stripe &times;2 + Gmail + Calendar) &bull;
+          <strong>Time: ~5 seconds</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION 6: WHAT MAKES THIS DIFFERENT -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-info mb-4"><i class="bi bi-lightning"></i> What Makes This Different</h3>
+        <table class="table table-sm table-bordered diff-table">
+          <thead>
+            <tr>
+              <th style="width:25%">Capability</th>
+              <th style="width:25%">Traditional Apps</th>
+              <th style="width:25%">Other AI Platforms</th>
+              <th style="width:25%"><span style="color:var(--accent-purple)">ContextWeaver</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>User says one sentence</strong></td>
+              <td>&#x274C; Click through 5 screens</td>
+              <td>&#x26A0;&#xFE0F; Chat but can&rsquo;t act</td>
+              <td>&#x2705; Searches, books, charges, emails</td>
+            </tr>
+            <tr>
+              <td><strong>Multi-system orchestration</strong></td>
+              <td>&#x274C; Separate apps</td>
+              <td>&#x26A0;&#xFE0F; Hardcoded integrations</td>
+              <td>&#x2705; LLM chains tools from any plugin</td>
+            </tr>
+            <tr>
+              <td><strong>Per-user credentials</strong></td>
+              <td>&#x2705; Each user logs in</td>
+              <td>&#x274C; Shared API keys</td>
+              <td>&#x2705; Vault cascade: user &rarr; group &rarr; org</td>
+            </tr>
+            <tr>
+              <td><strong>Policy enforcement</strong></td>
+              <td>&#x2705; Code-enforced rules</td>
+              <td>&#x274C; No policy awareness</td>
+              <td>&#x2705; RAG-based: org + group + user tiers</td>
+            </tr>
+            <tr>
+              <td><strong>Same request, different users</strong></td>
+              <td>&#x2705; Role-based access</td>
+              <td>&#x274C; Same result for everyone</td>
+              <td>&#x2705; Different policies, credentials, outcomes</td>
+            </tr>
+            <tr>
+              <td><strong>Add new capability</strong></td>
+              <td>&#x274C; Months of development</td>
+              <td>&#x26A0;&#xFE0F; API integration work</td>
+              <td>&#x2705; No-code: drag connector + attach to plugin</td>
+            </tr>
+            <tr>
+              <td><strong>Card data security</strong></td>
+              <td>&#x2705; PCI compliance</td>
+              <td>&#x274C; Often stores tokens</td>
+              <td>&#x2705; Stripe Checkout &mdash; card data never touches CW</td>
+            </tr>
+            <tr>
+              <td><strong>Policy updates</strong></td>
+              <td>&#x274C; Code changes + deploy</td>
+              <td>&#x274C; Prompt engineering</td>
+              <td>&#x2705; Ingest from any data source &mdash; instant policy enforcement via vectorized RAG</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION: SECURITY & TRUST FAQ -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="mb-4" style="color:var(--accent-purple)"><i class="bi bi-shield-check"></i> "But Is It Safe?" &mdash; Security &amp; Trust FAQ</h3>
+        <p class="text-muted small mb-4">These are the most common concerns people have. Here's how ContextWeaver addresses each one.</p>
+
+        <!-- Q1: Financial data access -->
+        <div class="block" style="background:rgba(220,53,69,0.06);border:1px solid rgba(220,53,69,0.2)">
+          <h5>&#x1F4B0; "The AI has access to so much financial data. How are pass codes protected?"</h5>
+          <p><strong>Short answer: The AI never sees your passwords, card numbers, or API keys.</strong></p>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <div class="p-3 rounded" style="background:rgba(220,53,69,0.08)">
+                <div class="fw-bold text-danger mb-2"><i class="bi bi-x-circle"></i> What the AI NEVER sees</div>
+                <ul class="small mb-0" style="padding-left:1.2rem">
+                  <li>Credit card numbers (stored only in Stripe)</li>
+                  <li>CVV codes (never stored anywhere)</li>
+                  <li>Stripe API keys (resolved at runtime, not in prompts)</li>
+                  <li>Gmail passwords or OAuth tokens</li>
+                  <li>Any vault secret values</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="p-3 rounded" style="background:rgba(25,135,84,0.08)">
+                <div class="fw-bold text-success mb-2"><i class="bi bi-check-circle"></i> What actually happens</div>
+                <ul class="small mb-0" style="padding-left:1.2rem">
+                  <li>LLM says: <em>"call payments-charge"</em></li>
+                  <li>Engine resolves Stripe key from vault at runtime</li>
+                  <li>Engine calls Stripe API directly</li>
+                  <li>Key is in memory for milliseconds, never logged</li>
+                  <li>LLM only sees: <em>"$189 charged to AMEX ****1005"</em></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <p class="small mb-0">Think of it this way: the AI is like a <strong>personal assistant who knows your name but not your PIN</strong>. It tells the bank <em>what</em> to do, but the bank handles the actual money. The assistant never touches cash.</p>
+        </div>
+
+        <!-- Q2: Payment gateway safety -->
+        <div class="block" style="background:rgba(255,193,7,0.06);border:1px solid rgba(255,193,7,0.2)">
+          <h5>&#x1F4B3; "Payment gateways &mdash; how safe are they? Can they be hacked?"</h5>
+          <p><strong>Short answer: We use Stripe, which is PCI DSS Level 1 certified &mdash; the highest security standard in the payments industry.</strong></p>
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:1.5rem">&#x1F3E6;</div>
+                <div class="fw-bold small">Stripe Handles Cards</div>
+                <div class="text-muted" style="font-size:0.7rem">Card numbers go directly to Stripe's servers via their hosted Checkout page. ContextWeaver never sees, transmits, or stores card numbers.</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:1.5rem">&#x1F512;</div>
+                <div class="fw-bold small">We Only Store a Reference</div>
+                <div class="text-muted" style="font-size:0.7rem">Our vault stores <code>cus_abc123</code> (a Stripe customer ID) &mdash; not a card number. Even if someone accessed our vault, they'd get an ID that means nothing outside Stripe.</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03)">
+                <div style="font-size:1.5rem">&#x1F6E1;&#xFE0F;</div>
+                <div class="fw-bold small">Same as Amazon/Uber</div>
+                <div class="text-muted" style="font-size:0.7rem">This is the exact same security model used by Amazon, Uber, Shopify, and millions of other businesses. Stripe handles $1 trillion+ annually.</div>
+              </div>
+            </div>
+          </div>
+          <p class="small mb-0"><strong>If a hacker breached ContextWeaver, what would they get?</strong> Encrypted vault entries containing Stripe customer IDs (useless without Stripe's API key) and policy documents (your travel rules &mdash; not financial data). No card numbers. No bank accounts. No passwords.</p>
+        </div>
+
+        <!-- Q3: Vault security -->
+        <div class="block" style="background:rgba(13,110,253,0.06);border:1px solid rgba(13,110,253,0.2)">
+          <h5>&#x1F5C4;&#xFE0F; "What about the personal vault? Where is that data stored?"</h5>
+          <p><strong>Short answer: The vault uses industry-standard secret managers &mdash; the same ones that protect bank infrastructure.</strong></p>
+          <table class="table table-sm table-bordered mb-3" style="font-size:0.8rem;color:var(--text)">
+            <thead><tr><th>Vault Backend</th><th>Where Data Lives</th><th>Encryption</th><th>Who Uses It</th></tr></thead>
+            <tbody>
+              <tr><td><i class="bi bi-cloud text-info"></i> Azure Key Vault</td><td>Microsoft Azure data center (your region)</td><td>AES-256 + HSM hardware</td><td>Banks, governments, Fortune 500</td></tr>
+              <tr><td><i class="bi bi-cloud text-warning"></i> HashiCorp Vault</td><td>Your own servers or cloud</td><td>AES-256-GCM, Shamir sealing</td><td>Stripe itself, NASA, Adobe</td></tr>
+              <tr><td><i class="bi bi-cloud text-success"></i> AWS Secrets Manager</td><td>Amazon AWS data center</td><td>AWS KMS encryption</td><td>Netflix, Airbnb, Capital One</td></tr>
+              <tr><td><i class="bi bi-pc-display"></i> Local File (dev only)</td><td>Your machine (development/demo)</td><td>Not for production</td><td>Local testing only</td></tr>
+            </tbody>
+          </table>
+          <p class="small mb-0">In production, your vault is <strong>never on the same server as the AI</strong>. The AI requests a secret, uses it for one API call, then discards it. The secret is never written to disk, never included in logs, and never sent to the LLM.</p>
+        </div>
+
+        <!-- Q4: Third party data handling -->
+        <div class="block" style="background:rgba(25,135,84,0.06);border:1px solid rgba(25,135,84,0.2)">
+          <h5>&#x1F310; "It depends on how third parties handle data. How do you ensure that?"</h5>
+          <p><strong>Short answer: We only use third parties that are independently audited and certified.</strong></p>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,0.03)">
+                <div class="fw-bold small mb-1">&#x2705; What we verify about every third party</div>
+                <div style="font-size:0.75rem" class="text-muted">
+                  &bull; SOC 2 Type II certified (security audit)<br>
+                  &bull; GDPR compliant (data protection)<br>
+                  &bull; PCI DSS certified (if handling payments)<br>
+                  &bull; Data residency options (choose your region)<br>
+                  &bull; Encryption at rest and in transit
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="p-2 rounded" style="background:rgba(255,255,255,0.03)">
+                <div class="fw-bold small mb-1">&#x1F4CA; Data flow summary</div>
+                <div style="font-size:0.75rem" class="text-muted">
+                  &bull; <strong>Your policies/rules:</strong> Stored in Azure AI Search (your subscription, your region)<br>
+                  &bull; <strong>Your credentials:</strong> Azure Key Vault (your subscription)<br>
+                  &bull; <strong>Card data:</strong> Stripe (never in our systems)<br>
+                  &bull; <strong>Emails:</strong> Your Gmail/Outlook (your account)<br>
+                  &bull; <strong>LLM prompts:</strong> Azure OpenAI (your deployment, your data boundary)
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="small mb-0"><strong>Key principle:</strong> ContextWeaver is a <em>conductor</em>, not a <em>warehouse</em>. It orchestrates actions between systems you already trust (Stripe, Gmail, Azure) but <strong>never stores your actual financial or personal data itself</strong>. Your data stays where it already is &mdash; in the systems designed to protect it.</p>
+        </div>
+
+        <!-- Q5: Multi-tasking with one instruction -->
+        <div class="block" style="background:rgba(168,139,250,0.06);border:1px solid rgba(168,139,250,0.2)">
+          <h5>&#x1F504; "What about pass codes when multi-tasking with just one instruction?"</h5>
+          <p><strong>Short answer: Each action uses its own isolated credential lookup. Nothing is shared between steps.</strong></p>
+          <div class="text-center mb-3">
+            <div class="d-inline-block text-start p-3 rounded" style="background:rgba(0,0,0,0.2);font-size:0.8rem;font-family:monospace">
+              <div class="text-muted"># User says ONE sentence, but internally:</div><br>
+              <div><span class="text-info">Step 1:</span> search_all() &rarr; no credentials needed (public RAG index)</div>
+              <div><span class="text-info">Step 2:</span> travel-search() &rarr; resolves <strong>travel API key</strong> from vault <em>(used, then discarded)</em></div>
+              <div><span class="text-info">Step 3:</span> payments-charge() &rarr; resolves <strong>Stripe key</strong> from vault <em>(used, then discarded)</em></div>
+              <div><span class="text-info">Step 4:</span> email-send() &rarr; resolves <strong>Gmail token</strong> from vault <em>(used, then discarded)</em></div>
+              <div><br><span class="text-muted"># Each step is independent. Step 3 cannot see Step 4's Gmail token.</span></div>
+              <div><span class="text-muted"># The LLM never sees ANY of these credentials.</span></div>
+            </div>
+          </div>
+          <p class="small mb-0">Even though you gave one instruction, each tool call is a <strong>separate, isolated execution</strong>. The Stripe key used in Step 3 is resolved fresh from the vault, used for that one API call, and immediately discarded. It's never passed to the email step, never stored in memory, and never sent back to the AI. Think of each step as a <strong>separate locked room</strong> &mdash; they can't see into each other.</p>
+        </div>
+
+        <!-- Visual summary -->
+        <div class="mt-3 p-3 rounded text-center" style="background:rgba(168,139,250,0.08);border:1px solid rgba(168,139,250,0.2)">
+          <h5 class="mb-3">&#x1F512; Security in One Picture</h5>
+          <div class="d-flex justify-content-center gap-2 flex-wrap mb-3" style="font-size:0.8rem">
+            <div class="p-2 rounded" style="background:rgba(168,139,250,0.15);min-width:140px">
+              <div class="fw-bold">&#x1F9E0; AI (LLM)</div>
+              <div class="text-muted small">Sees: tool names<br>Never sees: credentials</div>
+            </div>
+            <div class="p-2 rounded" style="background:rgba(13,202,240,0.15);min-width:140px">
+              <div class="fw-bold">&#x1F50C; Engine</div>
+              <div class="text-muted small">Resolves credentials<br>Uses &amp; discards instantly</div>
+            </div>
+            <div class="p-2 rounded" style="background:rgba(220,53,69,0.15);min-width:140px">
+              <div class="fw-bold">&#x1F5C4;&#xFE0F; Vault</div>
+              <div class="text-muted small">Encrypted storage<br>Azure KV / HashiCorp</div>
+            </div>
+            <div class="p-2 rounded" style="background:rgba(255,193,7,0.15);min-width:140px">
+              <div class="fw-bold">&#x1F4B3; Stripe</div>
+              <div class="text-muted small">Card data lives here<br>PCI Level 1 certified</div>
+            </div>
+          </div>
+          <p class="mb-0 small"><strong>Your financial data never enters ContextWeaver.</strong> It stays in Stripe, Gmail, and your vault &mdash; systems designed and audited to protect it.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION: THE LEGO PLATFORM -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="mb-4" style="color:var(--accent-purple)"><i class="bi bi-bricks"></i> The Bigger Picture: A Lego System for Any Service</h3>
+
+        <div class="block" style="background:rgba(168,139,250,0.08);border:1px solid rgba(168,139,250,0.3)">
+          <h5>&#x1F9F1; Every connector is a building block. Snap them together to build anything.</h5>
+          <p>The travel example above used 3 connectors (Travel + Payments + Email). But ContextWeaver isn't a travel app &mdash; it's a <strong>platform for building any service</strong> by combining connectors like Lego blocks:</p>
+          <div class="row g-2 mt-3">
+            <div class="col-md-3">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1)">
+                <div style="font-size:1.5rem">&#x1F3E2;</div>
+                <div class="fw-bold small text-info">B2B Enterprise</div>
+                <div style="font-size:0.7rem" class="text-muted">Jira + GitHub + ADO + K8s + Datadog<br>= DevOps automation</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1)">
+                <div style="font-size:1.5rem">&#x1F6D2;</div>
+                <div class="fw-bold small text-info">B2C Commerce</div>
+                <div style="font-size:0.7rem" class="text-muted">Shopify + Stripe + Email + SMS<br>= AI shopping assistant</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1)">
+                <div style="font-size:1.5rem">&#x1F3E5;</div>
+                <div class="fw-bold small text-info">Healthcare</div>
+                <div style="font-size:0.7rem" class="text-muted">EHR + Lab + Pharmacy + Calendar<br>= Patient care coordinator</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="p-2 rounded text-center" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1)">
+                <div style="font-size:1.5rem">&#x1F4B0;</div>
+                <div class="fw-bold small text-info">FinTech</div>
+                <div style="font-size:0.7rem" class="text-muted">Banking API + Stripe + Plaid + Email<br>= AI financial advisor</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(25,135,84,0.06);border:1px solid rgba(25,135,84,0.2)">
+          <h5>&#x1F50C; Three ways to add any system to the platform:</h5>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(25,135,84,0.1)">
+                <div style="font-size:1.5rem">&#x1F527;</div>
+                <div class="fw-bold small text-success">Build New</div>
+                <div style="font-size:0.75rem" class="text-muted">Write a connector with tools.py<br>Direct API integration<br><em>e.g., Stripe, Gmail, GitHub</em></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(13,202,240,0.1)">
+                <div style="font-size:1.5rem">&#x1F504;</div>
+                <div class="fw-bold small text-info">Proxy Existing MCP</div>
+                <div style="font-size:0.75rem" class="text-muted">Point to any MCP server<br>Inherit all its tools instantly<br><em>e.g., Expedia MCP, Amadeus MCP</em></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 rounded text-center" style="background:rgba(255,193,7,0.1)">
+                <div style="font-size:1.5rem">&#x2795;</div>
+                <div class="fw-bold small text-warning">Extend &amp; Combine</div>
+                <div style="font-size:0.75rem" class="text-muted">Attach N connectors to 1 plugin<br>Mix-and-match capabilities<br><em>e.g., DevOps plugin uses Jira+GitHub+K8s</em></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" style="background:rgba(220,53,69,0.06);border:1px solid rgba(220,53,69,0.2)">
+          <h5>&#x1F512; Enterprise-grade security at every level &mdash; B2B and B2C</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="fw-bold small mb-1">&#x1F3E2; B2B Enterprise</div>
+              <div style="font-size:0.75rem" class="text-muted">
+                &bull; Hierarchical policies (Org &gt; Group &gt; User)<br>
+                &bull; SSO with RBAC (manager/developer/viewer)<br>
+                &bull; Vault-backed credentials (Azure KV, HashiCorp)<br>
+                &bull; Audit trail for every action<br>
+                &bull; On-prem deployment option
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="fw-bold small mb-1">&#x1F464; B2C Consumer</div>
+              <div style="font-size:0.75rem" class="text-muted">
+                &bull; PCI-compliant payments (Stripe Checkout)<br>
+                &bull; Card data never touches the platform<br>
+                &bull; Per-user credential isolation<br>
+                &bull; OAuth for Gmail, Calendar, social logins<br>
+                &bull; GDPR-compliant data handling
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-3 p-3 rounded" style="background:rgba(168,139,250,0.1);border:1px solid rgba(168,139,250,0.3)">
+          <p class="fw-bold mb-1" style="color:var(--accent-purple);font-size:1.1rem">&#x1F9F1; Build. Proxy. Extend. Combine. &mdash; Unlimited Possibilities.</p>
+          <p class="text-muted small mb-0">Every popular application can become a connector. Every connector can be combined with others.<br>The result: <strong>any service imaginable</strong> &mdash; travel, DevOps, healthcare, finance, HR, logistics &mdash; built from the same secure, policy-aware platform.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION: THE BOTTOM LINE -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="card mb-4">
+      <div class="card-body text-center py-4">
+        <h3 style="color:var(--accent-purple)" class="mb-3">The Bottom Line</h3>
+        <p class="lead" style="font-size:1.1rem">
+          <strong>One sentence.</strong> Three connectors. Policy-aware. Per-user credentials.<br>
+          The AI searched flights, checked your budget, charged your card, and emailed your confirmation.<br>
+          <em>No screens. No forms. No code changes.</em>
+        </p>
+        <p style="font-size:0.95rem" class="text-muted mt-3">
+          And this is just one combination. With enough connectors &mdash; built, proxied, or extended &mdash;<br>
+          <strong style="color:var(--accent-purple)">ContextWeaver becomes a Lego system for building any AI-powered service,<br>
+          for B2B enterprise or B2C consumer, with enterprise-grade security built in.</strong>
+        </p>
+        <div class="mt-3">
+          <a href="index.html" class="btn btn-outline-info btn-sm me-2"><i class="bi bi-house"></i> Back to About</a>
+          <a href="scenario-devops.html" class="btn btn-outline-info btn-sm me-2"><i class="bi bi-gear"></i> DevOps Scenario</a>
+          <a href="scenario.html" class="btn btn-outline-info btn-sm"><i class="bi bi-arrow-right"></i> More Scenarios</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center text-muted small pb-4">&copy; 2026 ContextWeaver &mdash; Enterprise RAG &amp; Agentic AI Platform</div>
+
+  </div>
+</body>
+</html>

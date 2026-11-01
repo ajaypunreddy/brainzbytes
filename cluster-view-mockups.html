@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight">
+<head>
+<script src="/gate.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster View — Design Options</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;padding:1.5rem}
+h1{text-align:center;font-size:1.5rem;margin-bottom:.5rem;background:linear-gradient(135deg,#0dcaf0,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{text-align:center;color:rgba(255,255,255,0.3);font-size:.82rem;margin-bottom:2rem}
+h2{font-size:1.1rem;color:#a78bfa;margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(255,255,255,0.06)}
+.mockup{background:#0a0e14;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.2rem;margin-bottom:1rem;max-width:1100px;margin-left:auto;margin-right:auto}
+
+/* Option A: Hexagonal */
+@keyframes pulse-green{0%,100%{box-shadow:0 0 4px rgba(25,135,84,0.4)}50%{box-shadow:0 0 12px rgba(25,135,84,0.7)}}
+@keyframes pulse-red{0%,100%{box-shadow:0 0 4px rgba(220,53,69,0.4)}50%{box-shadow:0 0 12px rgba(220,53,69,0.7)}}
+.hex-pod{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;transition:all .2s;position:relative}
+.hex-pod:hover{transform:scale(1.15);z-index:10}
+.hex-pod.running{background:rgba(25,135,84,0.15);border:2px solid rgba(25,135,84,0.5);animation:pulse-green 3s ease-in-out infinite}
+.hex-pod.warning{background:rgba(255,193,7,0.15);border:2px solid rgba(255,193,7,0.5)}
+.hex-pod.error{background:rgba(220,53,69,0.15);border:2px solid rgba(220,53,69,0.5);animation:pulse-red 2s ease-in-out infinite}
+.hex-label{font-size:.58rem;color:rgba(255,255,255,0.5);text-align:center;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60px}
+.hex-tooltip{display:none;position:absolute;bottom:110%;left:50%;transform:translateX(-50%);background:var(--bg-elevated);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:8px 12px;font-size:.72rem;white-space:nowrap;z-index:100;pointer-events:none}
+.hex-pod:hover .hex-tooltip{display:block}
+.ns-section{background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px}
+.ns-header{font-size:.75rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+
+/* Option B: Topology */
+.topo-node{position:absolute;border-radius:10px;padding:8px 14px;font-size:.75rem;text-align:center;cursor:pointer;transition:all .2s}
+.topo-node:hover{transform:scale(1.05);z-index:10}
+
+/* Option C: Dashboard cards */
+.dash-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .2s}
+.dash-card:hover{border-color:rgba(13,202,240,0.3);background:rgba(13,202,240,0.03)}
+.dash-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dash-bar{height:4px;border-radius:2px;background:rgba(255,255,255,0.06);flex:1;overflow:hidden}
+.dash-bar-fill{height:100%;border-radius:2px}
+.summary-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;text-align:center}
+.summary-val{font-size:1.6rem;font-weight:800}
+.summary-label{font-size:.72rem;color:rgba(255,255,255,0.4)}
+.ns-tab{padding:6px 16px;border-radius:8px;font-size:.78rem;cursor:pointer;border:1px solid rgba(255,255,255,0.08);background:transparent;color:rgba(255,255,255,0.5);transition:all .15s}
+.ns-tab.active{background:rgba(13,202,240,0.1);border-color:rgba(13,202,240,0.3);color:#0dcaf0;font-weight:600}
+</style>
+
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js" defer></script>
+</head>
+<body>
+
+<h1>☸ Cluster View — Design Options</h1>
+<p class="subtitle">Three mockups showing how the cluster view could look. Pick your favorite.</p>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>Option A: Hexagonal Pod Grid — "Monitoring Wall"</h2>
+<p style="color:rgba(255,255,255,0.35);font-size:.82rem;margin-bottom:1rem;max-width:800px">Each pod is a glowing icon with status color. Hover for details. Grouped by namespace. Feels like a NOC dashboard.</p>
+
+<div class="mockup">
+  <!-- Cluster header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding:10px 14px;background:rgba(13,202,240,0.05);border:1px solid rgba(13,202,240,0.15);border-radius:10px">
+    <div>
+      <span style="color:#0dcaf0;font-weight:700">☁ aks-contextweaver</span>
+      <span style="color:rgba(255,255,255,0.3);font-size:.78rem;margin-left:8px">eastus2 · K8s 1.32</span>
+    </div>
+    <div style="display:flex;gap:6px">
+      <div style="width:12px;height:12px;border-radius:50%;background:#198754"></div>
+      <div style="width:12px;height:12px;border-radius:50%;background:#198754"></div>
+      <span style="font-size:.72rem;color:rgba(255,255,255,0.4)">2 nodes healthy</span>
+    </div>
+  </div>
+
+  <!-- Namespace grid -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+    <!-- default namespace -->
+    <div class="ns-section" style="border-left:3px solid #0dcaf0">
+      <div class="ns-header"><span style="color:#0dcaf0">🔌 default</span><span style="color:rgba(255,255,255,0.25);font-size:.6rem;margin-left:auto">2 pods</span></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running">🧠<div class="hex-tooltip">🧠 <strong>cerebro-app</strong><br>Running · 0 restarts · 4 workers<br>CPU: 0.5/2 · Mem: 512M/2Gi<br>⎈ Helm rev 8 · Image: latest<br><span style="color:#0dcaf0">↗ double-click → Dashboard</span></div></div>
+          <div class="hex-label">cerebro-app</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running">🌐<div class="hex-tooltip">🌐 <strong>ingress-nginx</strong><br>Running · TLS: ✅ Let's Encrypt<br>IP: 4.152.21.202<br>Host: app.brainzbytes.com</div></div>
+          <div class="hex-label">ingress</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- mcp1 namespace -->
+    <div class="ns-section" style="border-left:3px solid #198754">
+      <div class="ns-header"><span style="color:#198754">⚙ mcp1</span><span style="color:rgba(255,255,255,0.25);font-size:.6rem;margin-left:auto">1 pod</span></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running">🔌<div class="hex-tooltip">🔌 <strong>mcp-engine</strong><br>Running · 4 plugins loaded<br>Tools: Email, GitHub, Payments, Travel<br>⎈ Helm rev 4<br><span style="color:#198754">↗ double-click → Visual Designer</span></div></div>
+          <div class="hex-label">mcp1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- workbench namespace -->
+    <div class="ns-section" style="border-left:3px solid #ffc107">
+      <div class="ns-header"><span style="color:#ffc107">🔬 workbench</span><span style="color:rgba(255,255,255,0.25);font-size:.6rem;margin-left:auto">1 pod</span></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running">📓<div class="hex-tooltip">📓 <strong>jupyter</strong><br>Running · Jupyter 2.8.0<br>6 starter notebooks<br>RBAC: cluster-viewer<br><span style="color:#ffc107">↗ double-click → Workbench</span></div></div>
+          <div class="hex-label">jupyter</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- monitoring namespace -->
+    <div class="ns-section" style="border-left:3px solid #e6522c">
+      <div class="ns-header"><span style="color:#e6522c">📊 monitoring</span><span style="color:rgba(255,255,255,0.25);font-size:.6rem;margin-left:auto">8 pods</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running" style="width:40px;height:40px;font-size:.9rem">🔥<div class="hex-tooltip">🔥 <strong>prometheus</strong><br>Running · Scraping all namespaces</div></div>
+          <div class="hex-label">prometheus</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running" style="width:40px;height:40px;font-size:.9rem">📊<div class="hex-tooltip">📊 <strong>grafana</strong><br>Running · 6 dashboards<br><span style="color:#e6522c">↗ double-click → Monitoring</span></div></div>
+          <div class="hex-label">grafana</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running" style="width:40px;height:40px;font-size:.9rem">📋<div class="hex-tooltip">📋 <strong>loki</strong><br>Running · Log aggregation</div></div>
+          <div class="hex-label">loki</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running" style="width:40px;height:40px;font-size:.9rem">📡<div class="hex-tooltip">📡 <strong>promtail</strong><br>Running · Log collection</div></div>
+          <div class="hex-label">promtail</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running" style="width:40px;height:40px;font-size:.9rem">🔔<div class="hex-tooltip">🔔 <strong>alertmanager</strong><br>Running · Alert routing</div></div>
+          <div class="hex-label">alerts</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running" style="width:40px;height:40px;font-size:.9rem">📈<div class="hex-tooltip">📈 <strong>node-exporter</strong><br>Running · Node metrics</div></div>
+          <div class="hex-label">node-exp</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running" style="width:40px;height:40px;font-size:.9rem">🏷<div class="hex-tooltip">🏷 <strong>kube-state-metrics</strong><br>Running · K8s object metrics</div></div>
+          <div class="hex-label">kube-state</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="hex-pod running" style="width:40px;height:40px;font-size:.9rem">🔐<div class="hex-tooltip">🔐 <strong>cert-manager</strong><br>Running · TLS certificates</div></div>
+          <div class="hex-label">cert-mgr</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>Option B: Node-Graph Topology — "Network Map"</h2>
+<p style="color:rgba(255,255,255,0.35);font-size:.82rem;margin-bottom:1rem;max-width:800px">SVG topology showing data flow: Internet → Ingress → Services → Pods. Animated connection lines. Like a network diagram.</p>
+
+<div class="mockup" style="position:relative;height:400px;overflow:hidden">
+  <!-- Internet -->
+  <div class="topo-node" style="left:50%;top:10px;transform:translateX(-50%);background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5)">🌍 Internet</div>
+
+  <!-- Ingress -->
+  <div class="topo-node" style="left:50%;top:70px;transform:translateX(-50%);background:rgba(255,193,7,0.08);border:1.5px solid rgba(255,193,7,0.4);color:#ffc107">
+    🌐 Ingress<br><span style="font-size:.62rem;color:rgba(255,255,255,0.35)">4.152.21.202 · TLS ✅</span>
+  </div>
+
+  <!-- SVG connection lines -->
+  <svg style="position:absolute;inset:0;pointer-events:none" viewBox="0 0 1080 400">
+    <line x1="540" y1="45" x2="540" y2="70" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <line x1="540" y1="110" x2="280" y2="170" stroke="rgba(13,202,240,0.3)" stroke-width="1.5"/>
+    <line x1="540" y1="110" x2="540" y2="170" stroke="rgba(25,135,84,0.3)" stroke-width="1.5"/>
+    <line x1="540" y1="110" x2="800" y2="170" stroke="rgba(230,82,44,0.3)" stroke-width="1.5"/>
+    <!-- Services → Pods -->
+    <line x1="280" y1="210" x2="200" y2="280" stroke="rgba(13,202,240,0.2)" stroke-width="1"/>
+    <line x1="280" y1="210" x2="360" y2="280" stroke="rgba(13,202,240,0.2)" stroke-width="1"/>
+    <line x1="540" y1="210" x2="540" y2="280" stroke="rgba(25,135,84,0.2)" stroke-width="1"/>
+    <line x1="800" y1="210" x2="700" y2="280" stroke="rgba(230,82,44,0.2)" stroke-width="1"/>
+    <line x1="800" y1="210" x2="780" y2="280" stroke="rgba(230,82,44,0.2)" stroke-width="1"/>
+    <line x1="800" y1="210" x2="860" y2="280" stroke="rgba(230,82,44,0.2)" stroke-width="1"/>
+    <line x1="800" y1="210" x2="940" y2="280" stroke="rgba(230,82,44,0.2)" stroke-width="1"/>
+  </svg>
+
+  <!-- Services row -->
+  <div class="topo-node" style="left:200px;top:170px;background:rgba(13,202,240,0.06);border:1.5px solid rgba(13,202,240,0.3);color:#0dcaf0">
+    🔌 cerebro-app:5080<br><span style="font-size:.62rem;color:rgba(255,255,255,0.3)">default ns</span>
+  </div>
+  <div class="topo-node" style="left:460px;top:170px;background:rgba(25,135,84,0.06);border:1.5px solid rgba(25,135,84,0.3);color:#198754">
+    ⚙ mcp1:5000/5001<br><span style="font-size:.62rem;color:rgba(255,255,255,0.3)">mcp1 ns</span>
+  </div>
+  <div class="topo-node" style="left:720px;top:170px;background:rgba(230,82,44,0.06);border:1.5px solid rgba(230,82,44,0.3);color:#e6522c">
+    📊 monitoring<br><span style="font-size:.62rem;color:rgba(255,255,255,0.3)">monitoring ns</span>
+  </div>
+
+  <!-- Pods row -->
+  <div class="topo-node" style="left:120px;top:280px;background:rgba(13,202,240,0.08);border:1.5px solid rgba(13,202,240,0.25)">
+    <span style="font-size:1.2rem">🧠</span><br><span style="font-size:.68rem;color:#0dcaf0">cerebro-app</span><br><span style="font-size:.58rem;color:rgba(255,255,255,0.3)">● Running</span>
+  </div>
+  <div class="topo-node" style="left:290px;top:280px;background:rgba(13,202,240,0.06);border:1.5px solid rgba(13,202,240,0.15)">
+    <span style="font-size:1.2rem">🌐</span><br><span style="font-size:.68rem;color:rgba(255,255,255,0.5)">ingress</span><br><span style="font-size:.58rem;color:rgba(255,255,255,0.3)">● Running</span>
+  </div>
+  <div class="topo-node" style="left:475px;top:280px;background:rgba(25,135,84,0.08);border:1.5px solid rgba(25,135,84,0.25)">
+    <span style="font-size:1.2rem">🔌</span><br><span style="font-size:.68rem;color:#198754">mcp-engine</span><br><span style="font-size:.58rem;color:rgba(255,255,255,0.3)">● Running</span>
+  </div>
+  <div class="topo-node" style="left:630px;top:280px;background:rgba(230,82,44,0.06);border:1px solid rgba(230,82,44,0.15)">
+    <span style="font-size:1rem">🔥📊</span><br><span style="font-size:.62rem;color:rgba(255,255,255,0.4)">prom+grafana</span>
+  </div>
+  <div class="topo-node" style="left:730px;top:280px;background:rgba(230,82,44,0.06);border:1px solid rgba(230,82,44,0.15)">
+    <span style="font-size:1rem">📋📡</span><br><span style="font-size:.62rem;color:rgba(255,255,255,0.4)">loki+promtail</span>
+  </div>
+  <div class="topo-node" style="left:830px;top:280px;background:rgba(230,82,44,0.06);border:1px solid rgba(230,82,44,0.15)">
+    <span style="font-size:1rem">🔔📈</span><br><span style="font-size:.62rem;color:rgba(255,255,255,0.4)">alerts+metrics</span>
+  </div>
+  <div class="topo-node" style="left:930px;top:280px;background:rgba(230,82,44,0.06);border:1px solid rgba(230,82,44,0.15)">
+    <span style="font-size:1rem">🔐</span><br><span style="font-size:.62rem;color:rgba(255,255,255,0.4)">cert-mgr</span>
+  </div>
+
+  <!-- Nodes at bottom -->
+  <div style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:16px">
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 16px;font-size:.7rem;color:rgba(255,255,255,0.4)">
+      <span style="color:#198754">●</span> Node 1 — D4ds_v5 · 4 CPU · 16GB
+    </div>
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 16px;font-size:.7rem;color:rgba(255,255,255,0.4)">
+      <span style="color:#198754">●</span> Node 2 — D4ds_v5 · 4 CPU · 16GB
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>Option C: Dashboard Cards — "Status Board"</h2>
+<p style="color:rgba(255,255,255,0.35);font-size:.82rem;margin-bottom:1rem;max-width:800px">Summary cards at top, namespace tabs, pod cards with mini resource bars. Clean and data-rich. Like a Datadog dashboard.</p>
+
+<div class="mockup">
+  <!-- Summary row -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px">
+    <div class="summary-card">
+      <div class="summary-val" style="color:#198754">2</div>
+      <div class="summary-label">Nodes</div>
+      <div style="display:flex;gap:3px;justify-content:center;margin-top:4px">
+        <div style="width:8px;height:8px;border-radius:50%;background:#198754"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:#198754"></div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-val" style="color:#0dcaf0">12</div>
+      <div class="summary-label">Pods Running</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-val" style="color:#a78bfa">4</div>
+      <div class="summary-label">Namespaces</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-val" style="color:#ffc107">38%</div>
+      <div class="summary-label">CPU Usage</div>
+      <div class="dash-bar" style="margin-top:6px"><div class="dash-bar-fill" style="width:38%;background:#ffc107"></div></div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-val" style="color:#0dcaf0">62%</div>
+      <div class="summary-label">Memory Usage</div>
+      <div class="dash-bar" style="margin-top:6px"><div class="dash-bar-fill" style="width:62%;background:#0dcaf0"></div></div>
+    </div>
+  </div>
+
+  <!-- Namespace tabs -->
+  <div style="display:flex;gap:6px;margin-bottom:14px">
+    <div class="ns-tab active">🔌 default (2)</div>
+    <div class="ns-tab">⚙ mcp1 (1)</div>
+    <div class="ns-tab">🔬 workbench (1)</div>
+    <div class="ns-tab">📊 monitoring (8)</div>
+    <div class="ns-tab" style="margin-left:auto;border-color:rgba(255,255,255,0.05);color:rgba(255,255,255,0.25)">All namespaces</div>
+  </div>
+
+  <!-- Pod cards grid -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px">
+    <!-- cerebro-app -->
+    <div class="dash-card">
+      <div class="dash-dot" style="background:#198754"></div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:1rem">🧠</span>
+          <span style="font-weight:600;font-size:.85rem">cerebro-app</span>
+          <span style="font-size:.62rem;color:rgba(255,255,255,0.3);margin-left:auto">2h ago</span>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:6px;font-size:.7rem;color:rgba(255,255,255,0.4)">
+          <div style="flex:1">
+            <div style="margin-bottom:2px">CPU <span style="float:right;color:#ffc107">0.5/2</span></div>
+            <div class="dash-bar"><div class="dash-bar-fill" style="width:25%;background:#ffc107"></div></div>
+          </div>
+          <div style="flex:1">
+            <div style="margin-bottom:2px">Mem <span style="float:right;color:#0dcaf0">512M/2Gi</span></div>
+            <div class="dash-bar"><div class="dash-bar-fill" style="width:25%;background:#0dcaf0"></div></div>
+          </div>
+        </div>
+        <div style="font-size:.62rem;color:rgba(255,255,255,0.25);margin-top:4px">⎈ Helm rev 8 · 0 restarts · Flask/Gunicorn</div>
+      </div>
+    </div>
+
+    <!-- ingress -->
+    <div class="dash-card">
+      <div class="dash-dot" style="background:#198754"></div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:1rem">🌐</span>
+          <span style="font-weight:600;font-size:.85rem">ingress-nginx</span>
+          <span style="font-size:.62rem;color:rgba(255,255,255,0.3);margin-left:auto">26h ago</span>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:6px;font-size:.7rem;color:rgba(255,255,255,0.4)">
+          <div style="flex:1">
+            <div style="margin-bottom:2px">CPU <span style="float:right;color:#ffc107">0.1/1</span></div>
+            <div class="dash-bar"><div class="dash-bar-fill" style="width:10%;background:#ffc107"></div></div>
+          </div>
+          <div style="flex:1">
+            <div style="margin-bottom:2px">Mem <span style="float:right;color:#0dcaf0">128M/512M</span></div>
+            <div class="dash-bar"><div class="dash-bar-fill" style="width:25%;background:#0dcaf0"></div></div>
+          </div>
+        </div>
+        <div style="font-size:.62rem;color:rgba(255,255,255,0.25);margin-top:4px">TLS ✅ · 4.152.21.202 · app.brainzbytes.com</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;margin-top:2rem;padding:2rem;color:rgba(255,255,255,0.3);font-size:.85rem">
+  <strong style="color:#a78bfa">Which do you prefer?</strong><br>
+  A = Hexagonal monitoring wall · B = Network topology map · C = Dashboard status board
+</div>
+
+</body>
+</html>

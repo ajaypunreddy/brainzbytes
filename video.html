@@ -1,0 +1,2349 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContextWeaver - Identity-Aware AI Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background:var(--bg);
+            color:var(--text);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .presentation {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #0dcaf0, #bc8cff);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .scene.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .play-pause-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .play-pause-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #bc8cff;
+        }
+
+        .play-pause-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #e6edf3;
+        }
+
+        .scene-counter {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 0.9rem;
+            color: rgba(230, 237, 243, 0.6);
+            z-index: 1000;
+        }
+
+        /* Typography */
+        .title {
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0dcaf0, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            color: rgba(230, 237, 243, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: rgba(230, 237, 243, 0.6);
+            font-style: italic;
+        }
+
+        .headline {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .subheadline {
+            font-size: 1.8rem;
+            color: rgba(230, 237, 243, 0.7);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 0.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .danger-card {
+            border-left: 4px solid #dc3545;
+        }
+
+        .success-card {
+            border-left: 4px solid #198754;
+        }
+
+        .info-card {
+            border-left: 4px solid #0dcaf0;
+        }
+
+        /* Grid layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        /* Logo */
+        .logo-container {
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px rgba(188, 140, 255, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 30px rgba(188, 140, 255, 0.8));
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .fade-in-delay-1 {
+            animation: fadeIn 1s ease 0.5s forwards;
+            opacity: 0;
+        }
+
+        .fade-in-delay-2 {
+            animation: fadeIn 1s ease 1s forwards;
+            opacity: 0;
+        }
+
+        .fade-in-delay-3 {
+            animation: fadeIn 1s ease 1.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Typed text effect */
+        .typed {
+            display: inline-block;
+            border-right: 2px solid #bc8cff;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /* Stats */
+        .stat {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0dcaf0;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Pillars */
+        .pillars {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .pillar {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            min-width: 200px;
+        }
+
+        .pillar-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Architecture diagram */
+        .arch-diagram {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 500px;
+            margin: 2rem 0;
+        }
+
+        .arch-node {
+            position: absolute;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            transform: scale(0);
+            animation: popIn 0.5s ease forwards;
+        }
+
+        @keyframes popIn {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .arch-node.purple {
+            border-color: #bc8cff;
+            color: #bc8cff;
+        }
+
+        .arch-node.cyan {
+            border-color: #0dcaf0;
+            color: #0dcaf0;
+        }
+
+        .arch-node.green {
+            border-color: #198754;
+            color: #198754;
+        }
+
+        .arch-line {
+            position: absolute;
+            height: 2px;
+            background: rgba(188, 140, 255, 0.5);
+            transform-origin: left center;
+            animation: drawLine 1s ease forwards;
+        }
+
+        @keyframes drawLine {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        /* User avatars */
+        .user-demo {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .user-card {
+            flex: 1;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0dcaf0, #bc8cff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Pyramid diagram */
+        .pyramid {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            margin: 2rem auto;
+        }
+
+        .pyramid-layer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            opacity: 0;
+            animation: pyramidSlide 0.8s ease forwards;
+        }
+
+        @keyframes pyramidSlide {
+            from {
+                transform: translateX(-50%) translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .pyramid-layer.layer1 {
+            bottom: 0;
+            width: 500px;
+            border-color: #198754;
+            animation-delay: 0s;
+        }
+
+        .pyramid-layer.layer2 {
+            bottom: 140px;
+            width: 350px;
+            border-color: #0dcaf0;
+            animation-delay: 0.4s;
+        }
+
+        .pyramid-layer.layer3 {
+            bottom: 280px;
+            width: 200px;
+            border-color: #bc8cff;
+            animation-delay: 0.8s;
+        }
+
+        /* Connector grid */
+        .connector-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 900px;
+            margin: 2rem 0;
+        }
+
+        .connector-item {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .connector-item.appear {
+            animation: appear 0.5s ease forwards;
+        }
+
+        @keyframes appear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .connector-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Security circles */
+        .security-layers {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            margin: 1.5rem auto;
+            max-width: 700px;
+        }
+
+        .security-layer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.7rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: layerSlideIn 0.5s ease forwards;
+            width: 100%;
+            position: relative;
+        }
+
+        @keyframes layerSlideIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .security-layer .layer-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .security-layer .layer-bar {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .security-layer .layer-bar small {
+            display: block;
+            font-weight: 400;
+            font-size: 0.75rem;
+            opacity: 0.6;
+            margin-top: 2px;
+        }
+
+        .security-layer.l1 { animation-delay: 0.3s; }
+        .security-layer.l1 .layer-num { background: rgba(188,140,255,0.2); color: #bc8cff; }
+        .security-layer.l1 .layer-bar { background: rgba(188,140,255,0.06); border-color: #bc8cff; }
+
+        .security-layer.l2 { animation-delay: 0.6s; }
+        .security-layer.l2 .layer-num { background: rgba(13,202,240,0.2); color: #0dcaf0; }
+        .security-layer.l2 .layer-bar { background: rgba(13,202,240,0.06); border-color: #0dcaf0; }
+
+        .security-layer.l3 { animation-delay: 0.9s; }
+        .security-layer.l3 .layer-num { background: rgba(25,135,84,0.2); color: #198754; }
+        .security-layer.l3 .layer-bar { background: rgba(25,135,84,0.06); border-color: #198754; }
+
+        .security-layer.l4 { animation-delay: 1.2s; }
+        .security-layer.l4 .layer-num { background: rgba(255,193,7,0.2); color: #ffc107; }
+        .security-layer.l4 .layer-bar { background: rgba(255,193,7,0.06); border-color: #ffc107; }
+
+        .security-layer.l5 { animation-delay: 1.5s; }
+        .security-layer.l5 .layer-num { background: rgba(220,53,69,0.2); color: #dc3545; }
+        .security-layer.l5 .layer-bar { background: rgba(220,53,69,0.06); border-color: #dc3545; }
+
+        .security-connector {
+            width: 2px;
+            height: 16px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            margin-left: 50px;
+        }
+
+        /* Product screenshot mockups */
+        .product-frame {
+            position: relative;
+            max-width: 900px;
+            width: 90%;
+            margin: 1.5rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(188,140,255,0.08);
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            animation: frameReveal 0.8s ease forwards;
+        }
+        .product-frame.delay1 { animation-delay: 0.5s; }
+        .product-frame.delay2 { animation-delay: 1s; }
+
+        @keyframes frameReveal {
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .frame-titlebar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            background: rgba(22,27,34,0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .frame-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .frame-dot.r { background: #ff5f57; }
+        .frame-dot.y { background: #febc2e; }
+        .frame-dot.g { background: #28c840; }
+        .frame-title {
+            flex: 1;
+            text-align: center;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            font-weight: 500;
+        }
+        .frame-body {
+            background:var(--bg);
+            min-height: 260px;
+            position: relative;
+        }
+
+        .dual-screenshots {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            max-width: 1100px;
+            width: 95%;
+            margin: 1rem auto;
+        }
+        .dual-screenshots .product-frame { width: 100%; margin: 0; }
+
+        @media (max-width: 900px) {
+            .dual-screenshots { grid-template-columns: 1fr; }
+        }
+
+        /* Comparison table */
+        .comparison-table {
+            width: 100%;
+            max-width: 1000px;
+            margin: 2rem auto;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table tr {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .check {
+            color: #198754;
+            font-weight: 700;
+        }
+
+        .cross {
+            color: #dc3545;
+            font-weight: 700;
+        }
+
+        /* Cloud icons */
+        .cloud-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem 0;
+        }
+
+        .cloud-column {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .cloud-column h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #0dcaf0;
+        }
+
+        .cloud-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cloud-column li {
+            padding: 0.5rem 0;
+            color: rgba(230, 237, 243, 0.8);
+        }
+
+        /* CTA buttons */
+        .cta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 3rem 0;
+        }
+
+        .cta-card {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-card:hover {
+            border-color: #bc8cff;
+            background: rgba(188, 140, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .cta-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Workflow diagram */
+        .workflow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .workflow-node {
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #bc8cff;
+            border-radius: 12px;
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .workflow-arrow {
+            font-size: 2rem;
+            color: #0dcaf0;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Feature list */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+            max-width: 800px;
+        }
+
+        .feature-list li {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid #0dcaf0;
+            border-radius: 4px;
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        /* Scenario animation */
+        .scenario {
+            width: 100%;
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        .scenario-step {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .scenario-box {
+            flex: 1;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .scenario-arrow {
+            font-size: 2rem;
+            color: #0dcaf0;
+        }
+
+        /* Copyright */
+        .copyright {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: rgba(230, 237, 243, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .title {
+                font-size: 3.5rem;
+            }
+            .headline {
+                font-size: 2.5rem;
+            }
+            .grid-3,
+            .grid-4,
+            .cta-grid,
+            .cloud-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js" defer></script>
+</head>
+<body>
+    <div class="presentation">
+        <div class="progress-bar" id="progressBar"></div>
+
+        <!-- Scene 1: Title -->
+        <div class="scene active" data-duration="10000">
+            <div class="logo-container">
+                <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+                    <circle cx="60" cy="60" r="56" stroke="#bc8cff" stroke-width="2.5" opacity="0.3"/>
+                    <path d="M20 42 C35 42, 40 35, 55 35 S75 42, 100 42" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+                    <path d="M20 55 C35 55, 40 48, 55 48 S75 55, 100 55" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+                    <path d="M20 68 C35 68, 40 61, 55 61 S75 68, 100 68" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                    <path d="M20 81 C35 81, 40 74, 55 74 S75 81, 100 81" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
+                    <path d="M38 22 C38 37, 31 42, 31 57 S38 62, 38 98" stroke="#bc8cff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+                    <path d="M55 22 C55 37, 48 42, 48 57 S55 62, 55 98" stroke="#bc8cff" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+                    <path d="M72 22 C72 37, 65 42, 65 57 S72 62, 72 98" stroke="#bc8cff" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                    <path d="M89 22 C89 37, 82 42, 82 57 S89 62, 89 98" stroke="#bc8cff" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
+                    <circle cx="60" cy="60" r="14" fill="#0d1117" stroke="#bc8cff" stroke-width="2.5"/>
+                    <circle cx="60" cy="60" r="8" fill="#bc8cff" opacity="0.2"/>
+                    <circle cx="60" cy="60" r="4" fill="#bc8cff" opacity="0.8"/>
+                    <circle cx="28" cy="35" r="3" fill="#58a6ff" opacity="0.6"/>
+                    <circle cx="92" cy="35" r="3" fill="#58a6ff" opacity="0.6"/>
+                    <circle cx="28" cy="85" r="3" fill="#58a6ff" opacity="0.4"/>
+                    <circle cx="92" cy="85" r="3" fill="#58a6ff" opacity="0.4"/>
+                    <circle cx="60" cy="60" r="20" fill="#bc8cff" opacity="0.05"/>
+                </svg>
+            </div>
+            <h1 class="title fade-in" id="mainTitle"></h1>
+            <p class="subtitle fade-in-delay-1">Identity-Aware Agentic AI Platform</p>
+            <p class="tagline fade-in-delay-2">The security layer AI has been missing</p>
+            <p class="copyright fade-in-delay-3">by BrainzBytes</p>
+        </div>
+
+        <!-- Scene 2: The Problem -->
+        <div class="scene" data-duration="12000">
+            <h2 class="headline">AI agents have a dangerous blind spot</h2>
+            <div class="scenario">
+                <div class="scenario-step" style="animation-delay: 0.5s;">
+                    <div class="scenario-box" style="background: rgba(13, 202, 240, 0.1); border-color: #0dcaf0;">
+                        💬 "Check my email"
+                    </div>
+                    <div class="scenario-arrow">→</div>
+                    <div class="scenario-box" style="background: rgba(188, 140, 255, 0.1); border-color: #bc8cff;">
+                        🤖 AI Agent
+                    </div>
+                    <div class="scenario-arrow">→</div>
+                    <div class="scenario-box" style="background: rgba(220, 53, 69, 0.1); border-color: #dc3545;">
+                        ❌ Whose email? Which credentials? What rules?
+                    </div>
+                </div>
+            </div>
+            <p class="stat fade-in-delay-2">87% of enterprises cite AI security as top concern</p>
+            <p class="subheadline fade-in-delay-3">Today's AI doesn't know WHO it's working for</p>
+        </div>
+
+        <!-- Scene 3: What Goes Wrong -->
+        <div class="scene" data-duration="12000">
+            <h2 class="headline">What Goes Wrong</h2>
+            <div class="grid-4">
+                <div class="card danger-card" style="animation-delay: 0.3s; opacity: 0;" class="fade-in">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔑</div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Shared API Keys</h3>
+                    <p style="color: rgba(230, 237, 243, 0.7);">One leak compromises everyone</p>
+                </div>
+                <div class="card danger-card" style="animation-delay: 0.6s; opacity: 0;" class="fade-in">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">👤</div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">No Identity</h3>
+                    <p style="color: rgba(230, 237, 243, 0.7);">CEO and intern get same power</p>
+                </div>
+                <div class="card danger-card" style="animation-delay: 0.9s; opacity: 0;" class="fade-in">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">📚</div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Shared Knowledge</h3>
+                    <p style="color: rgba(230, 237, 243, 0.7);">AI shows wrong person's data</p>
+                </div>
+                <div class="card danger-card" style="animation-delay: 1.2s; opacity: 0;" class="fade-in">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">📝</div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Prompt-Only Rules</h3>
+                    <p style="color: rgba(230, 237, 243, 0.7);">Easily bypassed by hackers</p>
+                </div>
+            </div>
+            <p class="subheadline fade-in-delay-3" style="margin-top: 2rem;">This is the status quo in 2025</p>
+        </div>
+
+        <!-- Scene 4: The Vision -->
+        <div class="scene" data-duration="10000">
+            <h2 class="headline" style="color: #198754;">What if AI could be as secure as your bank?</h2>
+            <div class="pillars fade-in-delay-1">
+                <div class="pillar">
+                    <div class="pillar-icon">🔐</div>
+                    <h3>Identity</h3>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-icon">📋</div>
+                    <h3>Policy</h3>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-icon">📊</div>
+                    <h3>Audit</h3>
+                </div>
+            </div>
+            <p class="headline fade-in-delay-3" style="margin-top: 2rem; font-size: 2rem;">Every user. Every tool. Every action. Secured.</p>
+        </div>
+
+        <!-- Scene 5: Architecture Overview -->
+        <div class="scene" data-duration="15000">
+            <h2 class="headline">Architecture Overview</h2>
+            <div class="arch-diagram">
+                <div class="arch-node purple" style="top: 0; left: 50%; transform: translateX(-50%) scale(0); animation-delay: 0.5s;">
+                    👥 Users
+                </div>
+                <div class="arch-node purple" style="top: 45%; left: 50%; transform: translateX(-50%) scale(0); animation-delay: 1s; font-size: 1.3rem;">
+                    🧠 Cerebro (Brain)
+                </div>
+                <div class="arch-node cyan" style="top: 45%; left: 5%; transform: scale(0); animation-delay: 1.5s;">
+                    🔧 MCP Engines<br/><small>Tool Connectors</small>
+                </div>
+                <div class="arch-node cyan" style="top: 45%; right: 5%; transform: scale(0); animation-delay: 1.5s;">
+                    📚 RAG Knowledge<br/><small>Hierarchical</small>
+                </div>
+                <div class="arch-node green" style="bottom: 0; left: 50%; transform: translateX(-50%) scale(0); animation-delay: 2s;">
+                    🔑 Vault<br/><small>Credentials</small>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; max-width: 800px; margin-top: 2rem;">
+                <p class="fade-in-delay-3" style="text-align: center; font-size: 1.1rem;">Cerebro = The Brain</p>
+                <p class="fade-in-delay-3" style="text-align: center; font-size: 1.1rem;">MCP = The Hands</p>
+                <p class="fade-in-delay-3" style="text-align: center; font-size: 1.1rem;">RAG = The Memory</p>
+                <p class="fade-in-delay-3" style="text-align: center; font-size: 1.1rem;">Vault = The Keychain</p>
+            </div>
+        </div>
+
+        <!-- Scene 6: Identity-Aware Everything -->
+        <div class="scene" data-duration="12000">
+            <h2 class="headline">Identity-Aware Everything</h2>
+            <div class="user-demo">
+                <div class="user-card fade-in" style="animation-delay: 0.5s; opacity: 0;">
+                    <div class="avatar">A</div>
+                    <h3>Alice (CEO)</h3>
+                    <p style="margin: 1rem 0; color: rgba(230, 237, 243, 0.7);">"Send an email"</p>
+                    <div style="padding: 1rem; background: rgba(25, 135, 84, 0.1); border-radius: 8px; border: 1px solid #198754;">
+                        ✅ Uses alice@company.com<br/>Gmail (OAuth)
+                    </div>
+                </div>
+                <div class="user-card fade-in" style="animation-delay: 1s; opacity: 0;">
+                    <div class="avatar">B</div>
+                    <h3>Bob (Engineer)</h3>
+                    <p style="margin: 1rem 0; color: rgba(230, 237, 243, 0.7);">"Send an email"</p>
+                    <div style="padding: 1rem; background: rgba(25, 135, 84, 0.1); border-radius: 8px; border: 1px solid #198754;">
+                        ✅ Uses bob@company.com<br/>Outlook (OAuth)
+                    </div>
+                </div>
+                <div class="user-card fade-in" style="animation-delay: 1.5s; opacity: 0;">
+                    <div class="avatar">C</div>
+                    <h3>Carol (Intern)</h3>
+                    <p style="margin: 1rem 0; color: rgba(230, 237, 243, 0.7);">"Send an email"</p>
+                    <div style="padding: 1rem; background: rgba(220, 53, 69, 0.1); border-radius: 8px; border: 1px solid #dc3545;">
+                        ❌ Email not configured<br/>Ask your admin
+                    </div>
+                </div>
+            </div>
+            <p class="headline fade-in-delay-3" style="margin-top: 2rem; font-size: 1.8rem;">Same AI. Different identities. Different capabilities.</p>
+        </div>
+
+        <!-- Scene 7: Hierarchical RAG -->
+        <div class="scene" data-duration="15000">
+            <h2 class="headline">Hierarchical RAG Knowledge</h2>
+            <div class="pyramid">
+                <div class="pyramid-layer layer1">
+                    <div style="font-size: 1.1rem; font-weight: 600; color: #198754; margin-bottom: 0.5rem;">Organization Knowledge</div>
+                    <div style="font-size: 0.9rem; color: rgba(230, 237, 243, 0.7);">Company policies, compliance docs</div>
+                </div>
+                <div class="pyramid-layer layer2">
+                    <div style="font-size: 1.1rem; font-weight: 600; color: #0dcaf0; margin-bottom: 0.5rem;">Group Knowledge</div>
+                    <div style="font-size: 0.9rem; color: rgba(230, 237, 243, 0.7);">Team docs, department wikis</div>
+                </div>
+                <div class="pyramid-layer layer3">
+                    <div style="font-size: 1.1rem; font-weight: 600; color: #bc8cff; margin-bottom: 0.5rem;">Personal Knowledge</div>
+                    <div style="font-size: 0.9rem; color: rgba(230, 237, 243, 0.7);">User notes, preferences</div>
+                </div>
+            </div>
+            <div class="scenario" style="margin-top: 3rem;">
+                <div class="scenario-step" style="animation-delay: 2s;">
+                    <div class="scenario-box">
+                        "Buy $1200 software"
+                    </div>
+                    <div class="scenario-arrow">→</div>
+                    <div class="scenario-box" style="background: rgba(25, 135, 84, 0.1); border-color: #198754;">
+                        Org: $5000 max/month ✅
+                    </div>
+                    <div class="scenario-arrow">→</div>
+                    <div class="scenario-box" style="background: rgba(220, 53, 69, 0.1); border-color: #dc3545;">
+                        Eng: $500 max ❌ BLOCKED
+                    </div>
+                </div>
+            </div>
+            <p class="headline fade-in-delay-3" style="margin-top: 2rem; font-size: 1.6rem;">Your AI follows your org chart, not just your prompt</p>
+        </div>
+
+        <!-- Scene 8: MCP Connectors -->
+        <div class="scene" data-duration="12000">
+            <h2 class="headline">MCP Connectors — Connect ANY Tool</h2>
+            <div class="connector-grid">
+                <div class="connector-item" style="animation-delay: 0.2s;">
+                    <div class="connector-icon">📧</div>
+                    <div>Gmail</div>
+                </div>
+                <div class="connector-item" style="animation-delay: 0.4s;">
+                    <div class="connector-icon">📨</div>
+                    <div>Outlook</div>
+                </div>
+                <div class="connector-item" style="animation-delay: 0.6s;">
+                    <div class="connector-icon">📋</div>
+                    <div>Jira</div>
+                </div>
+                <div class="connector-item" style="animation-delay: 0.8s;">
+                    <div class="connector-icon">📝</div>
+                    <div>Confluence</div>
+                </div>
+                <div class="connector-item" style="animation-delay: 1s;">
+                    <div class="connector-icon">💻</div>
+                    <div>GitHub</div>
+                </div>
+                <div class="connector-item" style="animation-delay: 1.2s;">
+                    <div class="connector-icon">💬</div>
+                    <div>Slack</div>
+                </div>
+                <div class="connector-item" style="animation-delay: 1.4s;">
+                    <div class="connector-icon">💳</div>
+                    <div>Stripe</div>
+                </div>
+                <div class="connector-item" style="animation-delay: 1.6s;">
+                    <div class="connector-icon">📊</div>
+                    <div>Salesforce</div>
+                </div>
+                <div class="connector-item" style="animation-delay: 1.8s;">
+                    <div class="connector-icon">🔧</div>
+                    <div>Custom</div>
+                </div>
+            </div>
+            <p class="subheadline fade-in-delay-2">Connect ANY tool via Model Context Protocol</p>
+            <p class="subheadline fade-in-delay-3">Each connector inherits the user's identity and policies</p>
+        </div>
+
+        <!-- Scene 9: Visual Designer - Loom -->
+        <div class="scene" data-duration="12000">
+            <h2 class="headline">Visual Workflow Designer — Loom</h2>
+            <div class="workflow">
+                <div class="workflow-node" style="animation-delay: 0.5s;">Trigger</div>
+                <div class="workflow-arrow" style="animation-delay: 0.7s;">→</div>
+                <div class="workflow-node" style="animation-delay: 0.9s;">Ingest</div>
+                <div class="workflow-arrow" style="animation-delay: 1.1s;">→</div>
+                <div class="workflow-node" style="animation-delay: 1.3s;">Search</div>
+                <div class="workflow-arrow" style="animation-delay: 1.5s;">→</div>
+                <div class="workflow-node" style="animation-delay: 1.7s;">Agent</div>
+                <div class="workflow-arrow" style="animation-delay: 1.9s;">→</div>
+                <div class="workflow-node" style="animation-delay: 2.1s;">Act</div>
+                <div class="workflow-arrow" style="animation-delay: 2.3s;">→</div>
+                <div class="workflow-node" style="animation-delay: 2.5s;">Notify</div>
+            </div>
+            <p class="subheadline fade-in-delay-2" style="margin-top: 3rem;">Drag-and-drop workflow builder</p>
+            <p class="subheadline fade-in-delay-3">Non-technical users can build AI automations</p>
+            <p class="subheadline fade-in-delay-3" style="font-size: 1.2rem; margin-top: 1rem;">Each workflow enforces the creator's scope and permissions</p>
+        </div>
+
+        <!-- Scene 9b: Visual Designer Screenshot -->
+        <div class="scene" data-duration="12000">
+            <h2 class="headline" style="font-size: 1.8rem;">Loom — Visual Designer in Action</h2>
+            <div class="product-frame delay1">
+                <div class="frame-titlebar">
+                    <div class="frame-dot r"></div><div class="frame-dot y"></div><div class="frame-dot g"></div>
+                    <div class="frame-title">ContextWeaver — Visual Designer</div>
+                </div>
+                <div class="frame-body" style="padding: 0;">
+                    <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+                        <!-- Left panel - connector palette -->
+                        <rect x="0" y="0" width="160" height="300" fill="#161b22"/>
+                        <rect x="0" y="0" width="160" height="34" fill="rgba(255,255,255,0.03)"/>
+                        <text x="14" y="22" fill="rgba(255,255,255,0.5)" font-size="11" font-family="Segoe UI">📦 Connectors</text>
+                        <rect x="10" y="44" width="140" height="28" rx="6" fill="rgba(13,202,240,0.08)" stroke="rgba(13,202,240,0.3)" stroke-width="1"/>
+                        <text x="36" y="62" fill="#0dcaf0" font-size="10" font-family="Segoe UI">📧 Email Trigger</text>
+                        <rect x="10" y="78" width="140" height="28" rx="6" fill="rgba(188,140,255,0.08)" stroke="rgba(188,140,255,0.3)" stroke-width="1"/>
+                        <text x="36" y="96" fill="#bc8cff" font-size="10" font-family="Segoe UI">🔍 RAG Search</text>
+                        <rect x="10" y="112" width="140" height="28" rx="6" fill="rgba(25,135,84,0.08)" stroke="rgba(25,135,84,0.3)" stroke-width="1"/>
+                        <text x="36" y="130" fill="#198754" font-size="10" font-family="Segoe UI">🤖 Agent Node</text>
+                        <rect x="10" y="146" width="140" height="28" rx="6" fill="rgba(255,193,7,0.08)" stroke="rgba(255,193,7,0.3)" stroke-width="1"/>
+                        <text x="36" y="164" fill="#ffc107" font-size="10" font-family="Segoe UI">📊 Jira Action</text>
+                        <rect x="10" y="180" width="140" height="28" rx="6" fill="rgba(220,53,69,0.08)" stroke="rgba(220,53,69,0.3)" stroke-width="1"/>
+                        <text x="36" y="198" fill="#dc3545" font-size="10" font-family="Segoe UI">🔔 Slack Notify</text>
+                        <!-- Canvas - workflow nodes -->
+                        <rect x="160" y="0" width="740" height="300" fill="#0d1117"/>
+                        <!-- Grid dots -->
+                        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="0.5" fill="rgba(255,255,255,0.08)"/></pattern>
+                        <rect x="160" y="0" width="740" height="300" fill="url(#grid)"/>
+                        <!-- Nodes with connections -->
+                        <line x1="310" y1="90" x2="430" y2="130" stroke="#0dcaf0" stroke-width="2" opacity="0.4" stroke-dasharray="4,3"/>
+                        <line x1="510" y1="130" x2="610" y2="90" stroke="#bc8cff" stroke-width="2" opacity="0.4" stroke-dasharray="4,3"/>
+                        <line x1="310" y1="90" x2="430" y2="220" stroke="#198754" stroke-width="2" opacity="0.4" stroke-dasharray="4,3"/>
+                        <line x1="510" y1="220" x2="610" y2="90" stroke="#ffc107" stroke-width="2" opacity="0.4" stroke-dasharray="4,3"/>
+                        <line x1="690" y1="90" x2="770" y2="170" stroke="#dc3545" stroke-width="2" opacity="0.4" stroke-dasharray="4,3"/>
+                        <!-- Trigger node -->
+                        <rect x="240" y="68" width="80" height="44" rx="8" fill="rgba(13,202,240,0.12)" stroke="#0dcaf0" stroke-width="1.5"/>
+                        <text x="255" y="93" fill="#0dcaf0" font-size="10" font-weight="600" font-family="Segoe UI">📧 Trigger</text>
+                        <!-- Search node -->
+                        <rect x="430" y="108" width="80" height="44" rx="8" fill="rgba(188,140,255,0.12)" stroke="#bc8cff" stroke-width="1.5"/>
+                        <text x="447" y="133" fill="#bc8cff" font-size="10" font-weight="600" font-family="Segoe UI">🔍 Search</text>
+                        <!-- Agent node -->
+                        <rect x="610" y="68" width="80" height="44" rx="8" fill="rgba(25,135,84,0.12)" stroke="#198754" stroke-width="1.5"/>
+                        <text x="630" y="93" fill="#198754" font-size="10" font-weight="600" font-family="Segoe UI">🤖 Agent</text>
+                        <!-- Jira node -->
+                        <rect x="430" y="198" width="80" height="44" rx="8" fill="rgba(255,193,7,0.12)" stroke="#ffc107" stroke-width="1.5"/>
+                        <text x="448" y="223" fill="#ffc107" font-size="10" font-weight="600" font-family="Segoe UI">📊 Jira</text>
+                        <!-- Notify node -->
+                        <rect x="740" y="148" width="80" height="44" rx="8" fill="rgba(220,53,69,0.12)" stroke="#dc3545" stroke-width="1.5"/>
+                        <text x="755" y="173" fill="#dc3545" font-size="10" font-weight="600" font-family="Segoe UI">🔔 Notify</text>
+                        <!-- Properties panel hint -->
+                        <rect x="200" y="260" width="200" height="30" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                        <text x="214" y="279" fill="rgba(255,255,255,0.4)" font-size="9" font-family="Segoe UI">⚙️ Click a node to configure properties</text>
+                    </svg>
+                </div>
+            </div>
+            <p class="subheadline fade-in-delay-2" style="margin-top: 1rem; font-size: 1rem; color: rgba(230,237,243,0.5);">Drag connectors from the palette → wire them together → deploy</p>
+        </div>
+
+        <!-- Scene 10: Security Deep-Dive -->
+        <div class="scene" data-duration="15000">
+            <h2 class="headline" style="margin-bottom: 0.5rem;">Security Deep-Dive</h2>
+            <p class="subheadline fade-in-delay-1" style="font-size: 1.1rem; color: rgba(230,237,243,0.5); margin-bottom: 1rem;">5 layers from perimeter to core</p>
+            <div class="security-layers">
+                <div class="security-layer l1">
+                    <div class="layer-num">1</div>
+                    <div class="layer-bar">🔐 Entra ID / SSO Authentication<small>Identity verified before anything else</small></div>
+                </div>
+                <div class="security-connector"></div>
+                <div class="security-layer l2">
+                    <div class="layer-num">2</div>
+                    <div class="layer-bar">🛡️ RBAC — Manager / Developer / Viewer<small>Role determines what you can see and do</small></div>
+                </div>
+                <div class="security-connector"></div>
+                <div class="security-layer l3">
+                    <div class="layer-num">3</div>
+                    <div class="layer-bar">🔑 Vault Cascade — Org → Group → User<small>Credentials scoped to identity, never shared</small></div>
+                </div>
+                <div class="security-connector"></div>
+                <div class="security-layer l4">
+                    <div class="layer-num">4</div>
+                    <div class="layer-bar">⚙️ Policy Engine — Hierarchical Rules<small>Code-enforced limits, not prompt suggestions</small></div>
+                </div>
+                <div class="security-connector"></div>
+                <div class="security-layer l5">
+                    <div class="layer-num">5</div>
+                    <div class="layer-bar">📋 Audit Trail — Every Action Logged<small>Full traceability for compliance</small></div>
+                </div>
+            </div>
+            <p class="headline fade-in-delay-3" style="margin-top: 1.5rem; font-size: 1.6rem;">Zero trust. Full audit. Every layer.</p>
+        </div>
+
+        <!-- Scene 11: Local Install — Architecture -->
+        <div class="scene" data-duration="13000">
+            <h2 class="headline" style="font-size: 1.8rem;">Deploy Model: Individual</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:950px;width:95%;margin:1rem auto;align-items:start;">
+                <!-- Left: architecture diagram -->
+                <div class="product-frame delay1" style="margin:0;width:100%;">
+                    <div class="frame-titlebar">
+                        <div class="frame-dot r"></div><div class="frame-dot y"></div><div class="frame-dot g"></div>
+                        <div class="frame-title">docker-compose up</div>
+                    </div>
+                    <div class="frame-body" style="padding:0;">
+                        <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+                            <rect width="420" height="280" fill="#0d1117"/>
+                            <!-- User -->
+                            <rect x="160" y="10" width="100" height="30" rx="6" fill="rgba(188,140,255,0.1)" stroke="#bc8cff" stroke-width="1.5"/>
+                            <text x="183" y="30" fill="#bc8cff" font-size="10" font-weight="600" font-family="Segoe UI">👤 You</text>
+                            <line x1="210" y1="40" x2="210" y2="58" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="3,2"/>
+                            <!-- Docker boundary -->
+                            <rect x="30" y="58" width="360" height="210" rx="10" fill="rgba(13,202,240,0.03)" stroke="rgba(13,202,240,0.2)" stroke-width="1.5" stroke-dasharray="6,3"/>
+                            <text x="45" y="75" fill="rgba(13,202,240,0.5)" font-size="8" font-family="Segoe UI">🐳 Docker Compose — Your Laptop</text>
+                            <!-- Cerebro -->
+                            <rect x="140" y="85" width="140" height="40" rx="8" fill="rgba(188,140,255,0.1)" stroke="#bc8cff" stroke-width="1.5"/>
+                            <text x="163" y="109" fill="#bc8cff" font-size="10" font-weight="700" font-family="Segoe UI">🧠 Cerebro</text>
+                            <!-- Arrows down -->
+                            <line x1="175" y1="125" x2="100" y2="148" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                            <line x1="210" y1="125" x2="210" y2="148" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                            <line x1="245" y1="125" x2="320" y2="148" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                            <!-- MCP Engine -->
+                            <rect x="45" y="148" width="110" height="34" rx="6" fill="rgba(13,202,240,0.08)" stroke="rgba(13,202,240,0.4)" stroke-width="1"/>
+                            <text x="60" y="169" fill="#0dcaf0" font-size="9" font-weight="600" font-family="Segoe UI">🔌 MCP Engine</text>
+                            <!-- RAG / Knowledge -->
+                            <rect x="165" y="148" width="90" height="34" rx="6" fill="rgba(25,135,84,0.08)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <text x="177" y="169" fill="#198754" font-size="9" font-weight="600" font-family="Segoe UI">📚 RAG</text>
+                            <!-- SQLite / Local Store -->
+                            <rect x="265" y="148" width="110" height="34" rx="6" fill="rgba(255,193,7,0.08)" stroke="rgba(255,193,7,0.4)" stroke-width="1"/>
+                            <text x="278" y="169" fill="#ffc107" font-size="9" font-weight="600" font-family="Segoe UI">🗃️ Local Store</text>
+                            <!-- Security layers -->
+                            <rect x="45" y="200" width="330" height="55" rx="8" fill="rgba(25,135,84,0.04)" stroke="rgba(25,135,84,0.15)" stroke-width="1"/>
+                            <text x="55" y="216" fill="rgba(25,135,84,0.7)" font-size="7" font-weight="700" font-family="Segoe UI">SECURITY — SAME STACK, SINGLE USER</text>
+                            <text x="55" y="230" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">🔐 Local auth   🔑 Local vault   📚 Personal knowledge base   📋 Audit log</text>
+                            <text x="55" y="244" fill="rgba(255,255,255,0.35)" font-size="7" font-family="Segoe UI">⚙️ Policy engine active — same rules, even for one user. Your data never leaves your machine.</text>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Right: features -->
+                <div style="opacity:0;animation:fadeSlideUp 0.5s 0.8s forwards;">
+                    <div style="font-size:2.2rem;margin-bottom:1rem">💻</div>
+                    <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:.8rem;color:var(--text)">Single User / Developer</h3>
+                    <div style="font-size:.85rem;color:rgba(255,255,255,0.5);line-height:2;">
+                        <code style="background:rgba(13,202,240,0.1);color:#0dcaf0;padding:2px 8px;border-radius:4px;font-size:.8rem">docker-compose up</code><br>
+                        ✅ Full Cerebro + MCP + RAG<br>
+                        ✅ Policy engine enforced locally<br>
+                        ✅ Personal vault (encrypted)<br>
+                        ✅ Audit trail to local log<br>
+                        ✅ Data stays on your machine<br>
+                        ✅ Free forever
+                    </div>
+                    <div style="margin-top:1rem;padding:.6rem;background:rgba(188,140,255,0.06);border:1px solid rgba(188,140,255,0.15);border-radius:8px;font-size:.75rem;color:rgba(255,255,255,0.5)">
+                        💡 Same security stack as enterprise — just scoped to one user
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 12: Small Business — Architecture -->
+        <div class="scene" data-duration="13000">
+            <h2 class="headline" style="font-size: 1.8rem;">Deploy Model: Small Business</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:950px;width:95%;margin:1rem auto;align-items:start;">
+                <div class="product-frame delay1" style="margin:0;width:100%;">
+                    <div class="frame-titlebar">
+                        <div class="frame-dot r"></div><div class="frame-dot y"></div><div class="frame-dot g"></div>
+                        <div class="frame-title">helm install contextweaver</div>
+                    </div>
+                    <div class="frame-body" style="padding:0;">
+                        <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+                            <rect width="420" height="280" fill="#0d1117"/>
+                            <!-- Users -->
+                            <rect x="40" y="10" width="75" height="26" rx="5" fill="rgba(188,140,255,0.1)" stroke="#bc8cff" stroke-width="1"/>
+                            <text x="52" y="27" fill="#bc8cff" font-size="8" font-family="Segoe UI">👤 Alice (Mgr)</text>
+                            <rect x="125" y="10" width="75" height="26" rx="5" fill="rgba(13,202,240,0.1)" stroke="#0dcaf0" stroke-width="1"/>
+                            <text x="138" y="27" fill="#0dcaf0" font-size="8" font-family="Segoe UI">👤 Bob (Dev)</text>
+                            <rect x="210" y="10" width="80" height="26" rx="5" fill="rgba(25,135,84,0.1)" stroke="#198754" stroke-width="1"/>
+                            <text x="221" y="27" fill="#198754" font-size="8" font-family="Segoe UI">👤 Carol (Sales)</text>
+                            <rect x="300" y="10" width="80" height="26" rx="5" fill="rgba(255,193,7,0.1)" stroke="#ffc107" stroke-width="1"/>
+                            <text x="316" y="27" fill="#ffc107" font-size="8" font-family="Segoe UI">👤 +47 more</text>
+                            <!-- Lines down -->
+                            <line x1="210" y1="36" x2="210" y2="52" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                            <!-- K8s boundary -->
+                            <rect x="20" y="52" width="380" height="218" rx="10" fill="rgba(13,202,240,0.03)" stroke="rgba(13,202,240,0.2)" stroke-width="1.5" stroke-dasharray="6,3"/>
+                            <text x="35" y="67" fill="rgba(13,202,240,0.5)" font-size="8" font-family="Segoe UI">☸️ Kubernetes Cluster — Cloud or On-Prem</text>
+                            <!-- Cerebro -->
+                            <rect x="145" y="75" width="130" height="34" rx="7" fill="rgba(188,140,255,0.1)" stroke="#bc8cff" stroke-width="1.5"/>
+                            <text x="168" y="96" fill="#bc8cff" font-size="10" font-weight="700" font-family="Segoe UI">🧠 Cerebro</text>
+                            <!-- Auth layer -->
+                            <rect x="30" y="75" width="100" height="34" rx="7" fill="rgba(220,53,69,0.08)" stroke="rgba(220,53,69,0.3)" stroke-width="1"/>
+                            <text x="42" y="96" fill="#dc3545" font-size="8" font-weight="600" font-family="Segoe UI">🔐 Magic Link</text>
+                            <!-- Arrows -->
+                            <line x1="175" y1="109" x2="100" y2="128" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                            <line x1="210" y1="109" x2="210" y2="128" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                            <line x1="245" y1="109" x2="320" y2="128" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                            <!-- Services -->
+                            <rect x="35" y="128" width="100" height="30" rx="5" fill="rgba(13,202,240,0.08)" stroke="rgba(13,202,240,0.3)" stroke-width="1"/>
+                            <text x="50" y="147" fill="#0dcaf0" font-size="8" font-weight="600" font-family="Segoe UI">🔌 MCP Engine</text>
+                            <rect x="145" y="128" width="130" height="30" rx="5" fill="rgba(25,135,84,0.08)" stroke="rgba(25,135,84,0.3)" stroke-width="1"/>
+                            <text x="158" y="147" fill="#198754" font-size="8" font-weight="600" font-family="Segoe UI">📚 HRAG (2 levels)</text>
+                            <rect x="285" y="128" width="100" height="30" rx="5" fill="rgba(255,193,7,0.08)" stroke="rgba(255,193,7,0.3)" stroke-width="1"/>
+                            <text x="302" y="147" fill="#ffc107" font-size="8" font-weight="600" font-family="Segoe UI">🔑 Vault</text>
+                            <!-- HRAG detail -->
+                            <rect x="35" y="170" width="350" height="44" rx="6" fill="rgba(25,135,84,0.04)" stroke="rgba(25,135,84,0.12)" stroke-width="1"/>
+                            <text x="45" y="184" fill="rgba(25,135,84,0.7)" font-size="7" font-weight="700" font-family="Segoe UI">HIERARCHICAL RAG — 2 LEVELS</text>
+                            <rect x="45" y="190" width="120" height="16" rx="3" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.25)" stroke-width="1"/>
+                            <text x="52" y="201" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="Segoe UI">🏢 Team Knowledge</text>
+                            <rect x="175" y="190" width="120" height="16" rx="3" fill="rgba(188,140,255,0.1)" stroke="rgba(188,140,255,0.25)" stroke-width="1"/>
+                            <text x="182" y="201" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="Segoe UI">👤 Personal Knowledge</text>
+                            <!-- Security -->
+                            <rect x="35" y="222" width="350" height="38" rx="6" fill="rgba(188,140,255,0.04)" stroke="rgba(188,140,255,0.12)" stroke-width="1"/>
+                            <text x="45" y="236" fill="rgba(188,140,255,0.7)" font-size="7" font-weight="700" font-family="Segoe UI">SECURITY — TEAM SCOPE</text>
+                            <text x="45" y="250" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">🔐 Magic link auth   👥 Groups   🔑 Per-user vault   ⚙️ Team policies   📋 Full audit</text>
+                        </svg>
+                    </div>
+                </div>
+                <div style="opacity:0;animation:fadeSlideUp 0.5s 0.8s forwards;">
+                    <div style="font-size:2.2rem;margin-bottom:1rem">🏢</div>
+                    <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:.8rem;color:var(--text)">Small Business (5–50 users)</h3>
+                    <div style="font-size:.85rem;color:rgba(255,255,255,0.5);line-height:2;">
+                        <code style="background:rgba(13,202,240,0.1);color:#0dcaf0;padding:2px 8px;border-radius:4px;font-size:.8rem">helm install contextweaver</code><br>
+                        ✅ Group management (like teams)<br>
+                        ✅ 2-level HRAG (team + personal)<br>
+                        ✅ Per-user credentials in vault<br>
+                        ✅ Magic link auth (no AD needed)<br>
+                        ✅ RBAC (Manager / Developer / Viewer)<br>
+                        ✅ Shared + personal connectors
+                    </div>
+                    <div style="margin-top:1rem;padding:.6rem;background:rgba(13,202,240,0.06);border:1px solid rgba(13,202,240,0.15);border-radius:8px;font-size:.75rem;color:rgba(255,255,255,0.5)">
+                        💡 Alice sees team + her docs. Bob sees team + his docs. Neither sees the other's personal data.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 13: Enterprise — Architecture -->
+        <div class="scene" data-duration="14000">
+            <h2 class="headline" style="font-size: 1.8rem;">Deploy Model: Enterprise / Multi-Tenant</h2>
+            <div class="product-frame delay1" style="max-width:950px;">
+                <div class="frame-titlebar">
+                    <div class="frame-dot r"></div><div class="frame-dot y"></div><div class="frame-dot g"></div>
+                    <div class="frame-title">terraform apply — Multi-Cloud Enterprise</div>
+                </div>
+                <div class="frame-body" style="padding:0;">
+                    <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+                        <rect width="900" height="320" fill="#0d1117"/>
+                        <!-- Tenant A -->
+                        <rect x="15" y="10" width="280" height="300" rx="10" fill="rgba(188,140,255,0.03)" stroke="rgba(188,140,255,0.2)" stroke-width="1.5"/>
+                        <text x="30" y="28" fill="#bc8cff" font-size="9" font-weight="700" font-family="Segoe UI">🏛️ Tenant A — Acme Corp (500 users)</text>
+                        <!-- Users row -->
+                        <rect x="25" y="36" width="55" height="20" rx="4" fill="rgba(188,140,255,0.08)" stroke="rgba(188,140,255,0.2)" stroke-width="1"/>
+                        <text x="32" y="49" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="Segoe UI">CEO</text>
+                        <rect x="85" y="36" width="55" height="20" rx="4" fill="rgba(13,202,240,0.08)" stroke="rgba(13,202,240,0.2)" stroke-width="1"/>
+                        <text x="92" y="49" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="Segoe UI">Eng Team</text>
+                        <rect x="145" y="36" width="55" height="20" rx="4" fill="rgba(25,135,84,0.08)" stroke="rgba(25,135,84,0.2)" stroke-width="1"/>
+                        <text x="152" y="49" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="Segoe UI">Sales Grp</text>
+                        <rect x="205" y="36" width="55" height="20" rx="4" fill="rgba(255,193,7,0.08)" stroke="rgba(255,193,7,0.2)" stroke-width="1"/>
+                        <text x="212" y="49" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="Segoe UI">HR Dept</text>
+                        <!-- Entra SSO -->
+                        <rect x="25" y="62" width="260" height="22" rx="5" fill="rgba(220,53,69,0.05)" stroke="rgba(220,53,69,0.2)" stroke-width="1"/>
+                        <text x="35" y="76" fill="#dc3545" font-size="7" font-weight="600" font-family="Segoe UI">🔐 Entra ID / SAML SSO + MFA</text>
+                        <!-- Cerebro -->
+                        <rect x="70" y="90" width="170" height="28" rx="6" fill="rgba(188,140,255,0.1)" stroke="#bc8cff" stroke-width="1.5"/>
+                        <text x="113" y="108" fill="#bc8cff" font-size="9" font-weight="700" font-family="Segoe UI">🧠 Cerebro</text>
+                        <!-- HRAG 3 levels -->
+                        <rect x="25" y="124" width="260" height="65" rx="6" fill="rgba(25,135,84,0.04)" stroke="rgba(25,135,84,0.12)" stroke-width="1"/>
+                        <text x="35" y="137" fill="rgba(25,135,84,0.7)" font-size="7" font-weight="700" font-family="Segoe UI">HIERARCHICAL RAG — 3 LEVELS</text>
+                        <rect x="35" y="142" width="240" height="12" rx="3" fill="rgba(25,135,84,0.1)"/>
+                        <text x="40" y="151" fill="rgba(255,255,255,0.5)" font-size="6" font-family="Segoe UI">🏢 Org: Company policies, compliance, spending limits</text>
+                        <rect x="55" y="156" width="220" height="12" rx="3" fill="rgba(13,202,240,0.08)"/>
+                        <text x="60" y="165" fill="rgba(255,255,255,0.45)" font-size="6" font-family="Segoe UI">👥 Group: Engineering docs, Sales playbooks, HR policies</text>
+                        <rect x="75" y="170" width="200" height="12" rx="3" fill="rgba(188,140,255,0.08)"/>
+                        <text x="80" y="179" fill="rgba(255,255,255,0.4)" font-size="6" font-family="Segoe UI">👤 Personal: User notes, preferences, bookmarks</text>
+                        <!-- Vault + Policy + Audit -->
+                        <rect x="25" y="195" width="80" height="24" rx="5" fill="rgba(255,193,7,0.06)" stroke="rgba(255,193,7,0.2)" stroke-width="1"/>
+                        <text x="33" y="210" fill="#ffc107" font-size="7" font-weight="600" font-family="Segoe UI">🔑 Vault</text>
+                        <rect x="112" y="195" width="80" height="24" rx="5" fill="rgba(13,202,240,0.06)" stroke="rgba(13,202,240,0.2)" stroke-width="1"/>
+                        <text x="120" y="210" fill="#0dcaf0" font-size="7" font-weight="600" font-family="Segoe UI">⚙️ Policies</text>
+                        <rect x="199" y="195" width="80" height="24" rx="5" fill="rgba(220,53,69,0.06)" stroke="rgba(220,53,69,0.2)" stroke-width="1"/>
+                        <text x="212" y="210" fill="#dc3545" font-size="7" font-weight="600" font-family="Segoe UI">📋 Audit</text>
+                        <!-- MCP + Connectors -->
+                        <rect x="25" y="225" width="260" height="24" rx="5" fill="rgba(13,202,240,0.04)" stroke="rgba(13,202,240,0.1)" stroke-width="1"/>
+                        <text x="35" y="240" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">🔌 MCP: Gmail · Jira · Confluence · Salesforce · GitHub · Slack · +custom</text>
+                        <!-- Private endpoints -->
+                        <rect x="25" y="256" width="260" height="20" rx="4" fill="rgba(25,135,84,0.04)" stroke="rgba(25,135,84,0.1)" stroke-width="1"/>
+                        <text x="35" y="269" fill="rgba(25,135,84,0.6)" font-size="6.5" font-family="Segoe UI">🔒 Private Endpoints — Zero public internet   |   Managed Identity — Zero secrets</text>
+
+                        <!-- Tenant B -->
+                        <rect x="310" y="10" width="280" height="300" rx="10" fill="rgba(13,202,240,0.03)" stroke="rgba(13,202,240,0.2)" stroke-width="1.5"/>
+                        <text x="325" y="28" fill="#0dcaf0" font-size="9" font-weight="700" font-family="Segoe UI">🏥 Tenant B — MedCo Health (200 users)</text>
+                        <rect x="320" y="36" width="55" height="20" rx="4" fill="rgba(220,53,69,0.08)" stroke="rgba(220,53,69,0.2)" stroke-width="1"/>
+                        <text x="327" y="49" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="Segoe UI">Doctors</text>
+                        <rect x="380" y="36" width="55" height="20" rx="4" fill="rgba(13,202,240,0.08)" stroke="rgba(13,202,240,0.2)" stroke-width="1"/>
+                        <text x="387" y="49" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="Segoe UI">Nurses</text>
+                        <rect x="440" y="36" width="55" height="20" rx="4" fill="rgba(25,135,84,0.08)" stroke="rgba(25,135,84,0.2)" stroke-width="1"/>
+                        <text x="447" y="49" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="Segoe UI">Admin</text>
+                        <rect x="500" y="36" width="55" height="20" rx="4" fill="rgba(255,193,7,0.08)" stroke="rgba(255,193,7,0.2)" stroke-width="1"/>
+                        <text x="507" y="49" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="Segoe UI">Billing</text>
+                        <rect x="320" y="62" width="260" height="22" rx="5" fill="rgba(220,53,69,0.05)" stroke="rgba(220,53,69,0.2)" stroke-width="1"/>
+                        <text x="330" y="76" fill="#dc3545" font-size="7" font-weight="600" font-family="Segoe UI">🔐 Entra ID / SAML SSO + MFA</text>
+                        <rect x="365" y="90" width="170" height="28" rx="6" fill="rgba(13,202,240,0.1)" stroke="#0dcaf0" stroke-width="1.5"/>
+                        <text x="408" y="108" fill="#0dcaf0" font-size="9" font-weight="700" font-family="Segoe UI">🧠 Cerebro</text>
+                        <rect x="320" y="124" width="260" height="65" rx="6" fill="rgba(25,135,84,0.04)" stroke="rgba(25,135,84,0.12)" stroke-width="1"/>
+                        <text x="330" y="137" fill="rgba(25,135,84,0.7)" font-size="7" font-weight="700" font-family="Segoe UI">HIERARCHICAL RAG — HIPAA COMPLIANT</text>
+                        <rect x="330" y="142" width="240" height="12" rx="3" fill="rgba(25,135,84,0.1)"/>
+                        <text x="335" y="151" fill="rgba(255,255,255,0.5)" font-size="6" font-family="Segoe UI">🏥 Org: HIPAA rules, formulary, clinical guidelines</text>
+                        <rect x="350" y="156" width="220" height="12" rx="3" fill="rgba(13,202,240,0.08)"/>
+                        <text x="355" y="165" fill="rgba(255,255,255,0.45)" font-size="6" font-family="Segoe UI">👥 Dept: Cardiology KB, Radiology protocols, Billing codes</text>
+                        <rect x="370" y="170" width="200" height="12" rx="3" fill="rgba(188,140,255,0.08)"/>
+                        <text x="375" y="179" fill="rgba(255,255,255,0.4)" font-size="6" font-family="Segoe UI">👤 Personal: Doctor's notes, patient preferences</text>
+                        <rect x="320" y="195" width="80" height="24" rx="5" fill="rgba(255,193,7,0.06)" stroke="rgba(255,193,7,0.2)" stroke-width="1"/>
+                        <text x="328" y="210" fill="#ffc107" font-size="7" font-weight="600" font-family="Segoe UI">🔑 Vault</text>
+                        <rect x="407" y="195" width="80" height="24" rx="5" fill="rgba(13,202,240,0.06)" stroke="rgba(13,202,240,0.2)" stroke-width="1"/>
+                        <text x="415" y="210" fill="#0dcaf0" font-size="7" font-weight="600" font-family="Segoe UI">⚙️ Policies</text>
+                        <rect x="494" y="195" width="80" height="24" rx="5" fill="rgba(220,53,69,0.06)" stroke="rgba(220,53,69,0.2)" stroke-width="1"/>
+                        <text x="507" y="210" fill="#dc3545" font-size="7" font-weight="600" font-family="Segoe UI">📋 Audit</text>
+                        <rect x="320" y="225" width="260" height="24" rx="5" fill="rgba(13,202,240,0.04)" stroke="rgba(13,202,240,0.1)" stroke-width="1"/>
+                        <text x="330" y="240" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">🔌 MCP: EHR · HL7 · Lab Systems · Pharmacy · Billing · +custom</text>
+                        <rect x="320" y="256" width="260" height="20" rx="4" fill="rgba(25,135,84,0.04)" stroke="rgba(25,135,84,0.1)" stroke-width="1"/>
+                        <text x="330" y="269" fill="rgba(25,135,84,0.6)" font-size="6.5" font-family="Segoe UI">🔒 Private Endpoints — HIPAA BAA   |   Managed Identity — Zero secrets</text>
+
+                        <!-- Shared infrastructure -->
+                        <rect x="605" y="10" width="280" height="300" rx="10" fill="rgba(255,193,7,0.03)" stroke="rgba(255,193,7,0.15)" stroke-width="1.5"/>
+                        <text x="620" y="28" fill="#ffc107" font-size="9" font-weight="700" font-family="Segoe UI">⚡ Shared Infrastructure Layer</text>
+                        <rect x="615" y="40" width="260" height="50" rx="6" fill="rgba(13,202,240,0.04)" stroke="rgba(13,202,240,0.1)" stroke-width="1"/>
+                        <text x="625" y="56" fill="#0dcaf0" font-size="8" font-weight="600" font-family="Segoe UI">☸️ Kubernetes (AKS / EKS / GKE)</text>
+                        <text x="625" y="70" fill="rgba(255,255,255,0.35)" font-size="6.5" font-family="Segoe UI">Auto-scaling · Namespace isolation · Network policies</text>
+                        <rect x="615" y="96" width="260" height="40" rx="6" fill="rgba(25,135,84,0.04)" stroke="rgba(25,135,84,0.1)" stroke-width="1"/>
+                        <text x="625" y="112" fill="#198754" font-size="8" font-weight="600" font-family="Segoe UI">🗄️ Data Tier</text>
+                        <text x="625" y="125" fill="rgba(255,255,255,0.35)" font-size="6.5" font-family="Segoe UI">Cosmos DB / DynamoDB · AI Search · Key Vault</text>
+                        <rect x="615" y="142" width="260" height="40" rx="6" fill="rgba(188,140,255,0.04)" stroke="rgba(188,140,255,0.1)" stroke-width="1"/>
+                        <text x="625" y="158" fill="#bc8cff" font-size="8" font-weight="600" font-family="Segoe UI">📊 Observability</text>
+                        <text x="625" y="171" fill="rgba(255,255,255,0.35)" font-size="6.5" font-family="Segoe UI">Grafana · Prometheus · Loki · Cluster View</text>
+                        <rect x="615" y="188" width="260" height="40" rx="6" fill="rgba(220,53,69,0.04)" stroke="rgba(220,53,69,0.1)" stroke-width="1"/>
+                        <text x="625" y="204" fill="#dc3545" font-size="8" font-weight="600" font-family="Segoe UI">🛡️ Network Security</text>
+                        <text x="625" y="217" fill="rgba(255,255,255,0.35)" font-size="6.5" font-family="Segoe UI">WAF · Private endpoints · mTLS · Certificate mgmt</text>
+                        <rect x="615" y="234" width="260" height="40" rx="6" fill="rgba(255,193,7,0.04)" stroke="rgba(255,193,7,0.1)" stroke-width="1"/>
+                        <text x="625" y="250" fill="#ffc107" font-size="8" font-weight="600" font-family="Segoe UI">📦 Deploy Tooling</text>
+                        <text x="625" y="263" fill="rgba(255,255,255,0.35)" font-size="6.5" font-family="Segoe UI">Helm charts · Terraform modules · CI/CD pipelines</text>
+                        <!-- Isolation indicator -->
+                        <rect x="615" y="280" width="260" height="22" rx="4" fill="rgba(25,135,84,0.06)" stroke="rgba(25,135,84,0.15)" stroke-width="1"/>
+                        <text x="625" y="294" fill="rgba(25,135,84,0.7)" font-size="7" font-weight="600" font-family="Segoe UI">🔒 Complete tenant isolation — data, credentials, policies, knowledge</text>
+                    </svg>
+                </div>
+            </div>
+            <p class="subheadline fade-in-delay-2" style="margin-top:.8rem;font-size:.95rem;color:rgba(230,237,243,0.5)">Each tenant is fully isolated — same infrastructure, zero cross-contamination</p>
+        </div>
+
+        <!-- Scene 13a: Unified Architecture — Same Stack Everywhere -->
+        <div class="scene" data-duration="13000">
+            <h2 class="headline" style="font-size: 1.8rem;">One Architecture. Every Scale.</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;max-width:950px;width:95%;margin:1.5rem auto;">
+                <!-- Individual -->
+                <div style="background:rgba(188,140,255,0.04);border:1px solid rgba(188,140,255,0.15);border-radius:12px;padding:1.2rem;opacity:0;animation:fadeSlideUp 0.5s 0.3s forwards;">
+                    <div style="text-align:center;font-size:1.8rem;margin-bottom:.5rem">💻</div>
+                    <h4 style="text-align:center;font-size:.95rem;font-weight:700;color:#bc8cff;margin-bottom:.8rem">Individual</h4>
+                    <div style="font-size:.7rem;color:rgba(255,255,255,0.45);line-height:1.9">
+                        🧠 Cerebro ✅<br>🔌 MCP Engine ✅<br>📚 RAG (1 level) ✅<br>🔑 Local vault ✅<br>⚙️ Policy engine ✅<br>📋 Audit log ✅
+                    </div>
+                </div>
+                <!-- SMB -->
+                <div style="background:rgba(13,202,240,0.04);border:1px solid rgba(13,202,240,0.15);border-radius:12px;padding:1.2rem;opacity:0;animation:fadeSlideUp 0.5s 0.6s forwards;">
+                    <div style="text-align:center;font-size:1.8rem;margin-bottom:.5rem">🏢</div>
+                    <h4 style="text-align:center;font-size:.95rem;font-weight:700;color:#0dcaf0;margin-bottom:.8rem">Small Business</h4>
+                    <div style="font-size:.7rem;color:rgba(255,255,255,0.45);line-height:1.9">
+                        🧠 Cerebro ✅<br>🔌 MCP Engine ✅<br>📚 HRAG (2 levels) ✅<br>🔑 Vault cascade ✅<br>⚙️ Policy engine ✅<br>📋 Audit log ✅<br>👥 Groups + RBAC ✅<br>🔐 Magic link auth ✅
+                    </div>
+                </div>
+                <!-- Enterprise -->
+                <div style="background:rgba(25,135,84,0.04);border:1px solid rgba(25,135,84,0.15);border-radius:12px;padding:1.2rem;opacity:0;animation:fadeSlideUp 0.5s 0.9s forwards;">
+                    <div style="text-align:center;font-size:1.8rem;margin-bottom:.5rem">🌍</div>
+                    <h4 style="text-align:center;font-size:.95rem;font-weight:700;color:#198754;margin-bottom:.8rem">Enterprise</h4>
+                    <div style="font-size:.7rem;color:rgba(255,255,255,0.45);line-height:1.9">
+                        🧠 Cerebro ✅<br>🔌 MCP Engine ✅<br>📚 HRAG (3 levels) ✅<br>🔑 Vault cascade ✅<br>⚙️ Policy engine ✅<br>📋 Audit log ✅<br>👥 Groups + RBAC ✅<br>🔐 SSO + MFA ✅<br>🔒 Private endpoints ✅<br>🏗️ Multi-tenant ✅
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:1.5rem;text-align:center;opacity:0;animation:fadeSlideUp 0.5s 1.2s forwards;">
+                <div style="background:linear-gradient(135deg,rgba(188,140,255,0.08),rgba(13,202,240,0.08),rgba(25,135,84,0.08));border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:1rem 1.5rem;display:inline-block;max-width:700px;">
+                    <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.3rem">Same security DNA at every tier</div>
+                    <div style="font-size:.82rem;color:rgba(255,255,255,0.5)">The policy engine, vault, audit trail, and HRAG run identically whether you're a solo developer on Docker or a 100K-user enterprise on AKS. Scale adds layers — it never removes them.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 13b: Observability — Grafana & Prometheus -->
+        <div class="scene" data-duration="14000">
+            <h2 class="headline" style="font-size: 1.8rem;">Observability — Full Cluster Visibility</h2>
+            <div class="dual-screenshots">
+                <!-- Grafana Dashboard -->
+                <div class="product-frame delay1">
+                    <div class="frame-titlebar">
+                        <div class="frame-dot r"></div><div class="frame-dot y"></div><div class="frame-dot g"></div>
+                        <div class="frame-title">Grafana — Performance Dashboard</div>
+                    </div>
+                    <div class="frame-body" style="padding: 0;">
+                        <svg viewBox="0 0 450 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+                            <rect width="450" height="260" fill="#0d1117"/>
+                            <!-- Header -->
+                            <rect x="0" y="0" width="450" height="28" fill="#161b22"/>
+                            <text x="12" y="18" fill="#f46800" font-size="10" font-weight="700" font-family="Segoe UI">📊 Grafana</text>
+                            <text x="80" y="18" fill="rgba(255,255,255,0.5)" font-size="9" font-family="Segoe UI">ContextWeaver — Cerebro Dashboard</text>
+                            <rect x="355" y="6" width="80" height="16" rx="4" fill="rgba(25,135,84,0.15)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <text x="365" y="18" fill="#198754" font-size="8" font-family="Segoe UI">● Last 6h</text>
+                            <!-- Row 1: Metric cards -->
+                            <rect x="10" y="35" width="100" height="50" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                            <text x="20" y="50" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">Requests/min</text>
+                            <text x="20" y="72" fill="#0dcaf0" font-size="18" font-weight="700" font-family="Segoe UI">2,847</text>
+                            <rect x="120" y="35" width="100" height="50" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                            <text x="130" y="50" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">P95 Latency</text>
+                            <text x="130" y="72" fill="#198754" font-size="18" font-weight="700" font-family="Segoe UI">142ms</text>
+                            <rect x="230" y="35" width="100" height="50" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                            <text x="240" y="50" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">Error Rate</text>
+                            <text x="240" y="72" fill="#198754" font-size="18" font-weight="700" font-family="Segoe UI">0.02%</text>
+                            <rect x="340" y="35" width="100" height="50" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                            <text x="350" y="50" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">Active Users</text>
+                            <text x="350" y="72" fill="#bc8cff" font-size="18" font-weight="700" font-family="Segoe UI">384</text>
+                            <!-- Row 2: Request rate chart -->
+                            <rect x="10" y="92" width="215" height="80" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                            <text x="18" y="106" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">Request Rate (5m avg)</text>
+                            <polyline points="20,155 45,148 70,152 95,140 120,135 145,142 170,128 195,130 210,125" fill="none" stroke="#0dcaf0" stroke-width="1.5" opacity="0.8"/>
+                            <polyline points="20,155 45,148 70,152 95,140 120,135 145,142 170,128 195,130 210,125" fill="url(#cyanGrad)" opacity="0.15"/>
+                            <defs><linearGradient id="cyanGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0dcaf0"/><stop offset="100%" stop-color="transparent"/></linearGradient></defs>
+                            <!-- Row 2: Latency heatmap -->
+                            <rect x="235" y="92" width="205" height="80" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                            <text x="243" y="106" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">Latency Heatmap</text>
+                            <!-- Heatmap cells -->
+                            <g opacity="0.8">
+                                <rect x="243" y="112" width="18" height="8" rx="1" fill="rgba(25,135,84,0.6)"/><rect x="263" y="112" width="18" height="8" rx="1" fill="rgba(25,135,84,0.4)"/>
+                                <rect x="283" y="112" width="18" height="8" rx="1" fill="rgba(25,135,84,0.8)"/><rect x="303" y="112" width="18" height="8" rx="1" fill="rgba(255,193,7,0.3)"/>
+                                <rect x="323" y="112" width="18" height="8" rx="1" fill="rgba(25,135,84,0.5)"/><rect x="343" y="112" width="18" height="8" rx="1" fill="rgba(25,135,84,0.3)"/>
+                                <rect x="363" y="112" width="18" height="8" rx="1" fill="rgba(25,135,84,0.7)"/><rect x="383" y="112" width="18" height="8" rx="1" fill="rgba(25,135,84,0.4)"/>
+                                <rect x="403" y="112" width="18" height="8" rx="1" fill="rgba(25,135,84,0.6)"/>
+                                <rect x="243" y="122" width="18" height="8" rx="1" fill="rgba(25,135,84,0.3)"/><rect x="263" y="122" width="18" height="8" rx="1" fill="rgba(25,135,84,0.5)"/>
+                                <rect x="283" y="122" width="18" height="8" rx="1" fill="rgba(255,193,7,0.4)"/><rect x="303" y="122" width="18" height="8" rx="1" fill="rgba(255,193,7,0.6)"/>
+                                <rect x="323" y="122" width="18" height="8" rx="1" fill="rgba(25,135,84,0.4)"/><rect x="343" y="122" width="18" height="8" rx="1" fill="rgba(25,135,84,0.6)"/>
+                                <rect x="363" y="122" width="18" height="8" rx="1" fill="rgba(25,135,84,0.3)"/><rect x="383" y="122" width="18" height="8" rx="1" fill="rgba(25,135,84,0.5)"/>
+                                <rect x="403" y="122" width="18" height="8" rx="1" fill="rgba(25,135,84,0.4)"/>
+                                <rect x="243" y="132" width="18" height="8" rx="1" fill="rgba(25,135,84,0.2)"/><rect x="263" y="132" width="18" height="8" rx="1" fill="rgba(25,135,84,0.3)"/>
+                                <rect x="283" y="132" width="18" height="8" rx="1" fill="rgba(25,135,84,0.2)"/><rect x="303" y="132" width="18" height="8" rx="1" fill="rgba(25,135,84,0.3)"/>
+                                <rect x="323" y="132" width="18" height="8" rx="1" fill="rgba(220,53,69,0.3)"/><rect x="343" y="132" width="18" height="8" rx="1" fill="rgba(25,135,84,0.2)"/>
+                                <rect x="363" y="132" width="18" height="8" rx="1" fill="rgba(25,135,84,0.2)"/><rect x="383" y="132" width="18" height="8" rx="1" fill="rgba(25,135,84,0.3)"/>
+                                <rect x="403" y="132" width="18" height="8" rx="1" fill="rgba(25,135,84,0.2)"/>
+                            </g>
+                            <!-- Row 3: Pod status -->
+                            <rect x="10" y="180" width="430" height="70" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                            <text x="18" y="194" fill="rgba(255,255,255,0.4)" font-size="7" font-family="Segoe UI">Pod Status — All Namespaces</text>
+                            <!-- Pod blocks -->
+                            <g transform="translate(18,202)">
+                                <rect x="0" y="0" width="45" height="18" rx="3" fill="rgba(25,135,84,0.2)" stroke="rgba(25,135,84,0.5)" stroke-width="1"/><text x="5" y="12" fill="#198754" font-size="6" font-family="Segoe UI">cerebro</text>
+                                <rect x="50" y="0" width="50" height="18" rx="3" fill="rgba(25,135,84,0.2)" stroke="rgba(25,135,84,0.5)" stroke-width="1"/><text x="55" y="12" fill="#198754" font-size="6" font-family="Segoe UI">mcp-eng</text>
+                                <rect x="105" y="0" width="55" height="18" rx="3" fill="rgba(25,135,84,0.2)" stroke="rgba(25,135,84,0.5)" stroke-width="1"/><text x="110" y="12" fill="#198754" font-size="6" font-family="Segoe UI">workbnch</text>
+                                <rect x="165" y="0" width="50" height="18" rx="3" fill="rgba(25,135,84,0.2)" stroke="rgba(25,135,84,0.5)" stroke-width="1"/><text x="170" y="12" fill="#198754" font-size="6" font-family="Segoe UI">monitor</text>
+                                <rect x="220" y="0" width="48" height="18" rx="3" fill="rgba(25,135,84,0.2)" stroke="rgba(25,135,84,0.5)" stroke-width="1"/><text x="225" y="12" fill="#198754" font-size="6" font-family="Segoe UI">ingress</text>
+                                <rect x="273" y="0" width="55" height="18" rx="3" fill="rgba(25,135,84,0.2)" stroke="rgba(25,135,84,0.5)" stroke-width="1"/><text x="278" y="12" fill="#198754" font-size="6" font-family="Segoe UI">grafana</text>
+                                <rect x="333" y="0" width="70" height="18" rx="3" fill="rgba(25,135,84,0.2)" stroke="rgba(25,135,84,0.5)" stroke-width="1"/><text x="338" y="12" fill="#198754" font-size="6" font-family="Segoe UI">prometheus</text>
+                                <rect x="0" y="22" width="45" height="18" rx="3" fill="rgba(25,135,84,0.2)" stroke="rgba(25,135,84,0.5)" stroke-width="1"/><text x="5" y="34" fill="#198754" font-size="6" font-family="Segoe UI">loki</text>
+                                <text x="55" y="34" fill="rgba(255,255,255,0.3)" font-size="7" font-family="Segoe UI">All 12 pods ● Running</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Cluster View -->
+                <div class="product-frame delay2">
+                    <div class="frame-titlebar">
+                        <div class="frame-dot r"></div><div class="frame-dot y"></div><div class="frame-dot g"></div>
+                        <div class="frame-title">ContextWeaver — Cluster View</div>
+                    </div>
+                    <div class="frame-body" style="padding: 0;">
+                        <svg viewBox="0 0 450 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+                            <rect width="450" height="260" fill="#0d1117"/>
+                            <!-- Header -->
+                            <rect x="0" y="0" width="450" height="28" fill="#161b22"/>
+                            <text x="12" y="18" fill="#bc8cff" font-size="10" font-weight="700" font-family="Segoe UI">☸️ Cluster View</text>
+                            <text x="100" y="18" fill="rgba(255,255,255,0.4)" font-size="9" font-family="Segoe UI">AKS — ContextWeaver Production</text>
+                            <!-- Namespace: cerebro -->
+                            <rect x="10" y="35" width="210" height="100" rx="8" fill="rgba(188,140,255,0.05)" stroke="rgba(188,140,255,0.2)" stroke-width="1"/>
+                            <text x="18" y="50" fill="#bc8cff" font-size="9" font-weight="700" font-family="Segoe UI">cerebro</text>
+                            <rect x="18" y="56" width="86" height="30" rx="5" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <circle cx="26" cy="71" r="3" fill="#198754"/><text x="32" y="74" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Segoe UI">cerebro-app</text>
+                            <text x="20" y="90" fill="rgba(255,255,255,0.35)" font-size="6" font-family="Segoe UI">CPU: 340m | Mem: 512Mi</text>
+                            <text x="20" y="100" fill="rgba(255,255,255,0.35)" font-size="6" font-family="Segoe UI">Restarts: 0 | Age: 14d</text>
+                            <rect x="112" y="56" width="100" height="30" rx="5" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <circle cx="120" cy="71" r="3" fill="#198754"/><text x="126" y="74" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Segoe UI">cerebro-worker</text>
+                            <text x="114" y="90" fill="rgba(255,255,255,0.35)" font-size="6" font-family="Segoe UI">CPU: 180m | Mem: 256Mi</text>
+                            <text x="114" y="100" fill="rgba(255,255,255,0.35)" font-size="6" font-family="Segoe UI">Restarts: 0 | Age: 14d</text>
+                            <!-- Namespace: mcp1 -->
+                            <rect x="230" y="35" width="210" height="100" rx="8" fill="rgba(13,202,240,0.05)" stroke="rgba(13,202,240,0.2)" stroke-width="1"/>
+                            <text x="238" y="50" fill="#0dcaf0" font-size="9" font-weight="700" font-family="Segoe UI">mcp1</text>
+                            <rect x="238" y="56" width="90" height="30" rx="5" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <circle cx="246" cy="71" r="3" fill="#198754"/><text x="252" y="74" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Segoe UI">mcp-engine</text>
+                            <text x="240" y="90" fill="rgba(255,255,255,0.35)" font-size="6" font-family="Segoe UI">CPU: 420m | Mem: 768Mi</text>
+                            <text x="240" y="100" fill="rgba(255,255,255,0.35)" font-size="6" font-family="Segoe UI">Restarts: 0 | Age: 14d</text>
+                            <rect x="336" y="56" width="96" height="30" rx="5" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <circle cx="344" cy="71" r="3" fill="#198754"/><text x="350" y="74" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Segoe UI">plugin-loader</text>
+                            <text x="338" y="90" fill="rgba(255,255,255,0.35)" font-size="6" font-family="Segoe UI">CPU: 90m | Mem: 128Mi</text>
+                            <text x="338" y="100" fill="rgba(255,255,255,0.35)" font-size="6" font-family="Segoe UI">Restarts: 0 | Age: 14d</text>
+                            <!-- Namespace: monitoring -->
+                            <rect x="10" y="142" width="210" height="110" rx="8" fill="rgba(255,193,7,0.05)" stroke="rgba(255,193,7,0.2)" stroke-width="1"/>
+                            <text x="18" y="157" fill="#ffc107" font-size="9" font-weight="700" font-family="Segoe UI">monitoring</text>
+                            <rect x="18" y="163" width="60" height="26" rx="5" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <circle cx="26" cy="176" r="3" fill="#198754"/><text x="32" y="179" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Segoe UI">grafana</text>
+                            <rect x="84" y="163" width="70" height="26" rx="5" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <circle cx="92" cy="176" r="3" fill="#198754"/><text x="98" y="179" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Segoe UI">prometheus</text>
+                            <rect x="160" y="163" width="50" height="26" rx="5" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <circle cx="168" cy="176" r="3" fill="#198754"/><text x="174" y="179" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Segoe UI">loki</text>
+                            <rect x="18" y="194" width="70" height="26" rx="5" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <circle cx="26" cy="207" r="3" fill="#198754"/><text x="32" y="210" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Segoe UI">promtail</text>
+                            <text x="18" y="240" fill="rgba(255,255,255,0.3)" font-size="6" font-family="Segoe UI">All healthy • Scrape interval: 15s</text>
+                            <!-- Namespace: workbench -->
+                            <rect x="230" y="142" width="210" height="110" rx="8" fill="rgba(25,135,84,0.05)" stroke="rgba(25,135,84,0.2)" stroke-width="1"/>
+                            <text x="238" y="157" fill="#198754" font-size="9" font-weight="700" font-family="Segoe UI">workbench</text>
+                            <rect x="238" y="163" width="86" height="26" rx="5" fill="rgba(25,135,84,0.1)" stroke="rgba(25,135,84,0.4)" stroke-width="1"/>
+                            <circle cx="246" cy="176" r="3" fill="#198754"/><text x="252" y="179" fill="rgba(255,255,255,0.7)" font-size="7" font-family="Segoe UI">jupyter-lab</text>
+                            <text x="240" y="206" fill="rgba(255,255,255,0.35)" font-size="6" font-family="Segoe UI">CPU: 250m | Mem: 1Gi</text>
+                            <text x="240" y="216" fill="rgba(255,255,255,0.35)" font-size="6" font-family="Segoe UI">GPU: — | Restarts: 0</text>
+                            <!-- Node info -->
+                            <text x="240" y="240" fill="rgba(255,255,255,0.3)" font-size="6" font-family="Segoe UI">Nodes: 2× Standard_D4ds_v5 | Pool: pool4</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <p class="subheadline fade-in-delay-2" style="margin-top: 0.8rem; font-size: 1rem; color: rgba(230,237,243,0.5);">Grafana dashboards • Prometheus metrics • Loki logs • Real-time cluster health</p>
+        </div>
+
+        <!-- Scene 14: Multi-Cloud Architecture -->
+        <div class="scene" data-duration="15000">
+            <h2 class="headline">Multi-Cloud Architecture</h2>
+            <div class="cloud-grid">
+                <div class="cloud-column" style="animation-delay: 0.3s;">
+                    <h3>🔷 Azure</h3>
+                    <ul>
+                        <li>AKS</li>
+                        <li>Cosmos DB</li>
+                        <li>AI Search</li>
+                        <li>Key Vault</li>
+                    </ul>
+                </div>
+                <div class="cloud-column" style="animation-delay: 0.6s;">
+                    <h3>🟠 AWS</h3>
+                    <ul>
+                        <li>EKS</li>
+                        <li>DynamoDB</li>
+                        <li>OpenSearch</li>
+                        <li>Secrets Manager</li>
+                    </ul>
+                </div>
+                <div class="cloud-column" style="animation-delay: 0.9s;">
+                    <h3>🔴 GCP</h3>
+                    <ul>
+                        <li>GKE</li>
+                        <li>Firestore</li>
+                        <li>Vertex AI</li>
+                        <li>Secret Manager</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="headline fade-in-delay-2" style="margin-top: 2rem; font-size: 2rem;">Same app. Any cloud. Your choice.</p>
+            <p class="subheadline fade-in-delay-3">Terraform modules included for all three</p>
+            <p class="subheadline fade-in-delay-3">Deploy in hours, not months</p>
+        </div>
+
+        <!-- Scene 15: Finance Use Case -->
+        <div class="scene" data-duration="10000">
+            <h2 class="headline">Use Case: Finance</h2>
+            <div class="scenario">
+                <div class="scenario-step" style="animation-delay: 0.5s;">
+                    <div class="scenario-box">
+                        👤 User: "Pay invoice #4521"
+                    </div>
+                </div>
+                <div class="scenario-step" style="animation-delay: 1.5s;">
+                    <div class="scenario-box" style="background: rgba(25, 135, 84, 0.1); border-color: #198754;">
+                        🤖 Agent checks:<br/>
+                        ✅ User authorized<br/>
+                        ✅ Amount within limit<br/>
+                        ✅ Vendor approved
+                    </div>
+                </div>
+                <div class="scenario-step" style="animation-delay: 2.5s;">
+                    <div class="scenario-box" style="background: rgba(13, 202, 240, 0.1); border-color: #0dcaf0;">
+                        🤖 Agent: "Payment of $3,200 sent via ACH to Acme Corp"
+                    </div>
+                </div>
+            </div>
+            <p class="headline fade-in-delay-3" style="margin-top: 2rem; font-size: 1.6rem;">Every financial action verified against org policy</p>
+        </div>
+
+        <!-- Scene 16: Healthcare Use Case -->
+        <div class="scene" data-duration="10000">
+            <h2 class="headline">Use Case: Healthcare</h2>
+            <div class="scenario">
+                <div class="scenario-step" style="animation-delay: 0.5s;">
+                    <div class="scenario-box">
+                        👨‍⚕️ Doctor: "Summarize patient Smith's recent labs"
+                    </div>
+                </div>
+                <div class="scenario-step" style="animation-delay: 1.5s;">
+                    <div class="scenario-box" style="background: rgba(25, 135, 84, 0.1); border-color: #198754;">
+                        🤖 Agent checks:<br/>
+                        ✅ Doctor has access<br/>
+                        ✅ HIPAA compliant<br/>
+                        ✅ Audit logged
+                    </div>
+                </div>
+                <div class="scenario-step" style="animation-delay: 2.5s;">
+                    <div class="scenario-box" style="background: rgba(13, 202, 240, 0.1); border-color: #0dcaf0;">
+                        🤖 Agent: "Here are the results..." (redacted appropriately)
+                    </div>
+                </div>
+            </div>
+            <p class="headline fade-in-delay-3" style="margin-top: 2rem; font-size: 1.6rem;">HIPAA-aware. Role-based access to patient data.</p>
+        </div>
+
+        <!-- Scene 17: DevOps Use Case -->
+        <div class="scene" data-duration="10000">
+            <h2 class="headline">Use Case: DevOps</h2>
+            <div class="scenario">
+                <div class="scenario-step" style="animation-delay: 0.5s;">
+                    <div class="scenario-box">
+                        👨‍💻 SRE: "Deploy hotfix to production"
+                    </div>
+                </div>
+                <div class="scenario-step" style="animation-delay: 1.5s;">
+                    <div class="scenario-box" style="background: rgba(25, 135, 84, 0.1); border-color: #198754;">
+                        🤖 Agent checks:<br/>
+                        ✅ SRE role<br/>
+                        ✅ Change window open<br/>
+                        ✅ Tests passed
+                    </div>
+                </div>
+                <div class="scenario-step" style="animation-delay: 2.5s;">
+                    <div class="scenario-box" style="background: rgba(13, 202, 240, 0.1); border-color: #0dcaf0;">
+                        🤖 Agent: "Deployed v2.1.4 to production. Monitoring..."
+                    </div>
+                </div>
+            </div>
+            <p class="headline fade-in-delay-3" style="margin-top: 2rem; font-size: 1.6rem;">CI/CD integration with identity and approval gates</p>
+        </div>
+
+        <!-- Scene 18: Customer Support Use Case -->
+        <div class="scene" data-duration="10000">
+            <h2 class="headline">Use Case: Customer Support</h2>
+            <div class="scenario">
+                <div class="scenario-step" style="animation-delay: 0.5s;">
+                    <div class="scenario-box">
+                        📞 Agent: "Customer #8832 called about billing"
+                    </div>
+                </div>
+                <div class="scenario-step" style="animation-delay: 1.5s;">
+                    <div class="scenario-box" style="background: rgba(25, 135, 84, 0.1); border-color: #198754;">
+                        🤖 Agent checks:<br/>
+                        ✅ Support tier<br/>
+                        ✅ Customer data access<br/>
+                        ✅ Refund limit
+                    </div>
+                </div>
+                <div class="scenario-step" style="animation-delay: 2.5s;">
+                    <div class="scenario-box" style="background: rgba(13, 202, 240, 0.1); border-color: #0dcaf0;">
+                        🤖 Agent: "Applied $50 credit. Escalation not required."
+                    </div>
+                </div>
+            </div>
+            <p class="headline fade-in-delay-3" style="margin-top: 2rem; font-size: 1.6rem;">Support agents see only what they should. Auto-audit everything.</p>
+        </div>
+
+        <!-- Scene 19: Comparison -->
+        <div class="scene" data-duration="12000">
+            <h2 class="headline">ContextWeaver vs Traditional AI</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Traditional AI</th>
+                        <th>ContextWeaver</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="animation-delay: 0.3s;">
+                        <td>Identity</td>
+                        <td class="cross">❌ Shared</td>
+                        <td class="check">✅ Per-user</td>
+                    </tr>
+                    <tr style="animation-delay: 0.5s;">
+                        <td>Credentials</td>
+                        <td class="cross">❌ Shared keys</td>
+                        <td class="check">✅ Vault cascade</td>
+                    </tr>
+                    <tr style="animation-delay: 0.7s;">
+                        <td>Knowledge</td>
+                        <td class="cross">❌ Everyone sees all</td>
+                        <td class="check">✅ Hierarchical RAG</td>
+                    </tr>
+                    <tr style="animation-delay: 0.9s;">
+                        <td>Policies</td>
+                        <td class="cross">❌ Prompt-based</td>
+                        <td class="check">✅ Code-enforced</td>
+                    </tr>
+                    <tr style="animation-delay: 1.1s;">
+                        <td>Audit</td>
+                        <td class="cross">❌ None</td>
+                        <td class="check">✅ Every action</td>
+                    </tr>
+                    <tr style="animation-delay: 1.3s;">
+                        <td>Multi-cloud</td>
+                        <td class="cross">❌ Vendor lock-in</td>
+                        <td class="check">✅ Any cloud</td>
+                    </tr>
+                    <tr style="animation-delay: 1.5s;">
+                        <td>Deployment</td>
+                        <td class="cross">❌ Months</td>
+                        <td class="check">✅ Hours</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Scene 20: Pricing -->
+        <div class="scene" data-duration="14000">
+            <h2 class="headline" style="font-size: 2rem;">Pricing Plans</h2>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:1000px;width:95%;margin:1.5rem auto;">
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.2rem;text-align:center;opacity:0;animation:fadeSlideUp 0.5s 0.3s forwards;">
+                    <div style="font-size:.65rem;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px">Community</div>
+                    <div style="font-size:2rem;font-weight:900;margin:.5rem 0;color:var(--text)">Free</div>
+                    <div style="font-size:.75rem;color:rgba(255,255,255,0.4);margin-bottom:1rem">1 user · Docker</div>
+                    <div style="text-align:left;font-size:.72rem;color:rgba(255,255,255,0.5);line-height:1.9">
+                        ✅ 5 connectors<br>✅ 1 knowledge base<br>✅ Basic RAG<br>✅ Community plugins
+                    </div>
+                </div>
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(13,202,240,0.2);border-radius:12px;padding:1.2rem;text-align:center;opacity:0;animation:fadeSlideUp 0.5s 0.6s forwards;">
+                    <div style="font-size:.65rem;font-weight:700;color:#0dcaf0;text-transform:uppercase;letter-spacing:1px">Team</div>
+                    <div style="font-size:2rem;font-weight:900;margin:.5rem 0;color:var(--text)">$29<span style="font-size:.7rem;color:rgba(255,255,255,0.4)">/user/mo</span></div>
+                    <div style="font-size:.75rem;color:rgba(255,255,255,0.4);margin-bottom:1rem">5–50 users</div>
+                    <div style="text-align:left;font-size:.72rem;color:rgba(255,255,255,0.5);line-height:1.9">
+                        ✅ Unlimited connectors<br>✅ Group management<br>✅ 2-level HRAG<br>✅ Magic link auth
+                    </div>
+                </div>
+                <div style="background:rgba(167,139,250,0.06);border:2px solid rgba(167,139,250,0.4);border-radius:12px;padding:1.2rem;text-align:center;position:relative;opacity:0;animation:fadeSlideUp 0.5s 0.9s forwards;">
+                    <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:#a78bfa;color:var(--bg);padding:1px 10px;border-radius:10px;font-size:.55rem;font-weight:700">POPULAR</div>
+                    <div style="font-size:.65rem;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:1px;margin-top:4px">Business</div>
+                    <div style="font-size:2rem;font-weight:900;margin:.5rem 0;color:var(--text)">$79<span style="font-size:.7rem;color:rgba(255,255,255,0.4)">/user/mo</span></div>
+                    <div style="font-size:.75rem;color:rgba(255,255,255,0.4);margin-bottom:1rem">50–500 users</div>
+                    <div style="text-align:left;font-size:.72rem;color:rgba(255,255,255,0.5);line-height:1.9">
+                        ✅ SSO + RBAC + Vault<br>✅ Full HRAG<br>✅ Visual Designer<br>✅ Plugin Builder
+                    </div>
+                </div>
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(25,135,84,0.2);border-radius:12px;padding:1.2rem;text-align:center;opacity:0;animation:fadeSlideUp 0.5s 1.2s forwards;">
+                    <div style="font-size:.65rem;font-weight:700;color:#198754;text-transform:uppercase;letter-spacing:1px">Enterprise</div>
+                    <div style="font-size:2rem;font-weight:900;margin:.5rem 0;color:var(--text)">Custom</div>
+                    <div style="font-size:.75rem;color:rgba(255,255,255,0.4);margin-bottom:1rem">500+ users</div>
+                    <div style="text-align:left;font-size:.72rem;color:rgba(255,255,255,0.5);line-height:1.9">
+                        ✅ Dedicated infra<br>✅ Air-gapped deploy<br>✅ Custom verticals<br>✅ 24/7 + TAM
+                    </div>
+                </div>
+            </div>
+            <p class="subheadline fade-in-delay-3" style="margin-top:1rem;font-size:1rem;color:rgba(230,237,243,0.5)">All plans include Cerebro runtime • Loom designer • Weave knowledge engine</p>
+        </div>
+
+        <!-- Scene 21: Platform vs Partner Ecosystem -->
+        <div class="scene" data-duration="13000">
+            <h2 class="headline" style="font-size: 1.8rem;">Platform + Partner Ecosystem</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:900px;width:95%;margin:1.5rem auto;">
+                <div style="background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.2);border-radius:12px;padding:1.5rem;opacity:0;animation:fadeSlideUp 0.5s 0.3s forwards;">
+                    <h3 style="font-size:1.1rem;color:#a78bfa;margin-bottom:1rem;font-weight:700">🏢 BrainzBytes Builds</h3>
+                    <div style="font-size:.82rem;color:rgba(255,255,255,0.6);line-height:2.1">
+                        🧠 Cerebro Runtime (agent engine + RBAC)<br>
+                        🌐 Loom Designer (visual workflows)<br>
+                        🧶 Weave Knowledge (HRAG + policies)<br>
+                        🔌 Core Connectors (Gmail, Jira, GitHub…)<br>
+                        🛡️ Security (SSO, vault, audit)<br>
+                        📦 Deploy Tooling (Helm, Terraform)
+                    </div>
+                </div>
+                <div style="background:rgba(13,202,240,0.05);border:1px solid rgba(13,202,240,0.2);border-radius:12px;padding:1.5rem;opacity:0;animation:fadeSlideUp 0.5s 0.6s forwards;">
+                    <h3 style="font-size:1.1rem;color:#0dcaf0;margin-bottom:1rem;font-weight:700">🤝 Partners Build</h3>
+                    <div style="font-size:.82rem;color:rgba(255,255,255,0.6);line-height:2.1">
+                        🏥 Industry Connectors (EHR, Bloomberg…)<br>
+                        📋 Vertical Plugins (compliance, domain logic)<br>
+                        📚 Knowledge Packs (policy templates)<br>
+                        🎨 Custom Workflows (Loom automations)<br>
+                        🏗️ White-Label Solutions
+                    </div>
+                    <div style="margin-top:.8rem;padding:.5rem;background:rgba(13,202,240,0.08);border-radius:6px;font-size:.72rem;color:rgba(255,255,255,0.5)">
+                        💡 Plugin Builder — build MCP connectors in hours
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:1rem;opacity:0;animation:fadeSlideUp 0.5s 1s forwards;">
+                <div style="display:flex;gap:1.5rem;justify-content:center;font-size:.8rem;color:rgba(255,255,255,0.5)">
+                    <span>💳 <strong style="color:var(--text)">SaaS</strong> per-user</span>
+                    <span>🏢 <strong style="color:var(--text)">License</strong> annual</span>
+                    <span>🔌 <strong style="color:var(--text)">Marketplace</strong> 20% rev-share</span>
+                    <span>🎓 <strong style="color:var(--text)">Services</strong> integration</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 22: Competitive Landscape -->
+        <div class="scene" data-duration="14000">
+            <h2 class="headline" style="font-size: 1.8rem;">Competitive Landscape</h2>
+            <div style="overflow-x:auto;max-width:950px;width:95%;margin:1rem auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:.75rem;">
+                    <thead>
+                        <tr style="border-bottom:2px solid rgba(255,255,255,0.15)">
+                            <th style="padding:.5rem .7rem;text-align:left;color:rgba(255,255,255,0.4)">Capability</th>
+                            <th style="padding:.5rem .7rem;text-align:center;color:#a78bfa;font-weight:700">ContextWeaver</th>
+                            <th style="padding:.5rem .7rem;text-align:center;color:rgba(255,255,255,0.4)">LangChain</th>
+                            <th style="padding:.5rem .7rem;text-align:center;color:rgba(255,255,255,0.4)">Copilot Studio</th>
+                            <th style="padding:.5rem .7rem;text-align:center;color:rgba(255,255,255,0.4)">OpenAI</th>
+                        </tr>
+                    </thead>
+                    <tbody style="opacity:0;animation:fadeSlideUp 0.5s 0.5s forwards;">
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05)"><td style="padding:.45rem .7rem;color:var(--text)">Multi-user Identity</td><td style="text-align:center;color:#198754;font-weight:700">✅ Built-in</td><td style="text-align:center">❌</td><td style="text-align:center">⚠️ AD only</td><td style="text-align:center">❌</td></tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02)"><td style="padding:.45rem .7rem;color:var(--text)">Per-User Vault</td><td style="text-align:center;color:#198754;font-weight:700">✅ Cascade</td><td style="text-align:center">❌</td><td style="text-align:center">⚠️</td><td style="text-align:center">❌</td></tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05)"><td style="padding:.45rem .7rem;color:var(--text)">Hierarchical RAG</td><td style="text-align:center;color:#198754;font-weight:700">✅ 3-level</td><td style="text-align:center">❌ Flat</td><td style="text-align:center">❌ Flat</td><td style="text-align:center">⚠️</td></tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02)"><td style="padding:.45rem .7rem;color:var(--text)">Policy Engine</td><td style="text-align:center;color:#198754;font-weight:700">✅ Code</td><td style="text-align:center">❌ Prompt</td><td style="text-align:center">⚠️</td><td style="text-align:center">❌ Prompt</td></tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05)"><td style="padding:.45rem .7rem;color:var(--text)">MCP Protocol</td><td style="text-align:center;color:#198754;font-weight:700">✅ Native</td><td style="text-align:center">⚠️</td><td style="text-align:center">❌</td><td style="text-align:center">⚠️</td></tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02)"><td style="padding:.45rem .7rem;color:var(--text)">Visual Designer</td><td style="text-align:center;color:#198754;font-weight:700">✅ Loom</td><td style="text-align:center">❌</td><td style="text-align:center">✅</td><td style="text-align:center">❌</td></tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05)"><td style="padding:.45rem .7rem;color:var(--text)">Multi-Cloud</td><td style="text-align:center;color:#198754;font-weight:700">✅ 3 clouds</td><td style="text-align:center">⚠️ DIY</td><td style="text-align:center">❌ Azure</td><td style="text-align:center">❌</td></tr>
+                        <tr><td style="padding:.45rem .7rem;color:var(--text)">Full Audit Trail</td><td style="text-align:center;color:#198754;font-weight:700">✅</td><td style="text-align:center">❌</td><td style="text-align:center">⚠️</td><td style="text-align:center">⚠️</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="subheadline fade-in-delay-3" style="margin-top:1rem;font-size:.95rem;color:#198754;font-weight:600">Only platform with identity + HRAG + multi-cloud in one product</p>
+        </div>
+
+        <!-- Scene 23: Call to Action -->
+        <div class="scene" data-duration="15000">
+            <div class="logo-container">
+                <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+                    <circle cx="60" cy="60" r="56" stroke="#bc8cff" stroke-width="2.5" opacity="0.3"/>
+                    <path d="M20 42 C35 42, 40 35, 55 35 S75 42, 100 42" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+                    <path d="M20 55 C35 55, 40 48, 55 48 S75 55, 100 55" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+                    <path d="M20 68 C35 68, 40 61, 55 61 S75 68, 100 68" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                    <path d="M20 81 C35 81, 40 74, 55 74 S75 81, 100 81" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
+                    <path d="M38 22 C38 37, 31 42, 31 57 S38 62, 38 98" stroke="#bc8cff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+                    <path d="M55 22 C55 37, 48 42, 48 57 S55 62, 55 98" stroke="#bc8cff" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+                    <path d="M72 22 C72 37, 65 42, 65 57 S72 62, 72 98" stroke="#bc8cff" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                    <path d="M89 22 C89 37, 82 42, 82 57 S89 62, 89 98" stroke="#bc8cff" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
+                    <circle cx="60" cy="60" r="14" fill="#0d1117" stroke="#bc8cff" stroke-width="2.5"/>
+                    <circle cx="60" cy="60" r="8" fill="#bc8cff" opacity="0.2"/>
+                    <circle cx="60" cy="60" r="4" fill="#bc8cff" opacity="0.8"/>
+                    <circle cx="28" cy="35" r="3" fill="#58a6ff" opacity="0.6"/>
+                    <circle cx="92" cy="35" r="3" fill="#58a6ff" opacity="0.6"/>
+                    <circle cx="28" cy="85" r="3" fill="#58a6ff" opacity="0.4"/>
+                    <circle cx="92" cy="85" r="3" fill="#58a6ff" opacity="0.4"/>
+                    <circle cx="60" cy="60" r="20" fill="#bc8cff" opacity="0.05"/>
+                </svg>
+            </div>
+            <h1 class="title fade-in">ContextWeaver</h1>
+            <p class="headline fade-in-delay-1" style="font-size: 2.5rem;">Ready to secure your AI?</p>
+            <div class="cta-grid fade-in-delay-2">
+                <div class="cta-card">
+                    <div class="cta-icon">🚀</div>
+                    <div class="cta-text">Try it free</div>
+                    <div style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(230, 237, 243, 0.6);">docker-compose up</div>
+                </div>
+                <div class="cta-card">
+                    <div class="cta-icon">📧</div>
+                    <div class="cta-text">Contact us</div>
+                    <div style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(230, 237, 243, 0.6);">hello@brainzbytes.com</div>
+                </div>
+                <div class="cta-card">
+                    <div class="cta-icon">🌐</div>
+                    <div class="cta-text">Learn more</div>
+                    <div style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(230, 237, 243, 0.6);">brainzbytes.com</div>
+                </div>
+            </div>
+            <p class="copyright fade-in-delay-3" style="margin-top: 3rem;">Built by BrainzBytes • © 2025 BrainzBytes. All rights reserved.</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="play-pause-btn" id="playPauseBtn">
+                <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                </svg>
+                <svg id="playIcon" style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="scene-counter" id="sceneCounter">Scene 1 of 20</div>
+    </div>
+
+    <script>
+        // Scene management
+        let currentScene = 0;
+        let isPlaying = true;
+        let sceneTimer = null;
+        const scenes = document.querySelectorAll('.scene');
+        const totalScenes = scenes.length;
+        const progressBar = document.getElementById('progressBar');
+        const sceneCounter = document.getElementById('sceneCounter');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+
+        // Typed text effect for Scene 1
+        function typeText(element, text, speed = 100) {
+            let i = 0;
+            element.textContent = '';
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    element.classList.remove('typed');
+                }
+            }, speed);
+        }
+
+        // Start typing animation for Scene 1
+        setTimeout(() => {
+            const titleElement = document.getElementById('mainTitle');
+            titleElement.classList.add('typed');
+            typeText(titleElement, 'ContextWeaver', 80);
+        }, 500);
+
+        // Animate connector items in Scene 8
+        function animateConnectors() {
+            const connectors = document.querySelectorAll('.connector-item');
+            connectors.forEach((connector, index) => {
+                setTimeout(() => {
+                    connector.classList.add('appear');
+                }, index * 200);
+            });
+        }
+
+        // Trigger connector animation when Scene 8 is active
+        function onSceneActivate(sceneIndex) {
+            if (sceneIndex === 7) { // Scene 8 (0-indexed)
+                animateConnectors();
+            }
+        }
+
+        function showScene(index) {
+            scenes.forEach((scene, i) => {
+                if (i === index) {
+                    scene.classList.add('active');
+                    onSceneActivate(i);
+                } else {
+                    scene.classList.remove('active');
+                }
+            });
+            
+            currentScene = index;
+            sceneCounter.textContent = `Scene ${index + 1} of ${totalScenes}`;
+            updateProgress();
+            
+            if (isPlaying) {
+                scheduleNextScene();
+            }
+        }
+
+        function scheduleNextScene() {
+            if (sceneTimer) {
+                clearTimeout(sceneTimer);
+            }
+            
+            const duration = parseInt(scenes[currentScene].dataset.duration) || 10000;
+            sceneTimer = setTimeout(() => {
+                nextScene();
+            }, duration);
+        }
+
+        function nextScene() {
+            if (currentScene < totalScenes - 1) {
+                showScene(currentScene + 1);
+            } else {
+                // Loop back to start
+                showScene(0);
+            }
+        }
+
+        function prevScene() {
+            if (currentScene > 0) {
+                showScene(currentScene - 1);
+            }
+        }
+
+        function togglePlayPause() {
+            isPlaying = !isPlaying;
+            
+            if (isPlaying) {
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                scheduleNextScene();
+            } else {
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                if (sceneTimer) {
+                    clearTimeout(sceneTimer);
+                }
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentScene + 1) / totalScenes) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Event listeners
+        playPauseBtn.addEventListener('click', togglePlayPause);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                togglePlayPause();
+            } else if (e.code === 'ArrowRight') {
+                e.preventDefault();
+                nextScene();
+            } else if (e.code === 'ArrowLeft') {
+                e.preventDefault();
+                prevScene();
+            }
+        });
+
+        // Initialize
+        showScene(0);
+        updateProgress();
+
+        // ── Evolving ambient music via Web Audio API ──
+        let audioCtx = null;
+        let musicPlaying = false;
+        let musicIntervals = [];
+        let musicTimeouts = [];
+
+        function createAmbientMusic() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const master = audioCtx.createGain();
+            master.gain.value = 0.22;
+            master.connect(audioCtx.destination);
+
+            // Reverb via convolver (synthetic impulse)
+            const convolver = audioCtx.createConvolver();
+            const rate = audioCtx.sampleRate;
+            const len = rate * 2.5;
+            const impulse = audioCtx.createBuffer(2, len, rate);
+            for (let ch = 0; ch < 2; ch++) {
+                const d = impulse.getChannelData(ch);
+                for (let i = 0; i < len; i++) {
+                    d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.5);
+                }
+            }
+            convolver.buffer = impulse;
+            const reverbGain = audioCtx.createGain();
+            reverbGain.gain.value = 0.3;
+            convolver.connect(reverbGain);
+            reverbGain.connect(master);
+
+            // Dry path
+            const dryGain = audioCtx.createGain();
+            dryGain.gain.value = 0.7;
+            dryGain.connect(master);
+
+            // Chord progressions (frequencies)
+            const chords = [
+                [130.81, 164.81, 196.00, 261.63],  // C  - C3 E3 G3 C4
+                [110.00, 138.59, 164.81, 220.00],  // Am - A2 C#3 E3 A3
+                [146.83, 174.61, 220.00, 293.66],  // Dm - D3 F3 A3 D4
+                [98.00,  123.47, 146.83, 196.00],  // G  - G2 B2 D3 G3
+                [130.81, 155.56, 196.00, 261.63],  // Cm - C3 Eb3 G3 C4
+                [116.54, 146.83, 174.61, 233.08],  // Bb - Bb2 D3 F3 Bb3
+                [87.31,  110.00, 130.81, 174.61],  // F  - F2 A2 C3 F3
+                [98.00,  123.47, 146.83, 196.00],  // G  - G2 B2 D3 G3
+            ];
+
+            let chordIndex = 0;
+            let activeOscs = [];
+
+            function playChord() {
+                // Fade out old notes
+                activeOscs.forEach(({ osc, gain }) => {
+                    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+                    const t = setTimeout(() => { try { osc.stop(); } catch(e){} }, 2000);
+                    musicTimeouts.push(t);
+                });
+                activeOscs = [];
+
+                const chord = chords[chordIndex % chords.length];
+                chordIndex++;
+
+                // Pad layer — each note fades in
+                chord.forEach((freq, i) => {
+                    const osc = audioCtx.createOscillator();
+                    osc.type = i < 2 ? 'triangle' : 'sine';
+                    osc.frequency.value = freq;
+
+                    // Gentle vibrato
+                    const vib = audioCtx.createOscillator();
+                    vib.type = 'sine';
+                    vib.frequency.value = 0.3 + Math.random() * 0.4;
+                    const vibG = audioCtx.createGain();
+                    vibG.gain.value = 1.5;
+                    vib.connect(vibG);
+                    vibG.connect(osc.detune);
+                    vib.start();
+
+                    const gain = audioCtx.createGain();
+                    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.06 - i * 0.008, audioCtx.currentTime + 0.8 + i * 0.3);
+
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.value = 1200 - i * 150;
+                    filter.Q.value = 0.7;
+
+                    osc.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(dryGain);
+                    gain.connect(convolver);
+                    osc.start();
+
+                    activeOscs.push({ osc, gain, vib });
+                });
+
+                // Arpeggio layer — plucked notes cycling through chord
+                let arpIndex = 0;
+                const arpNotes = [...chord, chord[0] * 2, chord[1] * 2]; // extend up an octave
+                const arpInterval = setInterval(() => {
+                    if (!audioCtx) return;
+                    const freq = arpNotes[arpIndex % arpNotes.length];
+                    arpIndex++;
+
+                    const osc = audioCtx.createOscillator();
+                    osc.type = 'sine';
+                    osc.frequency.value = freq * 2; // play arp one octave higher
+
+                    const gain = audioCtx.createGain();
+                    const now = audioCtx.currentTime;
+                    gain.gain.setValueAtTime(0, now);
+                    gain.gain.linearRampToValueAtTime(0.04, now + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
+
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(2000, now);
+                    filter.frequency.exponentialRampToValueAtTime(400, now + 1.5);
+
+                    osc.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(dryGain);
+                    gain.connect(convolver);
+                    osc.start(now);
+                    osc.stop(now + 2);
+                }, 600 + Math.random() * 200);
+                musicIntervals.push(arpInterval);
+
+                // Clear arp before next chord
+                const clearArp = setTimeout(() => {
+                    clearInterval(arpInterval);
+                    const idx = musicIntervals.indexOf(arpInterval);
+                    if (idx > -1) musicIntervals.splice(idx, 1);
+                }, 7200);
+                musicTimeouts.push(clearArp);
+            }
+
+            // Sub-bass with slow pulse
+            const sub = audioCtx.createOscillator();
+            sub.type = 'sine';
+            sub.frequency.value = 65.41;
+            const subGain = audioCtx.createGain();
+            subGain.gain.value = 0.06;
+            const subLfo = audioCtx.createOscillator();
+            subLfo.type = 'sine';
+            subLfo.frequency.value = 0.08;
+            const subLfoG = audioCtx.createGain();
+            subLfoG.gain.value = 0.025;
+            subLfo.connect(subLfoG);
+            subLfoG.connect(subGain.gain);
+            subLfo.start();
+            sub.connect(subGain);
+            subGain.connect(master);
+            sub.start();
+
+            // Occasional high bell tone
+            const bellInterval = setInterval(() => {
+                if (!audioCtx) return;
+                const bellFreqs = [523.25, 659.25, 783.99, 1046.50, 880.00];
+                const freq = bellFreqs[Math.floor(Math.random() * bellFreqs.length)];
+                const osc = audioCtx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                const gain = audioCtx.createGain();
+                const now = audioCtx.currentTime;
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.025, now + 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 3);
+                osc.connect(gain);
+                gain.connect(convolver);
+                osc.start(now);
+                osc.stop(now + 3.5);
+            }, 3000 + Math.random() * 4000);
+            musicIntervals.push(bellInterval);
+
+            // Play first chord and schedule progression (every 8 sec)
+            playChord();
+            const chordLoop = setInterval(() => {
+                if (!audioCtx) return;
+                playChord();
+            }, 8000);
+            musicIntervals.push(chordLoop);
+
+            // Store cleanup refs
+            musicIntervals._sub = sub;
+            musicIntervals._subLfo = subLfo;
+
+            musicPlaying = true;
+        }
+
+        function stopMusic() {
+            musicIntervals.forEach(id => clearInterval(id));
+            musicTimeouts.forEach(id => clearTimeout(id));
+            if (musicIntervals._sub) try { musicIntervals._sub.stop(); } catch(e){}
+            if (musicIntervals._subLfo) try { musicIntervals._subLfo.stop(); } catch(e){}
+            musicIntervals = [];
+            musicTimeouts = [];
+            if (audioCtx) {
+                audioCtx.close();
+                audioCtx = null;
+            }
+            musicPlaying = false;
+        }
+
+        // Music toggle button
+        const musicBtn = document.createElement('button');
+        musicBtn.innerHTML = '🔇';
+        musicBtn.title = 'Toggle music';
+        musicBtn.style.cssText = 'position:fixed;bottom:1.5rem;left:1.5rem;z-index:1000;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:50%;width:44px;height:44px;font-size:1.2rem;cursor:pointer;color:#e6edf3;transition:all 0.3s;display:flex;align-items:center;justify-content:center;';
+        musicBtn.onmouseenter = () => musicBtn.style.background = 'rgba(255,255,255,0.15)';
+        musicBtn.onmouseleave = () => musicBtn.style.background = 'rgba(255,255,255,0.08)';
+        musicBtn.onclick = () => {
+            if (musicPlaying) {
+                stopMusic();
+                musicBtn.innerHTML = '🔇';
+            } else {
+                createAmbientMusic();
+                musicBtn.innerHTML = '🔊';
+            }
+        };
+        document.body.appendChild(musicBtn);
+
+        // Auto-start music on first user interaction (required by browsers)
+        let musicAutoStarted = false;
+        function autoStartMusic() {
+            if (!musicAutoStarted) {
+                musicAutoStarted = true;
+                createAmbientMusic();
+                musicBtn.innerHTML = '🔊';
+            }
+        }
+        document.addEventListener('click', autoStartMusic, { once: true });
+        document.addEventListener('keydown', autoStartMusic, { once: true });
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight">
+<head>
+  <script src="/gate.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ContextWeaver NextGen &mdash; Azure Production Architecture</title>
+  <meta name="description" content="Azure production target for ContextWeaver NextGen with Entra ID, private AKS, durable PostgreSQL and RabbitMQ execution, governed RAG, dynamic Agent and MCP releases, and continuous authorization.">
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js" defer></script>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",system-ui,sans-serif}.wrap{width:min(1160px,calc(100% - 2rem));margin:auto}
+    .hero{padding:8rem 0 4rem;text-align:center;background:radial-gradient(circle at 50% 0,rgba(37,99,235,.18),transparent 52%)}.eyebrow{color:#60a5fa;font-size:.75rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase}
+    h1{font-size:clamp(2.1rem,4vw,3.15rem);line-height:1.03;letter-spacing:-.04em;margin:.8rem auto 1.2rem;max-width:900px}.lead{max-width:800px;margin:auto;color:var(--text-muted);font-size:1.08rem;line-height:1.75}
+    .actions{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;margin-top:1.8rem}.button{padding:.75rem 1rem;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);text-decoration:none;color:var(--text);font-weight:750}.button.primary{background:#2563eb;color:#fff;border-color:#2563eb}
+    .section{padding:4.2rem 0}.section.alt{background:var(--bg-elevated)}.section h2{font-size:clamp(1.65rem,3vw,2.3rem);letter-spacing:-.03em;margin:.4rem 0 .65rem}.intro{max-width:760px;color:var(--text-muted);line-height:1.7;margin:0 0 2rem}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.card{padding:1.2rem;border:1px solid var(--border);border-radius:15px;background:var(--bg-card)}.card b{display:block;color:#60a5fa;margin-bottom:.35rem}.card p{color:var(--text-muted);font-size:.82rem;line-height:1.55;margin:0}
+    .map{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.row{display:grid;grid-template-columns:.75fr 1.25fr;gap:1rem;padding:1rem;border:1px solid var(--border);border-radius:12px;background:var(--bg-card)}.row strong{color:#60a5fa}.row span{color:var(--text-muted);font-size:.84rem;line-height:1.55}
+    .diagram{display:block;padding:1rem;border-radius:16px;background:#f7fbfc;border:1px solid var(--border)}.diagram img{display:block;width:100%;height:auto}
+    .status{padding:1.1rem 1.25rem;border:1px solid rgba(251,191,36,.35);border-radius:13px;background:rgba(251,191,36,.07);color:var(--text-muted);line-height:1.65}.status strong{color:#fbbf24}
+    @media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.map{grid-template-columns:1fr}}@media(max-width:560px){.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}.hero{padding-top:6.5rem}}
+  </style>
+</head>
+<body>
+  <header class="hero"><div class="wrap"><span class="eyebrow">Azure production target</span><h1>Private, durable, continuously authorized AI services on Azure</h1><p class="lead">The NextGen target maps the cloud-neutral ContextWeaver planes to Azure services without changing the workflow, Agent, MCP, RAG, security, or recovery contracts.</p><div class="actions"><a class="button primary" href="docs/documents/azure-production-platform-and-poc.html">Read the complete Azure blueprint</a><a class="button" href="architecture.html">Back to architecture overview</a><a class="button" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html">Open all diagrams</a></div></div></header>
+  <main>
+    <section class="section alt"><div class="wrap"><span class="eyebrow">Security boundary</span><h2>Entra authenticates; policy authorizes every execution</h2><p class="intro">The browser uses a confidential BFF authorization-code flow with PKCE and receives an opaque secure session. Authentication is never ambient execution authority.</p><div class="grid">
+      <article class="card"><b>Microsoft Entra ID</b><p>Tenant identity, MFA, Conditional Access, groups, roles, and workload identities.</p></article>
+      <article class="card"><b>Confidential BFF</b><p>Server-side token handling, HttpOnly session cookies, CSRF protection, and no reusable downstream token in the browser.</p></article>
+      <article class="card"><b>Whole-graph preflight</b><p>Service, workflow, Agent, MCP, tool, model, RAG, fallback, and compensation authority is frozen into the immutable plan.</p></article>
+      <article class="card"><b>Runtime enforcement</b><p>Every protected node and side effect is reauthorized immediately before execution.</p></article>
+      <article class="card"><b>Credential broker</b><p>Trusted gateways obtain short-lived scoped tokens from Key Vault/OpenBao references; Agents never possess credentials.</p></article>
+      <article class="card"><b>Private networking</b><p>Private AKS, private endpoints, restricted egress, workload identity, network policy, and encrypted service paths.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="wrap"><span class="eyebrow">Azure service mapping</span><h2>Cloud bindings beneath stable platform contracts</h2><p class="intro">Provider services can change without changing the durable execution protocol or capability contracts.</p><div class="map">
+      <div class="row"><strong>Compute</strong><span>Private AKS node pools for edge, control plane, queue workers, RAG, gateways, and isolated Agent/MCP runtime namespaces.</span></div>
+      <div class="row"><strong>Durable state</strong><span>Azure Database for PostgreSQL Flexible Server HA for runs, tasks, leases, timers, HITL, inbox/outbox, checkpoints, registry, policy, and pgvector.</span></div>
+      <div class="row"><strong>Messaging</strong><span>RabbitMQ quorum queues on AKS or a validated managed-compatible topology with persistent messages, confirms, retries, DLQ, and redelivery.</span></div>
+      <div class="row"><strong>Artifacts</strong><span>Azure Blob Storage for immutable documents, large task payloads, results, evidence, citations, packages, and release artifacts.</span></div>
+      <div class="row"><strong>Models</strong><span>Azure OpenAI behind the Model Gateway, with approved deployments, regions, retention policy, redaction, budgets, and fallback rules.</span></div>
+      <div class="row"><strong>RAG search</strong><span>PostgreSQL full-text search plus pgvector initially; Azure AI Search is introduced only when measured scale or search requirements justify it.</span></div>
+      <div class="row"><strong>Secrets</strong><span>OpenBao/Vault as the portable credential broker, optionally backed by Azure Key Vault and External Secrets.</span></div>
+      <div class="row"><strong>Operations</strong><span>Prometheus, Grafana, Loki, OpenTelemetry, Azure Monitor integration, immutable audit, SLOs, alerts, and recovery drills.</span></div>
+    </div></div></section>
+
+    <section class="section alt"><div class="wrap"><span class="eyebrow">Production topology</span><h2>Durable execution is visible in the Azure diagram</h2><p class="intro">The scheduler does not call Agents or MCPs directly. It commits work, publishes queue commands, and relies on replaceable workers and durable state.</p><a class="diagram" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html"><img src="docs/diagram-viewer/contextweaver-nextgen-architecture/10-azure-production-platform.svg" alt="ContextWeaver NextGen Azure production platform architecture"></a></div></section>
+
+    <section class="section"><div class="wrap"><span class="eyebrow">Current truth</span><h2>Production target, not a claim that every service is deployed</h2><div class="status"><strong>Status:</strong> local platform foundations and selected application capabilities are implemented. The complete Entra BFF, universal runtime authorization, workflow coordinator, inbox/outbox topology, leases, durable timers, persistent HITL service, MCP reconciliation, Saga compensation, and full recovery suite remain production-target work. The documentation keeps this distinction explicit.</div></div></section>
+  </main>
+</body>
+</html>

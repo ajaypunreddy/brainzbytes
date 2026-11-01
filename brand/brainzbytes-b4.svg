@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <path class="bb-body" fill="#F4FFF5" fill-rule="evenodd" d="M14 20h22c8 0 14 4.8 14 11.5 0 3.8-1.8 7-5 9 4.2 1.8 6.5 5.3 6.5 9.6C51.5 58 45.3 63 36 63H14V20Zm11 9v8h10.2c2.7 0 4.5-1.5 4.5-4s-1.8-4-4.5-4H25Zm0 16v9h11.2c3 0 4.8-1.7 4.8-4.5S39.2 45 36.2 45H25Z"/>
+  <path class="bb-modules" fill="#7CFF8F" d="M14 20h11v9H14zM14 37h11v8H14zM14 54h11v9H14z"/>
+  <path class="bb-signal" stroke="#7CFF8F" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M25 20V12m0 0-8-6m8 6 8-7m-8 7h13l7-6"/>
+  <circle class="bb-node" cx="17" cy="6" r="3" fill="#7CFF8F"/>
+  <circle class="bb-node" cx="33" cy="5" r="3" fill="#7CFF8F"/>
+  <circle class="bb-node" cx="45" cy="6" r="3" fill="#7CFF8F"/>
+</svg>

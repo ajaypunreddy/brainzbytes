@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="390" viewBox="0 0 1200 390" role="img" aria-labelledby="title desc">
+  <title id="title">ContextWeaver intent to governed evidence flow</title>
+  <desc id="desc">Seven stages connect user intent to a verified result with policy, identity, audit, telemetry, and durable state across every stage.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08131c"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L9 3L0 6Z" fill="#6ee7cf"/></marker>
+    <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity=".28"/></filter>
+  </defs>
+  <rect width="1200" height="390" rx="24" fill="url(#bg)"/>
+  <text x="48" y="55" fill="#f8fafc" font-family="Inter,Segoe UI,sans-serif" font-size="26" font-weight="800">Intent to governed evidence</text>
+  <text x="48" y="82" fill="#94a3b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">A durable, authorized path from request to proof</text>
+  <g stroke="#6ee7cf" stroke-width="3" fill="none" marker-end="url(#arrow)" opacity=".85">
+    <path d="M184 188H213"/><path d="M349 188H378"/><path d="M514 188H543"/><path d="M679 188H708"/><path d="M844 188H873"/><path d="M1009 188H1038"/>
+  </g>
+  <g font-family="Inter,Segoe UI,sans-serif" text-anchor="middle" filter="url(#shadow)">
+    <g><rect x="48" y="132" width="136" height="112" rx="16" fill="#102a43" stroke="#58a6ff"/><text x="116" y="172" fill="#7dd3fc" font-size="12" font-weight="800">1 · INTENT</text><text x="116" y="202" fill="#f8fafc" font-size="15" font-weight="700">User or API</text><text x="116" y="224" fill="#94a3b8" font-size="11">Request + purpose</text></g>
+    <g><rect x="213" y="132" width="136" height="112" rx="16" fill="#10291f" stroke="#34d399"/><text x="281" y="172" fill="#6ee7cf" font-size="12" font-weight="800">2 · RESOLVE</text><text x="281" y="202" fill="#f8fafc" font-size="15" font-weight="700">Service</text><text x="281" y="224" fill="#94a3b8" font-size="11">Workflow version</text></g>
+    <g><rect x="378" y="132" width="136" height="112" rx="16" fill="#302510" stroke="#fbbf24"/><text x="446" y="172" fill="#fde68a" font-size="12" font-weight="800">3 · AUTHORIZE</text><text x="446" y="202" fill="#f8fafc" font-size="15" font-weight="700">Whole graph</text><text x="446" y="224" fill="#94a3b8" font-size="11">Identity + policy</text></g>
+    <g><rect x="543" y="132" width="136" height="112" rx="16" fill="#261b38" stroke="#bc8cff"/><text x="611" y="172" fill="#c4b5fd" font-size="12" font-weight="800">4 · COMMIT</text><text x="611" y="202" fill="#f8fafc" font-size="15" font-weight="700">Durable truth</text><text x="611" y="224" fill="#94a3b8" font-size="11">Plan + outbox</text></g>
+    <g><rect x="708" y="132" width="136" height="112" rx="16" fill="#102a43" stroke="#58a6ff"/><text x="776" y="172" fill="#7dd3fc" font-size="12" font-weight="800">5 · EXECUTE</text><text x="776" y="202" fill="#f8fafc" font-size="15" font-weight="700">Workers</text><text x="776" y="224" fill="#94a3b8" font-size="11">Agent + MCP + RAG</text></g>
+    <g><rect x="873" y="132" width="136" height="112" rx="16" fill="#302510" stroke="#fbbf24"/><text x="941" y="172" fill="#fde68a" font-size="12" font-weight="800">6 · VERIFY</text><text x="941" y="202" fill="#f8fafc" font-size="15" font-weight="700">Approval</text><text x="941" y="224" fill="#94a3b8" font-size="11">Contracts + receipts</text></g>
+    <g><rect x="1038" y="132" width="114" height="112" rx="16" fill="#10291f" stroke="#34d399"/><text x="1095" y="172" fill="#6ee7cf" font-size="12" font-weight="800">7 · DELIVER</text><text x="1095" y="202" fill="#f8fafc" font-size="15" font-weight="700">Result</text><text x="1095" y="224" fill="#94a3b8" font-size="11">Evidence + replay</text></g>
+  </g>
+  <rect x="190" y="302" width="820" height="50" rx="14" fill="#0d1c27" stroke="#6ee7cf" stroke-dasharray="6 5"/>
+  <text x="600" y="333" fill="#c7f9ec" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="13" font-weight="700">Policy · identity · durable state · audit · telemetry</text>
+</svg>

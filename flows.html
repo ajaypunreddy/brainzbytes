@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight">
+<head>
+  <script src="/gate.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrainzBytes ContextWeaver &mdash; NextGen Platform Flows</title>
+  <meta name="description" content="Modern visual flows for ContextWeaver NextGen: prompt execution, capability onboarding, asynchronous RAG ingestion, and Azure production delivery.">
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js" defer></script>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",system-ui,sans-serif}.wrap{width:min(1180px,calc(100% - 2rem));margin:auto}
+    .hero{padding:8rem 0 4rem;text-align:center;background:radial-gradient(circle at 50% 0,rgba(167,139,250,.2),transparent 55%)}.eyebrow{color:var(--accent-cyan);font-size:.74rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase}
+    h1{font-size:clamp(2.2rem,4vw,3.2rem);line-height:1.03;letter-spacing:-.045em;margin:.8rem auto 1.2rem;max-width:960px;background:linear-gradient(120deg,var(--accent-purple),var(--accent-cyan));-webkit-background-clip:text;background-clip:text;color:transparent}.lead{max-width:800px;margin:auto;color:var(--text-muted);font-size:1.1rem;line-height:1.75}
+    .actions{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;margin-top:1.8rem}.button{padding:.8rem 1rem;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);text-decoration:none;color:var(--text);font-weight:750}.button.primary{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;border-color:transparent}
+    .section{padding:4.5rem 0}.section.alt{background:var(--bg-elevated)}.section h2{font-size:clamp(1.7rem,3vw,2.35rem);letter-spacing:-.03em;margin:.4rem 0 .65rem}.intro{max-width:780px;color:var(--text-muted);line-height:1.7;margin:0 0 2rem}
+    .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.step{position:relative;padding:1.2rem;border:1px solid var(--border);border-radius:15px;background:var(--bg-card)}.step:not(:last-child)::after{content:"";position:absolute;right:-.7rem;top:50%;width:.7rem;border-top:2px solid var(--accent-purple)}.step b{display:block;color:var(--accent-cyan);font-size:.69rem;letter-spacing:.09em;margin-bottom:.55rem}.step h3{font-size:1rem;margin:0 0 .45rem}.step p{color:var(--text-muted);font-size:.8rem;line-height:1.58;margin:0}
+    .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}.diagram{display:block;overflow:hidden;border:1px solid var(--border);border-radius:18px;background:var(--bg-card);text-decoration:none;transition:.2s;box-shadow:var(--card-shadow)}.diagram:hover{border-color:var(--accent-purple);transform:translateY(-3px);box-shadow:var(--card-hover-shadow)}.preview{padding:12px;background-image:linear-gradient(rgba(99,124,145,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(99,124,145,.1) 1px,transparent 1px),linear-gradient(145deg,#eaf3f8,#dce8f0);background-size:24px 24px,24px 24px,auto}.preview img{display:block;width:100%;height:300px;object-fit:contain;border-radius:12px;filter:drop-shadow(0 12px 24px rgba(20,50,64,.2))}.copy{padding:1.2rem}.copy span{color:var(--accent-cyan);font-size:.67rem;font-weight:850;letter-spacing:.09em;text-transform:uppercase}.copy h3{margin:.4rem 0;font-size:1.08rem}.copy p{margin:0;color:var(--text-muted);font-size:.82rem;line-height:1.6}
+    .truth{padding:1.2rem 1.35rem;border:1px solid rgba(251,191,36,.35);border-radius:14px;background:rgba(251,191,36,.07);color:var(--text-muted);line-height:1.65}.truth strong{color:#fbbf24}
+    @media(max-width:900px){.flow{grid-template-columns:repeat(2,1fr)}.step:not(:last-child)::after{display:none}.gallery{grid-template-columns:1fr}}@media(max-width:560px){.flow{grid-template-columns:1fr}.hero{padding-top:6.5rem}.preview img{height:220px}}
+  </style>
+</head>
+<body>
+  <header class="hero"><div class="wrap"><span class="eyebrow">ContextWeaver NextGen &middot; Visual journeys</span><h1>From governed intent to durable outcome</h1><p class="lead">The old synchronous call-flow diagrams have been replaced by queue-mediated, resumable flows for execution, capability deployment, knowledge ingestion, and production operations.</p><div class="actions"><a class="button primary" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html">Open all 18 diagrams</a><a class="button" href="architecture.html">Architecture overview</a><a class="button" href="docs/features/platform-realization-lifecycle.html">Animated lifecycle</a></div></div></header>
+  <main>
+    <section class="section alt"><div class="wrap"><span class="eyebrow">Prompt-to-result</span><h2>Execution crosses durable boundaries</h2><p class="intro">The browser receives an accepted run and observes it. PostgreSQL, RabbitMQ, and replaceable workers own the actual execution.</p><div class="flow">
+      <article class="step"><b>01 ADMIT</b><h3>Identity, schema, and idempotency</h3><p>The edge validates the caller and normalized typed request.</p></article>
+      <article class="step"><b>02 FREEZE</b><h3>Plan and authorize</h3><p>The compiler resolves versions, contracts, capabilities, policy, and budgets.</p></article>
+      <article class="step"><b>03 COMMIT</b><h3>Persist before acceptance</h3><p>The run, immutable plan, initial task, and outbox record commit together.</p></article>
+      <article class="step"><b>04 DISPATCH</b><h3>Publish confirmed commands</h3><p>RabbitMQ quorum queues deliver persistent commands to competing workers.</p></article>
+      <article class="step"><b>05 EXECUTE</b><h3>Lease, reauthorize, checkpoint</h3><p>Agent, RAG, model, HITL, and MCP Gateway workers execute independently.</p></article>
+      <article class="step"><b>06 COMMIT</b><h3>Store result before acknowledgement</h3><p>Inbox, artifacts, receipts, state, and next outbox records commit atomically.</p></article>
+      <article class="step"><b>07 RECOVER</b><h3>Redeliver or resume</h3><p>Another worker continues after message redelivery or lease expiry.</p></article>
+      <article class="step"><b>08 PROJECT</b><h3>Replay events and evidence</h3><p>SSE reconnects with ordered progress, approvals, graph state, and results.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="wrap"><span class="eyebrow">Modern diagram library</span><h2>Four journeys explain the complete platform</h2><p class="intro">Each preview opens the full viewer at the relevant architecture page.</p><div class="gallery">
+      <a class="diagram" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html#page=12"><div class="preview"><img src="docs/diagram-viewer/contextweaver-nextgen-architecture/12-durable-async-execution.svg" alt="Durable asynchronous prompt-to-result flow"></div><div class="copy"><span>Runtime</span><h3>Durable asynchronous execution</h3><p>Admission, transactional outbox, queues, workers, MCP effects, recovery, and replayable results.</p></div></a>
+      <a class="diagram" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html#page=8"><div class="preview"><img src="docs/diagram-viewer/contextweaver-nextgen-architecture/08-dynamic-agent-and-mcp-lifecycle.svg" alt="Dynamic Agent and MCP lifecycle"></div><div class="copy"><span>Control plane</span><h3>Dynamic Agent and MCP onboarding</h3><p>Package, scan, validate, approve, sign, deploy through Helm, discover, observe, and retire.</p></div></a>
+      <a class="diagram" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html#page=13"><div class="preview"><img src="docs/diagram-viewer/contextweaver-nextgen-architecture/13-asynchronous-rag-ingestion.svg" alt="Asynchronous governed RAG ingestion"></div><div class="copy"><span>Knowledge</span><h3>Asynchronous RAG ingestion</h3><p>Events plus reconciliation, durable stages, shadow generations, validation, atomic publication, and retrieval.</p></div></a>
+      <a class="diagram" href="docs/diagram-viewer/contextweaver-nextgen-architecture.html#page=10"><div class="preview"><img src="docs/diagram-viewer/contextweaver-nextgen-architecture/10-azure-production-platform.svg" alt="Azure production platform"></div><div class="copy"><span>Production</span><h3>Azure production topology</h3><p>Entra, private edge, AKS planes, durable data, trusted gateways, RAG, operations, and dynamic capabilities.</p></div></a>
+    </div><div class="truth" style="margin-top:1.4rem"><strong>Implementation truth:</strong> these visuals distinguish implemented foundation, normative specification, proof-of-concept scope, and production target. The complete durable coordinator and recovery suite remain implementation work.</div></div></section>
+  </main>
+</body>
+</html>

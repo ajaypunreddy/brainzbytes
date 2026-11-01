@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight">
+<head>
+<script src="/gate.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ContextWeaver — Agentic AI Scenario: Smart Trading Assistant</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); padding:0 0 3rem 0; margin:0; }
+    .card { background:var(--bg-card); border-color:var(--border); }
+    .table { color: var(--text); }
+    a { color:var(--accent); }
+    code { background:var(--code-bg); padding:2px 6px; border-radius:4px; font-size:0.85em; }
+    .step-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; margin-bottom:1rem; }
+    .step-num { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; font-weight:700; font-size:0.9rem; }
+    .connector-badge { font-size:0.6rem; padding:3px 8px; }
+    .voice-bubble { background:rgba(13,202,240,0.08); border:1px solid rgba(13,202,240,0.3); border-radius:12px; padding:0.75rem 1rem; margin:0.5rem 0; display:inline-block; }
+    .agent-bubble { background:rgba(25,135,84,0.08); border:1px solid rgba(25,135,84,0.3); border-radius:12px; padding:0.75rem 1rem; margin:0.5rem 0; display:inline-block; }
+    .ticker { font-family:monospace; font-weight:700; }
+    .up { color:#16a34a; }
+    .down { color:#dc3545; }
+  </style>
+
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js" defer></script>
+</head>
+<body>
+  <!-- Nav -->
+<div class="container-fluid" style="max-width:900px">
+
+    <!-- Hero -->
+    <div class="text-center py-4">
+      <div style="font-size:3rem">&#x1F4C8;&#x1F4B0;&#x1F916;</div>
+      <h1 style="color:var(--accent-purple);font-weight:700;letter-spacing:-0.5px;font-size:1.8rem">Agentic AI in Action</h1>
+      <p class="lead text-muted mb-1">Smart Trading Assistant &mdash; Buy Low, Sell High</p>
+      <p class="small text-muted">One amount. AI does the research, timing, execution, and monitoring.</p>
+    </div>
+
+    <!-- The Prompt -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4 class="text-info mb-3"><i class="bi bi-mic"></i> The User Prompt</h4>
+        <div class="text-center">
+          <div class="voice-bubble" style="font-size:1.1rem">
+            <i class="bi bi-mic-fill text-info me-2"></i>
+            <em>"I have $5,000 to invest. Find me the best buy-low opportunities right now and set up automatic sell targets."</em>
+          </div>
+        </div>
+        <p class="text-center text-muted small mt-3 mb-0">
+          One sentence triggers an <strong>11-step agentic workflow</strong> &mdash; scanning market data,
+          analyzing technical indicators, screening for undervalued stocks, validating your account,
+          executing trades, setting stop-loss and take-profit orders, and monitoring positions with real-time alerts.
+        </p>
+      </div>
+    </div>
+
+    <!-- The Steps -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4 class="text-info mb-3"><i class="bi bi-diagram-3"></i> What ContextWeaver Does</h4>
+
+        <!-- Step 1: Market scan -->
+        <div class="step-card">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num bg-info text-dark">1</span>
+            <div>
+              <strong>Scan Market for Buy-Low Opportunities</strong>
+              <span class="badge bg-warning text-dark connector-badge ms-2"><i class="bi bi-graph-up"></i> Market Data API</span>
+              <span class="badge bg-secondary connector-badge ms-2"><i class="bi bi-cpu"></i> AI Analysis</span>
+            </div>
+          </div>
+          <div class="small text-muted mb-2">
+            <code>screen_stocks(criteria=["oversold_rsi", "near_52w_low", "strong_fundamentals", "high_volume_spike"], budget=5000)</code>
+          </div>
+          <div class="agent-bubble small">
+            <i class="bi bi-robot text-success me-1"></i>
+            "Scanned 3,500+ stocks. Found 12 oversold with strong fundamentals. Top 5 buy-low candidates:<br><br>
+            <span class='ticker'>CRWD</span> CrowdStrike &mdash; <span class='down'>$218</span> (down 15% this month, RSI 28) &bull; Earnings beat, sector rotation dip<br>
+            <span class='ticker'>SHOP</span> Shopify &mdash; <span class='down'>$62</span> (near 52-week low, RSI 31) &bull; Strong revenue growth, oversold on macro fears<br>
+            <span class='ticker'>AMD</span> AMD &mdash; <span class='down'>$142</span> (down 12%, RSI 33) &bull; AI chip demand intact, temporary sell-off<br>
+            <span class='ticker'>NET</span> Cloudflare &mdash; <span class='down'>$78</span> (down 18%, RSI 27) &bull; 30% revenue growth, beaten down with tech sector<br>
+            <span class='ticker'>DKNG</span> DraftKings &mdash; <span class='down'>$34</span> (near support level, RSI 30) &bull; Sports betting expansion, profitable last quarter<br><br>
+            Want me to break down any of these, or should I build a portfolio?"
+          </div>
+        </div>
+
+        <!-- Step 2: User decides -->
+        <div class="step-card">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num bg-warning text-dark">2</span>
+            <div>
+              <strong>User Sets Strategy</strong>
+              <span class="badge bg-secondary connector-badge ms-2"><i class="bi bi-mic"></i> Voice Input</span>
+            </div>
+          </div>
+          <div class="voice-bubble small">
+            <i class="bi bi-mic-fill text-info me-1"></i> "Split it across the top 3. Set sells at 15% profit and stop losses at 8% down."
+          </div>
+        </div>
+
+        <!-- Step 3: AI builds plan -->
+        <div class="step-card">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num bg-success text-dark">3</span>
+            <div>
+              <strong>AI Builds Trade Plan</strong>
+              <span class="badge bg-secondary connector-badge ms-2"><i class="bi bi-cpu"></i> AI Analysis</span>
+            </div>
+          </div>
+          <div class="agent-bubble small">
+            <i class="bi bi-robot text-success me-1"></i>
+            "Here's your trade plan for $5,000 split across 3 positions:<br><br>
+            <table class='table table-sm table-bordered small mt-2 mb-2'>
+              <thead class='table-dark'><tr><th>Stock</th><th>Buy Price</th><th>Shares</th><th>Cost</th><th>Sell Target (+15%)</th><th>Stop Loss (-8%)</th><th>Profit Target</th></tr></thead>
+              <tbody>
+                <tr><td><span class='ticker'>CRWD</span></td><td>$218.00</td><td>7</td><td>$1,526</td><td class='up'>$250.70</td><td class='down'>$200.56</td><td class='up'>+$228.90</td></tr>
+                <tr><td><span class='ticker'>SHOP</span></td><td>$62.00</td><td>27</td><td>$1,674</td><td class='up'>$71.30</td><td class='down'>$57.04</td><td class='up'>+$251.10</td></tr>
+                <tr><td><span class='ticker'>AMD</span></td><td>$142.00</td><td>12</td><td>$1,704</td><td class='up'>$163.30</td><td class='down'>$130.64</td><td class='up'>+$255.60</td></tr>
+                <tr class='table-active'><td colspan='3'><strong>Total</strong></td><td><strong>$4,904</strong></td><td colspan='2'>Cash reserve: $96</td><td class='up'><strong>+$735.60</strong></td></tr>
+              </tbody>
+            </table>
+            Maximum risk: <span class='down'>-$392</span> (8%) &bull; Reward target: <span class='up'>+$735</span> (15%) &bull; Risk/Reward: 1:1.9<br>
+            Shall I execute?"
+          </div>
+        </div>
+
+        <!-- Step 4: Validate account -->
+        <div class="step-card">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num" style="background:#f59e0b;color:#000">4</span>
+            <div>
+              <strong>Validate Brokerage Account</strong>
+              <span class="badge connector-badge ms-2" style="background:#f59e0b;color:#000"><i class="bi bi-bank"></i> Brokerage API</span>
+            </div>
+          </div>
+          <div class="small text-muted mb-2">
+            <code>get_account(broker="alpaca")</code> &mdash; API key from <code class="text-success">@vault:cw-pvt-ajay-alpaca-api-key</code>
+          </div>
+          <div class="agent-bubble small">
+            <i class="bi bi-robot text-success me-1"></i>
+            "Brokerage account verified:<br>
+            &bull; Buying power: <strong>$12,450</strong> (sufficient for $4,904)<br>
+            &bull; Pattern day trader: No<br>
+            &bull; Account type: Individual margin<br>
+            &#x2705; Ready to execute."
+          </div>
+          <div class="small mt-2">
+            <span class="badge bg-success connector-badge"><i class="bi bi-shield-lock"></i> Brokerage API key from locked connector vault &mdash; per-user, never exposed</span>
+          </div>
+        </div>
+
+        <!-- Step 5: User confirms -->
+        <div class="step-card">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num bg-info text-dark">5</span>
+            <div>
+              <strong>User Confirms</strong>
+              <span class="badge bg-secondary connector-badge ms-2"><i class="bi bi-mic"></i> Voice Input</span>
+            </div>
+          </div>
+          <div class="voice-bubble small">
+            <i class="bi bi-mic-fill text-info me-1"></i> "Execute all three trades."
+          </div>
+        </div>
+
+        <!-- Step 6: Execute trades -->
+        <div class="step-card" style="border-color:rgba(25,135,84,0.3)">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num bg-success text-white">6</span>
+            <div>
+              <strong>Execute Buy Orders</strong>
+              <span class="badge connector-badge ms-2" style="background:#f59e0b;color:#000"><i class="bi bi-bank"></i> Brokerage API</span>
+            </div>
+          </div>
+          <div class="small text-muted mb-2">
+            <code>place_order(symbol="CRWD", side="buy", qty=7, type="limit", price=218.00)</code><br>
+            <code>place_order(symbol="SHOP", side="buy", qty=27, type="limit", price=62.00)</code><br>
+            <code>place_order(symbol="AMD", side="buy", qty=12, type="limit", price=142.00)</code>
+          </div>
+          <div class="agent-bubble small">
+            <i class="bi bi-robot text-success me-1"></i>
+            "All 3 orders submitted as <strong>limit orders</strong> (not market, to protect from slippage):<br>
+            &#x2705; CRWD: 7 shares @ $218.00 &mdash; <strong>FILLED</strong> @ $217.85<br>
+            &#x2705; SHOP: 27 shares @ $62.00 &mdash; <strong>FILLED</strong> @ $61.92<br>
+            &#x2705; AMD: 12 shares @ $142.00 &mdash; <strong>FILLED</strong> @ $141.80<br>
+            Total invested: <strong>$4,897.39</strong>"
+          </div>
+        </div>
+
+        <!-- Step 7: Set automatic sells -->
+        <div class="step-card" style="border-color:rgba(220,53,69,0.3)">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num bg-danger text-white">7</span>
+            <div>
+              <strong>Set Stop-Loss &amp; Take-Profit Orders</strong>
+              <span class="badge connector-badge ms-2" style="background:#f59e0b;color:#000"><i class="bi bi-bank"></i> Brokerage API</span>
+            </div>
+          </div>
+          <div class="small text-muted mb-2">
+            <code>place_oco_order(symbol="CRWD", qty=7, take_profit=250.70, stop_loss=200.56)</code><br>
+            <code>place_oco_order(symbol="SHOP", qty=27, take_profit=71.30, stop_loss=57.04)</code><br>
+            <code>place_oco_order(symbol="AMD", qty=12, take_profit=163.30, stop_loss=130.64)</code>
+          </div>
+          <div class="agent-bubble small">
+            <i class="bi bi-robot text-success me-1"></i>
+            "OCO (One-Cancels-Other) orders set for all 3 positions:<br>
+            &#x1F7E2; CRWD: sell at <span class='up'>$250.70</span> (profit) OR <span class='down'>$200.56</span> (stop-loss)<br>
+            &#x1F7E2; SHOP: sell at <span class='up'>$71.30</span> (profit) OR <span class='down'>$57.04</span> (stop-loss)<br>
+            &#x1F7E2; AMD: sell at <span class='up'>$163.30</span> (profit) OR <span class='down'>$130.64</span> (stop-loss)<br><br>
+            These are <strong>automatic</strong> &mdash; the broker executes them even if you're offline."
+          </div>
+        </div>
+
+        <!-- Step 8: Set monitoring alerts -->
+        <div class="step-card">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num bg-primary text-white">8</span>
+            <div>
+              <strong>Set Up Real-Time Monitoring</strong>
+              <span class="badge bg-warning text-dark connector-badge ms-2"><i class="bi bi-graph-up"></i> Market Data API</span>
+              <span class="badge connector-badge ms-2" style="background:#7b68ee"><i class="bi bi-bell"></i> Notifications</span>
+            </div>
+          </div>
+          <div class="small text-muted mb-2">
+            <code>create_alert(symbols=["CRWD","SHOP","AMD"], conditions=["price_move_5pct", "volume_spike", "earnings_date", "analyst_upgrade"])</code>
+          </div>
+          <div class="agent-bubble small">
+            <i class="bi bi-robot text-success me-1"></i>
+            "Monitoring active. I'll alert you via Teams/SMS when:<br>
+            &bull; Any position moves &#x00B1;5% in a day<br>
+            &bull; Unusual volume spike detected<br>
+            &bull; Earnings date approaching (7 days before)<br>
+            &bull; Analyst upgrade or downgrade<br>
+            &bull; Stop-loss or take-profit triggered"
+          </div>
+        </div>
+
+        <!-- Step 9: Daily check-in -->
+        <div class="step-card">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num" style="background:var(--accent-purple);color:#fff">9</span>
+            <div>
+              <strong>Daily Portfolio Check-In</strong>
+              <span class="badge bg-secondary connector-badge ms-2"><i class="bi bi-mic"></i> Voice Input (next day)</span>
+            </div>
+          </div>
+          <div class="voice-bubble small">
+            <i class="bi bi-mic-fill text-info me-1"></i> "How are my trades doing?"
+          </div>
+          <div class="agent-bubble small">
+            <i class="bi bi-robot text-success me-1"></i>
+            "Portfolio update (Day 2):<br><br>
+            <span class='ticker'>CRWD</span> $223.40 <span class='up'>+2.5%</span> ($38.85 gain) &mdash; recovering nicely, RSI improving<br>
+            <span class='ticker'>SHOP</span> $63.20 <span class='up'>+2.1%</span> ($34.56 gain) &mdash; bouncing off support, volume increasing<br>
+            <span class='ticker'>AMD</span> $139.50 <span class='down'>-1.6%</span> ($27.60 loss) &mdash; sector still weak, but within range<br><br>
+            Overall: <span class='up'>+$45.81 (+0.9%)</span> &bull; No stop-losses triggered &bull; All targets intact<br>
+            Recommendation: <strong>Hold all positions</strong> &mdash; thesis unchanged."
+          </div>
+        </div>
+
+        <!-- Step 10: Take profit triggered -->
+        <div class="step-card" style="border-color:rgba(25,135,84,0.4)">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num bg-success text-white">10</span>
+            <div>
+              <strong>Take-Profit Triggered!</strong>
+              <span class="badge connector-badge ms-2" style="background:#7b68ee"><i class="bi bi-bell-fill"></i> Auto-Alert</span>
+            </div>
+          </div>
+          <div class="agent-bubble small" style="border-color:rgba(25,135,84,0.5)">
+            <i class="bi bi-robot text-success me-1"></i>
+            "&#x1F389; <strong>SHOP hit your take-profit target!</strong><br>
+            Sold 27 shares @ <span class='up'>$71.30</span><br>
+            Bought @ $61.92 &bull; Sold @ $71.30<br>
+            Profit: <span class='up'>+$253.26 (+15.2%)</span> in 11 days<br><br>
+            Remaining positions: CRWD ($231 <span class='up'>+6%</span>), AMD ($148 <span class='up'>+4.4%</span>)<br>
+            Want me to reinvest the $1,925 from the SHOP sale?"
+          </div>
+        </div>
+
+        <!-- Step 11: Reinvest or withdraw -->
+        <div class="step-card">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="step-num bg-info text-dark">11</span>
+            <div>
+              <strong>User Decides Next Move</strong>
+              <span class="badge bg-secondary connector-badge ms-2"><i class="bi bi-mic"></i> Voice Input</span>
+            </div>
+          </div>
+          <div class="voice-bubble small">
+            <i class="bi bi-mic-fill text-info me-1"></i> "Nice! Find me another buy-low opportunity with that money."
+          </div>
+          <div class="agent-bubble small">
+            <i class="bi bi-robot text-success me-1"></i>
+            "Scanning for new opportunities with your $1,925... &#x1F50D;<br>
+            <em>The cycle continues &mdash; buy low, sell high, reinvest.</em>"
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- What makes this possible -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4 class="text-info mb-3"><i class="bi bi-gear"></i> What Makes This Possible in ContextWeaver</h4>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered small">
+            <thead class="table-dark"><tr><th>Capability</th><th>How It's Used</th></tr></thead>
+            <tbody>
+              <tr><td><strong>AI stock screening</strong></td><td>Analyzes RSI, 52-week ranges, fundamentals, volume patterns, and sector trends to find oversold stocks with strong recovery potential</td></tr>
+              <tr><td><strong>Multi-connector orchestration</strong></td><td>One plugin chains Market Data + Brokerage + Notifications + Calendar into a continuous trading workflow</td></tr>
+              <tr><td><strong>Locked connector + vault</strong></td><td>Brokerage API credentials are in a <strong>locked connector</strong> &mdash; each user's API key/secret resolved from their private vault scope. No one can see or override another user's trading credentials</td></tr>
+              <tr><td><strong>OCO order management</strong></td><td>Automatically creates One-Cancels-Other orders (take-profit + stop-loss) so the broker executes even when the user is offline</td></tr>
+              <tr><td><strong>Continuous monitoring</strong></td><td>Market data connector watches positions in real-time, sends alerts on price moves, volume spikes, earnings, analyst changes</td></tr>
+              <tr><td><strong>Conversational trading</strong></td><td>User speaks naturally ("split across top 3", "how are my trades doing?") &mdash; AI translates to precise trading actions</td></tr>
+              <tr><td><strong>Risk management</strong></td><td>AI calculates position sizing, risk/reward ratios, maximum drawdown, and enforces stop-losses before executing</td></tr>
+              <tr><td><strong>Reinvestment loop</strong></td><td>When a take-profit triggers, the agent proactively suggests new opportunities &mdash; a continuous buy-low-sell-high cycle</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Can anyone else do this -->
+    <div class="card mb-4" id="comparison" style="border-left:4px solid #dc3545">
+      <div class="card-body">
+        <h4 class="text-danger mb-3"><i class="bi bi-trophy"></i> Can Anyone Else Do This Today?</h4>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered small">
+            <thead class="table-dark">
+              <tr>
+                <th style="min-width:180px">Platform</th>
+                <th class="text-center" style="min-width:80px">Verdict</th>
+                <th>Why Not</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Robinhood / Webull</strong></td>
+                <td class="text-center text-warning">&#x26A0;&#xFE0F; Partial</td>
+                <td>Can place trades and set price alerts, but <strong>no AI screening, no automated buy-low strategy, no voice, no risk analysis before execution</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ChatGPT</strong></td>
+                <td class="text-center text-warning">&#x26A0;&#xFE0F; Partial</td>
+                <td>Can discuss strategies and analyze stocks, but <strong>can't access live market data, can't execute trades, can't set real orders</strong></td>
+              </tr>
+              <tr>
+                <td><strong>TradingView</strong></td>
+                <td class="text-center text-warning">&#x26A0;&#xFE0F; Partial</td>
+                <td>Excellent charting and screening, but <strong>no conversational AI, no automatic order placement, no voice interface, manual execution</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Alpaca / IBKR Algo Trading</strong></td>
+                <td class="text-center text-warning">&#x26A0;&#xFE0F; Partial</td>
+                <td>API for automated trading, but <strong>requires writing Python code, no natural language, no conversational refinement, no AI screening</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Wealthfront / Betterment</strong></td>
+                <td class="text-center text-warning">&#x26A0;&#xFE0F; Limited</td>
+                <td>Automated investing but <strong>index funds only, no individual stock picks, no buy-low-sell-high strategy, no user control</strong></td>
+              </tr>
+              <tr class="table-active" style="border-left:3px solid #198754">
+                <td><strong><img src="logo.svg" style="width:16px;height:16px"> ContextWeaver</strong></td>
+                <td class="text-center text-success"><strong>&#x2705; Full Flow</strong></td>
+                <td><strong>AI stock screening, risk analysis, automated trade execution, OCO orders, real-time monitoring, voice commands, continuous reinvestment loop &mdash; all with vault-secured brokerage credentials per user</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-3 p-3 rounded" style="background:rgba(25,135,84,0.08);border:1px solid rgba(25,135,84,0.3)">
+          <p class="small mb-0">
+            <i class="bi bi-lightning-charge-fill text-success"></i>
+            <strong>The key differentiator:</strong> No other platform lets you say <strong>"invest $5,000 buy low sell high"</strong> and have AI
+            <strong>screen 3,500 stocks</strong>, <strong>build a risk-managed portfolio</strong>, <strong>execute limit orders</strong>,
+            <strong>set automatic take-profit and stop-loss</strong>, <strong>monitor in real-time</strong>, and
+            <strong>reinvest profits</strong> &mdash; all in <strong>one voice conversation</strong> with each user's brokerage credentials
+            secured in a <strong>locked vault connector</strong>.
+          </p>
+        </div>
+
+        <div class="mt-3 p-3 rounded" style="background:rgba(220,53,69,0.08);border:1px solid rgba(220,53,69,0.3)">
+          <p class="small mb-0">
+            <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+            <strong>Disclaimer:</strong> This scenario is for demonstration purposes. All trading involves risk.
+            Past performance does not guarantee future results. Always consult a financial advisor before making investment decisions.
+            ContextWeaver provides the orchestration platform &mdash; trading strategies are the user's responsibility.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connectors used -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4 class="text-info mb-3"><i class="bi bi-plug"></i> Connectors Used in This Scenario</h4>
+        <div class="d-flex flex-wrap gap-3 justify-content-center">
+          <div class="text-center p-3 rounded" style="background:rgba(255,193,7,0.1);border:1px solid rgba(255,193,7,0.3);min-width:140px">
+            <div style="font-size:1.5rem">&#x1F4C8;</div>
+            <div class="fw-bold small" style="color:#f59e0b">Market Data</div>
+            <div style="font-size:0.55rem" class="text-muted">Polygon.io / Alpha Vantage</div>
+            <div style="font-size:0.55rem" class="text-success mt-1">&#x1F512; API key in vault</div>
+          </div>
+          <div class="text-center p-3 rounded" style="background:rgba(220,53,69,0.1);border:1px solid rgba(220,53,69,0.3);min-width:140px">
+            <div style="font-size:1.5rem">&#x1F3E6;</div>
+            <div class="fw-bold small text-danger">Brokerage</div>
+            <div style="font-size:0.55rem" class="text-muted">Alpaca / IBKR / TD</div>
+            <div style="font-size:0.55rem" class="text-danger mt-1">&#x1F512; LOCKED connector</div>
+          </div>
+          <div class="text-center p-3 rounded" style="background:rgba(13,110,253,0.1);border:1px solid rgba(13,110,253,0.3);min-width:140px">
+            <div style="font-size:1.5rem">&#x1F4C5;</div>
+            <div class="fw-bold small text-primary">Microsoft Graph</div>
+            <div style="font-size:0.55rem" class="text-muted">Calendar + email</div>
+            <div style="font-size:0.55rem" class="text-success mt-1">&#x1F512; OAuth in vault</div>
+          </div>
+          <div class="text-center p-3 rounded" style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);min-width:140px">
+            <div style="font-size:1.5rem">&#x1F514;</div>
+            <div class="fw-bold small" style="color:var(--accent-purple)">Notifications</div>
+            <div style="font-size:0.55rem" class="text-muted">Teams / SMS / Email</div>
+            <div style="font-size:0.55rem" class="text-success mt-1">&#x1F512; Webhook in vault</div>
+          </div>
+        </div>
+        <div class="text-center mt-3 small text-muted">
+          Brokerage connector is <strong class="text-danger">LOCKED</strong> &mdash; each user's API key/secret resolved from their private vault scope. No extensions, no overrides, no credential sharing.
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav links -->
+    <div class="text-center py-3">
+      <a href="index.html" class="btn btn-outline-info btn-sm me-2"><i class="bi bi-arrow-left"></i> About</a>
+      <a href="scenario.html" class="btn btn-outline-secondary btn-sm me-2"><i class="bi bi-airplane"></i> Travel Booking</a>
+      <a href="scenario-salesforce.html" class="btn btn-outline-secondary btn-sm me-2"><i class="bi bi-cloud"></i> Salesforce</a>
+      <a href="scenario-gym.html" class="btn btn-outline-secondary btn-sm me-2"><i class="bi bi-heart-pulse"></i> Gym</a>
+      <a href="scenario-travel-planner.html" class="btn btn-outline-secondary btn-sm"><i class="bi bi-globe"></i> Travel Planner</a>
+    </div>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

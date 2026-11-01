@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Animated ContextWeaver lifecycle from infrastructure provisioning through governed onboarding, inference, commit, and Saga rollback.">
+  <meta name="author" content="BrainzBytes">
+  <meta name="theme-color" content="#06131d">
+  <title>ContextWeaver — Platform Realization Lifecycle</title>
+  <style>
+    :root {
+      --bg: #06131d;
+      --surface: #0b202d;
+      --surface-2: #102a39;
+      --line: #244759;
+      --text: #f1f7fa;
+      --muted: #9bb2bf;
+      --cyan: #46ddd2;
+      --blue: #67a6ff;
+      --violet: #ad8cff;
+      --amber: #ffc565;
+      --green: #5ee0a3;
+      --red: #ff7183;
+      --stage: #183547;
+      --shadow: 0 24px 70px rgba(0,0,0,.3);
+    }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 12%, rgba(70,221,210,.12), transparent 26rem),
+        radial-gradient(circle at 90% 85%, rgba(173,140,255,.11), transparent 30rem),
+        var(--bg);
+      font: 15px/1.45 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    button, select { font: inherit; }
+    button { color: inherit; }
+    .shell { width: min(1880px, 100%); min-height: 100vh; margin: auto; padding: clamp(16px, 2.4vw, 38px); }
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; }
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid #367486;
+      border-radius: 13px;
+      background: linear-gradient(145deg, #0e3240, #142445);
+      box-shadow: inset 0 0 20px rgba(70,221,210,.12);
+      color: var(--cyan);
+      font-weight: 900;
+      letter-spacing: -.08em;
+    }
+    .brand b, .brand small { display: block; }
+    .brand small { margin-top: 2px; color: var(--muted); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+    .masthead-link { color: #b9d0dc; font-size: 12px; font-weight: 800; text-decoration: none; }
+    .masthead-link:hover { color: white; }
+    .titlebar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+    .eyebrow { margin: 0 0 6px; color: var(--cyan); font-size: 10px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { margin: 0; font: 700 clamp(28px, 3.2vw, 48px)/1.06 Georgia, "Times New Roman", serif; letter-spacing: -.03em; }
+    h1 em { color: var(--cyan); font-style: normal; }
+    .subtitle { max-width: 980px; margin: 9px 0 0; color: var(--muted); font-size: clamp(13px, 1.1vw, 17px); }
+    .scenario-picker { display: flex; gap: 8px; padding: 5px; border: 1px solid var(--line); border-radius: 13px; background: rgba(11,32,45,.78); }
+    .scenario-picker button, .controls button {
+      border: 1px solid transparent;
+      border-radius: 9px;
+      padding: 9px 13px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .scenario-picker button.active { border-color: #3a7887; color: #06131d; background: var(--cyan); }
+    .scenario-picker button[data-scenario="rollback"].active { border-color: #a74f61; background: var(--red); }
+    .slide {
+      position: relative;
+      overflow: hidden;
+      min-height: min(760px, calc(100vh - 210px));
+      border: 1px solid #285166;
+      border-radius: 24px;
+      background:
+        linear-gradient(rgba(103,166,255,.038) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(103,166,255,.038) 1px, transparent 1px),
+        linear-gradient(145deg, rgba(8,28,39,.98), rgba(13,24,45,.98));
+      background-size: 42px 42px, 42px 42px, auto;
+      box-shadow: var(--shadow);
+    }
+    .progress { display: grid; grid-template-columns: repeat(8, 1fr); height: 5px; background: #112c3a; }
+    .progress span { transform: scaleX(0); transform-origin: left; background: var(--cyan); transition: transform .45s ease; }
+    .progress span.on { transform: scaleX(1); }
+    .progress.rollback span.on { background: var(--red); }
+    .slide-grid { display: grid; grid-template-columns: minmax(0, 1fr) 330px; min-height: calc(min(760px, calc(100vh - 210px)) - 5px); }
+    .canvas { position: relative; overflow: hidden; padding: 20px 20px 104px; }
+    .lanes { display: grid; grid-template-rows: repeat(4, minmax(120px, 1fr)); gap: 10px; height: 100%; }
+    .lane {
+      position: relative;
+      display: grid;
+      grid-template-columns: 154px repeat(4, minmax(130px, 1fr));
+      gap: 10px;
+      align-items: center;
+      padding: 9px 10px;
+      border: 1px solid rgba(62,104,126,.42);
+      border-radius: 15px;
+      background: rgba(8,28,39,.45);
+    }
+    .lane::before { content: ""; position: absolute; left: 164px; right: 14px; top: 50%; border-top: 1px dashed rgba(99,155,181,.26); }
+    .lane-label { position: relative; z-index: 2; padding-left: 10px; }
+    .lane-label b { display: block; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .lane-label span { display: block; margin-top: 4px; color: #7393a4; font-size: 10px; }
+    .node {
+      position: relative;
+      z-index: 3;
+      min-height: 76px;
+      display: grid;
+      place-content: center;
+      padding: 10px;
+      border: 1px solid #31566a;
+      border-radius: 13px;
+      color: #adc3ce;
+      background: linear-gradient(145deg, rgba(17,46,61,.96), rgba(13,36,50,.96));
+      text-align: center;
+      transition: border-color .35s, transform .35s, box-shadow .35s, color .35s, opacity .35s;
+    }
+    .node b { display: block; color: inherit; font-size: 12px; }
+    .node small { display: block; margin-top: 4px; color: #7896a5; font-size: 9px; line-height: 1.35; }
+    .node.active {
+      transform: translateY(-3px) scale(1.025);
+      border-color: var(--cyan);
+      color: white;
+      box-shadow: 0 0 0 1px rgba(70,221,210,.25), 0 12px 34px rgba(30,180,175,.18);
+    }
+    .rollback-mode .node.active { border-color: var(--red); box-shadow: 0 0 0 1px rgba(255,113,131,.24), 0 12px 34px rgba(199,62,82,.2); }
+    .node.complete { border-color: #328267; color: #c8f5df; }
+    .node.failed { border-color: var(--red); color: #ffd0d6; animation: shake .35s linear 2; }
+    .node.compensated { border-color: var(--amber); color: #ffe3ad; }
+    .node[data-kind="infra"] { border-top-color: var(--blue); }
+    .node[data-kind="governance"] { border-top-color: var(--violet); }
+    .node[data-kind="runtime"] { border-top-color: var(--cyan); }
+    .node[data-kind="evidence"] { border-top-color: var(--amber); }
+    .bridge {
+      position: absolute;
+      z-index: 1;
+      width: 2px;
+      border-left: 2px dashed rgba(93,148,173,.42);
+      pointer-events: none;
+    }
+    .bridge.b1 { left: 46%; top: 22%; height: 27%; }
+    .bridge.b2 { left: 70%; top: 47%; height: 27%; }
+    .request-token {
+      position: absolute;
+      z-index: 9;
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border: 2px solid white;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 7px rgba(70,221,210,.13), 0 0 28px rgba(70,221,210,.85);
+      transform: translate(-50%, -50%);
+      transition: left .72s cubic-bezier(.22,.75,.18,1), top .72s cubic-bezier(.22,.75,.18,1), background .3s, box-shadow .3s;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .request-token.visible { opacity: 1; }
+    .request-token::after { content: "›"; color: #06202a; font-size: 22px; font-weight: 1000; transform: translateX(1px); }
+    .rollback-mode .request-token { background: var(--red); box-shadow: 0 0 0 7px rgba(255,113,131,.14), 0 0 28px rgba(255,113,131,.8); }
+    .rollback-mode .request-token::after { content: "↶"; font-size: 16px; transform: none; }
+    .legend {
+      position: absolute;
+      left: 24px;
+      bottom: 65px;
+      z-index: 4;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: #7595a5;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .legend span::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 5px; border-radius: 50%; background: currentColor; }
+    .legend .lg-blue { color: var(--blue); }
+    .legend .lg-violet { color: var(--violet); }
+    .legend .lg-cyan { color: var(--cyan); }
+    .legend .lg-amber { color: var(--amber); }
+    .controls {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 16px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 40px;
+      padding: 5px;
+      border: 1px solid #284e62;
+      border-radius: 12px;
+      background: rgba(6,19,29,.92);
+      backdrop-filter: blur(12px);
+    }
+    .controls button { min-width: 42px; padding: 7px 11px; color: #abc2cd; }
+    .controls button:hover { color: white; background: #153446; }
+    .controls .primary { color: #06131d; background: var(--cyan); }
+    .controls .primary:hover { color: #06131d; background: #83eee7; }
+    .controls .spacer { flex: 1; }
+    .controls label { display: flex; align-items: center; gap: 7px; color: #7796a6; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+    .controls select { border: 1px solid #31576a; border-radius: 7px; padding: 5px 7px; color: #c4d6df; background: #0d2634; font-size: 11px; }
+    .narrative {
+      position: relative;
+      overflow: hidden;
+      padding: 26px;
+      border-left: 1px solid #284e62;
+      background: linear-gradient(180deg, rgba(13,36,50,.84), rgba(8,26,37,.9));
+    }
+    .step-number { color: var(--cyan); font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+    .rollback-mode .step-number { color: var(--red); }
+    .narrative h2 { margin: 10px 0 12px; font: 700 30px/1.08 Georgia, "Times New Roman", serif; letter-spacing: -.025em; }
+    .narrative-copy { min-height: 90px; margin: 0; color: #a7bdc8; font-size: 14px; }
+    .checks { display: grid; gap: 8px; margin: 22px 0; padding: 0; list-style: none; }
+    .checks li { position: relative; padding: 10px 10px 10px 31px; border: 1px solid #25495b; border-radius: 9px; color: #96afbb; background: rgba(14,40,53,.64); font-size: 11px; transition: .3s; }
+    .checks li::before { content: "○"; position: absolute; left: 11px; color: #66899a; }
+    .checks li.on { border-color: #2e8068; color: #c9f4df; }
+    .checks li.on::before { content: "✓"; color: var(--green); }
+    .rollback-mode .checks li.on { border-color: #9b4c5b; color: #ffd0d6; }
+    .rollback-mode .checks li.on::before { content: "↶"; color: var(--red); }
+    .artifact {
+      margin-top: 18px;
+      padding: 14px;
+      border: 1px solid #31576a;
+      border-radius: 11px;
+      color: #8fb1c1;
+      background: #071b26;
+      font: 10px/1.6 "SFMono-Regular", Consolas, monospace;
+      white-space: pre-wrap;
+    }
+    .outcome {
+      position: absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 24px;
+      padding: 13px;
+      border: 1px solid #2d795f;
+      border-radius: 11px;
+      color: #bff3d8;
+      background: rgba(25,93,70,.2);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .rollback-mode .outcome { border-color: #9c4d5d; color: #ffd0d6; background: rgba(125,41,58,.2); }
+    .step-pips { display: flex; gap: 5px; margin-top: 18px; }
+    .step-pips span { width: 8px; height: 8px; border-radius: 50%; background: #294a5b; transition: .3s; }
+    .step-pips span.on { width: 23px; border-radius: 5px; background: var(--cyan); }
+    .rollback-mode .step-pips span.on { background: var(--red); }
+    @keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+    @media (max-width: 1100px) {
+      .titlebar { grid-template-columns: 1fr; }
+      .scenario-picker { width: max-content; }
+      .slide-grid { grid-template-columns: 1fr; }
+      .narrative { min-height: 350px; border-top: 1px solid #284e62; border-left: 0; }
+      .slide, .slide-grid { min-height: auto; }
+      .canvas { min-height: 680px; }
+      .outcome { position: static; margin-top: 18px; }
+    }
+    @media (max-width: 760px) {
+      .masthead-link { display: none; }
+      .canvas { overflow-x: auto; }
+      .lanes { width: 980px; }
+      .lane { grid-template-columns: 130px repeat(4, 190px); }
+      .lane::before { left: 140px; }
+      .controls { position: sticky; width: 940px; }
+      .legend { width: 900px; }
+      .bridge, .request-token { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+    @media print {
+      body { background: white; }
+      .shell { padding: 0; }
+      .masthead, .controls, .scenario-picker { display: none; }
+      .slide { border: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <a class="brand" href="../">
+        <span class="mark">CW</span>
+        <span><b>ContextWeaver</b><small>BrainzBytes AI Platform</small></span>
+      </a>
+      <a class="masthead-link" href="spec-driven-ai-platform-whitepaper.html">Open the complete whitepaper →</a>
+    </header>
+
+    <section class="titlebar">
+      <div>
+        <p class="eyebrow">Animated operating model · infrastructure to trusted outcome</p>
+        <h1>How the platform is <em>realized and governed.</em></h1>
+        <p class="subtitle">A capability becomes executable only after infrastructure, identity, contracts, supply-chain evidence, policy, evaluation, and runtime controls agree. Every execution either commits with evidence or compensates safely.</p>
+      </div>
+      <div class="scenario-picker" role="group" aria-label="Animation scenario">
+        <button class="active" data-scenario="success">Successful execution</button>
+        <button data-scenario="rollback">Failure + rollback</button>
+      </div>
+    </section>
+
+    <section class="slide" id="slide">
+      <div class="progress" id="progress" aria-hidden="true"></div>
+      <div class="slide-grid">
+        <div class="canvas" id="canvas">
+          <div class="lanes">
+            <section class="lane">
+              <div class="lane-label"><b>Foundation</b><span>Cloud-neutral infrastructure</span></div>
+              <article class="node" id="infra" data-kind="infra"><b>Infrastructure</b><small>Kubernetes · network · storage</small></article>
+              <article class="node" id="identity" data-kind="infra"><b>Identity &amp; Secrets</b><small>OIDC · workload identity · vault</small></article>
+              <article class="node" id="data" data-kind="infra"><b>Data, Memory &amp; AI</b><small>Source freshness · memory · atomic indexes · models</small></article>
+              <article class="node" id="telemetry" data-kind="evidence"><b>Observability</b><small>Metrics · traces · logs · evidence</small></article>
+            </section>
+
+            <section class="lane">
+              <div class="lane-label"><b>Control plane</b><span>Define, inspect, and authorize</span></div>
+              <article class="node" id="onboard" data-kind="governance"><b>Onboard Capability</b><small>Service · MCP · agent · workflow</small></article>
+              <article class="node" id="contract" data-kind="governance"><b>Validate Contract</b><small>Schema · compatibility · ownership</small></article>
+              <article class="node" id="scan" data-kind="governance"><b>Admission Gates</b><small>SBOM · malware · secrets · sandbox</small></article>
+              <article class="node" id="approve" data-kind="governance"><b>Policy &amp; Approval</b><small>Risk · evaluation · human decision</small></article>
+            </section>
+
+            <section class="lane">
+              <div class="lane-label"><b>Composition</b><span>Publish immutable capability</span></div>
+              <article class="node" id="publish" data-kind="governance"><b>Signed Publication</b><small>Version · provenance · trust state</small></article>
+              <article class="node" id="discover" data-kind="runtime"><b>Registry Discovery</b><small>Intent · entitlement · environment</small></article>
+              <article class="node" id="compile" data-kind="runtime"><b>Compile Plan</b><small>Bindings · aliases · Saga steps</small></article>
+              <article class="node" id="route" data-kind="runtime"><b>Runtime Route</b><small>Model · RAG · MCP · service</small></article>
+            </section>
+
+            <section class="lane">
+              <div class="lane-label"><b>Execution</b><span>Run, prove, or compensate</span></div>
+              <article class="node" id="prompt" data-kind="runtime"><b>Prompt + Context</b><small>Identity · purpose · retrieval · governed memory</small></article>
+              <article class="node" id="infer" data-kind="runtime"><b>Inference &amp; Tools</b><small>Guardrails · budgets · tool policy</small></article>
+              <article class="node" id="commit" data-kind="evidence"><b>Commit Outcome</b><small>State · response · business result</small></article>
+              <article class="node" id="evidence" data-kind="evidence"><b>Evidence &amp; Learning</b><small>Audit · KPIs · eval · feedback</small></article>
+            </section>
+          </div>
+          <span class="bridge b1"></span>
+          <span class="bridge b2"></span>
+          <div class="request-token" id="token" aria-hidden="true"></div>
+          <div class="legend" aria-label="Color legend">
+            <span class="lg-blue">Infrastructure</span>
+            <span class="lg-violet">Governance</span>
+            <span class="lg-cyan">Runtime</span>
+            <span class="lg-amber">Evidence</span>
+          </div>
+          <div class="controls">
+            <button id="first" title="First step">↤</button>
+            <button id="previous" title="Previous step">←</button>
+            <button id="play" class="primary">Pause</button>
+            <button id="next" title="Next step">→</button>
+            <button id="last" title="Last step">↦</button>
+            <span class="spacer"></span>
+            <label>Speed
+              <select id="speed">
+                <option value="2600">Slow</option>
+                <option value="1700" selected>Normal</option>
+                <option value="950">Fast</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <aside class="narrative" id="narrative" aria-live="polite">
+          <span class="step-number" id="stepNumber"></span>
+          <h2 id="stepTitle"></h2>
+          <p class="narrative-copy" id="stepCopy"></p>
+          <ul class="checks" id="checks"></ul>
+          <div class="artifact" id="artifact"></div>
+          <div class="step-pips" id="pips" aria-hidden="true"></div>
+          <div class="outcome" id="outcome"></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const common = [
+      {
+        title: "Provision the trusted foundation",
+        node: "infra",
+        copy: "Cloud adapters create a private Kubernetes foundation while GitOps establishes the same platform contract across Azure, AWS, GCP, or on-premises infrastructure.",
+        checks: ["Private network and ingress boundaries", "Storage classes, queues, and durable state", "GitOps controllers and signed release inputs"],
+        artifact: "platform_contract/v1\ncluster.ready = true\nnetwork.default_deny = true"
+      },
+      {
+        title: "Bind identity, secrets, data, and telemetry",
+        node: "identity",
+        also: ["data", "telemetry"],
+        copy: "Workload identity, secret references, registries, retrieval stores, model endpoints, and evidence pipelines come online before any AI capability can execute.",
+        checks: ["No raw credentials in specifications", "Provider aliases resolve by environment and tenant", "Logs, traces, metrics, and audit sinks are writable"],
+        artifact: "identity.mode = workload\nsecrets.mode = reference_only\ntelemetry.required = true"
+      },
+      {
+        title: "Onboard a new capability",
+        node: "onboard",
+        copy: "An administrator submits a Service, MCP, Agent, or Workflow specification through the control-plane UI. The submission declares ownership, schemas, permissions, dependencies, telemetry, and rollback behavior.",
+        checks: ["Canonical specification envelope", "Owner, runbook, support, and lifecycle metadata", "Input/output schemas and semantic version"],
+        artifact: "kind: MCP\nname: customer-intelligence\nversion: 1.0.0\nowner: customer-platform"
+      },
+      {
+        title: "Execute admission and governance",
+        node: "contract",
+        also: ["scan", "approve"],
+        copy: "The platform normalizes the contract, checks compatibility, scans the supply chain, tests the capability in a sandbox, evaluates quality, and asks policy whether publication is allowed.",
+        checks: ["Schema + dependency compatibility", "Signature, SBOM, malware, secret, and license scans", "Sandbox evaluation + risk-based approval"],
+        artifact: "decision: ALLOW\npolicy_bundle: production-ai-v7\neval_score: 0.94\nprovenance: verified"
+      },
+      {
+        title: "Publish and compile an immutable plan",
+        node: "publish",
+        also: ["discover", "compile"],
+        copy: "The signed capability enters the registry. Discovery resolves only compatible and entitled versions, then compiles exact model, RAG, MCP, service, timeout, retry, and compensation bindings.",
+        checks: ["Signed immutable registry revision", "Environment and tenant-aware alias resolution", "Saga steps and compensations frozen into the plan"],
+        artifact: "plan_id: runplan-8f32\nmodel: chat.production@17\nmcp: customer-intelligence@1.0.0\nrollback: required"
+      },
+      {
+        title: "Authorize the prompt and retrieval context",
+        node: "prompt",
+        also: ["route"],
+        copy: "At runtime, identity and purpose are evaluated again. Source and active-index revisions must satisfy the compiled freshness policy before hierarchical RAG and governed memory resolve context.",
+        checks: ["User, role, group, tenant, and purpose supplied", "Authorization precedes retrieval and memory access", "Known-stale index generations are blocked", "Prompt-injection and data-loss controls active"],
+        artifact: "principal: user@tenant\npurpose: support_resolution\nrag_scopes: [personal, group, org, plugin]\nbudget_ms: 12000"
+      },
+      {
+        title: "Run inference and governed tool calls",
+        node: "infer",
+        copy: "The selected model reasons over authorized context. Every MCP and service call is schema-validated, identity-bound, policy-checked, traced, budgeted, and recorded before side effects are accepted.",
+        checks: ["Input/output contract enforcement", "Per-tool policy and least-privilege credentials", "Timeout, retry, cost, and token budgets"],
+        artifact: "trace_id: 4b18...d7\nstep: update_customer_case\ntool_policy: allowed\nside_effect: pending_commit"
+      }
+    ];
+
+    const successEnd = {
+      title: "Commit the outcome and learn",
+      node: "commit",
+      also: ["evidence"],
+      copy: "All steps satisfy their postconditions. The workflow commits the business outcome, returns the governed response, emits evidence, updates KPIs, and feeds continuous evaluation.",
+      checks: ["Business transaction committed", "Response includes provenance and policy evidence", "Metrics, audit, evaluation, and feedback recorded"],
+      artifact: "run.status: SUCCEEDED\ntransaction: COMMITTED\nevidence.complete: true\ncontinuous_eval: queued"
+    };
+
+    const rollbackEnd = {
+      title: "Failure detected — compensate and roll back",
+      node: "infer",
+      fail: true,
+      compensate: ["commit", "compile", "publish"],
+      copy: "A tool fails its postcondition after an earlier side effect. The durable workflow stops forward progress, classifies the failure, executes compensations in reverse order, and preserves the complete evidence chain.",
+      checks: ["Forward execution frozen", "Reverse compensation plan executed", "Residual risk escalated if compensation is incomplete"],
+      artifact: "run.status: COMPENSATING\nfailed_step: update_customer_case\ncompensate: [release_reservation, restore_case]\nfinal_state: ROLLED_BACK"
+    };
+
+    const scenarios = {
+      success: [...common, successEnd],
+      rollback: [...common, rollbackEnd]
+    };
+
+    const outcomeCopy = {
+      success: "Trusted outcome: committed, observable, attributable, and continuously evaluated.",
+      rollback: "Safe failure: side effects compensated, state restored, evidence retained, and operators notified."
+    };
+
+    let scenario = "success";
+    let index = 0;
+    let timer;
+    let playing = true;
+
+    const slide = document.getElementById("slide");
+    const canvas = document.getElementById("canvas");
+    const token = document.getElementById("token");
+    const progress = document.getElementById("progress");
+    const pips = document.getElementById("pips");
+
+    function buildIndicators() {
+      progress.innerHTML = scenarios[scenario].map(() => "<span></span>").join("");
+      pips.innerHTML = scenarios[scenario].map(() => "<span></span>").join("");
+    }
+
+    function placeToken(node) {
+      const canvasBox = canvas.getBoundingClientRect();
+      const nodeBox = node.getBoundingClientRect();
+      token.style.left = `${nodeBox.left - canvasBox.left + nodeBox.width / 2}px`;
+      token.style.top = `${nodeBox.top - canvasBox.top + nodeBox.height / 2}px`;
+      token.classList.add("visible");
+    }
+
+    function render() {
+      const steps = scenarios[scenario];
+      const step = steps[index];
+      document.querySelectorAll(".node").forEach(node => {
+        node.classList.remove("active", "complete", "failed", "compensated");
+      });
+      steps.slice(0, index).forEach(previousStep => {
+        document.getElementById(previousStep.node)?.classList.add("complete");
+        (previousStep.also || []).forEach(id => document.getElementById(id)?.classList.add("complete"));
+      });
+      const activeNode = document.getElementById(step.node);
+      activeNode.classList.add(step.fail ? "failed" : "active");
+      (step.also || []).forEach(id => document.getElementById(id)?.classList.add("active"));
+      (step.compensate || []).forEach(id => document.getElementById(id)?.classList.add("compensated"));
+      placeToken(activeNode);
+
+      document.getElementById("stepNumber").textContent = `Stage ${index + 1} of ${steps.length}`;
+      document.getElementById("stepTitle").textContent = step.title;
+      document.getElementById("stepCopy").textContent = step.copy;
+      document.getElementById("checks").innerHTML = step.checks.map((check, itemIndex) =>
+        `<li class="${itemIndex <= Math.min(index, 2) ? "on" : ""}">${check}</li>`
+      ).join("");
+      document.getElementById("artifact").textContent = step.artifact;
+      document.getElementById("outcome").textContent = outcomeCopy[scenario];
+      [...progress.children].forEach((item, itemIndex) => item.classList.toggle("on", itemIndex <= index));
+      [...pips.children].forEach((item, itemIndex) => item.classList.toggle("on", itemIndex === index));
+      document.getElementById("play").textContent = playing ? "Pause" : "Play";
+    }
+
+    function schedule() {
+      clearTimeout(timer);
+      if (!playing) return;
+      const delay = Number(document.getElementById("speed").value);
+      timer = setTimeout(() => {
+        const steps = scenarios[scenario];
+        index = index >= steps.length - 1 ? 0 : index + 1;
+        render();
+        schedule();
+      }, delay);
+    }
+
+    function setScenario(nextScenario) {
+      scenario = nextScenario;
+      index = 0;
+      slide.classList.toggle("rollback-mode", scenario === "rollback");
+      progress.classList.toggle("rollback", scenario === "rollback");
+      document.querySelectorAll("[data-scenario]").forEach(button =>
+        button.classList.toggle("active", button.dataset.scenario === scenario)
+      );
+      buildIndicators();
+      render();
+      schedule();
+    }
+
+    document.querySelectorAll("[data-scenario]").forEach(button =>
+      button.addEventListener("click", () => setScenario(button.dataset.scenario))
+    );
+    document.getElementById("play").addEventListener("click", () => {
+      playing = !playing;
+      render();
+      schedule();
+    });
+    document.getElementById("previous").addEventListener("click", () => {
+      index = Math.max(0, index - 1);
+      render();
+      schedule();
+    });
+    document.getElementById("next").addEventListener("click", () => {
+      index = Math.min(scenarios[scenario].length - 1, index + 1);
+      render();
+      schedule();
+    });
+    document.getElementById("first").addEventListener("click", () => {
+      index = 0;
+      render();
+      schedule();
+    });
+    document.getElementById("last").addEventListener("click", () => {
+      index = scenarios[scenario].length - 1;
+      render();
+      schedule();
+    });
+    document.getElementById("speed").addEventListener("change", schedule);
+    window.addEventListener("resize", () => render());
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) clearTimeout(timer);
+      else schedule();
+    });
+
+    buildIndicators();
+    render();
+    schedule();
+  </script>
+</body>
+</html>
