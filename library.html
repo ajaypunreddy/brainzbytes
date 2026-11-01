@@ -56,7 +56,7 @@
     <div class="library-grid">
       <details class="brief" open>
         <summary><span>Conceptual design</span><small>Reusable Enterprise Agentic AI Platform</small></summary>
-        <div><p><strong>Decision:</strong> Treat Agents, MCPs, Workflows, Services, policy, data, and evidence as governed platform assets rather than application-local code.</p><ul><li>Separates experience, governance, composition, runtime, data, evidence, and infrastructure planes.</li><li>Uses typed contracts and immutable plans to prevent runtime authority expansion.</li><li>Lets individual and enterprise experiences share the same core semantics.</li></ul></div>
+        <div><p><strong>Decision:</strong> Treat MCPs, Agents, Workflows, Services, Solutions, policy, data, and evidence as governed platform assets rather than application-local code.</p><ul><li>Separates user-facing Solution experience from reusable Service execution and lower-level capabilities.</li><li>Uses typed contracts and immutable plans to prevent runtime authority expansion.</li><li>Lets individual and enterprise experiences share the same core semantics.</li></ul></div>
       </details>
       <details class="brief">
         <summary><span>Spec-driven AI platform</span><small>Governance and operations whitepaper</small></summary>
@@ -99,7 +99,7 @@
         <div><p><strong>Decision:</strong> Workflow progress belongs in durable state, not in the memory of a particular pod.</p><ul><li>Use commands, events, leases, checkpoints, inbox/outbox, and accepted artifact hashes.</li><li>Make retries safe with idempotency keys and provider receipts.</li><li>Represent compensation and non-compensable escalation explicitly.</li></ul></div>
       </details>
       <details class="brief">
-        <summary><span>Observability standard</span><small>Agents, MCPs, Workflows, and Services</small></summary>
+        <summary><span>Observability standard</span><small>Solutions, Services, Workflows, Agents, and MCPs</small></summary>
         <div><p><strong>Decision:</strong> Observe the business and trust path, not only infrastructure health.</p><ul><li>Correlate intent, plan, node, model, source, policy, approval, tool call, receipt, and result.</li><li>Measure reliability, quality, safety, cost, latency, usage, and business outcome.</li><li>Preserve enough evidence to explain a run without exposing restricted content.</li></ul></div>
       </details>
     </div>
@@ -136,8 +136,8 @@
     <footer class="site-footer">
       <div class="container footer-grid">
         <div>
-          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed capability platform</span></span></a>
-          <p style="margin-top:16px">Turn specifications, enterprise information, Agents, MCPs, Workflows, models, policy, and infrastructure into governed, deployable Services with evidence attached.</p>
+          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed solution operating platform</span></span></a>
+          <p style="margin-top:16px">Turn approved intent into user-facing Solutions assembled from governed Services, Workflows, Agents, MCP capabilities, knowledge, models, policy, and portable infrastructure—with evidence attached.</p>
         </div>
         <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
         <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>

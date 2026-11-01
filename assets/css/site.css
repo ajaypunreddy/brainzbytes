@@ -1288,7 +1288,8 @@ body[data-page="learning"] :focus-visible { outline-color: var(--mint); }
 .node-rag { top: 27%; right: 9%; }
 .node-agent { right: 12%; bottom: 18%; }
 .node-mcp { bottom: 10%; left: 41%; }
-.node-service { bottom: 21%; left: 7%; }
+.node-service { bottom: 19%; left: 8%; }
+.node-solution { top: 48%; left: 4%; }
 .node-trust { top: 25%; left: 9%; }
 .learning-config,
 .learning-route,

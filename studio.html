@@ -3,9 +3,9 @@
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta name="description" content="Create, validate, simulate, publish, deploy, modify, and govern Agents, MCP servers, Services, and Workflows from a GUI, VS Code, CLI, or Jupyter.">
+      <meta name="description" content="Create, validate, simulate, publish, deploy, modify, and govern MCPs, Agents, Workflows, reusable Services, and complete Solutions from a GUI, VS Code, CLI, or Jupyter.">
       <meta name="theme-color" content="#07110f">
-      <title>ContextWeaver Agent and MCP Studio</title>
+      <title>ContextWeaver Studio — MCPs, Agents, Workflows, Services, and Solutions</title>
       <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
       <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
     </head>
@@ -44,7 +44,7 @@
 
 <section class="container section compact">
   <div class="section-head"><div><p class="section-kicker">Current realization</p><h2>The authoring workspace is connected to real Registry contracts.</h2></div><p>AI interpretation proposes normalized intent and exact references from governed context. Deterministic compilation validates the result; authoring does not publish, deploy, execute, grant authority, or apply side effects.</p></div>
-  <div class="grid three"><article class="card amber" data-fact-id="unified-studios" data-reveal><div class="meta">Active realization</div><h3>One governed Studio workspace</h3><p>MCPs, Agents, Workflows, Services, and Solutions share one searchable, tabbed workspace with typed drafts, dependency graphs, AI-assisted interpretation, and explicit runtime links.</p></article><article class="card amber" data-fact-id="connector-control-plane" data-reveal><div class="meta">Active realization</div><h3>Governed connector instances</h3><p>Source Catalog manages tenant-scoped connector instances while retaining only opaque secret references and governed connection metadata.</p></article><article class="card mint" data-fact-id="hello-world-qualification" data-reveal><div class="meta">Implemented foundation</div><h3>Qualified Hello World path</h3><p>The promoted Hello World AgentCards are version 0.2.1, and publication remains a separate MCP action after human approval.</p></article></div>
+  <div class="grid three"><article class="card amber" data-fact-id="unified-studios" data-reveal><div class="meta">Active realization</div><h3>One governed Studio workspace</h3><p>MCPs, Agents, Workflows, Services, and Solutions share one searchable, tabbed workspace with typed drafts, dependency graphs, AI-assisted interpretation, and explicit runtime links.</p></article><article class="card amber" data-fact-id="solution-service-model" data-reveal><div class="meta">Active realization</div><h3>Solutions compose reusable Services</h3><p>A Service is a reusable executable intent-to-outcome contract pinned to approved Workflows; a Solution is the final user-facing composition, complete dependency graph, experience contract, and lifecycle built from Services and lower-level capabilities.</p></article><article class="card amber" data-fact-id="connector-control-plane" data-reveal><div class="meta">Active realization</div><h3>Governed connector instances</h3><p>Source Catalog manages tenant-scoped connector instances while retaining only opaque secret references and governed connection metadata.</p></article><article class="card mint" data-fact-id="hello-world-qualification" data-reveal><div class="meta">Implemented foundation</div><h3>Qualified Hello World path</h3><p>The promoted Hello World AgentCards are version 0.2.1, and publication remains a separate MCP action after human approval.</p></article></div>
 </section>
 
 <section id="create" class="container section compact">
@@ -64,12 +64,13 @@
 </section>
 
 <section class="container section">
-  <div class="section-head"><div><p class="section-kicker">What can be created</p><h2>Four asset types, designed to work together.</h2></div><p>The Studio makes the distinction clear so a tool is not confused with an Agent, and a Workflow is not mistaken for an unrestricted chat chain.</p></div>
+  <div class="section-head"><div><p class="section-kicker">What can be created</p><h2>Four reusable runtime artifact types—and the Solution that composes them.</h2></div><p>The Studio makes each responsibility explicit: an MCP is not an Agent, a Workflow is not a Service, and a reusable Service is not the complete user-facing Solution.</p></div>
   <div class="grid four">
-    <article class="card sky" data-reveal><div class="meta">Specification</div><h3>The contract</h3><p>Identity, owner, inputs, outputs, errors, side effects, data classes, dependencies, SLOs, tests, support, and lifecycle.</p></article>
-    <article class="card violet" data-reveal><div class="meta">Agent</div><h3>The reasoning capability</h3><p>A bounded task specialist with typed inputs and outputs, approved model envelopes, skills, evaluations, and resource limits.</p></article>
-    <article class="card mint" data-reveal><div class="meta">MCP</div><h3>The tool capability</h3><p>A governed integration exposing tools, resources, and prompts with schemas, delegated identity, side-effect classes, receipts, and compensation.</p></article>
-    <article class="card amber" data-reveal><div class="meta">Service + Workflow</div><h3>The customer outcome</h3><p>An executable product that composes typed steps, parallel work, decisions, waits, approvals, callbacks, retries, and finalization.</p></article>
+    <article class="card sky" data-reveal><div class="meta">MCP capability</div><h3>The governed tool boundary</h3><p>Exposes tools, resources, and prompts with typed schemas, delegated identity, side-effect classes, receipts, idempotency, and compensation metadata.</p></article>
+    <article class="card violet" data-reveal><div class="meta">Agent</div><h3>The bounded reasoning specialist</h3><p>Uses an approved model, knowledge, instructions, budgets, and MCP allow-list to produce a typed result for one defined responsibility.</p></article>
+    <article class="card amber" data-reveal><div class="meta">Workflow</div><h3>The durable coordination graph</h3><p>Orders Agent and capability work through typed steps, branches, parallel joins, waits, approvals, callbacks, retries, checkpoints, and compensation.</p></article>
+    <article class="card mint" data-reveal><div class="meta">Service</div><h3>The reusable executable contract</h3><p>Publishes a stable intent-to-outcome contract pinned to one or more approved Workflows, with inputs, outputs, policies, SLOs, and lifecycle.</p></article>
+    <article class="card coral" data-reveal><div class="meta">Solution</div><h3>The final user-facing composition</h3><p>Packages the complete dependency graph, experience contract, presentation, lifecycle, and one or more Services into what a consumer actually discovers and uses.</p></article>
   </div>
 </section>
 
@@ -81,10 +82,11 @@
 </section>
 
 <section class="container section">
-  <div class="section-head"><div><p class="section-kicker">Studio workspace</p><h2>Designed for hundreds of capabilities, not a handful of cards.</h2></div><p>Separate Agent and MCP catalogs support search, ownership, lifecycle, risk, health, version, environment, dependency, and entitlement filters.</p></div>
-  <div class="grid two">
+  <div class="section-head"><div><p class="section-kicker">Studio workspace</p><h2>Designed for hundreds of capabilities and complete Solutions.</h2></div><p>Catalogs make reusable components discoverable; the Solution context assembles their complete dependency graph and consumer experience without copying those components.</p></div>
+  <div class="grid three">
     <article class="card mint"><div class="meta">Agent catalog</div><h3>Find the right specialist</h3><ul><li>Search by capability, owner, domain, trust, region, model envelope, and evaluation</li><li>Compare exact versions, schemas, SLOs, support, and consumers</li><li>Inspect Agent Cards, dependencies, dashboards, and recent runs</li><li>Create, clone, modify, deprecate, drain, or retire through governed actions</li></ul></article>
     <article class="card violet"><div class="meta">MCP catalog</div><h3>Find the right tool boundary</h3><ul><li>Search by tool, provider, side-effect class, data scope, credential profile, and region</li><li>Inspect schemas, transports, rate limits, idempotency, receipts, and compensation</li><li>See every Service, Workflow, and Agent consumer before an update or removal</li><li>Test through a safe sandbox without exposing provider credentials to the Agent</li></ul></article>
+    <article class="card amber"><div class="meta">Solution context</div><h3>Assemble the complete experience</h3><ul><li>Select immutable MCP, Agent, Workflow, and Service versions instead of cloning them</li><li>Inspect the complete dependency graph, experience contract, entry actions, policies, and lifecycle</li><li>Qualify and publish a consumer-ready Solution without executing it during authoring</li><li>Expose the published experience through My Solutions and delegated channels</li></ul></article>
   </div>
 </section>
 
@@ -98,7 +100,7 @@
 
 <section class="container section compact">
   <div class="chapter-next">
-    <div><p class="section-kicker">Next chapter</p><h2>Follow three concrete Services through a governed run.</h2><p>See how intent becomes admitted capabilities, a safe rehearsal, approvals, durable execution, and evidence.</p></div>
+    <div><p class="section-kicker">Next chapter</p><h2>Follow three Solution outcomes through a governed Service Run.</h2><p>See how a user action resolves an approved Service, admitted capabilities, approvals, durable execution, and evidence.</p></div>
     <a class="button primary" href="runtime.html#scenarios">See it run →</a>
   </div>
 </section>
@@ -108,8 +110,8 @@
     <footer class="site-footer">
       <div class="container footer-grid">
         <div>
-          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed capability platform</span></span></a>
-          <p style="margin-top:16px">Turn specifications, enterprise information, Agents, MCPs, Workflows, models, policy, and infrastructure into governed, deployable Services with evidence attached.</p>
+          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed solution operating platform</span></span></a>
+          <p style="margin-top:16px">Turn approved intent into user-facing Solutions assembled from governed Services, Workflows, Agents, MCP capabilities, knowledge, models, policy, and portable infrastructure—with evidence attached.</p>
         </div>
         <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
         <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>

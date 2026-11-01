@@ -16,8 +16,8 @@
   .edge-waiting path { stroke:#ffc76a; stroke-dasharray:10 7; }
 </style>
     <g role="img" aria-labelledby="diagram-title diagram-desc">
-      <title id="diagram-title">Universal Service Factory</title>
-      <desc id="diagram-desc">Any approved source can become a governed, deployable, discoverable, evidence-backed Service.</desc>
+      <title id="diagram-title">Universal Solution and Capability Factory</title>
+      <desc id="diagram-desc">Approved inputs become reusable capabilities and Services that compose into governed, user-facing Solutions.</desc>
       <defs>
         <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
           <path d="M0,0 L0,6 L9,3 z" fill="context-stroke"/>
@@ -29,8 +29,8 @@
         <path d="M 0 0 V 720"/><path d="M 60 0 V 720"/><path d="M 120 0 V 720"/><path d="M 180 0 V 720"/><path d="M 240 0 V 720"/><path d="M 300 0 V 720"/><path d="M 360 0 V 720"/><path d="M 420 0 V 720"/><path d="M 480 0 V 720"/><path d="M 540 0 V 720"/><path d="M 600 0 V 720"/><path d="M 660 0 V 720"/><path d="M 720 0 V 720"/><path d="M 780 0 V 720"/><path d="M 840 0 V 720"/><path d="M 900 0 V 720"/><path d="M 960 0 V 720"/><path d="M 1020 0 V 720"/><path d="M 1080 0 V 720"/><path d="M 1140 0 V 720"/><path d="M 1200 0 V 720"/>
         <path d="M 0 0 H 1200"/><path d="M 0 60 H 1200"/><path d="M 0 120 H 1200"/><path d="M 0 180 H 1200"/><path d="M 0 240 H 1200"/><path d="M 0 300 H 1200"/><path d="M 0 360 H 1200"/><path d="M 0 420 H 1200"/><path d="M 0 480 H 1200"/><path d="M 0 540 H 1200"/><path d="M 0 600 H 1200"/><path d="M 0 660 H 1200"/><path d="M 0 720 H 1200"/>
       </g>
-      <text class="diagram-title" x="36" y="46">Universal Service Factory</text>
-      <text class="diagram-subtitle" x="36" y="72">Any approved source can become a governed, deployable, discoverable, evidence-backed Service.</text>
+      <text class="diagram-title" x="36" y="46">Universal Solution and Capability Factory</text>
+      <text class="diagram-subtitle" x="36" y="72">Approved inputs become reusable capabilities and Services that compose into governed, user-facing Solutions.</text>
       <g class="edges"><g id="edge-f1" class="edge edge-data" data-edge-id="f1"><path d="M 216.0 200.0 L 238.0 200.0 L 238.0 200.0 L 260.0 200.0" marker-end="url(#arrow)"/><text x="240.5" y="192.0">ingest</text></g><g id="edge-f2" class="edge edge-data" data-edge-id="f2"><path d="M 450.0 200.0 L 472.0 200.0 L 472.0 200.0 L 494.0 200.0" marker-end="url(#arrow)"/><text x="469.5" y="192.0">generate + edit</text></g><g id="edge-f3" class="edge edge-governance" data-edge-id="f3"><path d="M 674.0 200.0 L 696.0 200.0 L 696.0 200.0 L 718.0 200.0" marker-end="url(#arrow)"/><text x="698.5" y="192.0">validate</text></g><g id="edge-f4" class="edge edge-governance" data-edge-id="f4"><path d="M 908.0 200.0 L 930.0 200.0 L 930.0 200.0 L 952.0 200.0" marker-end="url(#arrow)"/><text x="935.0" y="192.0">admit</text></g><g id="edge-f5" class="edge edge-success" data-edge-id="f5"><path d="M 952.0 200.0 L 619.5 200.0 L 619.5 410.0 L 287.0 410.0" marker-end="url(#arrow)"/><text x="620.8" y="297.0">approved release</text></g><g id="edge-f6" class="edge edge-data" data-edge-id="f6"><path d="M 287.0 410.0 L 312.0 410.0 L 312.0 410.0 L 337.0 410.0" marker-end="url(#arrow)"/><text x="312.0" y="402.0">live runtime</text></g><g id="edge-f7" class="edge edge-success" data-edge-id="f7"><path d="M 542.0 410.0 L 747.0 410.0 L 747.0 200.0 L 952.0 200.0" marker-end="url(#arrow)"/><text x="748.2" y="297.0">promote</text></g><g id="edge-f8" class="edge edge-data" data-edge-id="f8"><path d="M 952.0 200.0 L 874.5 200.0 L 874.5 410.0 L 797.0 410.0" marker-end="url(#arrow)"/><text x="875.8" y="297.0">discover</text></g><g id="edge-f9" class="edge edge-governance" data-edge-id="f9"><path d="M 797.0 410.0 L 822.0 410.0 L 822.0 410.0 L 847.0 410.0" marker-end="url(#arrow)"/><text x="822.0" y="402.0">immutable plan</text></g><g id="edge-f10" class="edge edge-success" data-edge-id="f10"><path d="M 847.0 410.0 L 780.5 410.0 L 780.5 604.0 L 714.0 604.0" marker-end="url(#arrow)"/><text x="774.8" y="499.0">finalize</text></g><g id="edge-f11" class="edge edge-evidence" data-edge-id="f11"><path d="M 714.0 604.0 L 833.0 604.0 L 833.0 200.0 L 952.0 200.0" marker-end="url(#arrow)"/><text x="828.5" y="394.0">health + learning</text></g></g>
       <g class="nodes">
     <g id="node-inputs" class="node node-sky">
@@ -40,13 +40,13 @@
     </g>
     <g id="node-studio" class="node node-mint">
       <rect x="260" y="145" width="190" height="110" rx="16"/>
-      <text class="node-title" x="355.0" y="176"><tspan x="355.0" dy="0">Agent + MCP Studio</tspan></text>
-      <text class="node-subtitle" x="355.0" y="200"><tspan x="355.0" dy="0">GUI · VS Code · CLI ·</tspan><tspan x="355.0" dy="14">Jupyter</tspan></text>
+      <text class="node-title" x="355.0" y="176"><tspan x="355.0" dy="0">Unified Studio</tspan></text>
+      <text class="node-subtitle" x="355.0" y="200"><tspan x="355.0" dy="0">MCP · Agent · Workflow</tspan><tspan x="355.0" dy="14">· Service · Solution</tspan></text>
     </g>
     <g id="node-contracts" class="node node-violet">
       <rect x="494" y="145" width="180" height="110" rx="16"/>
       <text class="node-title" x="584.0" y="176"><tspan x="584.0" dy="0">Typed contracts</tspan></text>
-      <text class="node-subtitle" x="584.0" y="200"><tspan x="584.0" dy="0">Service · Workflow ·</tspan><tspan x="584.0" dy="14">Agent · MCP</tspan></text>
+      <text class="node-subtitle" x="584.0" y="200"><tspan x="584.0" dy="0">MCP · Agent · Workflow</tspan><tspan x="584.0" dy="14">· Service · Solution</tspan></text>
     </g>
     <g id="node-admission" class="node node-amber">
       <rect x="718" y="145" width="190" height="110" rx="16"/>
@@ -70,17 +70,17 @@
     </g>
     <g id="node-compose" class="node node-violet">
       <rect x="592" y="355" width="205" height="110" rx="16"/>
-      <text class="node-title" x="694.5" y="386"><tspan x="694.5" dy="0">Cerebro composition</tspan></text>
-      <text class="node-subtitle" x="694.5" y="410"><tspan x="694.5" dy="0">Select · compile ·</tspan><tspan x="694.5" dy="14">authorize</tspan></text>
+      <text class="node-title" x="694.5" y="386"><tspan x="694.5" dy="0">Solution + Service</tspan><tspan x="694.5" dy="17">resolution</tspan></text>
+      <text class="node-subtitle" x="694.5" y="427"><tspan x="694.5" dy="0">Experience action ·</tspan><tspan x="694.5" dy="14">compile · authorize</tspan></text>
     </g>
     <g id="node-execute" class="node node-amber">
       <rect x="847" y="355" width="205" height="110" rx="16"/>
-      <text class="node-title" x="949.5" y="386"><tspan x="949.5" dy="0">Durable execution</tspan></text>
+      <text class="node-title" x="949.5" y="386"><tspan x="949.5" dy="0">Governed Service Run</tspan></text>
       <text class="node-subtitle" x="949.5" y="410"><tspan x="949.5" dy="0">Agents · MCPs · RAG ·</tspan><tspan x="949.5" dy="14">humans</tspan></text>
     </g>
     <g id="node-outcome" class="node node-mint">
       <rect x="486" y="548" width="228" height="112" rx="16"/>
-      <text class="node-title" x="600.0" y="579"><tspan x="600.0" dy="0">Proved outcome</tspan></text>
-      <text class="node-subtitle" x="600.0" y="603"><tspan x="600.0" dy="0">Result · citations ·</tspan><tspan x="600.0" dy="14">receipts · evidence</tspan></text>
+      <text class="node-title" x="600.0" y="579"><tspan x="600.0" dy="0">Solution result +</tspan><tspan x="600.0" dy="17">proof</tspan></text>
+      <text class="node-subtitle" x="600.0" y="620"><tspan x="600.0" dy="0">Experience · citations ·</tspan><tspan x="600.0" dy="14">receipts · evidence</tspan></text>
     </g></g>
     </g></svg>

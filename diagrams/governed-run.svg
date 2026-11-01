@@ -16,8 +16,8 @@
   .edge-waiting path { stroke:#ffc76a; stroke-dasharray:10 7; }
 </style>
     <g role="img" aria-labelledby="diagram-title diagram-desc">
-      <title id="diagram-title">Governed Dynamic Service Run</title>
-      <desc id="diagram-desc">Identity, policy, data, Agents, MCP tools, approvals, durable state, and evidence remain explicit from prompt to outcome.</desc>
+      <title id="diagram-title">Solution Action to Governed Service Run</title>
+      <desc id="diagram-desc">A user-facing Solution action resolves a reusable Service while identity, policy, data, Agents, MCP tools, approvals, durable state, and evidence remain explicit.</desc>
       <defs>
         <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
           <path d="M0,0 L0,6 L9,3 z" fill="context-stroke"/>
@@ -29,14 +29,14 @@
         <path d="M 0 0 V 720"/><path d="M 60 0 V 720"/><path d="M 120 0 V 720"/><path d="M 180 0 V 720"/><path d="M 240 0 V 720"/><path d="M 300 0 V 720"/><path d="M 360 0 V 720"/><path d="M 420 0 V 720"/><path d="M 480 0 V 720"/><path d="M 540 0 V 720"/><path d="M 600 0 V 720"/><path d="M 660 0 V 720"/><path d="M 720 0 V 720"/><path d="M 780 0 V 720"/><path d="M 840 0 V 720"/><path d="M 900 0 V 720"/><path d="M 960 0 V 720"/><path d="M 1020 0 V 720"/><path d="M 1080 0 V 720"/><path d="M 1140 0 V 720"/><path d="M 1200 0 V 720"/>
         <path d="M 0 0 H 1200"/><path d="M 0 60 H 1200"/><path d="M 0 120 H 1200"/><path d="M 0 180 H 1200"/><path d="M 0 240 H 1200"/><path d="M 0 300 H 1200"/><path d="M 0 360 H 1200"/><path d="M 0 420 H 1200"/><path d="M 0 480 H 1200"/><path d="M 0 540 H 1200"/><path d="M 0 600 H 1200"/><path d="M 0 660 H 1200"/><path d="M 0 720 H 1200"/>
       </g>
-      <text class="diagram-title" x="36" y="46">Governed Dynamic Service Run</text>
-      <text class="diagram-subtitle" x="36" y="72">Identity, policy, data, Agents, MCP tools, approvals, durable state, and evidence remain explicit from prompt to outcome.</text>
+      <text class="diagram-title" x="36" y="46">Solution Action to Governed Service Run</text>
+      <text class="diagram-subtitle" x="36" y="72">A user-facing Solution action resolves a reusable Service while identity, policy, data, Agents, MCP tools, approvals, durable state, and evidence remain explicit.</text>
       <g class="edges"><g id="edge-r1" class="edge edge-data" data-edge-id="r1"><path d="M 215.0 152.5 L 235.0 152.5 L 235.0 152.5 L 255.0 152.5" marker-end="url(#arrow)"/><text x="235.0" y="144.5">classify</text></g><g id="edge-r2" class="edge edge-data" data-edge-id="r2"><path d="M 430.0 152.5 L 450.0 152.5 L 450.0 152.5 L 470.0 152.5" marker-end="url(#arrow)"/><text x="450.0" y="144.5">select / compose</text></g><g id="edge-r3" class="edge edge-governance" data-edge-id="r3"><path d="M 645.0 152.5 L 665.0 152.5 L 665.0 152.5 L 685.0 152.5" marker-end="url(#arrow)"/><text x="665.0" y="144.5">manifest</text></g><g id="edge-r4" class="edge edge-governance" data-edge-id="r4"><path d="M 860.0 152.5 L 880.0 152.5 L 880.0 152.5 L 900.0 152.5" marker-end="url(#arrow)"/><text x="892.5" y="144.5">freeze</text></g><g id="edge-r5" class="edge edge-governance" data-edge-id="r5"><path d="M 900.0 152.5 L 577.5 152.5 L 577.5 385.0 L 255.0 385.0" marker-end="url(#arrow)"/><text x="586.2" y="260.8">authorized scopes</text></g><g id="edge-r6" class="edge edge-data" data-edge-id="r6"><path d="M 1012.5 205.0 L 1012.5 267.5 L 1082.5 267.5 L 1082.5 330.0" marker-end="url(#arrow)"/><text x="1047.5" y="260.8">commit</text></g><g id="edge-r7" class="edge edge-data" data-edge-id="r7"><path d="M 255.0 385.0 L 277.5 385.0 L 277.5 385.0 L 300.0 385.0" marker-end="url(#arrow)"/><text x="277.5" y="377.0">context + citations</text></g><g id="edge-r8" class="edge edge-waiting" data-edge-id="r8"><path d="M 490.0 385.0 L 512.5 385.0 L 512.5 385.0 L 535.0 385.0" marker-end="url(#arrow)"/><text x="512.5" y="377.0">high-impact action</text></g><g id="edge-r9" class="edge edge-success" data-edge-id="r9"><path d="M 725.0 385.0 L 747.5 385.0 L 747.5 385.0 L 770.0 385.0" marker-end="url(#arrow)"/><text x="747.5" y="377.0">approved operation</text></g><g id="edge-r10" class="edge edge-data" data-edge-id="r10"><path d="M 490.0 385.0 L 630.0 385.0 L 630.0 385.0 L 770.0 385.0" marker-end="url(#arrow)"/><text x="630.0" y="377.0">tool intent</text></g><g id="edge-r11" class="edge edge-evidence" data-edge-id="r11"><path d="M 960.0 385.0 L 982.5 385.0 L 982.5 385.0 L 1005.0 385.0" marker-end="url(#arrow)"/><text x="973.8" y="377.0">receipt + result</text></g><g id="edge-r12" class="edge edge-data" data-edge-id="r12"><path d="M 1005.0 385.0 L 747.5 385.0 L 747.5 385.0 L 490.0 385.0" marker-end="url(#arrow)"/><text x="738.8" y="377.0">resume / retry</text></g><g id="edge-r13" class="edge edge-success" data-edge-id="r13"><path d="M 395.0 440.0 L 395.0 497.5 L 407.5 497.5 L 407.5 555.0" marker-end="url(#arrow)"/><text x="401.2" y="488.2">accepted artifacts</text></g><g id="edge-r14" class="edge edge-data" data-edge-id="r14"><path d="M 1005.0 385.0 L 770.0 385.0 L 770.0 607.5 L 535.0 607.5" marker-end="url(#arrow)"/><text x="745.0" y="488.2">run state</text></g><g id="edge-r15" class="edge edge-success" data-edge-id="r15"><path d="M 535.0 607.5 L 600.0 607.5 L 600.0 607.5 L 665.0 607.5" marker-end="url(#arrow)"/><text x="600.0" y="599.5">release</text></g><g id="edge-r16" class="edge edge-evidence" data-edge-id="r16"><path d="M 920.0 607.5 L 962.5 607.5 L 962.5 385.0 L 1005.0 385.0" marker-end="url(#arrow)"/><text x="937.5" y="488.2">observe + improve</text></g></g>
       <g class="nodes">
     <g id="node-intent" class="node node-sky">
       <rect x="40" y="100" width="175" height="105" rx="16"/>
-      <text class="node-title" x="127.5" y="131"><tspan x="127.5" dy="0">User intent</tspan></text>
-      <text class="node-subtitle" x="127.5" y="155"><tspan x="127.5" dy="0">Prompt · upload refs</tspan><tspan x="127.5" dy="14">· purpose</tspan></text>
+      <text class="node-title" x="127.5" y="131"><tspan x="127.5" dy="0">Solution action</tspan></text>
+      <text class="node-subtitle" x="127.5" y="155"><tspan x="127.5" dy="0">Experience contract ·</tspan><tspan x="127.5" dy="14">inputs · purpose</tspan></text>
     </g>
     <g id="node-understand" class="node node-mint">
       <rect x="255" y="100" width="175" height="105" rx="16"/>
@@ -45,8 +45,8 @@
     </g>
     <g id="node-compile" class="node node-violet">
       <rect x="470" y="100" width="175" height="105" rx="16"/>
-      <text class="node-title" x="557.5" y="131"><tspan x="557.5" dy="0">Compile</tspan></text>
-      <text class="node-subtitle" x="557.5" y="155"><tspan x="557.5" dy="0">Service · graph ·</tspan><tspan x="557.5" dy="14">bindings · budgets</tspan></text>
+      <text class="node-title" x="557.5" y="131"><tspan x="557.5" dy="0">Resolve + compile</tspan></text>
+      <text class="node-subtitle" x="557.5" y="155"><tspan x="557.5" dy="0">Service · Workflow ·</tspan><tspan x="557.5" dy="14">bindings · budgets</tspan></text>
     </g>
     <g id="node-authorize" class="node node-amber">
       <rect x="685" y="100" width="175" height="105" rx="16"/>

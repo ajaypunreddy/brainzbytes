@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <mxfile host="app.diagrams.net" version="26.0.0">
-  <diagram id="service-factory" name="Universal Service Factory">
+  <diagram id="service-factory" name="Universal Solution and Capability Factory">
     <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="720">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="service-factory-title" value="&lt;b&gt;Universal Service Factory&lt;/b&gt;&lt;br&gt;Any approved source can become a governed, deployable, discoverable, evidence-backed Service." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
+        <mxCell id="service-factory-title" value="&lt;b&gt;Universal Solution and Capability Factory&lt;/b&gt;&lt;br&gt;Approved inputs become reusable capabilities and Services that compose into governed, user-facing Solutions." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="35" y="20" width="1100" height="60" as="geometry" />
         </mxCell>
         <mxCell id="service-factory-inputs" value="&lt;b&gt;Product inputs&lt;/b&gt;&lt;br&gt;Specs · APIs · wiki · data · code" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="36" y="145" width="180" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="service-factory-studio" value="&lt;b&gt;Agent + MCP Studio&lt;/b&gt;&lt;br&gt;GUI · VS Code · CLI · Jupyter" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="service-factory-studio" value="&lt;b&gt;Unified Studio&lt;/b&gt;&lt;br&gt;MCP · Agent · Workflow · Service · Solution" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="260" y="145" width="190" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="service-factory-contracts" value="&lt;b&gt;Typed contracts&lt;/b&gt;&lt;br&gt;Service · Workflow · Agent · MCP" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="service-factory-contracts" value="&lt;b&gt;Typed contracts&lt;/b&gt;&lt;br&gt;MCP · Agent · Workflow · Service · Solution" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="494" y="145" width="180" height="110" as="geometry" />
         </mxCell>
         <mxCell id="service-factory-admission" value="&lt;b&gt;Admission pipeline&lt;/b&gt;&lt;br&gt;Test · scan · SBOM · sign · approve" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
@@ -29,13 +29,13 @@
         <mxCell id="service-factory-discovery" value="&lt;b&gt;Runtime discovery&lt;/b&gt;&lt;br&gt;Attest · inspect · qualify" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="337" y="355" width="205" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="service-factory-compose" value="&lt;b&gt;Cerebro composition&lt;/b&gt;&lt;br&gt;Select · compile · authorize" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="service-factory-compose" value="&lt;b&gt;Solution + Service resolution&lt;/b&gt;&lt;br&gt;Experience action · compile · authorize" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="592" y="355" width="205" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="service-factory-execute" value="&lt;b&gt;Durable execution&lt;/b&gt;&lt;br&gt;Agents · MCPs · RAG · humans" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="service-factory-execute" value="&lt;b&gt;Governed Service Run&lt;/b&gt;&lt;br&gt;Agents · MCPs · RAG · humans" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="847" y="355" width="205" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="service-factory-outcome" value="&lt;b&gt;Proved outcome&lt;/b&gt;&lt;br&gt;Result · citations · receipts · evidence" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="service-factory-outcome" value="&lt;b&gt;Solution result + proof&lt;/b&gt;&lt;br&gt;Experience · citations · receipts · evidence" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="486" y="548" width="228" height="112" as="geometry" />
         </mxCell>
         <mxCell id="service-factory-f1" value="ingest" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="service-factory-inputs" target="service-factory-studio">
@@ -159,7 +159,7 @@
         <mxCell id="platform-planes-title" value="&lt;b&gt;Eight Platform Planes&lt;/b&gt;&lt;br&gt;Cerebro, Weave, and Loom coordinate stable governance and execution contracts above replaceable infrastructure." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="35" y="20" width="1100" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="platform-planes-experience" value="&lt;b&gt;1 · Experience&lt;/b&gt;&lt;br&gt;Portal · Studio · workspaces · operations" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="platform-planes-experience" value="&lt;b&gt;1 · Experience&lt;/b&gt;&lt;br&gt;My Solutions · Studio · delegated clients" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="62" y="92" width="250" height="95" as="geometry" />
         </mxCell>
         <mxCell id="platform-planes-governance" value="&lt;b&gt;2 · Governance&lt;/b&gt;&lt;br&gt;Identity · policy · approval · audit" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
@@ -186,7 +186,7 @@
         <mxCell id="platform-planes-cerebro" value="&lt;b&gt;Cerebro&lt;/b&gt;&lt;br&gt;Understand · govern · compile · orchestrate · prove" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="150" y="500" width="270" height="105" as="geometry" />
         </mxCell>
-        <mxCell id="platform-planes-weave" value="&lt;b&gt;Weave&lt;/b&gt;&lt;br&gt;Services · Workflows · Agents · MCPs · packs" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="platform-planes-weave" value="&lt;b&gt;Weave&lt;/b&gt;&lt;br&gt;Solutions · Services · Workflows · Agents · MCPs" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="465" y="500" width="270" height="105" as="geometry" />
         </mxCell>
         <mxCell id="platform-planes-loom" value="&lt;b&gt;Loom&lt;/b&gt;&lt;br&gt;Portable operational substrate" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
@@ -317,21 +317,21 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="governed-run" name="Governed Dynamic Service Run">
+  <diagram id="governed-run" name="Solution Action to Governed Service Run">
     <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="720">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="governed-run-title" value="&lt;b&gt;Governed Dynamic Service Run&lt;/b&gt;&lt;br&gt;Identity, policy, data, Agents, MCP tools, approvals, durable state, and evidence remain explicit from prompt to outcome." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
+        <mxCell id="governed-run-title" value="&lt;b&gt;Solution Action to Governed Service Run&lt;/b&gt;&lt;br&gt;A user-facing Solution action resolves a reusable Service while identity, policy, data, Agents, MCP tools, approvals, durable state, and evidence remain explicit." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="35" y="20" width="1100" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="governed-run-intent" value="&lt;b&gt;User intent&lt;/b&gt;&lt;br&gt;Prompt · upload refs · purpose" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="governed-run-intent" value="&lt;b&gt;Solution action&lt;/b&gt;&lt;br&gt;Experience contract · inputs · purpose" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="40" y="100" width="175" height="105" as="geometry" />
         </mxCell>
         <mxCell id="governed-run-understand" value="&lt;b&gt;Understand&lt;/b&gt;&lt;br&gt;Intent · risk · entities · needs" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="255" y="100" width="175" height="105" as="geometry" />
         </mxCell>
-        <mxCell id="governed-run-compile" value="&lt;b&gt;Compile&lt;/b&gt;&lt;br&gt;Service · graph · bindings · budgets" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="governed-run-compile" value="&lt;b&gt;Resolve + compile&lt;/b&gt;&lt;br&gt;Service · Workflow · bindings · budgets" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="470" y="100" width="175" height="105" as="geometry" />
         </mxCell>
         <mxCell id="governed-run-authorize" value="&lt;b&gt;Authorize&lt;/b&gt;&lt;br&gt;Whole graph · use-time policy" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
@@ -417,16 +417,16 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="scale-path-title" value="&lt;b&gt;Individual to Sovereign Enterprise&lt;/b&gt;&lt;br&gt;The same Service, Workflow, Agent, and MCP contracts scale through progressively stronger sharing, isolation, governance, operations, and assurance." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
+        <mxCell id="scale-path-title" value="&lt;b&gt;Individual to Sovereign Enterprise&lt;/b&gt;&lt;br&gt;The same Solution, Service, Workflow, Agent, and MCP contracts scale through progressively stronger sharing, isolation, governance, operations, and assurance." style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=18;fontFamily=Inter;fontColor=#f4f8f2;align=left;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="35" y="20" width="1100" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="scale-path-individual" value="&lt;b&gt;Individual&lt;/b&gt;&lt;br&gt;Private tools and personal workflows" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="scale-path-individual" value="&lt;b&gt;Individual&lt;/b&gt;&lt;br&gt;Personal Solutions and private sources" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="42" y="145" width="185" height="115" as="geometry" />
         </mxCell>
         <mxCell id="scale-path-team" value="&lt;b&gt;Team&lt;/b&gt;&lt;br&gt;Shared capabilities and knowledge" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#52b788;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="274" y="145" width="185" height="115" as="geometry" />
         </mxCell>
-        <mxCell id="scale-path-business" value="&lt;b&gt;Small business&lt;/b&gt;&lt;br&gt;Repeatable operating Services" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="scale-path-business" value="&lt;b&gt;Small business&lt;/b&gt;&lt;br&gt;Repeatable operating Solutions" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="506" y="145" width="185" height="115" as="geometry" />
         </mxCell>
         <mxCell id="scale-path-enterprise" value="&lt;b&gt;Enterprise&lt;/b&gt;&lt;br&gt;Multi-tenant governed ecosystem" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
@@ -435,7 +435,7 @@
         <mxCell id="scale-path-sovereign" value="&lt;b&gt;Sovereign / regulated&lt;/b&gt;&lt;br&gt;Dedicated, restricted, or disconnected" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#7fb98d;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="970" y="145" width="185" height="115" as="geometry" />
         </mxCell>
-        <mxCell id="scale-path-contracts" value="&lt;b&gt;Stable capability contracts&lt;/b&gt;&lt;br&gt;Services · Workflows · Agents · MCPs" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="scale-path-contracts" value="&lt;b&gt;Stable product contracts&lt;/b&gt;&lt;br&gt;Solutions · Services · Workflows · Agents · MCPs" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="126" y="388" width="300" height="108" as="geometry" />
         </mxCell>
         <mxCell id="scale-path-profiles" value="&lt;b&gt;Progressive deployment profiles&lt;/b&gt;&lt;br&gt;Shared · dedicated · sovereign · edge" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#ffc76a;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
@@ -444,7 +444,7 @@
         <mxCell id="scale-path-packs" value="&lt;b&gt;Solution and control packs&lt;/b&gt;&lt;br&gt;Industry · jurisdiction · data · policy" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#9bcf9f;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="774" y="388" width="300" height="108" as="geometry" />
         </mxCell>
-        <mxCell id="scale-path-outcomes" value="&lt;b&gt;Outcome&lt;/b&gt;&lt;br&gt;One useful Service to a governed ecosystem" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
+        <mxCell id="scale-path-outcomes" value="&lt;b&gt;Outcome&lt;/b&gt;&lt;br&gt;One useful Solution to a governed ecosystem" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=16;fillColor=#10231e;strokeColor=#70e6b1;strokeWidth=2;fontSize=14;fontFamily=Inter;fontColor=#f4f8f2;align=center;verticalAlign=middle;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="360" y="570" width="480" height="90" as="geometry" />
         </mxCell>
         <mxCell id="scale-path-s1" value="share" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#52b788;dashed=0;fontSize=10;fontFamily=Inter;fontColor=#a8bbb3;" edge="1" parent="1" source="scale-path-individual" target="scale-path-team">

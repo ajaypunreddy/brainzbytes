@@ -3,9 +3,9 @@
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta name="description" content="See how ContextWeaver turns intent into an authorized immutable plan, durable Agent and MCP execution, and an evidence-backed result.">
+      <meta name="description" content="See how a user-facing Solution action resolves a reusable Service, authorized immutable plan, durable Agent and MCP execution, and evidence-backed result.">
       <meta name="theme-color" content="#07110f">
-      <title>ContextWeaver Runtime — Governed dynamic Service execution</title>
+      <title>ContextWeaver Runtime — Solution actions and governed Service Runs</title>
       <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
       <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
     </head>
@@ -32,10 +32,20 @@
   <div>
     <p class="eyebrow">Governed dynamic execution</p>
     <h1>Dynamic enough to adapt. <em>Bounded enough to trust.</em></h1>
-    <p class="lede">ContextWeaver can select an approved Service or compose a constrained plan from admitted capabilities. The model may help propose the graph; identity, schemas, policy, compatibility, approvals, and the compiler determine whether it can run.</p>
+    <p class="lede">A user launches a Solution action defined by its Service Experience Contract. ContextWeaver resolves the approved Service and Workflow, or constrained-composes a plan from admitted capabilities; identity, schemas, policy, compatibility, approvals, and the compiler determine whether it can run.</p>
     <div class="hero-actions"><a class="button primary" href="#flow">Walk through a run</a><a class="button" href="governance.html">Review the safeguards</a></div>
   </div>
   <div class="quote">Dependencies control when work may run. Schemas, explicit bindings, and field policy control what data each step receives.</div>
+</section>
+
+<section class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Solution to runtime</p><h2>The user sees a Solution. The platform executes a governed Service Run.</h2></div><p>This separation lets product teams evolve presentation and lifecycle independently while the runtime reuses stable, typed, observable execution contracts.</p></div>
+  <div class="steps">
+    <article class="step"><div><h3>Discover the Solution</h3><p>The consumer portal or delegated client returns only Solutions permitted for the authenticated user, tenant, purpose, and current entitlement state.</p></div></article>
+    <article class="step"><div><h3>Choose an experience action</h3><p>The published Service Experience Contract defines the title, description, fields, actions, progress, approvals, result views, and evidence links presented to the user.</p></div></article>
+    <article class="step"><div><h3>Resolve the reusable Service</h3><p>The selected action maps to a stable Service contract pinned to an approved Workflow and exact reusable capability versions.</p></div></article>
+    <article class="step"><div><h3>Execute and return evidence</h3><p>The existing Service Run API performs durable governed execution; the Solution experience presents status, approvals, results, history, citations, receipts, and trace links.</p></div></article>
+  </div>
 </section>
 
 <section id="flow" class="container section compact">
@@ -43,14 +53,14 @@
 
     <div class="diagram-shell" data-reveal>
       <div class="diagram-toolbar">
-        <strong>Governed Dynamic Service Run</strong>
+        <strong>Solution Action to Governed Service Run</strong>
         <a href="diagrams/governed-run.html" target="_blank" rel="noopener">Open full screen ↗</a>
         <a href="diagrams/governed-run.svg">Static SVG</a>
         <a href="diagrams/governed-run.gif">Animated GIF</a>
       </div>
-      <iframe class="diagram-frame" src="diagrams/governed-run.html" title="Governed Dynamic Service Run" loading="lazy"></iframe>
+      <iframe class="diagram-frame" src="diagrams/governed-run.html" title="Solution Action to Governed Service Run" loading="lazy"></iframe>
     </div>
-    <p class="diagram-note">The player shows identity and policy paths, parallel Agent work, MCP side effects, human approval, durable state, and final evidence.</p>
+    <p class="diagram-note">The player shows how a user-facing Solution action resolves a reusable Service, identity and policy paths, parallel Agent work, MCP side effects, human approval, durable state, and final evidence.</p>
 
 </section>
 
@@ -133,7 +143,7 @@
   <div class="section-head"><div><p class="section-kicker">Run lifecycle</p><h2>The simple view of a rigorous execution model.</h2></div><p>The full design contains more granular authorization, retrieval, binding, checkpoint, disclosure, and audit states; users see a comprehensible progression.</p></div>
   <div class="steps">
     <article class="step"><div><h3>Receive and scrutinize intent</h3><p>Resolve identity, tenant, roles, relationships, device, purpose, risk, classification, entities, ambiguity, and candidate outcomes.</p></div></article>
-    <article class="step"><div><h3>Select or constrained-compose</h3><p>Choose an approved Service, ask a clarifying question, or propose a graph from only admitted capabilities and control nodes.</p></div></article>
+    <article class="step"><div><h3>Resolve the Solution action</h3><p>Map the selected experience action to an approved Service, ask a clarifying question, or propose a graph from only admitted capabilities and control nodes.</p></div></article>
     <article class="step"><div><h3>Compile and authorize the complete graph</h3><p>Validate schemas, field bindings, dependencies, fallback sets, budgets, RAG scopes, model envelopes, tool risk, and approvals.</p></div></article>
     <article class="step"><div><h3>Freeze the immutable plan</h3><p>Pin exact Service, Workflow, Agent, MCP, model, policy, schema, source, index, and configuration versions.</p></div></article>
     <article class="step"><div><h3>Commit the durable run</h3><p>Persist state, the plan, first tasks or approval request, and transactional outbox before returning acceptance.</p></div></article>
@@ -164,8 +174,8 @@
     <footer class="site-footer">
       <div class="container footer-grid">
         <div>
-          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed capability platform</span></span></a>
-          <p style="margin-top:16px">Turn specifications, enterprise information, Agents, MCPs, Workflows, models, policy, and infrastructure into governed, deployable Services with evidence attached.</p>
+          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed solution operating platform</span></span></a>
+          <p style="margin-top:16px">Turn approved intent into user-facing Solutions assembled from governed Services, Workflows, Agents, MCP capabilities, knowledge, models, policy, and portable infrastructure—with evidence attached.</p>
         </div>
         <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
         <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>

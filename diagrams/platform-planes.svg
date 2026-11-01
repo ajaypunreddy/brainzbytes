@@ -36,7 +36,7 @@
     <g id="node-experience" class="node node-violet">
       <rect x="62" y="92" width="250" height="95" rx="16"/>
       <text class="node-title" x="187.0" y="123"><tspan x="187.0" dy="0">1 · Experience</tspan></text>
-      <text class="node-subtitle" x="187.0" y="147"><tspan x="187.0" dy="0">Portal · Studio · workspaces ·</tspan><tspan x="187.0" dy="14">operations</tspan></text>
+      <text class="node-subtitle" x="187.0" y="147"><tspan x="187.0" dy="0">My Solutions · Studio ·</tspan><tspan x="187.0" dy="14">delegated clients</tspan></text>
     </g>
     <g id="node-governance" class="node node-amber">
       <rect x="350" y="92" width="250" height="95" rx="16"/>
@@ -81,7 +81,7 @@
     <g id="node-weave" class="node node-amber">
       <rect x="465" y="500" width="270" height="105" rx="16"/>
       <text class="node-title" x="600.0" y="531"><tspan x="600.0" dy="0">Weave</tspan></text>
-      <text class="node-subtitle" x="600.0" y="555"><tspan x="600.0" dy="0">Services · Workflows · Agents ·</tspan><tspan x="600.0" dy="14">MCPs · packs</tspan></text>
+      <text class="node-subtitle" x="600.0" y="555"><tspan x="600.0" dy="0">Solutions · Services · Workflows</tspan><tspan x="600.0" dy="14">· Agents · MCPs</tspan></text>
     </g>
     <g id="node-loom" class="node node-violet">
       <rect x="780" y="500" width="270" height="105" rx="16"/>
