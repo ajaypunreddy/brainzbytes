@@ -7,7 +7,7 @@
       <meta name="theme-color" content="#07110f">
       <title>ContextWeaver Runtime — Solution actions and governed Service Runs</title>
       <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-      <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
+      <link rel="stylesheet" href="assets/css/site.css?v=20261101-18">
     </head>
     <body data-page="runtime">
 
@@ -33,9 +33,21 @@
     <p class="eyebrow">Governed dynamic execution</p>
     <h1>Dynamic enough to adapt. <em>Bounded enough to trust.</em></h1>
     <p class="lede">A user launches a Solution action defined by its Service Experience Contract. ContextWeaver resolves the approved Service and Workflow, or constrained-composes a plan from admitted capabilities; identity, schemas, policy, compatibility, approvals, and the compiler determine whether it can run.</p>
-    <div class="hero-actions"><a class="button primary" href="#flow">Walk through a run</a><a class="button" href="governance.html">Review the safeguards</a></div>
+    <div class="hero-actions"><a class="button primary" href="#flow">Walk through a run</a><a class="button" href="#run-history">Inspect run history</a><a class="button" href="governance.html">Review the safeguards</a></div>
   </div>
-  <div class="quote">Dependencies control when work may run. Schemas, explicit bindings, and field policy control what data each step receives.</div>
+
+    <figure class="spatial-visual" data-reveal>
+      <button class="spatial-visual-stage spatial-visual-trigger" type="button" data-spatial-open data-spatial-type="image" data-spatial-src="assets/media/spatial/governed-call-flow.png" data-spatial-title="The request route and evidence route are separate" aria-label="Open large view: The request route and evidence route are separate">
+        <img src="assets/media/spatial/governed-call-flow.png" alt="Isometric governed service call flow showing numbered request stages, identity and policy controls, Agent and MCP execution, and a separate evidence-return route." loading="lazy">
+        <span class="spatial-visual-expand" aria-hidden="true">Expand ↗</span>
+      </button>
+      <figcaption>
+        <span>Governed call flow</span>
+        <strong>The request route and evidence route are separate</strong>
+        <p>Identity and policy constrain the call above the primary execution path while receipts, citations, and outcome proof return below it.</p>
+      </figcaption>
+    </figure>
+
 </section>
 
 <section class="container section compact">
@@ -54,14 +66,56 @@
     <div class="diagram-shell" data-reveal>
       <div class="diagram-toolbar">
         <strong>Solution Action to Governed Service Run</strong>
-        <a href="diagrams/governed-run.html" target="_blank" rel="noopener">Open full screen ↗</a>
-        <a href="diagrams/governed-run.svg">Static SVG</a>
-        <a href="diagrams/governed-run.gif">Animated GIF</a>
       </div>
       <iframe class="diagram-frame" src="diagrams/governed-run.html" title="Solution Action to Governed Service Run" loading="lazy"></iframe>
     </div>
     <p class="diagram-note">The player shows how a user-facing Solution action resolves a reusable Service, identity and policy paths, parallel Agent work, MCP side effects, human approval, durable state, and final evidence.</p>
 
+</section>
+
+<section class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Three runtime views</p><h2>Read the same run by route, message order, or durable recovery.</h2></div><p>Each technical view preserves a different invariant: the service path, exact participant timing, or the state and compensation model behind long-running work.</p></div>
+  <div class="spatial-gallery spatial-gallery-three">
+
+    <figure class="spatial-visual" data-reveal>
+      <button class="spatial-visual-stage spatial-visual-trigger" type="button" data-spatial-open data-spatial-type="image" data-spatial-src="assets/media/spatial/governed-call-flow.png" data-spatial-title="The request route and evidence route are separate" aria-label="Open large view: The request route and evidence route are separate">
+        <img src="assets/media/spatial/governed-call-flow.png" alt="Isometric governed service call flow showing numbered request stages, identity and policy controls, Agent and MCP execution, and a separate evidence-return route." loading="lazy">
+        <span class="spatial-visual-expand" aria-hidden="true">Expand ↗</span>
+      </button>
+      <figcaption>
+        <span>Governed call flow</span>
+        <strong>The request route and evidence route are separate</strong>
+        <p>Identity and policy constrain the call above the primary execution path while receipts, citations, and outcome proof return below it.</p>
+      </figcaption>
+    </figure>
+
+
+    <figure class="spatial-visual" data-reveal>
+      <button class="spatial-visual-stage spatial-visual-trigger" type="button" data-spatial-open data-spatial-type="image" data-spatial-src="assets/media/spatial/governed-sequence-ladder.png" data-spatial-title="Exact participant timing without losing architectural depth" aria-label="Open large view: Exact participant timing without losing architectural depth">
+        <img src="assets/media/spatial/governed-sequence-ladder.png" alt="Three-dimensional sequence ladder with fixed ContextWeaver participants, vertical lifelines, activations, message bridges, waits, approvals, parallel work, and returns." loading="lazy">
+        <span class="spatial-visual-expand" aria-hidden="true">Expand ↗</span>
+      </button>
+      <figcaption>
+        <span>Governed sequence ladder</span>
+        <strong>Exact participant timing without losing architectural depth</strong>
+        <p>Fixed lifelines, activations, approvals, waits, parallel work, and returns make runtime interaction reviewable message by message.</p>
+      </figcaption>
+    </figure>
+
+
+    <figure class="spatial-visual" data-reveal>
+      <button class="spatial-visual-stage spatial-visual-trigger" type="button" data-spatial-open data-spatial-type="image" data-spatial-src="assets/media/spatial/durable-saga-flow.png" data-spatial-title="Persistent state makes retry and recovery explicit" aria-label="Open large view: Persistent state makes retry and recovery explicit">
+        <img src="assets/media/spatial/durable-saga-flow.png" alt="Isometric durable Saga workflow showing split and join paths, retry, approval, compensation, persistent state, queues, receipts, and run history." loading="lazy">
+        <span class="spatial-visual-expand" aria-hidden="true">Expand ↗</span>
+      </button>
+      <figcaption>
+        <span>Durable Saga flow</span>
+        <strong>Persistent state makes retry and recovery explicit</strong>
+        <p>Parallel work, joins, bounded retries, approval waits, compensation, queues, receipts, and run history are visible as one durable system.</p>
+      </figcaption>
+    </figure>
+
+  </div>
 </section>
 
 <section id="generic-agent-runtime" class="container section compact">
@@ -70,9 +124,6 @@
     <div class="diagram-shell" data-reveal>
       <div class="diagram-toolbar">
         <strong>Generic Agent Runtime</strong>
-        <a href="diagrams/generic-agent-runtime.html" target="_blank" rel="noopener">Open full screen ↗</a>
-        <a href="diagrams/generic-agent-runtime.svg">Static SVG</a>
-        <a href="diagrams/generic-agent-runtime.gif">Animated GIF</a>
       </div>
       <iframe class="diagram-frame" src="diagrams/generic-agent-runtime.html" title="Generic Agent Runtime" loading="lazy"></iframe>
     </div>
@@ -83,6 +134,74 @@
 <section class="container section compact">
   <div class="section-head"><div><p class="section-kicker">Current runtime realization</p><h2>Composition, delegation, retrieval, and approval now share one evidence model.</h2></div><p>Plans are exact-version and digest pinned. Agents receive only authorized MCP bindings, retrieval returns citations and receipts, and policy-required dynamic plans cannot execute before approval of the exact immutable plan.</p></div>
   <div class="grid three"><article class="card amber" data-fact-id="multi-agent-composition" data-reveal><div class="meta">Active realization</div><h3>Version-pinned multi-Agent composition</h3><p>Solution Composer persists immutable dependency plans with exact capability versions and digests, qualification evidence, cache reuse, and stale-plan invalidation.</p></article><article class="card amber" data-fact-id="agent-tool-delegation" data-reveal><div class="meta">Active realization</div><h3>Least-privilege Agent tool delegation</h3><p>Agents declare MCP requirements; Workflows authorize exact bindings without turning MCPs into hidden Workflow steps or giving Agents provider credentials.</p></article><article class="card amber" data-fact-id="profile-bound-agents" data-reveal><div class="meta">Active realization</div><h3>Immutable profile-bound Agents</h3><p>One hardened Generic Agent image supports isolated logical Agents with immutable profiles, separate identities, queues, scaling, network policy, rollout, and rollback.</p></article><article class="card amber" data-fact-id="rag-ingestion-safety" data-reveal><div class="meta">Active realization</div><h3>Production-shaped RAG ingestion</h3><p>Durable PostgreSQL jobs, shadow generations, RabbitMQ delivery, pgvector, Tika, ClamAV, Presidio, ACL and lineage checks, and fail-closed external adapters now shape ingestion.</p></article><article class="card amber" data-fact-id="retrieval-evidence" data-reveal><div class="meta">Active realization</div><h3>Content-minimized retrieval evidence</h3><p>Retrieval returns ContextPack, CitationManifest, and receipts while retaining content-minimized evidence for 30 days by default.</p></article><article class="card amber" data-fact-id="durable-service-runs" data-reveal><div class="meta">Active realization</div><h3>Durable admitted Service Runs</h3><p>Run Coordinator admits intent before persistence, records evidence, supports constrained dynamic composition, and blocks execution behind an exact-plan approval when required.</p></article></div>
+</section>
+
+<section id="run-history" class="container section">
+  <div class="section-head"><div><p class="section-kicker">Run history and evidence</p><h2>Inspect the journey—not just the final answer.</h2></div><p>The consumer sees a clear progression and result. Builders, approvers, and operators can drill into the immutable plan, Workflow nodes, approvals, retries, tool calls, evidence, and recovery decisions behind it.</p></div>
+  <div class="run-explorer" data-reveal aria-label="Illustrative ContextWeaver Run Explorer product view">
+    <div class="run-explorer-bar">
+      <div class="run-explorer-brand"><span class="run-explorer-mark">CW</span><div><small>ContextWeaver</small><strong>Run Explorer</strong></div></div>
+      <div class="run-explorer-path"><span>Production health</span><b>/</b><strong>Run SR-2847</strong></div>
+      <span class="run-status complete"><i></i> Completed with approval</span>
+    </div>
+    <div class="run-explorer-tabs" aria-label="Run Explorer sections">
+      <span>Summary</span><span class="active">Journey</span><span>Evidence</span><span>Artifacts</span>
+    </div>
+    <div class="run-explorer-body">
+      <aside class="run-journey" aria-label="Run journey">
+        <div class="run-id"><small>Service run</small><strong>Investigate production regression</strong><span>8m 42s · 12 steps · Risk: medium</span></div>
+        <ol>
+          <li class="done"><i>✓</i><div><strong>Intent received</strong><span>10:32:08 · User request</span></div></li>
+          <li class="done"><i>✓</i><div><strong>Capabilities admitted</strong><span>10:32:09 · 6 approved</span></div></li>
+          <li class="done"><i>✓</i><div><strong>Dry run evaluated</strong><span>10:32:12 · 4 checks passed</span></div></li>
+          <li class="done"><i>✓</i><div><strong>Plan approved</strong><span>10:34:21 · Independent reviewer</span></div></li>
+          <li class="active"><i>5</i><div><strong>Investigate regression</strong><span>10:34:23 · Agent step</span></div></li>
+          <li class="done"><i>✓</i><div><strong>Result delivered</strong><span>10:40:50 · Evidence attached</span></div></li>
+        </ol>
+      </aside>
+      <div class="run-step-detail" aria-label="Selected workflow step details">
+        <div class="run-step-heading">
+          <div><small>Workflow node 5 of 12</small><h3>Investigate regression</h3><p>Compare release changes with the observed error spike using only admitted telemetry and repository evidence.</p></div>
+          <span class="run-status complete"><i></i> Succeeded</span>
+        </div>
+        <div class="run-detail-grid">
+          <article><span>Bounded specialist</span><strong>Production diagnosis Agent</strong><small>Profile v3.8 · Model envelope approved</small></article>
+          <article><span>Duration</span><strong>2m 18s</strong><small>Within 5-minute budget</small></article>
+          <article><span>Accepted artifact</span><strong>Diagnosis report</strong><small>SHA-256 · immutable version</small></article>
+        </div>
+        <div class="run-result">
+          <div class="run-result-head"><span>Accepted output</span><strong>Confidence 94%</strong></div>
+          <h4>Release 2026.11.01 introduced a retry-path regression.</h4>
+          <p>Error growth begins seven minutes after ring deployment and correlates with a changed timeout branch. No evidence indicates data loss. Rollback remains a separately approved human action.</p>
+          <div class="run-citations"><span>[1] Release diff</span><span>[2] Trace cohort</span><span>[3] Error budget</span><span>[4] Runbook</span></div>
+        </div>
+        <div class="run-receipt-row">
+          <span><i>✓</i> Typed input validated</span>
+          <span><i>✓</i> 3 tool receipts</span>
+          <span><i>✓</i> Policy decision PD-8821</span>
+          <span><i>✓</i> No credentials disclosed</span>
+        </div>
+      </div>
+      <aside class="run-evidence" aria-label="Evidence summary">
+        <div><small>Authority</small><strong>Delegated read-only</strong><span>Production operator</span></div>
+        <div><small>Approval</small><strong>Maya Chen</strong><span>Separation of duty verified</span></div>
+        <div><small>MCP operations</small><strong>3 completed</strong><span>Logs · Traces · Repository</span></div>
+        <div><small>Evidence</small><strong>18 records</strong><span>Citations, receipts, metrics, traces</span></div>
+        <button type="button">Export evidence bundle</button>
+      </aside>
+    </div>
+    <p class="run-explorer-note">Illustrative product view — exact fields and controls vary by Solution, Service, role, and policy profile.</p>
+  </div>
+  <div class="grid four">
+    <article class="card mint"><div class="meta">Run summary</div><h3>Who asked for what—and what happened?</h3><p>Solution, action, Service, initiator, delegated client, purpose, status, risk, start and finish time, current owner, and final outcome.</p></article>
+    <article class="card amber"><div class="meta">Journey timeline</div><h3>Follow every meaningful state transition.</h3><p>Intent received, capabilities admitted, dry run completed, plan approved, work dispatched, waits entered, retries or compensation applied, and result delivered.</p></article>
+    <article class="card coral"><div class="meta">Step evidence</div><h3>Open any Workflow node.</h3><p>Inspect the Agent or control step, typed inputs and outputs, source citations, model and prompt version, MCP operation, latency, retries, and accepted artifact hash.</p></article>
+    <article class="card sky"><div class="meta">Authority and receipts</div><h3>See why each protected action was allowed.</h3><p>Policy decision, approver, separation of duties, delegated identity, credential-broker event, tool and policy receipts, disclosure decision, logs, metrics, and traces.</p></article>
+  </div>
+  <div class="grid two solution-example-grid">
+    <article class="card mint"><div class="meta">Dry-run comparison</div><h3>Compare rehearsal with production.</h3><p>See mocked side effects, sample or protected-data boundaries, estimated cost and latency, expected approvals, quality and safety evaluation, failure injection, retry, rollback, and the exact version promoted after review.</p></article>
+    <article class="card amber"><div class="meta">Evidence bundle</div><h3>Export the proof with the outcome.</h3><p>Preserve the immutable plan digest, component versions, approvals, citations, provider receipts, artifacts, policy decisions, evaluations, run timeline, trace links, and retention classification.</p></article>
+  </div>
 </section>
 
 <section id="scenarios" class="container section scenario-section">
@@ -171,13 +290,27 @@
 
       </main>
 
+      <dialog class="spatial-modal" data-spatial-modal aria-label="Expanded spatial view">
+        <div class="spatial-modal-frame">
+          <div class="spatial-modal-bar">
+            <strong data-spatial-modal-title>ContextWeaver spatial view</strong>
+            <button class="spatial-modal-close" type="button" data-spatial-close aria-label="Close expanded spatial view">← Back to page</button>
+          </div>
+          <div class="spatial-modal-content">
+            <img data-spatial-modal-image alt="">
+            <iframe data-spatial-modal-frame title="Expanded ContextWeaver spatial view" sandbox="allow-scripts allow-same-origin"></iframe>
+          </div>
+        </div>
+      </dialog>
+
+
     <footer class="site-footer">
       <div class="container footer-grid">
         <div>
           <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed solution operating platform</span></span></a>
           <p style="margin-top:16px">Turn approved intent into user-facing Solutions assembled from governed Services, Workflows, Agents, MCP capabilities, knowledge, models, policy, and portable infrastructure—with evidence attached.</p>
         </div>
-        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
+        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Studio and creation contexts</a><a href="runtime.html">Dynamic runtime</a></div></div>
         <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>
         <div><h3>Company</h3><div class="footer-links"><a href="company.html#about">About BrainzBytes</a><a href="company.html#about">Founder</a><a href="company.html#company-paths">Careers · planned</a></div></div>
       </div>
@@ -187,6 +320,6 @@
       </div>
     </footer>
 
-      <script src="assets/js/site.js?v=20261101-13"></script>
+      <script src="assets/js/site.js?v=20261101-17"></script>
     </body>
     </html>

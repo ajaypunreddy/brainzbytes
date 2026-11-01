@@ -7,7 +7,7 @@
       <meta name="theme-color" content="#07110f">
       <title>ContextWeaver — Turn any approved idea into a governed Solution</title>
       <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-      <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
+      <link rel="stylesheet" href="assets/css/site.css?v=20261101-18">
     </head>
     <body data-page="overview">
 
@@ -34,21 +34,26 @@
     <h1>Turn any approved idea into a <em>working Solution.</em></h1>
     <p class="lede">ContextWeaver composes user-facing Solutions from reusable Services, Workflows, Agents, MCP capabilities, enterprise knowledge, models, policy, and portable infrastructure—then governs the lifecycle from creation and dry run to deployment, execution, recovery, and evidence.</p>
     <div class="hero-actions">
-      <a class="button primary" href="studio.html">Explore Agent/MCP Studio <span aria-hidden="true">→</span></a>
+      <a class="button primary" href="studio.html">Explore Studio <span aria-hidden="true">→</span></a>
       <a class="button" href="architecture.html">Explore the architecture</a>
     </div>
     <div class="pills" style="margin-top:24px">
       <span class="pill">No-code GUI</span><span class="pill">VS Code + CLI</span><span class="pill">Jupyter</span><span class="pill">OpenAPI + MCP + A2A</span><span class="pill">Kubernetes + GitOps</span>
     </div>
   </div>
-  <div class="hero-visual" aria-label="ContextWeaver product model">
-    <div class="orbit-ring" aria-hidden="true"></div>
-    <div class="orbit"><div><strong>Solution</strong><span>User-facing outcome</span></div></div>
-    <div class="orbit-node n1"><b>Create</b><small>Studio + code</small></div>
-    <div class="orbit-node n2"><b>Govern</b><small>Policy + approval</small></div>
-    <div class="orbit-node n3"><b>Operate</b><small>Evidence + SLO</small></div>
-    <div class="orbit-node n4"><b>Compose</b><small>Services + capabilities</small></div>
-  </div>
+
+    <figure class="spatial-visual" data-reveal>
+      <button class="spatial-visual-stage spatial-visual-trigger" type="button" data-spatial-open data-spatial-type="image" data-spatial-src="assets/media/spatial/intent-to-evidence.png" data-spatial-title="The complete governed product journey" aria-label="Open large view: The complete governed product journey">
+        <img src="assets/media/spatial/intent-to-evidence.png" alt="Isometric ContextWeaver intent-to-evidence architecture showing the governed journey from user intent through Solutions, Services, Workflows, Agents and MCP capabilities to evidence-backed outcome." loading="lazy">
+        <span class="spatial-visual-expand" aria-hidden="true">Expand ↗</span>
+      </button>
+      <figcaption>
+        <span>Intent → outcome → proof</span>
+        <strong>The complete governed product journey</strong>
+        <p>Identity, policy, reusable execution, approval, side effects, and evidence remain visible from the first request to the final outcome.</p>
+      </figcaption>
+    </figure>
+
 </section>
 <div class="container trust-strip" aria-label="Supported creation inputs">
   <span>Specifications & RFCs</span><span>OpenAPI & AsyncAPI</span><span>Wikis & enterprise data</span><span>MCPs, Agents & Workflows</span><span>Services & solution packs</span>
@@ -100,9 +105,6 @@
     <div class="diagram-shell" data-reveal>
       <div class="diagram-toolbar">
         <strong>Universal Solution and Capability Factory</strong>
-        <a href="diagrams/service-factory.html" target="_blank" rel="noopener">Open full screen ↗</a>
-        <a href="diagrams/service-factory.svg">Static SVG</a>
-        <a href="diagrams/service-factory.gif">Animated GIF</a>
       </div>
       <iframe class="diagram-frame" src="diagrams/service-factory.html" title="Universal Solution and Capability Factory" loading="lazy"></iframe>
     </div>
@@ -132,13 +134,27 @@
 
       </main>
 
+      <dialog class="spatial-modal" data-spatial-modal aria-label="Expanded spatial view">
+        <div class="spatial-modal-frame">
+          <div class="spatial-modal-bar">
+            <strong data-spatial-modal-title>ContextWeaver spatial view</strong>
+            <button class="spatial-modal-close" type="button" data-spatial-close aria-label="Close expanded spatial view">← Back to page</button>
+          </div>
+          <div class="spatial-modal-content">
+            <img data-spatial-modal-image alt="">
+            <iframe data-spatial-modal-frame title="Expanded ContextWeaver spatial view" sandbox="allow-scripts allow-same-origin"></iframe>
+          </div>
+        </div>
+      </dialog>
+
+
     <footer class="site-footer">
       <div class="container footer-grid">
         <div>
           <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed solution operating platform</span></span></a>
           <p style="margin-top:16px">Turn approved intent into user-facing Solutions assembled from governed Services, Workflows, Agents, MCP capabilities, knowledge, models, policy, and portable infrastructure—with evidence attached.</p>
         </div>
-        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
+        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Studio and creation contexts</a><a href="runtime.html">Dynamic runtime</a></div></div>
         <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>
         <div><h3>Company</h3><div class="footer-links"><a href="company.html#about">About BrainzBytes</a><a href="company.html#about">Founder</a><a href="company.html#company-paths">Careers · planned</a></div></div>
       </div>
@@ -148,6 +164,6 @@
       </div>
     </footer>
 
-      <script src="assets/js/site.js?v=20261101-13"></script>
+      <script src="assets/js/site.js?v=20261101-17"></script>
     </body>
     </html>

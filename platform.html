@@ -7,7 +7,7 @@
       <meta name="theme-color" content="#07110f">
       <title>ContextWeaver Platform — Cerebro, Weave, and Loom</title>
       <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-      <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
+      <link rel="stylesheet" href="assets/css/site.css?v=20261101-18">
     </head>
     <body data-page="platform">
 
@@ -34,11 +34,19 @@
     <h1>Three systems. One <em>governed fabric.</em></h1>
     <p class="lede"><strong>Cerebro</strong> understands and governs. <strong>Weave</strong> composes user-facing Solutions from reusable Services, Workflows, Agents, MCPs, RAG profiles, models, and policies. <strong>Loom</strong> provides the portable Kubernetes, GitOps, data, messaging, identity, secrets, and observability foundation.</p>
   </div>
-  <div class="grid" style="align-self:center">
-    <article class="card mint"><div class="meta">Cerebro</div><h3>Think, govern, compile, orchestrate, prove.</h3><p>The experience and control plane that turns an authenticated intent into an authorized immutable execution plan and durable outcome.</p></article>
-    <article class="card amber"><div class="meta">Weave</div><h3>Compose reusable capabilities into Solutions.</h3><p>The governed fabric of Solution definitions, Service contracts, Workflow graphs, Agents, MCP tools, data products, models, policies, and industry packs.</p></article>
-    <article class="card violet"><div class="meta">Loom</div><h3>Run on a portable operational substrate.</h3><p>Kubernetes, Helm, OCI, GitOps, databases, queues, object stores, search, identity, secrets, telemetry, and provider adapters.</p></article>
-  </div>
+
+    <figure class="spatial-visual" data-reveal>
+      <button class="spatial-visual-stage spatial-visual-trigger" type="button" data-spatial-open data-spatial-type="image" data-spatial-src="assets/media/spatial/governed-platform-city.png" data-spatial-title="Cerebro at the center of a reusable capability ecosystem" aria-label="Open large view: Cerebro at the center of a reusable capability ecosystem">
+        <img src="assets/media/spatial/governed-platform-city.png" alt="Isometric ContextWeaver platform city with Cerebro at the center and governed districts for Studio, runtime, data, tools, operations, and evidence." loading="lazy">
+        <span class="spatial-visual-expand" aria-hidden="true">Expand ↗</span>
+      </button>
+      <figcaption>
+        <span>Governed platform city</span>
+        <strong>Cerebro at the center of a reusable capability ecosystem</strong>
+        <p>Product, runtime, trust, data, operations, and integration districts stay independently governed while working as one platform.</p>
+      </figcaption>
+    </figure>
+
 </section>
 
 <section class="container section compact">
@@ -47,9 +55,6 @@
     <div class="diagram-shell" data-reveal>
       <div class="diagram-toolbar">
         <strong>Eight Platform Planes</strong>
-        <a href="diagrams/platform-planes.html" target="_blank" rel="noopener">Open full screen ↗</a>
-        <a href="diagrams/platform-planes.svg">Static SVG</a>
-        <a href="diagrams/platform-planes.gif">Animated GIF</a>
       </div>
       <iframe class="diagram-frame" src="diagrams/platform-planes.html" title="Eight Platform Planes" loading="lazy"></iframe>
     </div>
@@ -91,11 +96,25 @@
 <section class="container section compact">
   <div class="chapter-next">
     <div><p class="section-kicker">Next chapter</p><h2>See how capabilities are created, inspected, rehearsed, and promoted.</h2><p>Move from the platform model into the guided and developer creation experience.</p></div>
-    <a class="button primary" href="studio.html">Open Agent + MCP Studio →</a>
+    <a class="button primary" href="studio.html">Open Studio →</a>
   </div>
 </section>
 
       </main>
+
+      <dialog class="spatial-modal" data-spatial-modal aria-label="Expanded spatial view">
+        <div class="spatial-modal-frame">
+          <div class="spatial-modal-bar">
+            <strong data-spatial-modal-title>ContextWeaver spatial view</strong>
+            <button class="spatial-modal-close" type="button" data-spatial-close aria-label="Close expanded spatial view">← Back to page</button>
+          </div>
+          <div class="spatial-modal-content">
+            <img data-spatial-modal-image alt="">
+            <iframe data-spatial-modal-frame title="Expanded ContextWeaver spatial view" sandbox="allow-scripts allow-same-origin"></iframe>
+          </div>
+        </div>
+      </dialog>
+
 
     <footer class="site-footer">
       <div class="container footer-grid">
@@ -103,7 +122,7 @@
           <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed solution operating platform</span></span></a>
           <p style="margin-top:16px">Turn approved intent into user-facing Solutions assembled from governed Services, Workflows, Agents, MCP capabilities, knowledge, models, policy, and portable infrastructure—with evidence attached.</p>
         </div>
-        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
+        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Studio and creation contexts</a><a href="runtime.html">Dynamic runtime</a></div></div>
         <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>
         <div><h3>Company</h3><div class="footer-links"><a href="company.html#about">About BrainzBytes</a><a href="company.html#about">Founder</a><a href="company.html#company-paths">Careers · planned</a></div></div>
       </div>
@@ -113,6 +132,6 @@
       </div>
     </footer>
 
-      <script src="assets/js/site.js?v=20261101-13"></script>
+      <script src="assets/js/site.js?v=20261101-17"></script>
     </body>
     </html>

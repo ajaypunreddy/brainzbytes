@@ -7,7 +7,7 @@
       <meta name="theme-color" content="#07110f">
       <title>ContextWeaver Solutions — Consumer experiences built from governed Services</title>
       <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-      <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
+      <link rel="stylesheet" href="assets/css/site.css?v=20261101-18">
     </head>
     <body data-page="solutions">
 
@@ -33,9 +33,21 @@
     <p class="eyebrow">The user-facing product layer</p>
     <h1>Solutions are what people <em>discover, launch, and trust.</em></h1>
     <p class="lede">A ContextWeaver Solution is the final user-facing composition: a complete experience, dependency graph, lifecycle, and set of reusable Services assembled from governed Workflows, Agents, MCP capabilities, knowledge, models, and policy.</p>
-    <div class="hero-actions"><a class="button primary" href="#concepts">Understand the hierarchy</a><a class="button" href="#consumer">Follow the user journey</a></div>
+    <div class="hero-actions"><a class="button primary" href="#examples">See intent-to-outcome examples</a><a class="button" href="#concepts">Understand the hierarchy</a></div>
   </div>
-  <div class="card mint"><div class="meta">The critical distinction</div><h3>Service is the reusable executable contract. Solution is the complete user experience.</h3><p>A Service can support many Solutions. A Solution can compose multiple Services. Solutions reuse the existing Service Run API; they do not create a separate runtime primitive.</p><div class="pills" style="margin-top:18px"><span class="pill">Reusable Services</span><span class="pill">Complete dependency graph</span><span class="pill">Consumer experience</span></div></div>
+
+    <figure class="spatial-visual" data-reveal>
+      <button class="spatial-visual-stage spatial-visual-trigger" type="button" data-spatial-open data-spatial-type="image" data-spatial-src="assets/media/spatial/intent-to-evidence.png" data-spatial-title="The complete governed product journey" aria-label="Open large view: The complete governed product journey">
+        <img src="assets/media/spatial/intent-to-evidence.png" alt="Isometric ContextWeaver intent-to-evidence architecture showing the governed journey from user intent through Solutions, Services, Workflows, Agents and MCP capabilities to evidence-backed outcome." loading="lazy">
+        <span class="spatial-visual-expand" aria-hidden="true">Expand ↗</span>
+      </button>
+      <figcaption>
+        <span>Intent → outcome → proof</span>
+        <strong>The complete governed product journey</strong>
+        <p>Identity, policy, reusable execution, approval, side effects, and evidence remain visible from the first request to the final outcome.</p>
+      </figcaption>
+    </figure>
+
 </section>
 
 <section class="container section compact">
@@ -44,7 +56,7 @@
 </section>
 
 <section id="concepts" class="container section">
-  <div class="section-head"><div><p class="section-kicker">Conceptual model</p><h2>Five concepts. Five different responsibilities.</h2></div><p>Each layer adds meaning without erasing the layer beneath it. The distinction keeps reasoning, tool access, orchestration, executable contracts, and user experience independently governed and reusable.</p></div>
+  <div class="section-head"><div><p class="section-kicker">Conceptual model</p><h2>Five concepts. Five different responsibilities.</h2></div><p>Service is the reusable executable contract. Solution is the complete user experience. Each layer adds meaning without erasing the layer beneath it.</p></div>
   <div class="grid four">
     <article class="card sky"><div class="meta">01 · MCP capability</div><h3>A governed way to reach a tool or source</h3><p>Defines tools, resources, prompts, schemas, delegated identity, side-effect risk, receipts, rate limits, idempotency, and compensation. It does not decide the business goal.</p></article>
     <article class="card violet"><div class="meta">02 · Agent</div><h3>A bounded reasoning specialist</h3><p>Uses an approved model, instructions, knowledge, skills, and MCP allow-list to perform one typed responsibility. It does not own end-to-end durable coordination.</p></article>
@@ -61,11 +73,56 @@
   </div>
 </section>
 
+<section id="examples" class="container section">
+  <div class="section-head"><div><p class="section-kicker">Five illustrative examples</p><h2>A Solution carries a person from intent to outcome.</h2></div><p>The user asks for an outcome, not a Workflow or MCP. The Solution presents the experience, composes reusable Services, and lets each Service select approved Workflows, Agents, and MCP capabilities behind a stable contract.</p></div>
+  <article class="card mint solution-example-feature" data-reveal>
+    <div class="meta">Example 01 · Business travel Solution</div>
+    <h3>“Arrange an approved trip to Seattle and keep me informed.”</h3>
+    <p>The traveler sees one guided experience. ContextWeaver preserves the reusable execution layers beneath it.</p>
+    <div class="intent-chain" aria-label="Business travel intent-to-outcome chain">
+      <div><span>01 · Intent</span><strong>Arrange the trip</strong><small>Dates, purpose, preferences, budget</small></div>
+      <div><span>02 · Solution</span><strong>Business Travel</strong><small>Forms, actions, progress, approvals</small></div>
+      <div><span>03 · Services</span><strong>Plan, approve, pay, notify</strong><small>Four reusable executable contracts</small></div>
+      <div><span>04 · Workflows</span><strong>Search, compare, approve, book</strong><small>Waits, retries, recovery, receipts</small></div>
+      <div><span>05 · Agents + MCPs</span><strong>Reason and act</strong><small>Travel specialist, policy, booking, payment</small></div>
+      <div><span>06 · Outcome</span><strong>Approved booked itinerary</strong><small>Confirmation, receipts, evidence, history</small></div>
+    </div>
+  </article>
+  <div class="grid two solution-example-grid">
+    <article class="card amber" data-reveal><div class="meta">Example 02 · Employee onboarding Solution</div><h3>“Have this employee ready for Monday.”</h3><ul><li><strong>Services:</strong> worker verification, access provisioning, equipment fulfillment, training, notification</li><li><strong>Workflows:</strong> validate identity, obtain manager approval, provision in parallel, escalate blockers</li><li><strong>Outcome:</strong> a ready employee with approvals, exceptions, ownership, and evidence</li></ul></article>
+    <article class="card coral" data-reveal><div class="meta">Example 03 · Customer incident recovery Solution</div><h3>“Restore service and keep the customer informed.”</h3><ul><li><strong>Services:</strong> incident triage, production change, customer communication, post-incident review</li><li><strong>Workflows:</strong> enrich and diagnose, approve a change, canary and rollback, publish updates</li><li><strong>Outcome:</strong> restored service, controlled change, customer timeline, and traceable evidence</li></ul></article>
+    <article class="card mint" data-reveal><div class="meta">Example 04 · Insurance claim Solution</div><h3>“Assess this claim and settle it fairly.”</h3><ul><li><strong>Services:</strong> document intake, coverage decision, fraud review, settlement payment, notification</li><li><strong>Workflows:</strong> extract and validate, collect missing evidence, route adjuster approval, issue payment</li><li><strong>Outcome:</strong> an explained decision, approved settlement, payment receipt, and complete case history</li></ul></article>
+    <article class="card sky" data-reveal><div class="meta">Example 05 · Software release Solution</div><h3>“Release this change safely to production.”</h3><ul><li><strong>Services:</strong> specification review, change validation, release promotion, stakeholder communication</li><li><strong>Workflows:</strong> build and test, risk approval, staged rings, health checks, automatic pause or rollback</li><li><strong>Outcome:</strong> a qualified release with approval, rollout status, rollback posture, and evidence</li></ul></article>
+  </div>
+</section>
+
+<section class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Reuse without duplication</p><h2>The layers are many-to-many—governed by typed contracts.</h2></div><p>Solutions package context and experience; they do not copy the assets below them. Approved versions are referenced, composed, and independently evolved.</p></div>
+  <div class="grid four">
+    <article class="card mint"><div class="meta">Solution → Service</div><h3>One Solution can compose many Services.</h3><p>Business Travel combines planning, approval, payment, and notification Services into one experience.</p></article>
+    <article class="card amber"><div class="meta">Service → Solution</div><h3>One Service can support many Solutions.</h3><p>The same Notification Service can serve travel, onboarding, incident, claims, and release Solutions.</p></article>
+    <article class="card coral"><div class="meta">Service → Workflow</div><h3>One Service can select one or more approved Workflows.</h3><p>A Payment Service may use standard charge, high-risk approval, refund, and recovery Workflows under one stable contract.</p></article>
+    <article class="card sky"><div class="meta">Workflow → Service</div><h3>One typed Workflow can support multiple Services.</h3><p>A generic human-approval Workflow can coordinate travel approval, access grants, production changes, claim settlement, and release promotion.</p></article>
+  </div>
+  <div class="posture-table-wrap reuse-map" data-reveal>
+    <table class="posture-table">
+      <thead><tr><th>Reusable asset</th><th>Where it appears</th><th>What remains stable</th></tr></thead>
+      <tbody>
+        <tr><th>Notification Service</th><td>All five example Solutions</td><td>Message request, delivery status, channel policy, receipts, and audit evidence</td></tr>
+        <tr><th>Payment Service</th><td>Business Travel and Insurance Claim Solutions</td><td>Authorize, charge, refund, reconcile, and return a financial receipt</td></tr>
+        <tr><th>Human Approval Workflow</th><td>Travel Approval, Access Provisioning, Production Change, Claims Settlement, and Release Promotion Services</td><td>Assignee rules, separation of duties, wait, timeout, escalation, decision, and evidence</td></tr>
+        <tr><th>Evidence Packaging Workflow</th><td>Travel Receipt, Post-Incident Review, Claims Decision, and Release Evidence Services</td><td>Collect lineage, approvals, citations, receipts, summaries, and immutable references</td></tr>
+        <tr><th>Identity and directory MCP capabilities</th><td>Employee Onboarding, Incident Recovery, and Software Release Solutions</td><td>Governed access to users, groups, roles, ownership, and entitlements without owning the business outcome</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
 <section id="consumer" class="container section">
   <div class="section-head"><div><p class="section-kicker">One authentication entry point</p><h2>The same platform presents the right experience for each user.</h2></div><p>Entitlements determine presentation after sign-in. Consumer users do not need to navigate internal MCPs, Agents, Workflows, or cluster resources, while builders and operators retain the detailed controls they need.</p></div>
   <div class="grid three">
     <article class="card mint"><div class="meta">Consumer</div><h3>My Solutions</h3><p>Consumer-only users land on <strong>/my-solutions</strong>, discover permitted Solutions, launch experience actions, provide inputs, approve when required, and inspect status, results, history, citations, and receipts.</p></article>
-    <article class="card amber"><div class="meta">Builder / Admin</div><h3>Studios and operations</h3><p>Authorized builders create and qualify MCPs, Agents, Workflows, Services, and Solutions. Operators manage identity, policy, publication, runtime health, evidence, and lifecycle.</p></article>
+    <article class="card amber"><div class="meta">Builder / Admin</div><h3>Studio and operations</h3><p>Authorized builders move through MCP, Agent, Workflow, Service, and Solution contexts in one Studio. Operators manage identity, policy, publication, runtime health, evidence, and lifecycle.</p></article>
     <article class="card violet"><div class="meta">Headless / delegated</div><h3>Copilot, Claude, API, or event</h3><p>External assistants discover and invoke only the Solutions and actions allowed for the represented user. Delegated identity is preserved end to end; provider credentials remain platform-owned.</p></article>
   </div>
 </section>
@@ -79,6 +136,18 @@
     <article class="step"><div><h3>Launch the Service Run</h3><p>The action maps to a reusable Service and approved Workflow. The runtime freezes exact capability, policy, source, model, and configuration versions.</p></div></article>
     <article class="step"><div><h3>Follow progress and approve</h3><p>Durable state survives waits and failures. Human authority is requested explicitly when policy requires it.</p></div></article>
     <article class="step"><div><h3>Receive the result and proof</h3><p>The Solution presents the outcome with appropriate citations, receipts, approvals, lineage, run history, and trace links.</p></div></article>
+  </div>
+</section>
+
+<section id="journey-map" class="container section compact">
+  <div class="section-head"><div><p class="section-kicker">Continue the journey</p><h2>Each page opens a different layer of the actual product experience.</h2></div><p>Start with the user-facing Solution, then move into authoring, rehearsal, execution, run history, evidence, and architecture without losing the same intent-to-outcome thread.</p></div>
+  <div class="grid three">
+    <article class="card mint"><div class="meta">Create and rehearse</div><h3>Studio</h3><p>See how MCPs, Agents, Workflows, Services, and Solutions are authored, inspected, safely simulated, compared, approved, and promoted.</p><a class="card-link" href="studio.html#create">Open creation and dry runs →</a></article>
+    <article class="card amber"><div class="meta">Follow real journeys</div><h3>Runtime scenarios</h3><p>Walk through production incident, customer renewal, and travel examples from intent through admission, dry run, authorization, execution, and proof.</p><a class="card-link" href="runtime.html#scenarios">Open execution scenarios →</a></article>
+    <article class="card coral"><div class="meta">Inspect a run</div><h3>Run history and evidence</h3><p>See the journey timeline, immutable plan, Workflow steps, approvals, retries, tool receipts, citations, traces, and exported evidence bundle.</p><a class="card-link" href="runtime.html#run-history">Open run-history deep dive →</a></article>
+    <article class="card sky"><div class="meta">Understand authority</div><h3>Governance and evidence</h3><p>Inspect identity, delegated authority, policy decisions, credential brokering, human approval, audit records, and lifecycle controls.</p><a class="card-link" href="governance.html">Open the trust model →</a></article>
+    <article class="card mint"><div class="meta">Inspect every boundary</div><h3>Architecture atlas</h3><p>See how the experience, control, capability, runtime, evidence, operations, and infrastructure layers connect.</p><a class="card-link" href="architecture.html#governed-run">Open architecture deep dive →</a></article>
+    <article class="card amber"><div class="meta">Watch end to end</div><h3>Interactive intent-to-evidence story</h3><p>Move through the ten-stage governed path from authenticated intent and reusable contracts to durable execution, evidence, outcome, and operations.</p><a class="card-link" href="diagrams/intent-to-evidence.html?popout=1" target="_blank" rel="noopener noreferrer">Open the visual journey ↗</a></article>
   </div>
 </section>
 
@@ -98,9 +167,6 @@
     <div class="diagram-shell" data-reveal>
       <div class="diagram-toolbar">
         <strong>Individual to Sovereign Enterprise</strong>
-        <a href="diagrams/scale-path.html" target="_blank" rel="noopener">Open full screen ↗</a>
-        <a href="diagrams/scale-path.svg">Static SVG</a>
-        <a href="diagrams/scale-path.gif">Animated GIF</a>
       </div>
       <iframe class="diagram-frame" src="diagrams/scale-path.html" title="Individual to Sovereign Enterprise" loading="lazy"></iframe>
     </div>
@@ -159,13 +225,27 @@
 
       </main>
 
+      <dialog class="spatial-modal" data-spatial-modal aria-label="Expanded spatial view">
+        <div class="spatial-modal-frame">
+          <div class="spatial-modal-bar">
+            <strong data-spatial-modal-title>ContextWeaver spatial view</strong>
+            <button class="spatial-modal-close" type="button" data-spatial-close aria-label="Close expanded spatial view">← Back to page</button>
+          </div>
+          <div class="spatial-modal-content">
+            <img data-spatial-modal-image alt="">
+            <iframe data-spatial-modal-frame title="Expanded ContextWeaver spatial view" sandbox="allow-scripts allow-same-origin"></iframe>
+          </div>
+        </div>
+      </dialog>
+
+
     <footer class="site-footer">
       <div class="container footer-grid">
         <div>
           <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed solution operating platform</span></span></a>
           <p style="margin-top:16px">Turn approved intent into user-facing Solutions assembled from governed Services, Workflows, Agents, MCP capabilities, knowledge, models, policy, and portable infrastructure—with evidence attached.</p>
         </div>
-        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
+        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Studio and creation contexts</a><a href="runtime.html">Dynamic runtime</a></div></div>
         <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>
         <div><h3>Company</h3><div class="footer-links"><a href="company.html#about">About BrainzBytes</a><a href="company.html#about">Founder</a><a href="company.html#company-paths">Careers · planned</a></div></div>
       </div>
@@ -175,6 +255,6 @@
       </div>
     </footer>
 
-      <script src="assets/js/site.js?v=20261101-13"></script>
+      <script src="assets/js/site.js?v=20261101-17"></script>
     </body>
     </html>

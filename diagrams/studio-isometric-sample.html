@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ContextWeaver Studio Isometric Sample</title>
+<style>
+:root {
+  --bg: #030806;
+  --panel: #07140e;
+  --glass: rgba(20, 79, 50, .42);
+  --glass-strong: rgba(17, 67, 43, .92);
+  --line: rgba(124, 233, 169, .72);
+  --lime: #86f2a7;
+  --lime-bright: #c1ff79;
+  --text: #f4f8f2;
+  --muted: #9bb1a4;
+  --amber: #ffc76a;
+}
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 62% 42%, rgba(73, 179, 104, .16), transparent 32%),
+    linear-gradient(rgba(57, 92, 72, .11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 92, 72, .11) 1px, transparent 1px),
+    var(--bg);
+  background-size: auto, 52px 52px, 52px 52px, auto;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.shell {
+  width: min(1480px, calc(100% - 32px));
+  margin: 16px auto;
+  overflow: hidden;
+  border: 1px solid rgba(112, 230, 177, .28);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(7, 22, 14, .94), rgba(2, 8, 5, .98));
+  box-shadow: 0 40px 120px rgba(0, 0, 0, .68);
+}
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  min-height: 106px;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(112, 230, 177, .2);
+}
+.eyebrow {
+  color: var(--lime);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+h1 {
+  margin: 5px 0 3px;
+  font-size: clamp(24px, 3vw, 42px);
+  line-height: 1;
+  letter-spacing: -.035em;
+}
+.caption {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.controls { display: flex; flex-wrap: wrap; gap: 8px; }
+button {
+  min-height: 42px;
+  padding: 0 15px;
+  border: 1px solid rgba(112, 230, 177, .3);
+  border-radius: 9px;
+  color: var(--text);
+  background: #0a1b12;
+  cursor: pointer;
+  font: 800 11px Inter, ui-sans-serif, system-ui, sans-serif;
+}
+button:hover { border-color: var(--lime); }
+button:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+button.primary { color: #031007; background: var(--lime); }
+.stage {
+  position: relative;
+  height: calc(100vh - 155px);
+  min-height: 620px;
+  max-height: 720px;
+  overflow: hidden;
+  perspective: 1380px;
+  perspective-origin: 52% 42%;
+}
+.world {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: 980px;
+  height: 540px;
+  transform-style: preserve-3d;
+  transform: translate(-50%, -50%) scale(1.1) rotateX(58deg) rotateZ(-31deg);
+}
+.base,
+.base-bottom {
+  position: absolute;
+  left: 100px;
+  top: 110px;
+  width: 780px;
+  height: 360px;
+  border-radius: 38px;
+}
+.base-bottom {
+  transform: translateZ(-54px);
+  border: 2px solid rgba(124, 233, 169, .28);
+  background: linear-gradient(145deg, #07140e, #020704);
+  box-shadow: 0 58px 100px rgba(0, 0, 0, .78);
+}
+.base {
+  transform: translateZ(0);
+  border: 2px solid rgba(144, 255, 177, .68);
+  background:
+    linear-gradient(rgba(112, 230, 177, .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(112, 230, 177, .06) 1px, transparent 1px),
+    linear-gradient(140deg, rgba(33, 109, 68, .72), rgba(5, 25, 15, .82) 52%, rgba(3, 10, 6, .95));
+  background-size: 48px 48px, 48px 48px, auto;
+  box-shadow:
+    inset 0 0 42px rgba(92, 255, 139, .14),
+    0 0 22px rgba(85, 255, 144, .18);
+}
+.front-depth {
+  position: absolute;
+  left: 140px;
+  top: 438px;
+  width: 700px;
+  height: 55px;
+  transform-origin: top center;
+  transform: rotateX(-90deg) translateZ(-1px);
+  border: 1px solid rgba(112, 230, 177, .34);
+  border-radius: 0 0 24px 24px;
+  background: linear-gradient(180deg, rgba(14, 44, 29, .98), rgba(2, 8, 5, .98));
+  box-shadow: inset 0 -12px 20px rgba(0, 0, 0, .55);
+}
+.rail {
+  position: absolute;
+  border: 1px solid rgba(194, 255, 217, .35);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(198, 255, 219, .09), rgba(17, 72, 43, .05));
+  box-shadow: inset 0 0 24px rgba(177, 255, 205, .05);
+  backdrop-filter: blur(3px);
+}
+.rail-left {
+  left: 106px;
+  top: 166px;
+  width: 218px;
+  height: 128px;
+  transform-origin: bottom center;
+  transform: rotateX(-90deg) translateZ(2px);
+}
+.rail-right {
+  left: 744px;
+  top: 174px;
+  width: 134px;
+  height: 120px;
+  transform-origin: bottom center;
+  transform: rotateX(-90deg) translateZ(2px);
+}
+.backplate {
+  position: absolute;
+  left: 144px;
+  top: 112px;
+  width: 694px;
+  height: 218px;
+  transform-origin: bottom center;
+  transform: rotateX(-90deg) translateZ(4px);
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(142, 255, 177, .72);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(129, 255, 158, .18), transparent 45%),
+    linear-gradient(145deg, rgba(16, 74, 44, .96), rgba(3, 20, 11, .98));
+  box-shadow:
+    inset 0 1px 0 rgba(221, 255, 231, .25),
+    inset 0 -35px 60px rgba(0, 0, 0, .28),
+    0 20px 50px rgba(0, 0, 0, .54),
+    0 0 28px rgba(87, 255, 137, .16);
+}
+.backplate::before {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  border: 1px solid rgba(190, 255, 210, .12);
+  border-radius: 17px;
+}
+.backplate strong {
+  transform: translateY(-52px);
+  color: #f7fff8;
+  font-size: 50px;
+  letter-spacing: .18em;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, .8);
+}
+.backplate span {
+  position: absolute;
+  top: 82px;
+  color: rgba(199, 255, 216, .68);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.modules {
+  position: absolute;
+  left: 128px;
+  top: 292px;
+  display: flex;
+  gap: 18px;
+  transform-style: preserve-3d;
+}
+.module {
+  position: relative;
+  width: 128px;
+  height: 148px;
+  transform-origin: bottom center;
+  transform: rotateX(-90deg) translateZ(15px);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 12px;
+  border: 2px solid rgba(135, 235, 171, .58);
+  border-radius: 19px;
+  color: var(--text);
+  background:
+    linear-gradient(145deg, rgba(22, 79, 51, .98), rgba(5, 26, 15, .99));
+  box-shadow:
+    inset 0 1px 0 rgba(219, 255, 229, .23),
+    inset -18px -22px 38px rgba(0, 0, 0, .24),
+    0 20px 35px rgba(0, 0, 0, .52);
+  transition: border-color .35s, box-shadow .35s, filter .35s;
+}
+.module::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  top: 10px;
+  height: 1px;
+  background: rgba(215, 255, 227, .5);
+}
+.module .icon {
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  border: 1px solid rgba(149, 255, 183, .38);
+  border-radius: 13px;
+  color: var(--lime);
+  font-size: 23px;
+  font-weight: 900;
+  background: rgba(2, 13, 7, .42);
+}
+.module b { font-size: 14px; letter-spacing: .01em; }
+.module small { color: var(--muted); font-size: 9px; }
+.module.active {
+  border-color: var(--lime-bright);
+  filter: brightness(1.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .34),
+    inset -18px -22px 38px rgba(0, 0, 0, .2),
+    0 0 34px rgba(155, 255, 102, .64),
+    0 22px 38px rgba(0, 0, 0, .58);
+}
+.module.complete { border-color: var(--lime); }
+.flow-line {
+  position: absolute;
+  left: 183px;
+  top: 451px;
+  width: 576px;
+  height: 4px;
+  transform: translateZ(7px);
+  border-radius: 999px;
+  background: rgba(75, 135, 93, .36);
+}
+.flow-line::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: var(--progress, 0%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--lime), var(--lime-bright));
+  box-shadow: 0 0 15px rgba(181, 255, 104, .75);
+  transition: width .7s ease;
+}
+.packet {
+  position: absolute;
+  left: 175px;
+  top: 443px;
+  width: 20px;
+  height: 20px;
+  transform: translateZ(13px);
+  border: 3px solid #eaffc8;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 20px var(--lime);
+  transition: left .7s ease;
+}
+.stage-note {
+  position: absolute;
+  left: 24px;
+  bottom: 22px;
+  max-width: 430px;
+  padding: 14px 16px;
+  border: 1px solid rgba(112, 230, 177, .22);
+  border-radius: 14px;
+  background: rgba(4, 13, 8, .84);
+  backdrop-filter: blur(14px);
+}
+.stage-note b { display: block; margin-bottom: 3px; color: var(--lime); }
+.stage-note span { color: var(--muted); font-size: 12px; }
+@media (min-width: 981px) and (max-height: 850px) {
+  .stage { min-height: 540px; }
+  .world { top: 42%; transform: translate(-50%, -50%) scale(.88) rotateX(58deg) rotateZ(-31deg); }
+}
+@media (max-width: 980px) {
+  .toolbar { grid-template-columns: 1fr; }
+  .controls { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .stage { height: auto; min-height: 570px; }
+  .world { transform: translate(-50%, -52%) scale(.7) rotateX(58deg) rotateZ(-31deg); }
+}
+@media (max-width: 620px) {
+  .shell { width: 100%; margin: 0; border-radius: 0; }
+  .toolbar { padding: 16px 14px; }
+  .controls { grid-template-columns: repeat(2, 1fr); }
+  .stage { min-height: 430px; }
+  .world { transform: translate(-50%, -57%) scale(.47) rotateX(58deg) rotateZ(-31deg); }
+  .stage-note { left: 12px; right: 12px; bottom: 12px; max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="toolbar">
+    <div>
+      <div class="eyebrow">3D visual language sample</div>
+      <h1>Studio composition</h1>
+      <p class="caption" id="caption">Five purpose-built contexts progress from governed capability to complete user experience.</p>
+    </div>
+    <div class="controls">
+      <button id="previous">Previous</button>
+      <button class="primary" id="play">Pause</button>
+      <button id="next">Next</button>
+      <button id="audio" aria-pressed="false">Audio</button>
+      <button id="reset">Reset</button>
+    </div>
+  </header>
+  <section class="stage" aria-label="Isometric Studio module sample">
+    <div class="world">
+      <div class="base-bottom"></div>
+      <div class="front-depth"></div>
+      <div class="base"></div>
+      <div class="rail rail-left"></div>
+      <div class="rail rail-right"></div>
+      <div class="backplate"><strong>STUDIO</strong><span>Governed creation contexts</span></div>
+      <div class="modules">
+        <article class="module" data-index="0"><span class="icon">&lt;/&gt;</span><b>MCP</b><small>Capabilities</small></article>
+        <article class="module" data-index="1"><span class="icon">A</span><b>Agent</b><small>Reasoning</small></article>
+        <article class="module" data-index="2"><span class="icon">W</span><b>Workflow</b><small>Coordination</small></article>
+        <article class="module" data-index="3"><span class="icon">S</span><b>Service</b><small>Contract</small></article>
+        <article class="module" data-index="4"><span class="icon">◆</span><b>Solution</b><small>Experience</small></article>
+      </div>
+      <div class="flow-line" id="flow"></div>
+      <div class="packet" id="packet"></div>
+    </div>
+    <div class="stage-note"><b id="stage-title">MCP capability</b><span id="stage-copy">Start with governed tools, resources, prompts, schemas, and adapters.</span></div>
+  </section>
+</main>
+<script>
+const steps = [
+  ["MCP capability", "Start with governed tools, resources, prompts, schemas, and adapters."],
+  ["Bounded Agent", "Add reasoning with an explicit goal, model envelope, budget, and tool allow-list."],
+  ["Durable Workflow", "Coordinate typed stages, approvals, waits, retries, and compensation."],
+  ["Reusable Service", "Publish a stable executable contract with ownership, SLOs, and evidence."],
+  ["Complete Solution", "Compose the final user-facing experience from approved reusable Services."]
+];
+const modules = [...document.querySelectorAll(".module")];
+const packet = document.getElementById("packet");
+const flow = document.getElementById("flow");
+const playButton = document.getElementById("play");
+const audioButton = document.getElementById("audio");
+let current = 0;
+let playing = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+let audio = false;
+let timer;
+function narrate(text) {
+  if (!audio || !("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = .93;
+  speechSynthesis.speak(utterance);
+}
+function render(announce = false) {
+  modules.forEach((module, index) => {
+    module.classList.toggle("active", index === current);
+    module.classList.toggle("complete", index < current);
+  });
+  packet.style.left = `${175 + current * 146}px`;
+  flow.style.setProperty("--progress", `${current * 25}%`);
+  document.getElementById("stage-title").textContent = steps[current][0];
+  document.getElementById("stage-copy").textContent = steps[current][1];
+  document.getElementById("caption").textContent = `${current + 1} of ${steps.length} · ${steps[current][1]}`;
+  if (announce) narrate(`${steps[current][0]}. ${steps[current][1]}`);
+}
+function restart() {
+  clearInterval(timer);
+  if (playing) timer = setInterval(() => {
+    current = (current + 1) % steps.length;
+    render(true);
+  }, 4200);
+}
+document.getElementById("previous").onclick = () => { current = (current + steps.length - 1) % steps.length; render(true); restart(); };
+document.getElementById("next").onclick = () => { current = (current + 1) % steps.length; render(true); restart(); };
+document.getElementById("reset").onclick = () => { current = 0; render(true); restart(); };
+playButton.onclick = () => { playing = !playing; playButton.textContent = playing ? "Pause" : "Play"; restart(); };
+audioButton.onclick = () => { audio = !audio; audioButton.setAttribute("aria-pressed", String(audio)); audioButton.textContent = audio ? "Audio on" : "Audio"; if (audio) narrate(`${steps[current][0]}. ${steps[current][1]}`); };
+render();
+restart();
+</script>
+</body>
+</html>

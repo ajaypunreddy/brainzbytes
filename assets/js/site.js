@@ -117,6 +117,20 @@
     frame.style.minHeight = "0";
   });
 
+  const storyLaunch = document.querySelector("[data-story-launch]");
+  storyLaunch?.addEventListener("click", () => {
+    const source = storyLaunch.dataset.storySrc;
+    if (!source) return;
+    const frame = document.createElement("iframe");
+    frame.className = "landing-cinematic-frame";
+    frame.title = "Interactive ContextWeaver intent-to-evidence product story";
+    frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-popups");
+    frame.setAttribute("allow", "autoplay");
+    storyLaunch.replaceWith(frame);
+    frame.src = source;
+    frame.focus();
+  }, { once: true });
+
   const experienceDialog = document.querySelector("[data-experience-modal]");
   const experienceFrame = experienceDialog?.querySelector("[data-experience-frame]");
   let experienceTrigger = null;
@@ -150,6 +164,55 @@
   experienceFrame?.addEventListener("load", () => {
     experienceFrame.contentWindow?.addEventListener("keydown", (event) => {
       if (event.key === "Escape") closeExperience();
+    });
+  });
+
+  const spatialDialog = document.querySelector("[data-spatial-modal]");
+  const spatialDialogTitle = spatialDialog?.querySelector("[data-spatial-modal-title]");
+  const spatialDialogImage = spatialDialog?.querySelector("[data-spatial-modal-image]");
+  const spatialDialogFrame = spatialDialog?.querySelector("[data-spatial-modal-frame]");
+  let spatialTrigger = null;
+
+  const closeSpatialView = () => {
+    if (!spatialDialog?.open) return;
+    spatialDialog.close();
+  };
+
+  document.querySelectorAll("[data-spatial-open]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      if (!spatialDialog?.showModal) return;
+      spatialTrigger = trigger;
+      const mode = trigger.dataset.spatialType === "iframe" ? "iframe" : "image";
+      const title = trigger.dataset.spatialTitle || "ContextWeaver spatial view";
+      const source = trigger.dataset.spatialSrc || "";
+      spatialDialog.dataset.spatialMode = mode;
+      if (spatialDialogTitle) spatialDialogTitle.textContent = title;
+      if (mode === "image" && spatialDialogImage) {
+        spatialDialogImage.src = source;
+        spatialDialogImage.alt = trigger.querySelector("img")?.alt || title;
+      }
+      if (mode === "iframe" && spatialDialogFrame) {
+        spatialDialogFrame.src = source;
+        spatialDialogFrame.title = `Expanded ${title}`;
+      }
+      spatialDialog.showModal();
+      document.body.classList.add("spatial-modal-open");
+    });
+  });
+
+  spatialDialog?.querySelector("[data-spatial-close]")?.addEventListener("click", closeSpatialView);
+  spatialDialog?.addEventListener("click", (event) => {
+    if (event.target === spatialDialog) closeSpatialView();
+  });
+  spatialDialog?.addEventListener("close", () => {
+    document.body.classList.remove("spatial-modal-open");
+    if (spatialDialogFrame) spatialDialogFrame.src = "";
+    if (spatialDialogImage) spatialDialogImage.removeAttribute("src");
+    spatialTrigger?.focus();
+  });
+  spatialDialogFrame?.addEventListener("load", () => {
+    spatialDialogFrame.contentWindow?.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeSpatialView();
     });
   });
 

@@ -7,7 +7,7 @@
       <meta name="theme-color" content="#07110f">
       <title>ContextWeaver Studio — MCPs, Agents, Workflows, Services, and Solutions</title>
       <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-      <link rel="stylesheet" href="assets/css/site.css?v=20261101-13">
+      <link rel="stylesheet" href="assets/css/site.css?v=20261101-18">
     </head>
     <body data-page="studio">
 
@@ -35,11 +35,19 @@
     <p class="lede">MCPs, Agents, Workflows, Services, and Solutions now share one tabbed workspace. A guided GUI supports non-programmers while typed drafts, schemas, dependency graphs, code, and review remain available to engineers.</p>
     <div class="hero-actions"><a class="button primary" href="#create">See the creation flow</a><a class="button" href="architecture.html#capability-lifecycle">See lifecycle architecture</a></div>
   </div>
-  <div class="grid" style="align-self:center">
-    <article class="card mint"><div class="meta">GUI</div><h3>Guided creation</h3><p>Describe the outcome, select sources and tools, review generated contracts, simulate, and submit through governance.</p></article>
-    <article class="card sky"><div class="meta">Developer</div><h3>VS Code, CLI, SDK</h3><p>Author portable specs, schemas, tests, tool implementations, deployment overlays, and evaluation fixtures.</p></article>
-    <article class="card violet"><div class="meta">Research</div><h3>Jupyter workspaces</h3><p>Explore approved data and models, validate retrieval, experiment with scoring, and convert work into governed assets.</p></article>
-  </div>
+
+    <figure class="spatial-visual" data-reveal>
+      <button class="spatial-visual-stage spatial-visual-trigger" type="button" data-spatial-open data-spatial-type="image" data-spatial-src="assets/media/spatial/layered-governed-architecture.png" data-spatial-title="Experience, control, runtime, and infrastructure stay distinct" aria-label="Open large view: Experience, control, runtime, and infrastructure stay distinct">
+        <img src="assets/media/spatial/layered-governed-architecture.png" alt="Layered isometric ContextWeaver architecture separating experience, Cerebro governance, Weave runtime, and Loom infrastructure planes." loading="lazy">
+        <span class="spatial-visual-expand" aria-hidden="true">Expand ↗</span>
+      </button>
+      <figcaption>
+        <span>Layered governed architecture</span>
+        <strong>Experience, control, runtime, and infrastructure stay distinct</strong>
+        <p>Requests move down through explicit trust boundaries; evidence and operational proof return through the same governed system.</p>
+      </figcaption>
+    </figure>
+
 </section>
 
 <section class="container section compact">
@@ -53,9 +61,6 @@
     <div class="diagram-shell" data-reveal>
       <div class="diagram-toolbar">
         <strong>Agent and MCP Capability Lifecycle</strong>
-        <a href="diagrams/capability-lifecycle.html" target="_blank" rel="noopener">Open full screen ↗</a>
-        <a href="diagrams/capability-lifecycle.svg">Static SVG</a>
-        <a href="diagrams/capability-lifecycle.gif">Animated GIF</a>
       </div>
       <iframe class="diagram-frame" src="diagrams/capability-lifecycle.html" title="Agent and MCP Capability Lifecycle" loading="lazy"></iframe>
     </div>
@@ -107,13 +112,27 @@
 
       </main>
 
+      <dialog class="spatial-modal" data-spatial-modal aria-label="Expanded spatial view">
+        <div class="spatial-modal-frame">
+          <div class="spatial-modal-bar">
+            <strong data-spatial-modal-title>ContextWeaver spatial view</strong>
+            <button class="spatial-modal-close" type="button" data-spatial-close aria-label="Close expanded spatial view">← Back to page</button>
+          </div>
+          <div class="spatial-modal-content">
+            <img data-spatial-modal-image alt="">
+            <iframe data-spatial-modal-frame title="Expanded ContextWeaver spatial view" sandbox="allow-scripts allow-same-origin"></iframe>
+          </div>
+        </div>
+      </dialog>
+
+
     <footer class="site-footer">
       <div class="container footer-grid">
         <div>
           <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>ContextWeaver</strong><span>Governed solution operating platform</span></span></a>
           <p style="margin-top:16px">Turn approved intent into user-facing Solutions assembled from governed Services, Workflows, Agents, MCP capabilities, knowledge, models, policy, and portable infrastructure—with evidence attached.</p>
         </div>
-        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Agent/MCP Studio</a><a href="runtime.html">Dynamic runtime</a></div></div>
+        <div><h3>Explore</h3><div class="footer-links"><a href="platform.html">Platform model</a><a href="studio.html">Studio and creation contexts</a><a href="runtime.html">Dynamic runtime</a></div></div>
         <div><h3>Trust</h3><div class="footer-links"><a href="governance.html">Governance</a><a href="architecture.html">Architecture</a><a href="library.html">Technical library</a></div></div>
         <div><h3>Company</h3><div class="footer-links"><a href="company.html#about">About BrainzBytes</a><a href="company.html#about">Founder</a><a href="company.html#company-paths">Careers · planned</a></div></div>
       </div>
@@ -123,6 +142,6 @@
       </div>
     </footer>
 
-      <script src="assets/js/site.js?v=20261101-13"></script>
+      <script src="assets/js/site.js?v=20261101-17"></script>
     </body>
     </html>
