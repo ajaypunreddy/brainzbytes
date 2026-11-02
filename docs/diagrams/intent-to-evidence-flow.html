@@ -1,54 +1,36 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Intent to Governed Evidence | BrainzBytes</title>
-  <style>
-    :root{color-scheme:dark;--bg:#071019;--panel:#0d1822;--text:#f8fafc;--muted:#9fb0bd;--aqua:#6ee7cf;--blue:#58a6ff;--amber:#fbbf24;--violet:#bc8cff}
-    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 12% 5%,rgba(88,166,255,.15),transparent 30%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,sans-serif}
-    main{width:min(1240px,calc(100% - 24px));margin:24px auto}.head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:16px}.head h1{margin:0;font-size:clamp(1.5rem,3vw,2.4rem)}.head p{margin:.4rem 0 0;color:var(--muted)}.controls{display:flex;flex-wrap:wrap;gap:7px}.controls button{padding:8px 12px;border:1px solid #2c4252;border-radius:9px;color:var(--text);background:#13212d;cursor:pointer}.controls button:hover{border-color:var(--aqua)}
-    .stage{overflow:auto;border:1px solid #263846;border-radius:22px;background:linear-gradient(145deg,#0f1d28,#09121a);box-shadow:0 30px 90px rgba(0,0,0,.35)}svg{display:block;min-width:1040px;width:100%;height:auto}.node{transition:opacity .25s,filter .25s,transform .25s;transform-box:fill-box;transform-origin:center}.node:not(.active){opacity:.42}.node.active{filter:drop-shadow(0 0 12px rgba(110,231,207,.8));transform:translateY(-4px)}.edge{opacity:.2}.edge.active{opacity:1;stroke-dasharray:10 8;animation:flow 1s linear infinite}.caption{margin-top:12px;padding:15px 18px;border:1px solid #243847;border-radius:14px;color:#dce8ef;background:rgba(13,24,34,.92)}.caption b{color:var(--aqua)}
-    @keyframes flow{to{stroke-dashoffset:-18}}@media(prefers-reduced-motion:reduce){.node{transition:none}.edge.active{animation:none}}@media(max-width:700px){.head{align-items:flex-start;flex-direction:column}}
-  </style>
-</head>
-<body>
-<main>
-  <div class="head"><div><h1>Intent to governed evidence</h1><p>See how ContextWeaver turns one request into authorized, durable, verifiable work.</p></div><div class="controls"><button id="prev">Previous</button><button id="play">Pause</button><button id="next">Next</button><button id="reset">Reset</button></div></div>
-  <div class="stage">
-    <svg viewBox="0 0 1200 390" role="img" aria-labelledby="diagramTitle diagramDesc">
-      <title id="diagramTitle">ContextWeaver animated request flow</title><desc id="diagramDesc">Seven stages from intent through service resolution, authorization, durable commit, execution, verification, and delivery.</desc>
-      <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L9 3L0 6Z" fill="#6ee7cf"/></marker><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08131c"/><stop offset="1" stop-color="#111827"/></linearGradient></defs>
-      <rect width="1200" height="390" rx="24" fill="url(#b)"/>
-      <text x="48" y="55" fill="#f8fafc" font-size="26" font-weight="800">Intent to governed evidence</text><text x="48" y="82" fill="#94a3b8" font-size="13">The active stage and connector explain what the platform is doing now.</text>
-      <g fill="none" stroke="#6ee7cf" stroke-width="4" marker-end="url(#arr)"><path class="edge" data-edge="1" d="M184 188H213"/><path class="edge" data-edge="2" d="M349 188H378"/><path class="edge" data-edge="3" d="M514 188H543"/><path class="edge" data-edge="4" d="M679 188H708"/><path class="edge" data-edge="5" d="M844 188H873"/><path class="edge" data-edge="6" d="M1009 188H1038"/></g>
-      <g text-anchor="middle" font-family="Inter,Segoe UI,sans-serif">
-        <g class="node active" data-node="0"><rect x="48" y="132" width="136" height="112" rx="16" fill="#102a43" stroke="#58a6ff"/><text x="116" y="172" fill="#7dd3fc" font-size="12" font-weight="800">1 · INTENT</text><text x="116" y="202" fill="#fff" font-size="15" font-weight="700">User or API</text><text x="116" y="224" fill="#94a3b8" font-size="11">Request + purpose</text></g>
-        <g class="node" data-node="1"><rect x="213" y="132" width="136" height="112" rx="16" fill="#10291f" stroke="#34d399"/><text x="281" y="172" fill="#6ee7cf" font-size="12" font-weight="800">2 · RESOLVE</text><text x="281" y="202" fill="#fff" font-size="15" font-weight="700">Service</text><text x="281" y="224" fill="#94a3b8" font-size="11">Workflow version</text></g>
-        <g class="node" data-node="2"><rect x="378" y="132" width="136" height="112" rx="16" fill="#302510" stroke="#fbbf24"/><text x="446" y="172" fill="#fde68a" font-size="12" font-weight="800">3 · AUTHORIZE</text><text x="446" y="202" fill="#fff" font-size="15" font-weight="700">Whole graph</text><text x="446" y="224" fill="#94a3b8" font-size="11">Identity + policy</text></g>
-        <g class="node" data-node="3"><rect x="543" y="132" width="136" height="112" rx="16" fill="#261b38" stroke="#bc8cff"/><text x="611" y="172" fill="#c4b5fd" font-size="12" font-weight="800">4 · COMMIT</text><text x="611" y="202" fill="#fff" font-size="15" font-weight="700">Durable truth</text><text x="611" y="224" fill="#94a3b8" font-size="11">Plan + outbox</text></g>
-        <g class="node" data-node="4"><rect x="708" y="132" width="136" height="112" rx="16" fill="#102a43" stroke="#58a6ff"/><text x="776" y="172" fill="#7dd3fc" font-size="12" font-weight="800">5 · EXECUTE</text><text x="776" y="202" fill="#fff" font-size="15" font-weight="700">Workers</text><text x="776" y="224" fill="#94a3b8" font-size="11">Agent + MCP + RAG</text></g>
-        <g class="node" data-node="5"><rect x="873" y="132" width="136" height="112" rx="16" fill="#302510" stroke="#fbbf24"/><text x="941" y="172" fill="#fde68a" font-size="12" font-weight="800">6 · VERIFY</text><text x="941" y="202" fill="#fff" font-size="15" font-weight="700">Approval</text><text x="941" y="224" fill="#94a3b8" font-size="11">Contracts + receipts</text></g>
-        <g class="node" data-node="6"><rect x="1038" y="132" width="114" height="112" rx="16" fill="#10291f" stroke="#34d399"/><text x="1095" y="172" fill="#6ee7cf" font-size="12" font-weight="800">7 · DELIVER</text><text x="1095" y="202" fill="#fff" font-size="15" font-weight="700">Result</text><text x="1095" y="224" fill="#94a3b8" font-size="11">Evidence + replay</text></g>
-      </g>
-      <rect x="190" y="302" width="820" height="50" rx="14" fill="#0d1c27" stroke="#6ee7cf" stroke-dasharray="6 5"/><text x="600" y="333" fill="#c7f9ec" text-anchor="middle" font-size="13" font-weight="700">Policy · identity · durable state · audit · telemetry</text>
-    </svg>
-  </div>
-  <div class="caption" id="caption" aria-live="polite"></div>
-</main>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#030A06">
+<title>Intent to governed evidence | BrainzBytes</title>
+<style>
+:root{--bg:#030A06;--panel:#07110C;--surface:#0C1A12;--line:#1F5A35;--muted:#9AAF9E;--ink:#F4FFF5;--lime:#A8FF3E}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{display:grid;place-items:center;padding:18px;background:radial-gradient(circle at 12% 0,#17331f 0,transparent 32%),var(--bg)}button{font:inherit}
+.player{width:min(1320px,100%);border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--panel);box-shadow:0 24px 80px #0009}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 17px;border-bottom:1px solid var(--line)}.topbar strong{font-size:13px}.topbar span{color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.canvas{position:relative;aspect-ratio:8/5;background:#020704;overflow:hidden}.canvas>img{display:block;width:100%;height:100%;object-fit:contain}
+.overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.focus{fill:#a8ff3e12;stroke:var(--lime);stroke-width:5;vector-effect:non-scaling-stroke;filter:url(#glow)}.route{fill:none;stroke:var(--lime);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;stroke-dasharray:14 11;filter:url(#glow);animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-50}}.caption{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;min-height:108px;padding:16px 18px;border-top:1px solid var(--line);background:linear-gradient(135deg,var(--surface),var(--panel))}.caption-label{margin:0 0 5px;color:var(--lime);font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}.caption h1{margin:0;font-size:clamp(17px,2vw,25px)}.caption p:last-child{margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.45}
+.audio-gate{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(#050b0812,#050b08b8)}.audio-gate[hidden]{display:none}.audio-gate button{display:grid;gap:4px;min-width:210px;padding:14px 18px;border:1px solid var(--lime);border-radius:12px;background:#102c1d;color:var(--ink);font-weight:850;cursor:pointer}.audio-gate small{color:#b8cabd;font-size:10px}
+.controls{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}.controls button{min-height:35px;padding:0 11px;border:1px solid #315b3b;border-radius:8px;background:#0c1810;color:#d4e4d7;font-size:10px;font-weight:800;cursor:pointer}.controls button:hover,.controls button:focus-visible{border-color:var(--lime);color:var(--ink);outline:none}.controls .primary{border-color:var(--lime);background:var(--lime);color:#061008}
+.progress{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 18px 14px}.progress button{height:4px;padding:0;border:0;border-radius:99px;background:#244a2d;cursor:pointer}.progress button.active{background:var(--lime);box-shadow:0 0 12px #a8ff3e88}
+body.embedded{padding:0}body.embedded .player{width:100%;border:0;border-radius:0;box-shadow:none}body.popout{padding:24px}
+@media(max-width:760px){.caption{grid-template-columns:1fr}.controls{justify-content:flex-start}.controls button{flex:1 1 auto}.topbar span{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style></head><body>
+<main class="player" aria-label="Intent to governed evidence">
+<header class="topbar"><strong>Intent to governed evidence</strong><span id="stageCount">01 / 07</span></header>
+<section class="canvas"><img src="intent-to-evidence-flow.svg" alt="Seven governed stages arranged across three receding architectural planes."><svg class="overlay" viewBox="0 0 1600 1000" aria-hidden="true"><defs><filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g id="focusLayer"></g><g id="routeLayer"></g></svg></section>
+<section class="caption" aria-live="polite"><div><p class="caption-label" id="stageLabel"></p><h1 id="stageTitle"></h1><p id="stageCaption"></p></div><div class="controls"><button id="previous">Previous</button><button id="playPause" class="primary">Pause</button><button id="next">Next</button><button id="reset">Reset</button><button id="popout">Pop out</button></div></section>
+<nav class="progress" id="progress" aria-label="Animation stages"></nav></main>
 <script>
-const stages=[
-["Intent enters","A user or API submits an authenticated request with purpose, tenant context, and an idempotency key."],
-["Resolve the contract","Intent selects a published Service and the exact immutable Workflow version that can satisfy it."],
-["Authorize the whole graph","Identity, entitlements, Agents, MCP tools, models, data, budgets, and fallbacks are checked before admission."],
-["Commit durable truth","The run, immutable plan, initial task, and outbox event commit together before the request returns 202 Accepted."],
-["Execute bounded work","Durable queues dispatch leased attempts to Agent, MCP, RAG, approval, and transformation workers."],
-["Verify before release","Contracts, citations, human decisions, policy receipts, and side effects are checked before finalization."],
-["Deliver evidence","The canonical result, evidence, receipts, metrics, logs, traces, and replayable events remain available for review."]
-];let current=0,playing=true,timer;const nodes=[...document.querySelectorAll(".node")],edges=[...document.querySelectorAll(".edge")],caption=document.querySelector("#caption"),play=document.querySelector("#play");
-function show(index){current=(index+stages.length)%stages.length;nodes.forEach((n,i)=>n.classList.toggle("active",i===current));edges.forEach((e,i)=>e.classList.toggle("active",i===current-1));caption.innerHTML="<b>"+(current+1)+". "+stages[current][0]+"</b> — "+stages[current][1]}
-function schedule(){clearInterval(timer);if(playing)timer=setInterval(()=>show(current+1),2600)}
-document.querySelector("#prev").onclick=()=>{show(current-1);schedule()};document.querySelector("#next").onclick=()=>{show(current+1);schedule()};document.querySelector("#reset").onclick=()=>{show(0);schedule()};play.onclick=()=>{playing=!playing;play.textContent=playing?"Pause":"Play";schedule()};show(0);schedule();
-</script>
-</body>
-</html>
+const stages=[{"label":"Intent enters","title":"An authenticated request states purpose and constraints.","caption":"Tenant context and an idempotency key establish the governed run boundary.","box":[177,223,266,155],"route":[]},{"label":"Resolve","title":"Intent selects an immutable service contract.","caption":"The platform resolves the published Service and exact Workflow version.","box":[487,256,266,155],"route":[[415,301],[495,315]]},{"label":"Authorize","title":"The complete execution graph is authorized.","caption":"Identity, tools, models, data, budgets, and fallback paths are checked before admission.","box":[797,289,266,155],"route":[[725,334],[805,348]]},{"label":"Commit","title":"Durable truth is committed before work begins.","caption":"The run, immutable plan, first task, and outbox event commit together.","box":[307,488,296,155],"route":[[920,423],[920,465],[445,465],[445,510]]},{"label":"Execute","title":"Bounded workers execute durable attempts.","caption":"Agents, MCP tools, RAG, approvals, and transformations run through leased work.","box":[677,528,296,155],"route":[[575,566],[685,590]]},{"label":"Verify","title":"Contracts and human decisions gate release.","caption":"Citations, receipts, approvals, policy outcomes, and side effects are verified.","box":[432,738,306,155],"route":[[815,662],[815,715],[575,715],[575,760]]},{"label":"Deliver","title":"The canonical result remains reviewable and replayable.","caption":"Evidence, metrics, logs, traces, receipts, and replayable events close the loop.","box":[842,783,306,155],"route":[[710,816],[850,850]]}];const params=new URLSearchParams(location.search),embedded=params.get("embedded")==="1",popout=params.get("popout")==="1";document.body.classList.toggle("embedded",embedded);document.body.classList.toggle("popout",popout);
+const byId=id=>document.getElementById(id),focusLayer=byId("focusLayer"),routeLayer=byId("routeLayer"),progress=byId("progress");let index=0,playing=true,timer=0;function speak(){}
+stages.forEach((s,i)=>{const b=document.createElement("button");b.type="button";b.ariaLabel=`Open stage ${i+1}: ${s.label}`;b.onclick=()=>{index=i;render()};progress.append(b)});
+function node(name,attrs){const n=document.createElementNS("http://www.w3.org/2000/svg",name);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,v));return n}
+function schedule(){clearTimeout(timer);if(playing)timer=setTimeout(()=>{index=(index+1)%stages.length;render()},4200)}
+function render(announce=false){const s=stages[index];focusLayer.replaceChildren();routeLayer.replaceChildren();const [x,y,w,h]=s.box;focusLayer.append(node("rect",{x,y,width:w,height:h,rx:20,class:"focus"}));if(s.route.length){const d="M"+s.route.map(p=>p.join(" ")).join(" L");routeLayer.append(node("path",{d,class:"route"}))}byId("stageLabel").textContent=`${String(index+1).padStart(2,"0")} · ${s.label}`;byId("stageTitle").textContent=s.title;byId("stageCaption").textContent=s.caption;byId("stageCount").textContent=`${String(index+1).padStart(2,"0")} / ${String(stages.length).padStart(2,"0")}`;[...progress.children].forEach((b,i)=>b.classList.toggle("active",i===index));byId("playPause").textContent=playing?"Pause":"Play";if(announce)speak(s);schedule()}
+byId("previous").onclick=()=>{index=(index-1+stages.length)%stages.length;render(true)};byId("next").onclick=()=>{index=(index+1)%stages.length;render(true)};byId("playPause").onclick=()=>{playing=!playing;render()};byId("reset").onclick=()=>{index=0;playing=false;render()};
+
+byId("popout").textContent=popout?"Back":"Pop out";byId("popout").onclick=()=>{if(popout){window.close();setTimeout(()=>{if(history.length>1)history.back();else location.href="intent-to-evidence-flow.html"},80)}else window.open("intent-to-evidence-flow.html?popout=1","contextweaver-animation","popup,width=1380,height=960,noopener")};
+addEventListener("keydown",e=>{if(["INPUT","TEXTAREA","BUTTON"].includes(document.activeElement?.tagName))return;if(e.key===" "){e.preventDefault();byId("playPause").click()}if(e.key==="ArrowLeft")byId("previous").click();if(e.key==="ArrowRight")byId("next").click();if(e.key==="Home")byId("reset").click();if(e.key==="Escape"&&popout)byId("popout").click()});render();
+</script></body></html>

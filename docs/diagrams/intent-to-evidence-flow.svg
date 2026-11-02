@@ -1,26 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="390" viewBox="0 0 1200 390" role="img" aria-labelledby="title desc">
-  <title id="title">ContextWeaver intent to governed evidence flow</title>
-  <desc id="desc">Seven stages connect user intent to a verified result with policy, identity, audit, telemetry, and durable state across every stage.</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08131c"/><stop offset="1" stop-color="#111827"/></linearGradient>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L9 3L0 6Z" fill="#6ee7cf"/></marker>
-    <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity=".28"/></filter>
-  </defs>
-  <rect width="1200" height="390" rx="24" fill="url(#bg)"/>
-  <text x="48" y="55" fill="#f8fafc" font-family="Inter,Segoe UI,sans-serif" font-size="26" font-weight="800">Intent to governed evidence</text>
-  <text x="48" y="82" fill="#94a3b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">A durable, authorized path from request to proof</text>
-  <g stroke="#6ee7cf" stroke-width="3" fill="none" marker-end="url(#arrow)" opacity=".85">
-    <path d="M184 188H213"/><path d="M349 188H378"/><path d="M514 188H543"/><path d="M679 188H708"/><path d="M844 188H873"/><path d="M1009 188H1038"/>
-  </g>
-  <g font-family="Inter,Segoe UI,sans-serif" text-anchor="middle" filter="url(#shadow)">
-    <g><rect x="48" y="132" width="136" height="112" rx="16" fill="#102a43" stroke="#58a6ff"/><text x="116" y="172" fill="#7dd3fc" font-size="12" font-weight="800">1 · INTENT</text><text x="116" y="202" fill="#f8fafc" font-size="15" font-weight="700">User or API</text><text x="116" y="224" fill="#94a3b8" font-size="11">Request + purpose</text></g>
-    <g><rect x="213" y="132" width="136" height="112" rx="16" fill="#10291f" stroke="#34d399"/><text x="281" y="172" fill="#6ee7cf" font-size="12" font-weight="800">2 · RESOLVE</text><text x="281" y="202" fill="#f8fafc" font-size="15" font-weight="700">Service</text><text x="281" y="224" fill="#94a3b8" font-size="11">Workflow version</text></g>
-    <g><rect x="378" y="132" width="136" height="112" rx="16" fill="#302510" stroke="#fbbf24"/><text x="446" y="172" fill="#fde68a" font-size="12" font-weight="800">3 · AUTHORIZE</text><text x="446" y="202" fill="#f8fafc" font-size="15" font-weight="700">Whole graph</text><text x="446" y="224" fill="#94a3b8" font-size="11">Identity + policy</text></g>
-    <g><rect x="543" y="132" width="136" height="112" rx="16" fill="#261b38" stroke="#bc8cff"/><text x="611" y="172" fill="#c4b5fd" font-size="12" font-weight="800">4 · COMMIT</text><text x="611" y="202" fill="#f8fafc" font-size="15" font-weight="700">Durable truth</text><text x="611" y="224" fill="#94a3b8" font-size="11">Plan + outbox</text></g>
-    <g><rect x="708" y="132" width="136" height="112" rx="16" fill="#102a43" stroke="#58a6ff"/><text x="776" y="172" fill="#7dd3fc" font-size="12" font-weight="800">5 · EXECUTE</text><text x="776" y="202" fill="#f8fafc" font-size="15" font-weight="700">Workers</text><text x="776" y="224" fill="#94a3b8" font-size="11">Agent + MCP + RAG</text></g>
-    <g><rect x="873" y="132" width="136" height="112" rx="16" fill="#302510" stroke="#fbbf24"/><text x="941" y="172" fill="#fde68a" font-size="12" font-weight="800">6 · VERIFY</text><text x="941" y="202" fill="#f8fafc" font-size="15" font-weight="700">Approval</text><text x="941" y="224" fill="#94a3b8" font-size="11">Contracts + receipts</text></g>
-    <g><rect x="1038" y="132" width="114" height="112" rx="16" fill="#10291f" stroke="#34d399"/><text x="1095" y="172" fill="#6ee7cf" font-size="12" font-weight="800">7 · DELIVER</text><text x="1095" y="202" fill="#f8fafc" font-size="15" font-weight="700">Result</text><text x="1095" y="224" fill="#94a3b8" font-size="11">Evidence + replay</text></g>
-  </g>
-  <rect x="190" y="302" width="820" height="50" rx="14" fill="#0d1c27" stroke="#6ee7cf" stroke-dasharray="6 5"/>
-  <text x="600" y="333" fill="#c7f9ec" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="13" font-weight="700">Policy · identity · durable state · audit · telemetry</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+<title id="title">Intent to governed evidence</title><desc id="desc">Seven governed stages arranged across three receding architectural planes.</desc>
+<defs>
+  <radialGradient id="bg" cx="18%" cy="4%" r="90%"><stop stop-color="#12351F"/><stop offset=".42" stop-color="#030A06"/><stop offset="1" stop-color="#010402"/></radialGradient>
+  <linearGradient id="plane" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0C2516"/><stop offset="1" stop-color="#041009"/></linearGradient>
+  <linearGradient id="front" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#10291A"/><stop offset="1" stop-color="#06120B"/></linearGradient>
+  <linearGradient id="amberFront" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#382B0D"/><stop offset="1" stop-color="#120D03"/></linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="shadow" x="-50%" y="-50%" width="220%" height="240%"><feGaussianBlur stdDeviation="14"/></filter>
+  <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse" patternTransform="skewX(-24)"><path d="M48 0H0V48" fill="none" stroke="#173623" stroke-width="1"/></pattern>
+  <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto"><path d="M0 0L11 4L0 8Z" fill="#A8FF3E"/></marker>
+  <style>
+    text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .eyebrow{font-size:16px;font-weight:850;letter-spacing:2.7px;fill:#A8FF3E}
+    .title{font-size:48px;font-weight:900;letter-spacing:-1.4px;fill:#F4FFF5}
+    .subtitle{font-size:20px;fill:#9AAF9E}
+    .plane-label{font-size:13px;font-weight:850;letter-spacing:2px;fill:#42F59E}
+    .block-title{font-size:22px;font-weight:850;fill:#F4FFF5;text-anchor:middle}
+    .block-copy{font-size:13px;fill:#9AAF9E;text-anchor:middle}
+    .side-copy{font-size:13px;fill:#9AAF9E;text-anchor:start}
+    .number{font-size:15px;font-weight:900;fill:#071009;text-anchor:middle}
+    .route{fill:none;stroke:#A8FF3E;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow);filter:url(#glow)}
+  </style>
+</defs>
+<rect width="1600" height="1000" fill="url(#bg)"/><rect y="105" width="1600" height="895" fill="url(#grid)" opacity=".28"/>
+<text x="70" y="70" class="eyebrow">CONTEXTWEAVER GOVERNED RUN</text><text x="70" y="125" class="title">Intent to governed evidence</text><text x="70" y="160" class="subtitle">One durable, authorized path from request to proof.</text><g>
+<polygon points="105,353 1095,457 1330,449 340,345" fill="#020704" stroke="#16733B" stroke-width="2" opacity=".9"/>
+<polygon points="105,335 1095,439 1330,383 340,279" fill="url(#plane)" stroke="#42F59E" stroke-width="2" opacity=".96" filter="url(#glow)"/>
+<text x="364" y="311" class="plane-label">ADMIT</text>
+</g><g>
+<polygon points="210,618 1110,722 1345,714 445,610" fill="#020704" stroke="#16733B" stroke-width="2" opacity=".9"/>
+<polygon points="210,600 1110,704 1345,648 445,544" fill="url(#plane)" stroke="#42F59E" stroke-width="2" opacity=".96" filter="url(#glow)"/>
+<text x="469" y="576" class="plane-label">EXECUTE</text>
+</g><g>
+<polygon points="315,868 1105,972 1340,964 550,860" fill="#020704" stroke="#16733B" stroke-width="2" opacity=".9"/>
+<polygon points="315,850 1105,954 1340,898 550,794" fill="url(#plane)" stroke="#42F59E" stroke-width="2" opacity=".96" filter="url(#glow)"/>
+<text x="574" y="826" class="plane-label">VERIFY + DELIVER</text>
+</g><g id="intent">
+<ellipse cx="314.0" cy="375" rx="126.50000000000001" ry="17" fill="#42F59E" opacity=".18" filter="url(#shadow)"/>
+<polygon points="185,245 203,232 433,232 415,245" fill="#163B22" stroke="#42F59E" stroke-width="2"/>
+<polygon points="415,245 433,232 433,344 415,357" fill="#06100A" stroke="#42F59E" stroke-width="2"/>
+<rect x="185" y="245" width="230" height="112" rx="13" fill="url(#front)" stroke="#42F59E" stroke-width="2.5" filter="url(#glow)"/>
+<circle cx="203" cy="263" r="17" fill="#A8FF3E" stroke="#E8FFB8" stroke-width="2" filter="url(#glow)"/><text x="203" y="269" class="number">1</text>
+<text x="300.0" y="299.0" class="block-title">Intent</text>
+<text x="300.0" y="326.0" class="block-copy">Request + purpose</text>
+</g><g id="resolve">
+<ellipse cx="624.0" cy="408" rx="126.50000000000001" ry="17" fill="#42F59E" opacity=".18" filter="url(#shadow)"/>
+<polygon points="495,278 513,265 743,265 725,278" fill="#163B22" stroke="#42F59E" stroke-width="2"/>
+<polygon points="725,278 743,265 743,377 725,390" fill="#06100A" stroke="#42F59E" stroke-width="2"/>
+<rect x="495" y="278" width="230" height="112" rx="13" fill="url(#front)" stroke="#42F59E" stroke-width="2.5" filter="url(#glow)"/>
+<circle cx="513" cy="296" r="17" fill="#A8FF3E" stroke="#E8FFB8" stroke-width="2" filter="url(#glow)"/><text x="513" y="302" class="number">2</text>
+<text x="610.0" y="332.0" class="block-title">Resolve</text>
+<text x="610.0" y="359.0" class="block-copy">Service + workflow</text>
+</g><g id="authorize">
+<ellipse cx="934.0" cy="441" rx="126.50000000000001" ry="17" fill="#F2B84B" opacity=".18" filter="url(#shadow)"/>
+<polygon points="805,311 823,298 1053,298 1035,311" fill="#163B22" stroke="#F2B84B" stroke-width="2"/>
+<polygon points="1035,311 1053,298 1053,410 1035,423" fill="#06100A" stroke="#F2B84B" stroke-width="2"/>
+<rect x="805" y="311" width="230" height="112" rx="13" fill="url(#amberFront)" stroke="#F2B84B" stroke-width="2.5" filter="url(#glow)"/>
+<circle cx="823" cy="329" r="17" fill="#A8FF3E" stroke="#E8FFB8" stroke-width="2" filter="url(#glow)"/><text x="823" y="335" class="number">3</text>
+<text x="920.0" y="365.0" class="block-title">Authorize</text>
+<text x="920.0" y="392.0" class="block-copy">Identity + policy</text>
+</g><g id="commit">
+<ellipse cx="459.0" cy="640" rx="143.0" ry="17" fill="#42F59E" opacity=".18" filter="url(#shadow)"/>
+<polygon points="315,510 333,497 593,497 575,510" fill="#163B22" stroke="#42F59E" stroke-width="2"/>
+<polygon points="575,510 593,497 593,609 575,622" fill="#06100A" stroke="#42F59E" stroke-width="2"/>
+<rect x="315" y="510" width="260" height="112" rx="13" fill="url(#front)" stroke="#42F59E" stroke-width="2.5" filter="url(#glow)"/>
+<circle cx="333" cy="528" r="17" fill="#A8FF3E" stroke="#E8FFB8" stroke-width="2" filter="url(#glow)"/><text x="333" y="534" class="number">4</text>
+<text x="445.0" y="564.0" class="block-title">Commit</text>
+<text x="445.0" y="591.0" class="block-copy">Plan + task + outbox</text>
+</g><g id="execute">
+<ellipse cx="829.0" cy="680" rx="143.0" ry="17" fill="#42F59E" opacity=".18" filter="url(#shadow)"/>
+<polygon points="685,550 703,537 963,537 945,550" fill="#163B22" stroke="#42F59E" stroke-width="2"/>
+<polygon points="945,550 963,537 963,649 945,662" fill="#06100A" stroke="#42F59E" stroke-width="2"/>
+<rect x="685" y="550" width="260" height="112" rx="13" fill="url(#front)" stroke="#42F59E" stroke-width="2.5" filter="url(#glow)"/>
+<circle cx="703" cy="568" r="17" fill="#A8FF3E" stroke="#E8FFB8" stroke-width="2" filter="url(#glow)"/><text x="703" y="574" class="number">5</text>
+<text x="815.0" y="604.0" class="block-title">Execute</text>
+<text x="815.0" y="631.0" class="block-copy">Agents + MCP + RAG</text>
+</g><g id="verify">
+<ellipse cx="589.0" cy="890" rx="148.5" ry="17" fill="#F2B84B" opacity=".18" filter="url(#shadow)"/>
+<polygon points="440,760 458,747 728,747 710,760" fill="#163B22" stroke="#F2B84B" stroke-width="2"/>
+<polygon points="710,760 728,747 728,859 710,872" fill="#06100A" stroke="#F2B84B" stroke-width="2"/>
+<rect x="440" y="760" width="270" height="112" rx="13" fill="url(#amberFront)" stroke="#F2B84B" stroke-width="2.5" filter="url(#glow)"/>
+<circle cx="458" cy="778" r="17" fill="#A8FF3E" stroke="#E8FFB8" stroke-width="2" filter="url(#glow)"/><text x="458" y="784" class="number">6</text>
+<text x="575.0" y="814.0" class="block-title">Verify</text>
+<text x="575.0" y="841.0" class="block-copy">Approval + contracts</text>
+</g><g id="deliver">
+<ellipse cx="999.0" cy="935" rx="148.5" ry="17" fill="#42F59E" opacity=".18" filter="url(#shadow)"/>
+<polygon points="850,805 868,792 1138,792 1120,805" fill="#163B22" stroke="#42F59E" stroke-width="2"/>
+<polygon points="1120,805 1138,792 1138,904 1120,917" fill="#06100A" stroke="#42F59E" stroke-width="2"/>
+<rect x="850" y="805" width="270" height="112" rx="13" fill="url(#front)" stroke="#42F59E" stroke-width="2.5" filter="url(#glow)"/>
+<circle cx="868" cy="823" r="17" fill="#A8FF3E" stroke="#E8FFB8" stroke-width="2" filter="url(#glow)"/><text x="868" y="829" class="number">7</text>
+<text x="985.0" y="859.0" class="block-title">Deliver</text>
+<text x="985.0" y="886.0" class="block-copy">Result + evidence</text>
+</g><path d="M415 301 L495 315" class="route"/><path d="M725 334 L805 348" class="route"/><path d="M920 423 L920 465 L445 465 L445 510" class="route"/><path d="M575 566 L685 590" class="route"/><path d="M815 662 L815 715 L575 715 L575 760" class="route"/><path d="M710 816 L850 850" class="route"/><rect x="1130" y="235" width="360" height="178" rx="20" fill="#07150D" stroke="#2D7A45" stroke-width="2"/><text x="1160" y="275" class="plane-label">APPLIES AT EVERY STAGE</text><text x="1160" y="310" class="side-copy">IDENTITY + ENTITLEMENTS</text><text x="1160" y="338" class="side-copy">DURABLE STATE + OUTBOX</text><text x="1160" y="366" class="side-copy">AUDIT + TELEMETRY</text><text x="1160" y="394" class="side-copy">RECEIPTS + REPLAY</text></svg>
