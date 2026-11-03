@@ -1,7 +1,8 @@
 {
   "source": "contextweaver-nextgen-architecture.drawio",
-  "sourceSha256": "5bd8cfb9143b822935eae8bdb6b9b8171099f0b55e87cefdb2d0eb4c5c4c04c6",
-  "exporter": "draw.io desktop CLI",
+  "sourceSha256": "928217a693a9c4989d022a2dde493f710191c0df3178a4ad1b6af974ef480385",
+  "exporter": "ContextWeaver deterministic angled SVG renderer",
+  "orientation": "three-quarter perspective",
   "pages": [
     {
       "name": "Layered Architecture",
