@@ -150,7 +150,6 @@ body.cw-page::before {
 .cw-section.compact { padding: 40px 0; }
 .cw-section.alt { border-block: 1px solid var(--cw-border); background: rgba(8,19,14,.72); }
 .cw-company-story { padding-top: 34px; }
-.cw-story-copy .cw-actions { margin-top: 16px; }
 .cw-company-story-shell {
   overflow: hidden;
   border: 1px solid var(--cw-border-strong);
@@ -161,7 +160,7 @@ body.cw-page::before {
 .cw-company-story-shell iframe {
   display: block;
   width: 100%;
-  height: clamp(720px, 76vw, 920px);
+  height: clamp(620px, 73vw, 860px);
   border: 0;
   background: var(--cw-bg);
 }
@@ -357,7 +356,6 @@ body.cw-page::before {
   .cw-band { grid-template-columns: 1fr; padding: 24px; }
   .cw-footer-grid { grid-template-columns: 1fr; gap: 20px; }
   .cw-code-line { grid-template-columns: 1fr; gap: 4px; }
-  .cw-company-story-shell iframe { height: 820px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
