@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Intent to Outcome — Overview</title>
+<style>
+@page{size:A4;margin:0}html{background:#070b09}
+*{box-sizing:border-box}
+body{margin:0;background:#070b09;color:#e8f2ec;font:15px/1.6 "Segoe UI",Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+main{max-width:860px;margin:auto;padding:36px 28px}
+h1{font-size:34px;margin:0 0 6px;color:#fff}
+h2{font-size:21px;color:#7CFC8A;margin:30px 0 10px;border-bottom:1px solid #1d4a2b;padding-bottom:6px;break-after:avoid}
+.kick{color:#7CFC8A;font-weight:700;letter-spacing:.08em;font-size:12px}
+.lead{font-size:17px;color:#b9cbbf}
+.box{background:linear-gradient(160deg,#0f1a14,#0a100c);border:1px solid #23573a;border-radius:14px;padding:14px 18px;margin:10px 0;break-inside:avoid}
+.layman{border-color:#e0a33a;background:#17130a}
+.layman b{color:#ffc35a}
+table{width:100%;border-collapse:collapse;margin:8px 0;break-inside:avoid;font-size:14px}
+th,td{border:1px solid #1f3e2b;padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#0f2418;color:#7CFC8A}
+.t{display:inline-block;padding:1px 9px;border-radius:10px;font-weight:700;font-size:12px;color:#000}
+.id{background:#a78bfa}.rag{background:#38bdf8}.gr{background:#4ade80}.gov{background:#fbbf24}
+ol li,ul li{margin:4px 0}
+.result{border-color:#4ade80}
+.foot{color:#6f8a78;font-size:12px;margin-top:30px}
+@media print{.noprint{display:none}}</style></head><body><main><p style="margin:0 0 14px" class="noprint"><a href="./" style="color:#7CFC8A">&larr; Try the interactive simulator</a></p>
+<div class="kick">CONTEXTWEAVER · OVERVIEW</div>
+<h1>Intent to Outcome</h1>
+<p class="lead">What we are showing: a person asks for something in plain words, and the platform turns it into a safe, finished result. Safety checks can be added, removed or tightened while it runs, with no redeploy, and the result stays the same.</p>
+
+<div class="box layman"><b>In plain English:</b> Think of AI agents and tools as kids. They are helpful and fast, but you don't hand them the car keys. ContextWeaver is the house rules: who they may talk to (ID), what books they may read (RAG), what they must never do (Guardrails), and when a grown-up must say yes (Governance). Parents can change the rules at any time without rebuilding the house.</div>
+
+<h2>1. The example: Maria refunds order #4821</h2>
+<p>Maria is a support agent at Contoso. She signs in and types: <i>"Refund order #4821, the item arrived broken."</i> The refund is $250.</p>
+<ol>
+<li><b>Understand the ask.</b> The platform reads Maria's request and works out that it needs a refund.</li>
+<li><b>Plan it.</b> It picks the refund workflow, the agents and the tools (MCPs) it needs: orders, payments and email.</li>
+<li><b>Check every step.</b> The four checks below run before and after each step.</li>
+<li><b>Do it.</b> The refund is prepared. Maria confirms, her manager approves, and then it is sent.</li>
+<li><b>Prove it.</b> An evidence pack records who, what, which rules and which version.</li>
+</ol>
+
+<h2>2. The four checks (the "verticals")</h2>
+<table>
+<tr><th>Check</th><th>Plain meaning</th><th>In Maria's refund</th></tr>
+<tr><td><span class="t id">ID</span> Identity</td><td>Who are you, and are you allowed?</td><td>Signed in, MFA passed, has the Support Agent role.</td></tr>
+<tr><td><span class="t rag">RAG</span> Knowledge</td><td>Which trusted documents can the AI read?</td><td>Her notes, then the Returns FAQ, then company refund policy.</td></tr>
+<tr><td><span class="t gr">GR</span> Guardrails</td><td>Things it must never do.</td><td>No card numbers shown, $500 limit, confirm before sending.</td></tr>
+<tr><td><span class="t gov">GOV</span> Governance</td><td>When a human must approve, and what gets recorded.</td><td>Over $100 needs manager approval. Everything is logged.</td></tr>
+</table>
+
+<h2>3. Change the checks, keep the journey</h2>
+<p>Each check is a switch, not code. Admins turn a rule on or off, or tighten it, in the console. The next request picks it up within seconds. Nothing is rebuilt or redeployed.</p>
+<div class="box"><ul>
+<li><b>Add a rule:</b> a new rule says "block refunds to a new address". It applies from the next request.</li>
+<li><b>Remove a rule:</b> a noisy check is switched off. Maria's refund still completes the same way.</li>
+<li><b>Something goes wrong:</b> one bad tool can be switched off instantly. The workflow uses a backup or pauses for a human, so the problem doesn't spread.</li>
+</ul>
+<p><b>Why the outcome stays the same:</b> Maria's intent (refund #4821) and the workflow do not change. Only the checks around it change, so the result is the same, just safer or quicker.</p></div>
+
+<h2>4. Who sets the rules: Org, Group, User</h2>
+<table>
+<tr><th>Level</th><th>Who</th><th>Typical rules</th><th>Where it is applied</th></tr>
+<tr><td><b>Org</b></td><td>Contoso (whole company)</td><td>Sign-in + MFA required (locked). Card numbers never shown (locked). Refund limit $1,000. Keep evidence 7 years.</td><td>Every request, every team</td></tr>
+<tr><td><b>Group</b></td><td>Customer Care team</td><td>Limit $500. Over $100 needs manager approval. Uses the Returns FAQ.</td><td>Everyone in the team</td></tr>
+<tr><td><b>User</b></td><td>Maria</td><td>Her own notes first. Always ask her to confirm before sending.</td><td>Only Maria's requests</td></tr>
+</table>
+
+<h2>5. How the three levels become one (priority)</h2>
+<p>Before every request, the platform merges the three levels into one rule set. When rules disagree, five tie-breakers decide, in this order:</p>
+<ol>
+<li><b>Locked rules always win.</b> If the Org locks a rule, nobody below can turn it off.</li>
+<li><b>No beats yes.</b> If any level says deny, the answer is deny.</li>
+<li><b>Strictest limit wins.</b> Org $1,000 and Group $500 means the limit is $500.</li>
+<li><b>Lower levels can tighten, never loosen.</b> A group or user can add an approval but can't remove one.</li>
+<li><b>Knowledge is merged, closest first.</b> All sources are kept. User notes come first, then team documents, then company policy.</li>
+</ol>
+<div class="box result"><b style="color:#7CFC8A">Result: Maria's compiled rules for order #4821 ($250)</b>
+<ul>
+<li><span class="t id">ID</span> Signed in + MFA + Support Agent role (all pass)</li>
+<li><span class="t rag">RAG</span> Her notes → Returns FAQ → Refund policy</li>
+<li><span class="t gr">GR</span> Limit $500 · cards masked · confirm before sending</li>
+<li><span class="t gov">GOV</span> $250 is over $100, so manager approval is required</li>
+</ul>
+Outcome: the refund is prepared, Maria confirms, her manager approves, and then it is sent. The evidence pack is stamped with the rule-book version.</div>
+
+<h2>6. Why it matters</h2>
+<ul>
+<li><b>Safe by default:</b> every step is checked, and nothing runs anonymously.</li>
+<li><b>Fast to fix:</b> turn off a bad tool or rule in seconds, with no redeploy.</li>
+<li><b>Fair and clear:</b> company rules always hold, and teams and people can only make them stricter.</li>
+<li><b>Provable:</b> every outcome comes with evidence of who, what and which rules applied.</li>
+</ul>
+<p class="foot">Companion to the LinkedIn carousel (slides 3–5 overview, 16 live changes, 17–18 levels and priority). ContextWeaver · BrainzBytes</p>
+</main></body></html>
+

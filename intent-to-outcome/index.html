@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script src="/gate.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Intent to Outcome · Try it yourself | BrainzBytes ContextWeaver</title>
+<meta name="description" content="Flip the safety switches (Identity, Knowledge, Guardrails, Governance) at Org, Group or User level and watch the same request reach the same outcome, safely, with no redeploy.">
+<meta property="og:title" content="Govern Every AI Agent Live: Intent to Outcome, No Redeploy">
+<meta property="og:description" content="Interactive simulator: same intent, same outcome, live rules, zero redeploys.">
+<meta property="og:url" content="https://brainzbytes.com/intent-to-outcome/">
+<link rel="canonical" href="https://brainzbytes.com/intent-to-outcome/">
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<style>
+:root{--bg:#050b08;--shell:#08130e;--surf:#0b1711;--bd:rgba(188,255,91,.14);--bd2:rgba(188,255,91,.34);--tx:#f5faf2;--mu:#9dafa2;--lime:#bcff5b;--amb:#f4c66a;--red:#ff7d78}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(900px 500px at 15% -10%,rgba(188,255,91,.09),transparent),var(--bg);color:var(--tx);font:15px/1.55 "Segoe UI",system-ui,sans-serif}
+a{color:var(--lime)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:0;z-index:5;background:rgba(5,11,8,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd)}
+header.top .wrap{display:flex;gap:16px;align-items:center;height:60px}
+.brand{font-weight:700;text-decoration:none;color:var(--tx)}.brand span{color:var(--lime)}
+header nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--bd2);background:var(--surf);color:var(--tx);padding:8px 14px;border-radius:9px;font:inherit;font-size:14px;cursor:pointer;text-decoration:none}
+.btn:hover{border-color:var(--lime)}.btn.pri{background:var(--lime);color:#071006;border-color:var(--lime);font-weight:700}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.hero{padding:44px 0 18px}.eye{color:var(--lime);font-weight:700;letter-spacing:.1em;font-size:12px;text-transform:uppercase}
+h1{font-size:clamp(30px,4.6vw,48px);line-height:1.1;margin:8px 0 12px}h1 em{font-style:normal;color:var(--lime)}
+.lead{color:var(--mu);font-size:18px;max-width:860px}
+.kids{margin:18px 0 0;padding:14px 18px;border:1px solid rgba(244,198,106,.4);background:rgba(244,198,106,.06);border-radius:14px;max-width:900px}
+.kids b{color:var(--amb)}
+.steps{display:flex;gap:8px;margin:26px 0 14px;flex-wrap:wrap}
+.steps button{flex:1;min-width:150px;text-align:left;border:1px solid var(--bd);background:var(--shell);color:var(--mu);padding:10px 14px;border-radius:12px;cursor:pointer;font:inherit}
+.steps button b{display:block;color:var(--tx);font-size:15px}.steps button.on{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime) inset}
+.steps button.on b{color:var(--lime)}
+.page{display:none}.page.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+.card{background:linear-gradient(170deg,#0e1d15,#08120d);border:1px solid var(--bd2);border-radius:18px;padding:18px 20px;margin:12px 0;box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06)}
+.card h2{margin:0 0 6px;font-size:21px}.card h3{margin:0 0 4px;font-size:16px}.muted{color:var(--mu)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+.scen{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:860px){.scen{grid-template-columns:1fr}}
+.scen label{display:block;border:1px solid var(--bd);border-radius:14px;padding:12px 14px;cursor:pointer;background:var(--shell)}
+.scen input{accent-color:var(--lime);margin-right:6px}.scen label:has(input:checked){border-color:var(--lime);background:rgba(188,255,91,.07)}
+.scen small{display:block;color:var(--mu);margin-top:4px}
+.sw{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1px solid var(--bd);border-radius:14px;padding:12px 14px;margin:8px 0;background:var(--shell)}
+.sw.off{opacity:.62}
+.tog{position:relative;width:52px;height:28px}.tog input{opacity:0;width:0;height:0}
+.tog span{position:absolute;inset:0;border-radius:20px;background:#22302a;border:1px solid var(--bd2);cursor:pointer;transition:.2s}
+.tog span:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;border-radius:50%;background:#9dafa2;transition:.2s}
+.tog input:checked+span{background:rgba(188,255,91,.25);border-color:var(--lime)}.tog input:checked+span:before{transform:translateX(24px);background:var(--lime)}
+.tog input:focus-visible+span{outline:2px solid var(--lime);outline-offset:2px}
+.sw b{font-size:16px}.sw small{display:block;color:var(--mu)}
+select{background:#0a140f;color:var(--tx);border:1px solid var(--bd2);border-radius:8px;padding:6px 8px;font:inherit;font-size:13px}
+.lvl{display:flex;flex-direction:column;align-items:flex-end;gap:3px;font-size:12px;color:var(--mu)}
+.ver{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 0;font-size:13px}
+.chip{display:inline-block;padding:2px 10px;border-radius:20px;border:1px solid var(--bd2);font-size:12.5px;color:var(--mu)}
+.chip.g{color:var(--lime);border-color:var(--lime)}.chip.a{color:var(--amb);border-color:var(--amb)}.chip.r{color:var(--red);border-color:var(--red)}
+.flash{animation:flash 1s ease}@keyframes flash{0%{background:rgba(188,255,91,.35)}100%{background:transparent}}
+.intent{font-size:19px;font-weight:600;padding:14px 18px;border-radius:40px;border:1px solid var(--bd2);background:#0a150f;text-align:center}
+.intent i{color:var(--lime);font-style:normal}
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}@media(max-width:860px){.pipe{grid-template-columns:1fr}}
+.st{border:1px solid var(--bd);border-radius:14px;padding:12px;background:var(--shell);min-height:150px;transition:.3s;position:relative}
+.st .n{font-size:12px;color:var(--mu);letter-spacing:.08em}.st h3{margin:2px 0 6px}
+.st.act{border-color:var(--lime);box-shadow:0 0 24px rgba(188,255,91,.25)}
+.st.ok{border-color:rgba(188,255,91,.5)}.st.wait{border-color:var(--amb);box-shadow:0 0 18px rgba(244,198,106,.2)}.st.bad{border-color:var(--red);box-shadow:0 0 18px rgba(255,125,120,.2)}.st.stop{border-color:var(--lime);box-shadow:0 0 18px rgba(188,255,91,.25)}
+.st ul{margin:0;padding-left:16px;font-size:13px;color:#cfdcd2}.st li{margin:3px 0}
+.log li.g::marker{color:var(--lime)}.log li.a::marker{color:var(--amb)}.log li.r::marker{color:var(--red)}
+.res{border-radius:16px;padding:16px 18px;margin-top:6px;border:1px solid var(--lime);background:rgba(188,255,91,.06)}
+.res.a{border-color:var(--amb);background:rgba(244,198,106,.07)}.res.r{border-color:var(--red);background:rgba(255,125,120,.07)}
+.res h3{margin:0 0 4px;font-size:19px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{border-bottom:1px solid var(--bd);padding:9px 8px;text-align:left;vertical-align:top}th{color:var(--lime);font-weight:600}
+pre{background:#040a07;border:1px solid var(--bd);border-radius:12px;padding:12px;overflow:auto;font-size:12.5px;color:#cfe8d4;max-height:380px}
+.tabs{display:flex;gap:6px;margin-bottom:8px}.tabs button{background:none;border:1px solid var(--bd);color:var(--mu);padding:5px 12px;border-radius:8px;cursor:pointer;font:inherit;font-size:13px}.tabs button.on{border-color:var(--lime);color:var(--lime)}
+.score{font-size:40px;font-weight:800;color:var(--lime);line-height:1}
+.nav-row{display:flex;justify-content:space-between;gap:10px;margin:16px 0 30px}
+footer{border-top:1px solid var(--bd);padding:24px 0 40px;color:var(--mu);font-size:13px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/">ContextWeaver <span>· Intent to Outcome</span></a>
+  <nav aria-label="Intent to Outcome resources">
+    <a class="btn" href="/">← Home</a>
+    <a class="btn" href="presentation.html" target="_blank" rel="noopener">Slides</a>
+    <a class="btn" href="overview.html" target="_blank" rel="noopener">Overview</a>
+    <a class="btn" href="Intent-to-Outcome-Complete.pdf" target="_blank" rel="noopener">PDF</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+<section class="hero">
+  <div class="eye">Interactive simulator</div>
+  <h1>Same intent. Same outcome. <em>Rules change live.</em></h1>
+  <p class="lead">Maria, a support agent, asks: <b>"Refund order #4821, the item arrived broken."</b> Flip the four safety switches, choose where each rule is set (whole company, team, or just Maria), pick a "what could go wrong" situation, and run it. The request and the workflow never change. Only the protection around them does. No rebuild, no redeploy.</p>
+  <div class="kids"><b>Think of it like kids:</b> AI agents and tools (MCPs) are fast, eager helpers, but you don't hand them the car keys. <b>Identity</b> = who they may talk to. <b>Knowledge</b> = which books they may read. <b>Guardrails</b> = things they must never do. <b>Governance</b> = when a grown-up must say yes. Parents can change the house rules any time without rebuilding the house.</div>
+</section>
+
+<div class="steps" role="tablist">
+  <button data-go="0" class="on"><span>Step 1</span><b>Pick a situation</b></button>
+  <button data-go="1"><span>Step 2</span><b>Set the switches</b></button>
+  <button data-go="2"><span>Step 3</span><b>Run the request</b></button>
+  <button data-go="3"><span>Step 4</span><b>How it was mitigated</b></button>
+</div>
+
+<!-- PAGE 1 -->
+<section class="page on" id="p0">
+  <div class="card"><h2>What happens in this run?</h2><p class="muted">Every situation uses the <b>same request</b> from Maria. Some add a twist, like an attacker or a risky ask, so you can see which switch saves the day.</p>
+  <div class="scen" id="scen"></div></div>
+  <div class="nav-row"><span></span><button class="btn pri" data-go="1">Next: set the switches →</button></div>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page" id="p1">
+  <div class="grid2">
+    <div class="card"><h2>The four switches</h2><p class="muted">Turn each one on or off and choose who sets it. Changes apply on the very next request.</p>
+      <div id="switches"></div>
+      <div class="ver" id="ver"></div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn" id="allOn">All on</button><button class="btn" id="allOff">All off</button></div>
+    </div>
+    <div class="card"><h2>Maria's final rule book</h2><p class="muted">Before every request, Company → Team → Maria rules are merged into one set. Locked company rules always win, "no" beats "yes", and the strictest limit wins.</p>
+      <div class="tabs"><button class="on" data-rb="text">Plain English</button><button data-rb="json">JSON</button></div>
+      <div id="rbText"></div><pre id="rbJson" hidden></pre>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn" data-go="0">← Back</button><button class="btn pri" data-go="2">Next: run it →</button></div>
+</section>
+
+<!-- PAGE 3 -->
+<section class="page" id="p2">
+  <div class="card">
+    <div class="intent">Intent: <i>"Refund order #4821, the item arrived broken."</i></div>
+    <div class="ver" id="ver2"></div>
+    <div class="pipe" id="pipe"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" id="run">▶ Run Maria's request</button><button class="btn" data-go="1">Change switches</button><span class="muted" id="runHint" style="align-self:center">Tip: change a switch and run again. The workflow stays the same.</span></div>
+    <div id="result"></div>
+  </div>
+  <div class="nav-row"><button class="btn" data-go="1">← Back</button><button class="btn pri" data-go="3">Next: how it was mitigated →</button></div>
+</section>
+
+<!-- PAGE 4 -->
+<section class="page" id="p3">
+  <div class="grid3">
+    <div class="card"><div class="muted">Risks stopped with your switches</div><div class="score" id="score">0/6</div></div>
+    <div class="card"><div class="muted">Same intent, same workflow</div><div class="score">refund-v1</div><div class="muted">Only the rules around it changed</div></div>
+    <div class="card"><div class="muted">Redeploys needed</div><div class="score">0</div><div class="muted" id="verNote"></div></div>
+  </div>
+  <div class="card"><h2>Every situation, with your current switches</h2>
+    <p class="muted">We run all six situations through the same request so you can see what each switch catches, and what slips through when it's off.</p>
+    <div style="overflow:auto"><table><thead><tr><th>Situation</th><th>What happened</th><th>Caught by</th><th>Result</th></tr></thead><tbody id="matrix"></tbody></table></div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn" id="fixAll">Turn everything on and compare</button><button class="btn" data-go="1">Adjust switches</button></div>
+  </div>
+  <div class="card"><h2>Evidence pack from your last run</h2><p class="muted">Every outcome comes with proof: who asked, which rules applied, which version, and what was decided.</p>
+    <div class="tabs"><button class="on" data-ev="text">Plain English</button><button data-ev="json">JSON</button></div>
+    <div id="evText" class="muted">Run a request on Step 3 to see its evidence here.</div><pre id="evJson" hidden></pre>
+  </div>
+  <div class="nav-row"><button class="btn" data-go="2">← Run again</button><a class="btn pri" href="presentation.html" target="_blank" rel="noopener">See the full slides →</a></div>
+</section>
+</main>
+
+<footer><div class="wrap">This is a safe, in-browser simulation. No real payments, people, or data are used. ContextWeaver by BrainzBytes · <a href="/">brainzbytes.com</a></div></footer>
+
+<script>
+(function(){
+'use strict';
+const SCEN=[
+ {id:'normal',t:'Normal day',d:'Maria refunds $250 for a broken item.',amt:250},
+ {id:'imp',t:'Impostor',d:'Someone not signed in pretends to be Maria.',amt:250},
+ {id:'over',t:'Too big a refund',d:'The refund is $900, above the team limit.',amt:900},
+ {id:'pii',t:'Card number leak',d:'The chat asks the AI to show the full card number.',amt:250},
+ {id:'policy',t:'Old order',d:'Order was 200 days ago; the 30-day refund policy matters.',amt:250},
+ {id:'tool',t:'Bad tool',d:'The payments tool tries to send money to a new bank account.',amt:250}
+];
+const SW=[
+ {k:'id',n:'Identity',p:'Who is asking, and are they allowed?'},
+ {k:'rag',n:'Knowledge (RAG)',p:'Which trusted documents the AI reads'},
+ {k:'gr',n:'Guardrails',p:'Things it must never do'},
+ {k:'gov',n:'Governance',p:'When a human approves, what gets recorded'}
+];
+const LV={org:'Company (Org)',group:'Team (Group)',user:'Maria (User)'};
+const S={scen:'normal',on:{id:true,rag:true,gr:true,gov:true},lvl:{id:'org',rag:'group',gr:'group',gov:'group'},ver:12,last:null};
+const $=s=>document.querySelector(s), el=(h)=>{const d=document.createElement('div');d.innerHTML=h;return d.firstElementChild};
+const money=n=>'$'+n.toLocaleString();
+
+function rules(){
+  const r={id:null,rag:[],gr:null,gov:null};
+  if(S.on.id) r.id={require:['sign-in','MFA','Support Agent role'],locked:S.lvl.id==='org',set_by:S.lvl.id};
+  if(S.on.rag){const l=S.lvl.rag;r.rag=l==='org'?['Company refund policy']:l==='group'?['Returns FAQ','Company refund policy']:["Maria's notes",'Returns FAQ','Company refund policy'];}
+  if(S.on.gr){const l=S.lvl.gr;r.gr={refund_limit:l==='org'?1000:500,mask_card_numbers:true,block_new_bank_account:true,confirm_before_send:l==='user',locked:l==='org',set_by:l};}
+  if(S.on.gov){const l=S.lvl.gov;r.gov={approval_over:l==='org'?500:100,approver:'Manager',audit:'kept 7 years',pause_bad_tools:true,set_by:l};}
+  return r;
+}
+function scopeTxt(l){return l==='org'?'everyone at Contoso':l==='group'?'everyone in Customer Care':'only Maria'}
+
+function simulate(sid,R){
+  const sc=SCEN.find(s=>s.id===sid),A=sc.amt,st=[[],[],[],[],[]];let out,cls,caught=[],risk=null,mit=null;
+  const L=(i,c,t)=>st[i].push([c,t]);
+  // 1 Understand
+  L(0,'g','Reads the ask: refund for order #4821.');
+  if(sid==='pii') L(0,'a','Also asked: "show me the full card number".');
+  if(R.id){ if(sid==='imp'){L(0,'r','Identity check: not signed in, no MFA.');return fin('stop',0,'Stopped at the door','The impostor could not prove who they were, so nothing ran. Real Maria is unaffected.',['Identity'],'Impostor tried to get a refund','Blocked before any tool was touched');}
+    L(0,'g','Identity: Maria, signed in, MFA, Support Agent role.');}
+  else{ if(sid==='imp'){L(0,'r','No identity check: impostor accepted as "Maria".');risk='Impostor';} else L(0,'a','No identity check: request runs anonymously.');}
+  // 2 Plan
+  L(1,'g','Picks workflow refund-v1 (same every time).');L(1,'g','Tools: Orders, Payments, Email.');
+  if(R.rag.length) L(1,'g','Reads: '+R.rag.join(' → ')+'.'); else L(1,'a','No trusted documents: the AI must guess the policy.');
+  // 3 Check
+  let blocked=false;
+  if(sid==='policy'){ if(R.rag.length){L(2,'g','Policy found: refunds only within 30 days. This order is 200 days old.');L(2,'g','Plan changes to: offer store credit, not cash.');mit={by:['Knowledge'],what:'Refund policy found, so store credit is offered instead of a made-up cash refund'};}
+    else{L(2,'r','AI guesses "refunds are always allowed".');risk=risk||'Made-up policy';}}
+  if(sid==='pii'){ if(R.gr){L(2,'g','Guardrail: card numbers are masked (•••• 4242).');mit={by:['Guardrails'],what:'Card number masked; never shown'};} else {L(2,'r','Full card number would be shown in chat.');risk=risk||'Card number leaked';}}
+  if(R.gr){ if(A>R.gr.refund_limit){L(2,'r','Guardrail: '+money(A)+' is over the '+money(R.gr.refund_limit)+' limit. Blocked.');blocked=true;mit={by:['Guardrails'],what:money(A)+' blocked by the '+money(R.gr.refund_limit)+' limit'};}
+    else L(2,'g','Guardrail: '+money(A)+' is within the '+money(R.gr.refund_limit)+' limit.');}
+  else if(sid==='over') L(2,'a','No refund limit set.');
+  let needAppr=R.gov&&A>R.gov.approval_over&&!blocked;
+  if(R.gov){ if(blocked) L(2,'g','Governance: logged for the manager.'); else if(needAppr) L(2,'a','Governance: '+money(A)+' is over '+money(R.gov.approval_over)+', manager approval needed.'); else L(2,'g','Governance: under '+money(R.gov.approval_over)+', no approval needed.');}
+  else L(2,'a','No governance: no human sign-off, nothing recorded.');
+  if(blocked){ return fin('stop',2,'Safely stopped','The '+money(A)+' refund was blocked by the limit and sent to the manager for review. Maria sees a clear explanation.',['Guardrails'],'Over-limit refund','Blocked by Guardrails, sent to manager');}
+  // 4 Do
+  if(sid==='tool'){ if(R.gr){L(3,'r','Payments tool tries a new bank account. Guardrail blocks it.');mit={by:['Guardrails'].concat(R.gov?['Governance']:[]),what:'Payout to a new bank account blocked'+(R.gov?'; tool switched off, backup used':'')};}
+    if(R.gov){L(3,'a','Governance pauses the bad tool and switches to the backup payments tool.');if(!mit)mit={by:['Governance'],what:'Bad tool paused, backup used'};}
+    if(!R.gr&&!R.gov){L(3,'r','Money sent to an unknown bank account.');risk=risk||'Money sent to wrong account';}}
+  if(sid==='over'&&needAppr){mit={by:['Governance'],what:(R.gr?'Within the company '+money(R.gr.refund_limit)+' limit, but':'No limit, but')+' the manager reviewed the '+money(A)+' refund before it went out'};}
+  if(sid==='over'&&!needAppr){risk=risk||'Unchecked '+money(A)+' refund';}
+  if(R.gr&&R.gr.confirm_before_send) L(3,'g','Maria confirms before sending.');
+  if(needAppr) L(3,'a','Manager approves.');
+  if(sid==='policy'&&R.rag.length) L(3,'g','Store credit issued; email sent.'); else L(3,'g','Refund of '+money(A)+' sent; customer emailed.');
+  // 5 Prove
+  if(R.gov) L(4,'g','Evidence pack saved: who, what, which rules, rule-book v'+S.ver+'.'); else L(4,'a','No evidence pack. Hard to prove what happened.');
+  const by=mit?mit.by:[];
+  if(risk) return fin('bad',3,'Outcome reached, but harm got through','Risk: '+risk+'. Turn on the right switch and run again.',[],risk,'Not caught');
+  if(sid!=='normal'&&mit) return fin('ok',4,'Same outcome, safely','The request finished. '+mit.what+'.',by,SCEN.find(s=>s.id===sid).t,mit.what);
+  return fin(R.gov?'ok':'warn',4,R.gov?'Refund done, safely':'Refund done, but no one is accountable',needAppr?'Maria\'s refund went through after manager approval, with full evidence.':R.gov?'Maria\'s refund went through with full evidence.':'It worked, but without governance nothing is recorded or approved.',by,sc.t,R.gov?'Normal run':'No approval or record');
+  function fin(kind,upto,h,p,by,risk2,how){return{sid,steps:st,kind,upto,h,p,by,risk:risk2,how,amount:A};}
+}
+
+function renderScen(){const w=$('#scen');w.innerHTML='';SCEN.forEach(s=>{w.appendChild(el(`<label><input type="radio" name="sc" value="${s.id}" ${S.scen===s.id?'checked':''}><b>${s.t}</b><small>${s.d}</small></label>`));});
+  w.onchange=e=>{S.scen=e.target.value;resetPipe();};}
+function renderSw(){const w=$('#switches');w.innerHTML='';SW.forEach(s=>{
+  const r=el(`<div class="sw ${S.on[s.k]?'':'off'}"><label class="tog"><input type="checkbox" data-k="${s.k}" ${S.on[s.k]?'checked':''} aria-label="${s.n}"><span></span></label>
+  <div><b>${s.n}</b><small>${s.p}</small><small>Applies to ${scopeTxt(S.lvl[s.k])}${S.lvl[s.k]==='org'&&(s.k==='id'||s.k==='gr')?' · 🔒 locked, teams can\'t loosen it':''}</small></div>
+  <div class="lvl">Set by<select data-l="${s.k}" ${S.on[s.k]?'':'disabled'}>${Object.entries(LV).map(([v,t])=>`<option value="${v}" ${S.lvl[s.k]===v?'selected':''}>${t}</option>`).join('')}</select></div></div>`);w.appendChild(r);});
+}
+function bump(){S.ver++;renderSw();renderRules();renderVer(true);resetPipe();}
+document.addEventListener('change',e=>{const k=e.target.dataset.k,l=e.target.dataset.l;if(k){S.on[k]=e.target.checked;bump();}if(l){S.lvl[l]=e.target.value;bump();}});
+function renderVer(f){const h=`<span class="chip g">Rule book v${S.ver}</span><span class="chip">Workflow refund-v1 · unchanged</span><span class="chip">Redeploys: 0</span><span class="chip">${Object.values(S.on).filter(Boolean).length}/4 switches on</span>`;
+  ['#ver','#ver2'].forEach(id=>{const v=$(id);v.innerHTML=h;if(f){v.classList.remove('flash');void v.offsetWidth;v.classList.add('flash');}});
+  $('#verNote').textContent='Rule book is now v'+S.ver+', applied in seconds';}
+function renderRules(){const R=rules(),li=[];
+  li.push(R.id?`✅ <b>Identity:</b> sign-in, MFA and Support Agent role required (set for ${scopeTxt(R.id.set_by)}${R.id.locked?', locked':''}).`:'⚠️ <b>Identity off:</b> anyone could claim to be Maria.');
+  li.push(R.rag.length?`✅ <b>Knowledge:</b> reads ${R.rag.join(' → ')} (closest first).`:'⚠️ <b>Knowledge off:</b> the AI has no trusted policy to follow.');
+  li.push(R.gr?`✅ <b>Guardrails:</b> refund limit ${money(R.gr.refund_limit)} (strictest wins${R.gr.set_by==='org'?'; Company sets $1,000':'; Team tightens Company $1,000 to $500'}), card numbers masked, no payouts to new bank accounts${R.gr.confirm_before_send?', Maria confirms before sending':''}.`:'⚠️ <b>Guardrails off:</b> no limits, no masking.');
+  li.push(R.gov?`✅ <b>Governance:</b> manager approval over ${money(R.gov.approval_over)}, bad tools can be paused, everything recorded.`:'⚠️ <b>Governance off:</b> no human approval, no record.');
+  $('#rbText').innerHTML='<ul class="log" style="padding-left:18px;margin:0">'+li.map(x=>`<li style="margin:6px 0">${x}</li>`).join('')+'</ul>';
+  $('#rbJson').textContent=JSON.stringify({user:'maria@contoso.com',group:'Customer Care',org:'Contoso',rule_book_version:S.ver,compiled:R},null,2);}
+const NAMES=['Understand','Plan','Check','Do','Prove'];
+function resetPipe(){$('#pipe').innerHTML=NAMES.map((n,i)=>`<div class="st" id="st${i}"><div class="n">STEP ${i+1}</div><h3>${n}</h3><ul></ul></div>`).join('');$('#result').innerHTML='';}
+let running=false;
+async function run(){if(running)return;running=true;$('#run').disabled=true;resetPipe();
+  const R=rules(),r=simulate(S.scen,R);S.last={r,R,ver:S.ver,at:new Date().toISOString()};
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  for(let i=0;i<5;i++){const b=$('#st'+i);
+    if(i>r.upto){b.style.opacity=.35;b.querySelector('ul').innerHTML='<li>Not needed</li>';continue;}
+    b.classList.add('act');
+    for(const [c,t] of r.steps[i]){b.querySelector('ul').insertAdjacentHTML('beforeend',`<li class="${c}">${t}</li>`);if(!reduce)await new Promise(z=>setTimeout(z,320));}
+    if(!reduce)await new Promise(z=>setTimeout(z,450));
+    b.classList.remove('act');const cs=r.steps[i].map(x=>x[0]);
+    b.classList.add(i===r.upto&&r.kind==='stop'?'stop':cs.includes('r')?'bad':cs.includes('a')?'wait':'ok');}
+  const cls=r.kind==='bad'?'r':r.kind==='warn'?'a':'';
+  $('#result').innerHTML=`<div class="res ${cls}"><h3>${r.kind==='bad'?'⚠️':'✅'} ${r.h}</h3><div>${r.p}</div><div style="margin-top:8px">${r.by.length?r.by.map(b=>`<span class="chip g">Caught by ${b}</span> `).join(''):'<span class="chip">No switch needed to step in</span>'} <span class="chip">Intent unchanged</span> <span class="chip">Workflow refund-v1</span> <span class="chip">Rule book v${S.ver}</span></div></div>`;
+  renderReport();running=false;$('#run').disabled=false;}
+function renderReport(){const R=rules();let saved=0;
+  $('#matrix').innerHTML=SCEN.map(s=>{const r=simulate(s.id,R);const ok=r.kind!=='bad';if(ok)saved++;
+    const chip=r.kind==='bad'?'<span class="chip r">Harm got through</span>':r.kind==='warn'?'<span class="chip a">Worked, no record</span>':r.kind==='stop'?'<span class="chip g">Safely stopped</span>':'<span class="chip g">Same outcome, safe</span>';
+    return `<tr><td><b>${s.t}</b><br><span class="muted">${s.d}</span></td><td>${r.p}</td><td>${r.by.length?r.by.join(' + '):'—'}</td><td>${chip}</td></tr>`;}).join('');
+  $('#score').textContent=saved+'/6';
+  if(S.last){const {r,R:LR,ver,at}=S.last;
+    $('#evText').innerHTML=`<ul style="margin:0;padding-left:18px"><li><b>Who:</b> ${S.last.r.sid==='imp'?'Unverified person claiming to be Maria':'Maria (Customer Care)'}</li><li><b>Asked:</b> Refund order #4821 (${money(r.amount)}) · situation: ${SCEN.find(s=>s.id===r.sid).t}</li><li><b>Rules used:</b> rule book v${ver} · ${Object.entries(LR).filter(([k,v])=>v&&(!Array.isArray(v)||v.length)).length}/4 switches on</li><li><b>Decision:</b> ${r.h}</li><li><b>Protected by:</b> ${r.by.join(', ')||'none needed'}</li><li><b>When:</b> ${new Date(at).toLocaleString()}</li></ul>`;
+    $('#evJson').textContent=JSON.stringify({evidence_id:'ev-4821-'+ver,intent:'refund_order',order:'#4821',amount:r.amount,situation:r.sid,workflow:'refund-v1',rule_book_version:ver,redeploys:0,switches:S.on,levels:S.lvl,decision:r.kind,summary:r.p,mitigated_by:r.by,steps:NAMES.map((n,i)=>({step:n,events:r.steps[i].map(x=>({level:{g:'ok',a:'attention',r:'risk'}[x[0]],note:x[1]}))})),timestamp:at},null,2);}
+}
+function go(i){document.querySelectorAll('.page').forEach((p,k)=>p.classList.toggle('on',k===+i));document.querySelectorAll('.steps button').forEach((b,k)=>b.classList.toggle('on',k===+i));if(+i===3)renderReport();window.scrollTo({top:document.querySelector('.steps').offsetTop-70});}
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g)go(g.dataset.go);
+  const t=e.target.closest('[data-rb],[data-ev]');if(t){const isRb=!!t.dataset.rb,v=t.dataset.rb||t.dataset.ev;t.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));
+    $(isRb?'#rbText':'#evText').hidden=v!=='text';$(isRb?'#rbJson':'#evJson').hidden=v!=='json';}});
+$('#run').onclick=run;
+$('#allOn').onclick=()=>{SW.forEach(s=>S.on[s.k]=true);bump();};
+$('#allOff').onclick=()=>{SW.forEach(s=>S.on[s.k]=false);bump();};
+$('#fixAll').onclick=()=>{SW.forEach(s=>S.on[s.k]=true);bump();renderReport();};
+renderScen();renderSw();renderRules();renderVer();resetPipe();renderReport();
+})();
+</script>
+</body>
+</html>
